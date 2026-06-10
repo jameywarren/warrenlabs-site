@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" data-palette="steel" data-type="condensed">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Warren Labs · The Rack</title>
+<meta name="description" content="Warren Labs is Jamey Warren: musician, audio product builder, Livingston MT. Headphone EQ + crossfeed DSP, Tone Farmers record label, Sonic Bloom platform for working musicians.">
+<meta property="og:title" content="Warren Labs">
+<meta property="og:description" content="Don't read about my work. Turn it up. The lab of Jamey Warren: headphones, DSP, software, records.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='10' fill='%233fd2e4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<header>
+  <div class="head-in">
+    <div class="logo-mark"><div class="logo-dot"></div><span>WARREN&nbsp;LABS</span></div>
+    <nav>
+      <a href="#rack">THE RACK</a><a href="#about">ABOUT</a><a href="#patch">PATCH IN</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero wrap">
+  <div class="hero-kicker mono">
+    <span>THE&nbsp;LAB&nbsp;OF&nbsp;JAMEY&nbsp;WARREN</span><span class="sep">/</span>
+    <span>MUSICIAN</span><span class="sep">/</span>
+    <span>AUDIO&nbsp;PRODUCT&nbsp;BUILDER</span><span class="sep">/</span>
+    <span>LIVINGSTON,&nbsp;MT</span>
+  </div>
+  <h1 class="display">Warren<br>Labs<span class="accent">.</span></h1>
+  <canvas id="scope" height="230"></canvas>
+  <div class="hero-sub">
+    <p class="lede">Warren Labs is me, Jamey Warren. I make music, and I've spent 25 years building the things around it: the gear, the software, the records. This is home for my ongoing explorations into <em>where audio goes next</em>.</p>
+    <div class="creds mono">
+      <div class="cred"><span class="k">1997–2001</span><span class="v">GRACE DESIGN, EMPLOYEE #1</span></div>
+      <div class="cred"><span class="k">2003–2017</span><span class="v">HEADROOM, VP OPS TO CEO</span></div>
+      <div class="cred"><span class="k">NOW</span><span class="v">HEADPHONES · DSP · SOFTWARE</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="rack-zone" id="rack">
+  <div class="rack-head wrap">
+    <div class="k">THE RACK · WHAT I'M BUILDING</div>
+    <h2 class="display">Don't read about my work.<br><em>Turn it up.</em></h2>
+    <p class="sub">Every project at Warren Labs slots into the rack.</p>
+    <div class="rack-instr mono"><span class="dot"></span>CLICK A UNIT TO PULL IT OUT OF THE RACK</div>
+  </div>
+
+  <div class="rack-scene">
+    <div class="rack" id="rack3d">
+      <div class="rack-side"></div>
+      <div class="rail left"><div class="holes"></div></div>
+      <div class="rail right"><div class="holes"></div></div>
+
+      <div class="unit u2" data-unit="eq">
+        <span class="u-num">WL-EQ1</span>
+        <div class="u-name"><h3>Headphone EQ + Crossfeed</h3><span class="u-sub">VST3 · C++ / JUCE · PLAYABLE DEMO INSIDE</span></div>
+        <div class="u2-right">
+          <div class="u-status"><div class="led blink" style="--led-c: var(--led-amber)"></div>EXPLORING</div>
+          <span class="u-open">OPEN ↗</span>
+        </div>
+        <div class="u2-panel">
+          <div>
+            <div class="uscreen big"><canvas id="eqMini" width="500" height="176"></canvas></div>
+            <div class="tiny-label">CORRECTION CURVE</div>
+          </div>
+          <div><div class="tknob lg" style="--rot:-35deg"></div><div class="tiny-label">LOW</div></div>
+          <div><div class="tknob lg" style="--rot:20deg"></div><div class="tiny-label">MID</div></div>
+          <div><div class="tknob lg" style="--rot:-70deg"></div><div class="tiny-label">HIGH</div></div>
+          <div class="u2-div"></div>
+          <div><div class="tknob lg" style="--rot:-50deg"></div><div class="tiny-label">XFEED</div></div>
+          <div><div class="tknob lg" style="--rot:25deg"></div><div class="tiny-label">GAIN</div></div>
+          <div class="u2-div"></div>
+          <div><div class="utoggle"></div><div class="tiny-label">BYPASS</div></div>
+          <div><div class="ujack"></div><div class="tiny-label">PHONES</div></div>
+        </div>
+      </div>
+
+      <div class="unit" data-unit="tone">
+        <span class="u-num">WL-TF1</span>
+        <div class="u-name"><h3>Tone Farmers</h3><span class="u-sub">RECORD LABEL · ARTIST-FAVORABLE SPLIT</span></div>
+        <div class="mini">
+          <div class="u-detail">
+            <div>
+              <div class="ucassette"><div class="uhub"></div><div class="tape"></div><div class="uhub r"></div></div>
+              <div class="tiny-label">MASTER · 30 IPS</div>
+            </div>
+            <div>
+              <div class="uvu"><div class="vrow"></div><div class="vrow"></div></div>
+              <div class="tiny-label">L / R</div>
+            </div>
+            <div>
+              <div class="utrans"><i></i><i></i><i class="rec"></i><i></i></div>
+              <div class="tiny-label">TRANSPORT</div>
+            </div>
+          </div>
+          <div class="u-status"><div class="led" style="--led-c: var(--led-green)"></div>ACTIVE</div>
+        </div>
+        <div class="u-hint"><span class="u-open">OPEN ↗</span></div>
+      </div>
+
+      <div class="unit" data-unit="bloom">
+        <span class="u-num">WL-SB1</span>
+        <div class="u-name"><h3>Sonic Bloom</h3><span class="u-sub">PLATFORM FOR WORKING MUSICIANS · $20 FLAT</span></div>
+        <div class="mini">
+          <div class="u-detail">
+            <div>
+              <div class="usite">
+                <div class="ubar"><i></i><i></i><i></i></div>
+                <div class="ucontent">
+                  <div class="album"></div>
+                  <div class="ulines">
+                    <i></i><i></i>
+                    <div class="uwave"><i class="lit" style="height:5px"></i><i class="lit" style="height:9px"></i><i class="lit" style="height:6px"></i><i style="height:8px"></i><i style="height:4px"></i><i style="height:7px"></i><i style="height:5px"></i><i style="height:9px"></i><i style="height:6px"></i></div>
+                  </div>
+                </div>
+              </div>
+              <div class="tiny-label">ARTIST SITE · PLAYER</div>
+            </div>
+            <div><div class="mini-faders"><i style="--p:60%"></i><i style="--p:12%"></i><i style="--p:38%"></i></div><div class="tiny-label">MIX</div></div>
+          </div>
+          <div class="u-status"><div class="led blink" style="--led-c: var(--led-cyan)"></div>PRE-LAUNCH</div>
+        </div>
+        <div class="u-hint"><span class="u-open">OPEN ↗</span></div>
+      </div>
+
+      <div class="unit vent static"><div class="slots"></div></div>
+
+      <div class="rack-shadow"></div>
+    </div>
+  </div>
+</section>
+
+<section class="about wrap" id="about">
+  <h2 class="display">The one behind the lab</h2>
+  <div class="about-grid">
+    <img src="assets/photo-desk.jpg" alt="Jamey at the Warren Labs desk">
+    <div class="about-col">
+      <p>I got my start at <strong>Grace Design</strong> and went on to run <strong>HeadRoom</strong> as president and CEO. Over 25 years I've shepherded audio hardware from prototype into production, built software, produced records, and stayed close to the music the whole time.</p>
+      <p>What I do best is sit between the engineering and the music, knowing enough about both to push a product toward something people can feel. I've been doing the work of product for a long time, <strong>whatever the title on the door happened to be.</strong></p>
+    </div>
+  </div>
+  <div class="era-cards">
+    <div class="era">
+      <div class="y"><span>1997 · GRACE DESIGN</span><span>01</span></div>
+      <h4>Employee #1</h4>
+      <p>Production, testing, repair, prototyping, and the automated measurement system the gear was tested against. Two founders and me, to twenty people and gear in studios worldwide.</p>
+    </div>
+    <div class="era">
+      <div class="y"><span>2003 · HEADROOM</span><span>02</span></div>
+      <h4>VP Ops → President &amp; CEO</h4>
+      <p>Relaunched the entire headphone-amplifier line: every model from concept through prototype into production.</p>
+    </div>
+    <div class="era">
+      <div class="y"><span>LATER · THE COSMIC</span><span>03</span></div>
+      <h4>A headphone of my own</h4>
+      <p>Acoustic design, tuning, and first CAD myself. Never shipped, and still the thing that makes me want to build.</p>
+    </div>
+  </div>
+</section>
+
+<section class="contact wrap" id="patch">
+  <div class="k">OUTPUT SECTION · CONTACT</div>
+  <h2 class="display">Building something in audio? <span class="accent">Patch in.</span></h2>
+  <div class="pbay" id="pbay">
+    <div class="pbay-panel">
+      <div class="pbay-title mono">WL PATCHBAY · 12 CH · CLICK A JACK TO RE-PATCH</div>
+      <div class="pbay-row" id="pbayRow"></div>
+    </div>
+    <canvas id="pbayCv"></canvas>
+    <div class="pbay-readout mono" id="pbayReadout"></div>
+  </div>
+  <div class="contact-links">
+    <a class="primary" href="mailto:jamey@jameywarren.com">JAMEY@JAMEYWARREN.COM</a>
+    <a href="https://www.linkedin.com/in/jameywarren" target="_blank" rel="noopener">LINKEDIN ↗</a>
+    <a href="https://github.com/jameywarren" target="_blank" rel="noopener">GITHUB ↗</a>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-in"><span>WARREN LABS · JAMEY WARREN</span><span>BUILT IN LIVINGSTON, MONTANA</span></div>
+</footer>
+
+<!-- fullscreen unit overlay -->
+<div class="ov" id="ov">
+  <div class="ov-scrim" id="ovScrim"></div>
+  <div class="ov-card">
+    <div class="ov-head">
+      <span class="u-num" id="ovNum"></span>
+      <h2 id="ovTitle"></h2>
+      <div class="u-status" id="ovStatus"></div>
+      <button class="ov-close" id="ovClose">✕</button>
+    </div>
+    <div class="ov-body" id="ovBody"></div>
+  </div>
+</div>
+
+<script src="js/wl-eq1.js"></script>
+<script src="js/wl-app.js"></script>
+<script src="js/wl-patchbay.js"></script>
+</body>
+</html>
