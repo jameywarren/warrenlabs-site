@@ -139,9 +139,11 @@
       led: 'var(--led-green)', status: 'LIVE',
       link: 'https://makerphones.com',
       desc: [
-        "An open field manual for building your own headphones — driver physics through measurement and tuning. Thirty-two chapters off the bench, all done and free to read. The resource I wish I'd had thirty years ago."
+        "An open field manual for building your own headphones — driver physics through measurement and tuning. Thirty-two chapters off the bench, all done and free to read. The resource I wish I'd had thirty years ago.",
+        "It starts with the <b>Daily Driver</b>: a 40 mm open-back that's forgiving to design and to assemble, buildable by a first-timer, and good enough to keep wearing once it's done. The model is <b>fully parametric</b> — change the driver, the pad, or the head size and it follows.",
+        "Honest sonic target: a <b>bright, open, detailed open-back</b> — strong mids and treble, modest bass. That's what a small driver in an open baffle does, and the design leans into it instead of chasing sub-bass the hardware can't make."
       ],
-      meta: [['ROLE', 'Author'], ['FORMAT', 'Open web manual, free'], ['SCOPE', 'Driver physics → measurement → tuning'], ['STATUS', '32 chapters · complete']]
+      meta: [['ROLE', 'Author'], ['FORMAT', 'Open web manual, free'], ['FIRST BUILD', 'Daily Driver · 40 mm open-back'], ['SCOPE', 'Driver physics → measurement → tuning'], ['STATUS', '32 chapters · complete']]
     },
     tone: {
       num: 'WL-TF1', title: 'Tone Farmers',
