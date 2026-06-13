@@ -126,13 +126,22 @@
   const UNITS = {
     eq: {
       num: 'WL-EQ1', title: 'Headphone EQ + Crossfeed',
-      led: 'var(--led-amber)', blink: true, status: 'EXPLORING',
+      led: 'var(--led-amber)', blink: true, status: 'PROTOTYPE',
       plugin: true,
       desc: [
         "A VST3 plugin I'm building in <b>C++ with JUCE</b>: headphone EQ correction that flattens a given headphone's response, plus Bauer-style crossfeed that blends the channels to ease the in-your-head feeling of headphones.",
         "First milestone is deliberately narrow: <b>prove the signal chain end to end</b> with a hardcoded curve before adding real correction data and a UI. It's the part of audio I most want under my hands."
       ],
       meta: [['ROLE', 'Solo, learning by building'], ['STACK', 'C++, JUCE, CMake, Claude Code'], ['STATUS', 'Early; signal chain in progress'], ['THIS DEMO', 'Web Audio API, a sketch of the real thing']]
+    },
+    maker: {
+      num: 'WL-MP1', title: 'Maker Phones',
+      led: 'var(--led-green)', status: 'LIVE',
+      link: 'https://makerphones.com',
+      desc: [
+        "An open field manual for building your own headphones — driver physics through measurement and tuning. Thirty-two chapters off the bench, all done and free to read. The resource I wish I'd had thirty years ago."
+      ],
+      meta: [['ROLE', 'Author'], ['FORMAT', 'Open web manual, free'], ['SCOPE', 'Driver physics → measurement → tuning'], ['STATUS', '32 chapters · complete']]
     },
     tone: {
       num: 'WL-TF1', title: 'Tone Farmers',
@@ -198,6 +207,7 @@
         <div class="ov-grid">
           <div class="ov-desc">${u.desc.map(d => `<p>${d}</p>`).join('')}</div>
           <div class="ov-side">
+            ${u.link ? `<a class="ov-cta" href="${u.link}" target="_blank" rel="noopener">VISIT MAKERPHONES.COM ↗</a>` : ''}
             <div class="ov-meta">${u.meta.map(m =>
               `<div class="m"><span class="mk">${m[0]}</span><span class="mv">${m[1]}</span></div>`).join('')}</div>
             ${u.controls ? `<div class="ov-controls">${u.controls.map(knobHTML).join('')}</div>` : ''}

@@ -167,6 +167,15 @@ nav a:hover { color: var(--acc); }
 .mini-faders i { width: 3px; height: 34px; background: #0c0b0e; position: relative; border-radius: 2px; }
 .mini-faders i::after { content: ''; position: absolute; left: -4px; width: 11px; height: 6px; border-radius: 1px; background: var(--ink); top: var(--p, 40%); }
 
+/* Maker Phones: exploded headphone (placeholder) + chapters */
+.uhp { width: 120px; height: 48px; display: block; margin: 0 auto; }
+.uhp path, .uhp rect, .uhp circle, .uhp line { fill: none; stroke: var(--acc); stroke-width: 1.4; stroke-linecap: round; }
+.uhp .hp-cup { fill: rgba(63,210,228,0.08); }
+.uhp .hp-drv2 { stroke: var(--ink); opacity: 0.7; }
+.uhp .hp-x { stroke: var(--faint); stroke-dasharray: 2 3; }
+.uchap { display: flex; gap: 3px; align-items: flex-end; height: 48px; padding-bottom: 2px; justify-content: center; }
+.uchap i { width: 4px; height: 26px; border-radius: 1px; background: var(--acc); opacity: 0.9; }
+
 /* ---------- overlay ---------- */
 .ov { position: fixed; inset: 0; z-index: 100; display: none; }
 .ov.show { display: block; }
@@ -205,6 +214,8 @@ nav a:hover { color: var(--acc); }
 .knob::after { content: ''; position: absolute; left: 50%; top: 5px; width: 3px; height: 15px; background: var(--acc); border-radius: 2px; box-shadow: 0 0 6px color-mix(in oklab, var(--acc) 70%, transparent); transform-origin: 50% 24px; transform: translateX(-50%) rotate(var(--rot, 0deg)); }
 .knob-label { font-family: "IBM Plex Mono", monospace; font-size: 9px; letter-spacing: 0.18em; color: var(--faint); margin-top: 10px; }
 .knob-val { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--acc); margin-top: 5px; }
+.ov-cta { display: block; text-align: center; font-family: "IBM Plex Mono", monospace; font-size: 13px; letter-spacing: 0.12em; text-decoration: none; background: var(--acc); color: var(--bg); font-weight: 600; padding: 18px 24px; border-radius: 4px; transition: filter 0.2s; }
+.ov-cta:hover { filter: brightness(1.12); }
 
 /* plugin inside overlay */
 .plug-graph-wrap { border: 1px solid var(--line); border-radius: 4px; overflow: hidden; margin-bottom: 26px; }
