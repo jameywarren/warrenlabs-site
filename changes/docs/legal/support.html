@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Support — Changes</title>
+<meta name="description" content="Support for Changes, the on-device Nashville Number chart app for iPhone. Requirements, beta help, and how to reach us.">
+<meta name="robots" content="index, follow">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='6' y='6' width='20' height='20' rx='3' transform='rotate(45 16 16)' fill='%23F0E6D1'/><text x='16' y='21' font-size='14' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%2314100D'>1</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #14100D; color: #F0E6D1; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+a { color: inherit; }
+::selection { background: #E5481F; color: #F0E6D1; }
+.shell { position: relative; min-height: 100vh; overflow-x: hidden; background: #14100D; }
+.grain { position: fixed; inset: 0; pointer-events: none; z-index: 2; opacity: 0.05; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); }
+.vignette { position: fixed; inset: 0; pointer-events: none; z-index: 2; background: radial-gradient(130% 100% at 50% -10%, transparent 38%, rgba(0,0,0,0.55) 100%); }
+nav { position: sticky; top: 0; z-index: 10; backdrop-filter: blur(12px); background: rgba(20,16,13,0.72); border-bottom: 1px solid rgba(240,230,209,0.08); }
+.nav-in { max-width: 820px; margin: 0 auto; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.brand { display: flex; align-items: center; gap: 11px; text-decoration: none; }
+.diamond { display: inline-flex; align-items: center; justify-content: center; width: 30px; height: 30px; background: #F0E6D1; border-radius: 6px; transform: rotate(45deg); }
+.diamond span { transform: rotate(-45deg); font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: #14100D; font-size: 15px; line-height: 1; }
+.brand-name { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 20px; letter-spacing: -0.01em; }
+.nav-cta { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.04em; text-decoration: none; padding: 9px 16px; border-radius: 999px; background: #E5481F; color: #F0E6D1; }
+.nav-cta:hover { background: #c93d18; }
+main { position: relative; z-index: 3; }
+.doc { max-width: 820px; margin: 0 auto; padding: clamp(40px,6vw,72px) 24px; }
+.kicker { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.2em; color: #4E97AB; margin-bottom: 14px; }
+.doc h1 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(34px,5vw,52px); line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 14px; }
+.lead { font-size: clamp(16px,2vw,18px); line-height: 1.65; color: rgba(240,230,209,0.8); margin: 18px 0 0; max-width: 38em; }
+.contact-card { margin: 32px 0 0; padding: 24px 24px; border-radius: 16px; background: linear-gradient(180deg, rgba(229,72,31,0.12), rgba(229,72,31,0.04)); border: 1px solid rgba(229,72,31,0.3); }
+.contact-card h2 { margin: 0 0 8px; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 22px; }
+.contact-card p { margin: 0; font-size: 15.5px; line-height: 1.6; color: rgba(240,230,209,0.78); }
+.contact-card a { color: #4E97AB; text-decoration: underline; text-underline-offset: 2px; }
+.doc h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: clamp(20px,2.6vw,26px); letter-spacing: -0.01em; margin: 48px 0 12px; }
+.doc h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 17px; margin: 26px 0 6px; color: #F0E6D1; }
+.doc p, .doc li { font-size: 15.5px; line-height: 1.7; color: rgba(240,230,209,0.72); }
+.doc p { margin: 0 0 14px; max-width: 40em; }
+.doc ul { margin: 0 0 14px; padding-left: 20px; max-width: 40em; }
+.doc li { margin: 0 0 8px; }
+.doc a.link { color: #4E97AB; text-decoration: underline; text-underline-offset: 2px; }
+.doc strong { color: #F0E6D1; font-weight: 600; }
+.req { display: grid; grid-template-columns: 130px 1fr; gap: 10px 18px; margin: 0 0 14px; max-width: 40em; }
+.req dt { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.04em; color: #4E97AB; }
+.req dd { margin: 0; font-size: 15.5px; line-height: 1.5; color: rgba(240,230,209,0.78); }
+footer { border-top: 1px solid rgba(240,230,209,0.1); margin-top: 32px; }
+.foot-in { max-width: 820px; margin: 0 auto; padding: 32px 24px 52px; display: flex; flex-wrap: wrap; gap: 18px; align-items: center; justify-content: space-between; font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+.foot-in .left { color: rgba(240,230,209,0.6); }
+.foot-links { display: flex; flex-wrap: wrap; gap: 22px; }
+.foot-links a { color: rgba(240,230,209,0.7); text-decoration: none; }
+.foot-links a:hover { color: #4E97AB; }
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="grain"></div>
+  <div class="vignette"></div>
+
+  <nav>
+    <div class="nav-in">
+      <a class="brand" href="../../">
+        <span class="diamond"><span>1</span></span>
+        <span class="brand-name">Changes</span>
+      </a>
+      <a class="nav-cta" href="../../#beta">Join the beta list</a>
+    </div>
+  </nav>
+
+  <main>
+    <article class="doc">
+      <div class="kicker">CHANGES · SUPPORT</div>
+      <h1>Support</h1>
+      <p class="lead">Changes is in active development ahead of its beta. If something isn't working, you have a question, or you've got an idea — reach out. A real person reads every message.</p>
+
+      <div class="contact-card">
+        <h2>Get in touch</h2>
+        <p>Email <a href="mailto:jamey@jameywarren.com?subject=Changes%20support">jamey@jameywarren.com</a> and we'll get back to you. For bug reports, the details below help a lot.</p>
+      </div>
+
+      <h2>Requirements</h2>
+      <dl class="req">
+        <dt>Device</dt><dd>iPhone (iPad supported; a Mac version is in progress)</dd>
+        <dt>OS</dt><dd>iOS 27 or later</dd>
+        <dt>Cost</dt><dd>Free during the beta</dd>
+        <dt>Network</dt><dd>None required — Changes works fully offline</dd>
+      </dl>
+
+      <h2>Joining the beta</h2>
+      <p>The beta is distributed through <strong>Apple TestFlight</strong> and is gated on the public release of iOS 27. To get in line, <a class="link" href="../../#beta">join the beta list</a> with your email. When the beta opens, we'll send a TestFlight invitation.</p>
+      <h3>How to accept a TestFlight invite</h3>
+      <ul>
+        <li>Install Apple's free <strong>TestFlight</strong> app from the App Store.</li>
+        <li>Open the invitation link we email you, on the iPhone you'll use.</li>
+        <li>Tap <strong>Accept</strong>, then <strong>Install</strong>, and Changes appears like any other app.</li>
+      </ul>
+
+      <h2>Reporting a bug</h2>
+      <p>When something goes wrong, email us with as much of this as you can — it speeds up a fix:</p>
+      <ul>
+        <li>What you did, what you expected, and what happened instead.</li>
+        <li>Your device and iOS version (Settings → General → About).</li>
+        <li>Whether it happens every time or just sometimes.</li>
+        <li>If it's about a specific chart, a short description of the recording (instrument, rough key/tempo) — <strong>no need to send the audio</strong>, since it never leaves your phone anyway.</li>
+      </ul>
+      <p>During the beta you can also send feedback straight from TestFlight (take a screenshot, then tap Share → TestFlight).</p>
+
+      <h2>Common questions</h2>
+      <h3>Does it need an internet connection?</h3>
+      <p>No. Changes listens and writes the chart entirely on your phone. Nothing is uploaded.</p>
+      <h3>Covers or original songs?</h3>
+      <p>It's built for your own songs. A hum or rough take gets harmonized into a chart — it isn't a cover-detector.</p>
+      <h3>Is my audio uploaded anywhere?</h3>
+      <p>Never. No upload, no account. Your recordings stay on your device. See the <a class="link" href="privacy.html">Privacy Policy</a> for the full picture.</p>
+      <h3>How do I get my chart into Logic Pro?</h3>
+      <p>Export a MIDI from Changes and open it in Logic. Run <strong>Analyze</strong> to get a Chord Track, then add Session Players that follow your changes.</p>
+      <h3>How do I leave the beta list?</h3>
+      <p>Email <a class="link" href="mailto:jamey@jameywarren.com?subject=Remove%20from%20Changes%20beta%20list">jamey@jameywarren.com</a> and we'll remove your address.</p>
+
+      <h2>Privacy</h2>
+      <p>Your music and the charts you make in Changes stay on your device. Read the full <a class="link" href="privacy.html">Privacy Policy</a>.</p>
+    </article>
+
+    <footer>
+      <div class="foot-in">
+        <span class="left">Changes by Warren Labs</span>
+        <div class="foot-links">
+          <a href="privacy.html">Privacy</a>
+          <a href="support.html">Support</a>
+          <a href="../../">Changes home</a>
+          <a href="mailto:jamey@jameywarren.com">jamey@jameywarren.com</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+</div>
+</body>
+</html>
