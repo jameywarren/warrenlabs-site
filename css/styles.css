@@ -167,6 +167,11 @@ nav a:hover { color: var(--acc); }
 .mini-faders i { width: 3px; height: 34px; background: #0c0b0e; position: relative; border-radius: 2px; }
 .mini-faders i::after { content: ''; position: absolute; left: -4px; width: 11px; height: 6px; border-radius: 1px; background: var(--ink); top: var(--p, 40%); }
 
+/* WL-CH1 Changes number-chart mini */
+.uchart { display: flex; gap: 5px; }
+.uchart i { width: 27px; height: 36px; display: flex; align-items: center; justify-content: center; font-style: normal; border: 1px solid rgba(255,255,255,0.16); border-radius: 5px; background: rgba(255,255,255,0.03); font-family: var(--font-display); font-weight: 600; font-size: 15px; color: var(--ink); }
+.uchart i.hot { border-color: var(--acc); color: var(--acc); box-shadow: 0 0 0 2px color-mix(in oklab, var(--acc) 22%, transparent); }
+
 /* Maker Phones: exploded headphone (placeholder) + chapters */
 .uhp { width: 120px; height: 48px; display: block; margin: 0 auto; }
 .uhp path, .uhp rect, .uhp circle, .uhp line { fill: none; stroke: var(--acc); stroke-width: 1.4; stroke-linecap: round; }

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Changes — Hum it in. Get the chart.</title>
+<meta name="description" content="A rough recording of your song becomes a session-ready Nashville Number chart — then straight into Logic Pro. On your phone. Fixed in taps.">
+<meta property="og:title" content="Changes — Hum it in. Get the chart.">
+<meta property="og:description" content="A rough recording of your song becomes a session-ready Nashville Number chart — then straight into Logic Pro. On your phone. Fixed in taps.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://warrenlabs.com/changes/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='6' y='6' width='20' height='20' rx='3' transform='rotate(45 16 16)' fill='%23F0E6D1'/><text x='16' y='21' font-size='14' font-family='sans-serif' font-weight='700' text-anchor='middle' fill='%2314100D'>1</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: #14100D; color: #F0E6D1; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+a { color: inherit; }
+::selection { background: #E5481F; color: #F0E6D1; }
+@keyframes floaty { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+.cta-orange:hover { background: #c93d18 !important; }
+.email-input:focus { border-color: #4E97AB !important; box-shadow: 0 0 0 3px rgba(78,151,171,0.25) !important; }
+.foot-link:hover { color: #4E97AB !important; }
+</style>
+</head>
+<body>
+
+<div style="position:relative; min-height:100vh; overflow-x:hidden; background:#14100D;">
+
+  <!-- grain + vignette overlays -->
+  <div style="position:fixed; inset:0; pointer-events:none; z-index:2; opacity:0.05; mix-blend-mode:overlay; background-image:url(&quot;data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>&quot;);"></div>
+  <div style="position:fixed; inset:0; pointer-events:none; z-index:2; background:radial-gradient(130% 100% at 50% -10%, transparent 38%, rgba(0,0,0,0.55) 100%);"></div>
+
+  <!-- NAV -->
+  <nav style="position:sticky; top:0; z-index:10; backdrop-filter:blur(12px); background:rgba(20,16,13,0.72); border-bottom:1px solid rgba(240,230,209,0.08);">
+    <div style="max-width:1120px; margin:0 auto; padding:14px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px;">
+      <a href="#top" style="display:flex; align-items:center; gap:11px; text-decoration:none;">
+        <span style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; background:#F0E6D1; border-radius:6px; transform:rotate(45deg);">
+          <span style="transform:rotate(-45deg); font-family:'Space Grotesk',sans-serif; font-weight:700; color:#14100D; font-size:15px; line-height:1;">1</span>
+        </span>
+        <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:20px; letter-spacing:-0.01em;">Changes</span>
+      </a>
+      <a href="#beta" class="cta-orange" style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.04em; text-decoration:none; padding:9px 16px; border-radius:999px; background:#E5481F; color:#F0E6D1;">Join the beta list</a>
+    </div>
+  </nav>
+
+  <main style="position:relative; z-index:3;" id="top">
+
+    <!-- HERO -->
+    <section style="max-width:1120px; margin:0 auto; padding:clamp(48px,7vw,96px) 24px clamp(56px,8vw,104px);">
+      <div style="display:flex; flex-wrap:wrap; gap:clamp(32px,5vw,64px); align-items:center;">
+
+        <div style="flex:1 1 420px; min-width:300px;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.2em; color:#4E97AB; margin-bottom:28px;">NASHVILLE NUMBER CHARTS · ON-DEVICE</div>
+
+          <!-- 1·4·5 brand mark -->
+          <div style="display:flex; align-items:center; gap:14px; margin-bottom:30px;">
+            <span style="display:inline-flex; align-items:center; justify-content:center; width:62px; height:62px; background:#E5481F; border-radius:11px; transform:rotate(45deg);">
+              <span style="transform:rotate(-45deg); font-family:'Space Grotesk',sans-serif; font-weight:700; color:#F0E6D1; font-size:30px; line-height:1;">1</span>
+            </span>
+            <span style="display:inline-flex; align-items:center; justify-content:center; width:62px; height:62px; background:#F0E6D1; border-radius:11px; transform:rotate(45deg);">
+              <span style="transform:rotate(-45deg); font-family:'Space Grotesk',sans-serif; font-weight:700; color:#14100D; font-size:30px; line-height:1;">4</span>
+            </span>
+            <span style="display:inline-flex; align-items:center; justify-content:center; width:62px; height:62px; background:transparent; border:2px solid #F0E6D1; border-radius:11px; transform:rotate(45deg);">
+              <span style="transform:rotate(-45deg); font-family:'Space Grotesk',sans-serif; font-weight:700; color:#F0E6D1; font-size:30px; line-height:1;">5</span>
+            </span>
+          </div>
+
+          <h1 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(44px,6.6vw,76px); line-height:1.0; letter-spacing:-0.025em; margin:0 0 22px;">Hum it in.<br>Get the chart.</h1>
+
+          <p style="font-size:clamp(16px,2vw,19px); line-height:1.55; color:rgba(240,230,209,0.74); max-width:30em; margin:0 0 32px;">A rough recording of your song becomes a session-ready Nashville Number chart — then straight into Logic Pro. On your phone. Fixed in taps.</p>
+
+          <!-- HERO FORM -->
+          <div id="beta-top" data-beta>
+            <div class="beta-success" style="display:none; align-items:center; gap:10px; padding:16px 18px; border-radius:12px; background:rgba(78,151,171,0.14); border:1px solid rgba(78,151,171,0.4); max-width:440px;">
+              <span style="font-size:18px;">✓</span>
+              <span style="font-size:15px; line-height:1.4; color:#F0E6D1;">You're on the list. We'll send a TestFlight invite the moment the beta opens.</span>
+            </div>
+            <form class="beta-form" action="mailto:jamey@jameywarren.com" method="POST" enctype="text/plain" style="display:flex; flex-wrap:wrap; gap:10px; max-width:480px;">
+              <input class="email-input" type="email" name="email" required placeholder="you@band.com" aria-label="Email address" style="flex:1 1 220px; min-width:0; padding:14px 16px; border-radius:11px; border:1px solid rgba(240,230,209,0.22); background:rgba(240,230,209,0.05); color:#F0E6D1; font-family:'Inter',sans-serif; font-size:16px; outline:none;">
+              <button type="submit" class="cta-orange" style="flex:0 0 auto; padding:14px 22px; border-radius:11px; border:none; background:#E5481F; color:#F0E6D1; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; cursor:pointer;">Join the beta list</button>
+            </form>
+            <p style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.02em; color:rgba(240,230,209,0.74); margin:14px 0 0; line-height:1.6;">iPhone · iOS 27 · free during beta · your audio never leaves your phone.</p>
+          </div>
+        </div>
+
+        <!-- HERO PHONE -->
+        <div style="flex:1 1 320px; min-width:280px; display:flex; justify-content:center;">
+          <div style="width:clamp(280px,86vw,340px); animation:floaty 7s ease-in-out infinite;">
+            <div style="background:#0c0a08; border-radius:46px; padding:12px; box-shadow:0 50px 90px -28px rgba(0,0,0,0.8), 0 0 0 1px rgba(240,230,209,0.07); position:relative;">
+              <div style="border-radius:35px; background:#14100D; overflow:hidden; border:1px solid rgba(240,230,209,0.06);">
+
+                <!-- notch -->
+                <div style="display:flex; justify-content:center; padding-top:11px;">
+                  <div style="width:96px; height:24px; background:#0c0a08; border-radius:999px;"></div>
+                </div>
+
+                <div style="padding:14px 16px 18px;">
+                  <!-- app header -->
+                  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
+                    <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(240,230,209,0.5);">‹ Ideas</span>
+                    <span style="display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; background:#F0E6D1; border-radius:4px; transform:rotate(45deg);"><span style="transform:rotate(-45deg); font-family:'Space Grotesk',sans-serif; font-weight:700; color:#14100D; font-size:10px;">1</span></span>
+                  </div>
+                  <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; margin:6px 0 3px;">Back Roads</div>
+                  <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.04em; color:rgba(78,151,171,0.95); margin-bottom:14px;">Key of <span id="cur-key">G</span> · 132 BPM · 4/4</div>
+
+                  <!-- transpose chips -->
+                  <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.18em; color:rgba(240,230,209,0.42); margin-bottom:7px;">TRANSPOSE</div>
+                  <div id="chips" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px;"></div>
+
+                  <!-- chart -->
+                  <div id="chart" style="display:flex; flex-direction:column; gap:9px; margin-bottom:16px;"></div>
+
+                  <!-- player -->
+                  <div style="display:flex; align-items:center; gap:10px; padding:10px; border-radius:13px; background:rgba(240,230,209,0.05); border:1px solid rgba(240,230,209,0.09);">
+                    <button id="playBtn" aria-label="Play" class="cta-orange" style="flex:none; width:38px; height:38px; border-radius:50%; border:none; background:#E5481F; color:#F0E6D1; cursor:pointer; font-size:13px; display:flex; align-items:center; justify-content:center;">▶</button>
+                    <div id="wave" style="flex:1; height:34px; display:flex; align-items:flex-end; gap:2px;"></div>
+                  </div>
+                  <div style="font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(240,230,209,0.62); margin-top:9px; text-align:center;">Tap play — the marker follows your changes.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section data-reveal style="max-width:760px; margin:0 auto; padding:clamp(48px,7vw,96px) 24px; text-align:center;">
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(28px,4vw,42px); line-height:1.15; letter-spacing:-0.02em; margin:0 0 22px;">Your best ideas show up as a hum in a voice memo. Then they sit there.</h2>
+      <p style="font-size:clamp(16px,2vw,18px); line-height:1.65; color:rgba(240,230,209,0.7); margin:0; max-width:34em; margin-left:auto; margin-right:auto;">Capturing the idea is easy — you already do it. Writing it down is the chore: keys, structure, the chords that almost work. Changes does that draft in seconds, so the part you love stays the part you do.</p>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section data-reveal style="max-width:1120px; margin:0 auto; padding:clamp(40px,6vw,72px) 24px;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.2em; color:#4E97AB; margin-bottom:14px;">HOW IT WORKS</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(28px,4vw,44px); letter-spacing:-0.02em; margin:0 0 48px;">Three steps, all on your phone.</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px;">
+
+        <div style="padding:28px; border-radius:18px; background:rgba(240,230,209,0.035); border:1px solid rgba(240,230,209,0.1);">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#E5481F; margin-bottom:18px;">01</div>
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:21px; margin:0 0 10px;">Record or import</h3>
+          <p style="font-size:15px; line-height:1.6; color:rgba(240,230,209,0.68); margin:0;">Play it, hum it, or drop in a voice memo. A rough take is all Changes needs.</p>
+        </div>
+
+        <div style="padding:28px; border-radius:18px; background:rgba(240,230,209,0.035); border:1px solid rgba(240,230,209,0.1);">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#E5481F; margin-bottom:18px;">02</div>
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:21px; margin:0 0 10px;">Changes writes the chart</h3>
+          <p style="font-size:15px; line-height:1.6; color:rgba(240,230,209,0.68); margin:0;">Key, tempo, structure, chords — a Nashville Number chart, computed entirely on-device.</p>
+        </div>
+
+        <div style="padding:28px; border-radius:18px; background:rgba(240,230,209,0.035); border:1px solid rgba(240,230,209,0.1);">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#E5481F; margin-bottom:18px;">03</div>
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:21px; margin:0 0 10px;">Fix it, then deliver</h3>
+          <p style="font-size:15px; line-height:1.6; color:rgba(240,230,209,0.68); margin:0;">Tap to fix any spot. Share a clean PDF to your band, or open the MIDI in Logic Pro to build a session.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- WHY DIFFERENT -->
+    <section data-reveal style="max-width:1120px; margin:0 auto; padding:clamp(40px,6vw,72px) 24px;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.2em; color:#4E97AB; margin-bottom:14px;">WHY IT'S DIFFERENT</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(28px,4vw,44px); letter-spacing:-0.02em; margin:0 0 48px;">Built like a musician's tool, not a transcriber.</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px;">
+
+        <div style="padding:26px; border-radius:18px; background:rgba(240,230,209,0.035); border:1px solid rgba(240,230,209,0.1);">
+          <div style="display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; background:#F0E6D1; border-radius:7px; transform:rotate(45deg); margin-bottom:20px;"><span style="transform:rotate(-45deg); font-family:'Space Grotesk',sans-serif; font-weight:700; color:#14100D; font-size:15px;">1</span></div>
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; margin:0 0 9px;">Nashville Numbers</h3>
+          <p style="font-size:14.5px; line-height:1.6; color:rgba(240,230,209,0.68); margin:0;">Transpose-proof. Your band reads one chart in any key — no rewrites when the singer moves it.</p>
+        </div>
+
+        <div style="padding:26px; border-radius:18px; background:rgba(240,230,209,0.035); border:1px solid rgba(240,230,209,0.1);">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:20px; color:#4E97AB; margin-bottom:20px;">⦿</div>
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; margin:0 0 9px;">On-device &amp; private</h3>
+          <p style="font-size:14.5px; line-height:1.6; color:rgba(240,230,209,0.68); margin:0;">Your music never leaves your phone. No upload, no account, nothing to opt out of.</p>
+        </div>
+
+        <div style="padding:26px; border-radius:18px; background:rgba(240,230,209,0.035); border:1px solid rgba(240,230,209,0.1);">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:20px; color:#E5481F; margin-bottom:20px;">✎</div>
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; margin:0 0 9px;">A great draft, fixed in taps</h3>
+          <p style="font-size:14.5px; line-height:1.6; color:rgba(240,230,209,0.68); margin:0;">Not a promise of perfect. It flags the spots it's unsure of — you tap to correct them.</p>
+        </div>
+
+        <div style="padding:26px; border-radius:18px; background:rgba(240,230,209,0.035); border:1px solid rgba(240,230,209,0.1);">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:20px; color:#4E97AB; margin-bottom:20px;">▶</div>
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; margin:0 0 9px;">Plays along</h3>
+          <p style="font-size:14.5px; line-height:1.6; color:rgba(240,230,209,0.68); margin:0;">Hear your recording with a marker following the chart. Tap a bar to jump straight there.</p>
+        </div>
+
+        <div style="padding:26px; border-radius:18px; background:rgba(229,72,31,0.1); border:1px solid rgba(229,72,31,0.35);">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:20px; color:#E5481F; margin-bottom:20px;">⌥</div>
+          <h3 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; margin:0 0 9px;">Built for Logic Pro</h3>
+          <p style="font-size:14.5px; line-height:1.6; color:rgba(240,230,209,0.74); margin:0;">Exports a MIDI that opens in Logic. Run Analyze for a Chord Track, then add Session Players that follow your changes.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- WHO IT'S FOR -->
+    <section data-reveal style="max-width:900px; margin:0 auto; padding:clamp(40px,6vw,72px) 24px; text-align:center;">
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(24px,3.2vw,34px); letter-spacing:-0.02em; margin:0 0 28px;">For anyone who works in number charts.</h2>
+      <div style="display:flex; flex-wrap:wrap; gap:12px; justify-content:center;">
+        <span style="display:inline-flex; align-items:center; gap:9px; font-family:'JetBrains Mono',monospace; font-size:13px; padding:11px 18px; border-radius:999px; border:1px solid rgba(240,230,209,0.18); color:rgba(240,230,209,0.85);"><span style="width:7px;height:7px;background:#E5481F;transform:rotate(45deg);display:inline-block;"></span>Songwriters</span>
+        <span style="display:inline-flex; align-items:center; gap:9px; font-family:'JetBrains Mono',monospace; font-size:13px; padding:11px 18px; border-radius:999px; border:1px solid rgba(240,230,209,0.18); color:rgba(240,230,209,0.85);"><span style="width:7px;height:7px;background:#4E97AB;transform:rotate(45deg);display:inline-block;"></span>Worship teams</span>
+        <span style="display:inline-flex; align-items:center; gap:9px; font-family:'JetBrains Mono',monospace; font-size:13px; padding:11px 18px; border-radius:999px; border:1px solid rgba(240,230,209,0.18); color:rgba(240,230,209,0.85);"><span style="width:7px;height:7px;background:#E5481F;transform:rotate(45deg);display:inline-block;"></span>Session players</span>
+        <span style="display:inline-flex; align-items:center; gap:9px; font-family:'JetBrains Mono',monospace; font-size:13px; padding:11px 18px; border-radius:999px; border:1px solid rgba(240,230,209,0.18); color:rgba(240,230,209,0.85);"><span style="width:7px;height:7px;background:#4E97AB;transform:rotate(45deg);display:inline-block;"></span>Bedroom songwriters</span>
+      </div>
+    </section>
+
+    <!-- SCREENSHOTS — chart paper -->
+    <section data-reveal style="max-width:1120px; margin:0 auto; padding:clamp(40px,6vw,72px) 24px;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.2em; color:#4E97AB; margin-bottom:14px;">ON THE PAGE</div>
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(28px,4vw,44px); letter-spacing:-0.02em; margin:0 0 48px;">From hum to chart paper.</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:22px;">
+
+        <!-- fix in taps -->
+        <div style="background:#F0E6D1; color:#14100D; border-radius:16px; padding:24px; box-shadow:0 24px 50px -22px rgba(0,0,0,0.6);">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:#9a7d52; margin-bottom:18px;">FIX IT IN A TAP</div>
+          <div style="display:flex; gap:8px; margin-bottom:10px;">
+            <div style="flex:1; aspect-ratio:1; display:flex; align-items:center; justify-content:center; border:1px solid rgba(20,16,13,0.18); border-radius:8px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px;">1</div>
+            <div style="flex:1; aspect-ratio:1; display:flex; align-items:center; justify-content:center; border:1px solid rgba(20,16,13,0.18); border-radius:8px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px;">5</div>
+            <div style="position:relative; flex:1; aspect-ratio:1; display:flex; align-items:center; justify-content:center; border:2px solid #E5481F; border-radius:8px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px; background:rgba(229,72,31,0.1);">6m<span style="position:absolute; top:5px; right:6px; width:8px; height:8px; border-radius:50%; background:#4E97AB;"></span></div>
+            <div style="flex:1; aspect-ratio:1; display:flex; align-items:center; justify-content:center; border:1px solid rgba(20,16,13,0.18); border-radius:8px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px;">4</div>
+          </div>
+          <p style="font-size:14px; line-height:1.55; color:rgba(20,16,13,0.7); margin:0;">Changes marks the one bar it wasn't sure about. Tap it, pick the right chord, done.</p>
+        </div>
+
+        <!-- transpose -->
+        <div style="background:#F0E6D1; color:#14100D; border-radius:16px; padding:24px; box-shadow:0 24px 50px -22px rgba(0,0,0,0.6);">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:#9a7d52; margin-bottom:18px;">TRANSPOSE-PROOF</div>
+          <div style="display:flex; gap:8px; margin-bottom:14px;">
+            <div style="flex:1; padding:10px 0; text-align:center; border-radius:8px; background:rgba(20,16,13,0.05);"><div style="font-family:'Space Grotesk';font-weight:600;font-size:20px;">1</div><div style="font-family:'JetBrains Mono';font-size:11px;color:#4E97AB;">G</div></div>
+            <div style="flex:1; padding:10px 0; text-align:center; border-radius:8px; background:rgba(20,16,13,0.05);"><div style="font-family:'Space Grotesk';font-weight:600;font-size:20px;">4</div><div style="font-family:'JetBrains Mono';font-size:11px;color:#4E97AB;">C</div></div>
+            <div style="flex:1; padding:10px 0; text-align:center; border-radius:8px; background:rgba(20,16,13,0.05);"><div style="font-family:'Space Grotesk';font-weight:600;font-size:20px;">5</div><div style="font-family:'JetBrains Mono';font-size:11px;color:#4E97AB;">D</div></div>
+          </div>
+          <p style="font-size:14px; line-height:1.55; color:rgba(20,16,13,0.7); margin:0;">Singer wants it up a step? The numbers don't move — the letters do. One chart, every key.</p>
+        </div>
+
+        <!-- plays along -->
+        <div style="background:#F0E6D1; color:#14100D; border-radius:16px; padding:24px; box-shadow:0 24px 50px -22px rgba(0,0,0,0.6);">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:#9a7d52; margin-bottom:18px;">PLAYS ALONG</div>
+          <div id="paperWave" style="position:relative; height:56px; display:flex; align-items:flex-end; gap:3px; margin-bottom:14px;">
+            <div style="position:absolute; top:0; bottom:0; left:42%; width:2px; background:#E5481F;"></div>
+          </div>
+          <p style="font-size:14px; line-height:1.55; color:rgba(20,16,13,0.7); margin:0;">A marker sweeps the chart in time with your take. Tap any bar to jump there.</p>
+        </div>
+
+        <!-- logic handoff -->
+        <div style="background:#F0E6D1; color:#14100D; border-radius:16px; padding:24px; box-shadow:0 24px 50px -22px rgba(0,0,0,0.6);">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.1em; color:#9a7d52; margin-bottom:18px;">BUILT FOR LOGIC PRO</div>
+          <div style="display:flex; flex-direction:column; gap:7px; margin-bottom:14px;">
+            <div style="display:flex; align-items:center; gap:8px;"><span style="width:46px;flex:none;font-family:'JetBrains Mono';font-size:10px;color:rgba(20,16,13,0.6);">Drums</span><span style="height:16px;border-radius:4px;background:#4E97AB;flex:0 0 78%;"></span></div>
+            <div style="display:flex; align-items:center; gap:8px;"><span style="width:46px;flex:none;font-family:'JetBrains Mono';font-size:10px;color:rgba(20,16,13,0.6);">Bass</span><span style="height:16px;border-radius:4px;background:#E5481F;flex:0 0 78%;"></span></div>
+            <div style="display:flex; align-items:center; gap:8px;"><span style="width:46px;flex:none;font-family:'JetBrains Mono';font-size:10px;color:rgba(20,16,13,0.6);">Keys</span><span style="height:16px;border-radius:4px;background:#9a7d52;flex:0 0 78%;"></span></div>
+          </div>
+          <p style="font-size:14px; line-height:1.55; color:rgba(20,16,13,0.7); margin:0;">Exports a MIDI you open in Logic. Run Analyze for a Chord Track, then add Session Players.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- BETA CTA repeat -->
+    <section data-reveal id="beta" style="max-width:1120px; margin:0 auto; padding:clamp(40px,6vw,72px) 24px;">
+      <div style="border-radius:24px; background:linear-gradient(180deg, rgba(229,72,31,0.12), rgba(229,72,31,0.04)); border:1px solid rgba(229,72,31,0.3); padding:clamp(36px,5vw,64px); text-align:center;">
+        <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(30px,4.4vw,48px); letter-spacing:-0.02em; margin:0 0 16px;">Get on the beta list.</h2>
+        <p style="font-size:16px; line-height:1.6; color:rgba(240,230,209,0.74); max-width:30em; margin:0 auto 30px;">We'll send a TestFlight invite when it opens. Collecting email only — no spam, no account.</p>
+
+        <div data-beta style="max-width:480px; margin:0 auto;">
+          <div class="beta-success" style="display:none; align-items:center; justify-content:center; gap:10px; padding:16px 18px; border-radius:12px; background:rgba(78,151,171,0.14); border:1px solid rgba(78,151,171,0.4);">
+            <span style="font-size:18px;">✓</span>
+            <span style="font-size:15px; line-height:1.4;">You're on the list. Talk soon.</span>
+          </div>
+          <form class="beta-form" action="mailto:jamey@jameywarren.com" method="POST" enctype="text/plain" style="display:flex; flex-wrap:wrap; gap:10px;">
+            <input class="email-input" type="email" name="email" required placeholder="you@band.com" aria-label="Email address" style="flex:1 1 220px; min-width:0; padding:14px 16px; border-radius:11px; border:1px solid rgba(240,230,209,0.22); background:rgba(20,16,13,0.4); color:#F0E6D1; font-family:'Inter',sans-serif; font-size:16px; outline:none;">
+            <button type="submit" class="cta-orange" style="flex:0 0 auto; padding:14px 22px; border-radius:11px; border:none; background:#E5481F; color:#F0E6D1; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; cursor:pointer;">Join the beta list</button>
+          </form>
+        </div>
+
+        <p style="font-family:'JetBrains Mono',monospace; font-size:11.5px; letter-spacing:0.02em; color:rgba(240,230,209,0.74); margin:22px auto 0; max-width:36em; line-height:1.7;">iPhone, iOS 27. Free during beta. Built for original songs — a hum gets harmonized, not detected. <a href="mailto:jamey@jameywarren.com?subject=Changes%20beta" style="color:#4E97AB; text-decoration:underline;">Prefer email? Reach us here.</a></p>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section data-reveal style="max-width:760px; margin:0 auto; padding:clamp(40px,6vw,72px) 24px;">
+      <h2 style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(26px,3.6vw,38px); letter-spacing:-0.02em; margin:0 0 36px;">Questions, answered straight.</h2>
+      <div id="faq" style="display:flex; flex-direction:column; gap:0;"></div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="border-top:1px solid rgba(240,230,209,0.1); margin-top:32px;">
+      <div style="max-width:1120px; margin:0 auto; padding:40px 24px 56px; display:flex; flex-wrap:wrap; gap:24px; align-items:center; justify-content:space-between;">
+        <div style="display:flex; align-items:center; gap:11px;">
+          <span style="display:inline-flex; align-items:center; justify-content:center; width:26px; height:26px; background:#F0E6D1; border-radius:5px; transform:rotate(45deg);"><span style="transform:rotate(-45deg); font-family:'Space Grotesk',sans-serif; font-weight:700; color:#14100D; font-size:13px;">1</span></span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:rgba(240,230,209,0.74);">Changes by <a href="/" style="color:rgba(240,230,209,0.74); text-decoration:none;" class="foot-link">Warren Labs</a></span>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; gap:24px; font-family:'JetBrains Mono',monospace; font-size:12px;">
+          <a href="docs/legal/privacy.html" class="foot-link" style="color:rgba(240,230,209,0.7); text-decoration:none;">Privacy</a>
+          <a href="docs/legal/support.html" class="foot-link" style="color:rgba(240,230,209,0.7); text-decoration:none;">Support</a>
+          <a href="mailto:jamey@jameywarren.com" class="foot-link" style="color:rgba(240,230,209,0.7); text-decoration:none;">jamey@jameywarren.com</a>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+// Changes landing — interactivity ported from the Changes Landing design spec.
+(function () {
+  'use strict';
+
+  var chromatic = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+  var roots = { C: 0, G: 7, D: 2, A: 9, E: 4 };
+  var degInt = { 1: 0, 2: 2, 3: 4, 4: 5, 5: 7, 6: 9, 7: 11 };
+  var structure = [
+    { name: 'INTRO',  bars: [{ n: '1' }, { n: '4' }] },
+    { name: 'VERSE',  bars: [{ n: '1' }, { n: '5' }, { n: '6m' }, { n: '4' }] },
+    { name: 'PRE',    bars: [{ n: '4' }, { n: '5' }, { n: '6m', flag: true }, { n: '4' }] },
+    { name: 'CHORUS', bars: [{ n: '4' }, { n: '1' }, { n: '5' }, { n: '6m' }] }
+  ];
+  var faqData = [
+    { q: 'Does it need an internet connection?', a: 'No. Changes listens and writes the chart entirely on your phone. Nothing is uploaded.' },
+    { q: 'Covers or original songs?', a: 'Built for your own songs. A hum or rough take gets harmonized into a chart — it is not a cover-detector.' },
+    { q: 'iPad or Mac?', a: 'iPhone today, iPad supported, Mac in progress.' },
+    { q: 'Is my audio uploaded anywhere?', a: 'Never. No upload, no account. Your recordings stay on your device.' },
+    { q: 'When does the beta open?', a: 'It is gated on the public release of iOS 27. Join the list and we will send a TestFlight invite the moment it opens.' }
+  ];
+
+  var totalBars = structure.reduce(function (a, s) { return a + s.bars.length; }, 0);
+  var state = { key: 'G', playing: false, playIndex: 0, faq: 0 };
+  var timer = null;
+
+  function letterFor(token, key) {
+    var m = String(token).match(/^(\d)(.*)$/);
+    var deg = parseInt(m[1], 10);
+    var qual = m[2] || '';
+    var idx = (roots[key] + degInt[deg]) % 12;
+    return chromatic[idx] + qual;
+  }
+
+  function barStyle(active) {
+    return 'position:relative; flex:1 1 44px; min-width:44px; min-height:58px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; border-radius:9px; cursor:pointer; border:1px solid ' +
+      (active ? '#E5481F' : 'rgba(240,230,209,0.16)') + '; background:' +
+      (active ? 'rgba(229,72,31,0.18)' : 'rgba(240,230,209,0.035)') + '; box-shadow:' +
+      (active ? '0 0 0 3px rgba(229,72,31,0.18)' : 'none') + '; transition:all .16s ease;';
+  }
+
+  function chipStyle(sel) {
+    return "font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.03em; padding:6px 12px; border-radius:999px; cursor:pointer; border:1px solid " +
+      (sel ? '#4E97AB' : 'rgba(240,230,209,0.2)') + '; background:' +
+      (sel ? 'rgba(78,151,171,0.2)' : 'transparent') + '; color:' +
+      (sel ? '#cfeaf0' : 'rgba(240,230,209,0.65)') + '; transition:all .15s ease;';
+  }
+
+  var chartEl = document.getElementById('chart');
+  var chipsEl = document.getElementById('chips');
+  var waveEl = document.getElementById('wave');
+  var paperEl = document.getElementById('paperWave');
+  var faqEl = document.getElementById('faq');
+  var playBtn = document.getElementById('playBtn');
+  var keyEl = document.getElementById('cur-key');
+
+  function renderChips() {
+    chipsEl.innerHTML = '';
+    Object.keys(roots).forEach(function (k) {
+      var b = document.createElement('button');
+      b.textContent = k;
+      b.setAttribute('style', chipStyle(k === state.key));
+      b.addEventListener('click', function () { state.key = k; renderChips(); renderChart(); keyEl.textContent = k; });
+      chipsEl.appendChild(b);
+    });
+  }
+
+  function renderChart() {
+    chartEl.innerHTML = '';
+    var gi = 0;
+    structure.forEach(function (sec) {
+      var row = document.createElement('div');
+      row.setAttribute('style', 'display:flex; gap:8px; align-items:stretch;');
+      var label = document.createElement('div');
+      label.setAttribute('style', "width:52px; flex:none; display:flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.12em; color:rgba(240,230,209,0.45);");
+      label.textContent = sec.name;
+      row.appendChild(label);
+      var barsWrap = document.createElement('div');
+      barsWrap.setAttribute('style', 'flex:1; display:flex; gap:6px;');
+      sec.bars.forEach(function (bar) {
+        var idx = gi++;
+        var active = state.playing && state.playIndex === idx;
+        var cell = document.createElement('div');
+        cell.setAttribute('style', barStyle(active));
+        if (bar.flag) {
+          var dot = document.createElement('span');
+          dot.setAttribute('style', 'position:absolute; top:5px; right:6px; width:6px; height:6px; border-radius:50%; background:#4E97AB;');
+          cell.appendChild(dot);
+        }
+        var num = document.createElement('span');
+        num.setAttribute('style', "font-family:'Space Grotesk',sans-serif; font-size:21px; font-weight:600; color:#F0E6D1; line-height:1;");
+        num.textContent = bar.n;
+        var letter = document.createElement('span');
+        letter.setAttribute('style', "font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(78,151,171,0.95);");
+        letter.textContent = letterFor(bar.n, state.key);
+        cell.appendChild(num);
+        cell.appendChild(letter);
+        cell.addEventListener('click', function () { jumpTo(idx); });
+        barsWrap.appendChild(cell);
+      });
+      row.appendChild(barsWrap);
+      chartEl.appendChild(row);
+    });
+  }
+
+  function renderWaveforms() {
+    var i, h, bar;
+    for (i = 0; i < 26; i++) {
+      h = 24 + Math.round(Math.abs(Math.sin(i * 0.7) * 0.6 + Math.sin(i * 1.9) * 0.4) * 70);
+      bar = document.createElement('div');
+      bar.setAttribute('style', 'flex:1; border-radius:2px; background:rgba(240,230,209,0.35); height:' + h + '%;');
+      waveEl.appendChild(bar);
+    }
+    for (i = 0; i < 30; i++) {
+      h = 22 + Math.round(Math.abs(Math.sin(i * 0.9) * 0.55 + Math.sin(i * 2.3) * 0.45) * 74);
+      var past = (i / 30) < 0.42;
+      bar = document.createElement('div');
+      bar.setAttribute('style', 'flex:1; border-radius:2px; background:' + (past ? 'rgba(20,16,13,0.55)' : 'rgba(20,16,13,0.2)') + '; height:' + h + '%;');
+      paperEl.appendChild(bar);
+    }
+  }
+
+  function setPlaying(on) {
+    state.playing = on;
+    playBtn.textContent = on ? '■' : '▶';
+    playBtn.setAttribute('aria-label', on ? 'Stop' : 'Play');
+  }
+
+  function togglePlay() {
+    if (state.playing) {
+      clearInterval(timer); timer = null;
+      setPlaying(false); state.playIndex = 0; renderChart();
+      return;
+    }
+    setPlaying(true); state.playIndex = 0; renderChart();
+    timer = setInterval(function () {
+      var next = state.playIndex + 1;
+      if (next >= totalBars) {
+        clearInterval(timer); timer = null;
+        setPlaying(false); state.playIndex = 0; renderChart();
+        return;
+      }
+      state.playIndex = next;
+      renderChart();
+    }, 520);
+  }
+
+  function jumpTo(idx) {
+    if (!state.playing) setPlaying(true);
+    if (!timer) {
+      timer = setInterval(function () {
+        var next = state.playIndex + 1;
+        if (next >= totalBars) {
+          clearInterval(timer); timer = null;
+          setPlaying(false); state.playIndex = 0; renderChart();
+          return;
+        }
+        state.playIndex = next;
+        renderChart();
+      }, 520);
+    }
+    state.playIndex = idx;
+    renderChart();
+  }
+
+  function renderFaq() {
+    faqEl.innerHTML = '';
+    faqData.forEach(function (it, i) {
+      var wrap = document.createElement('div');
+      wrap.setAttribute('style', 'border-top:1px solid rgba(240,230,209,0.12);');
+      var btn = document.createElement('button');
+      btn.setAttribute('style', "width:100%; display:flex; align-items:center; justify-content:space-between; gap:16px; padding:22px 0; background:none; border:none; color:#F0E6D1; cursor:pointer; text-align:left; font-family:'Space Grotesk',sans-serif; font-weight:500; font-size:clamp(16px,2vw,19px);");
+      var q = document.createElement('span'); q.textContent = it.q;
+      var icon = document.createElement('span');
+      icon.textContent = '+';
+      icon.setAttribute('style', 'font-family:"JetBrains Mono",monospace; font-size:22px; font-weight:400; color:#E5481F; transition:transform .2s ease; flex:none; transform:rotate(' + (state.faq === i ? '45deg' : '0deg') + ');');
+      btn.appendChild(q); btn.appendChild(icon);
+      btn.addEventListener('click', function () { state.faq = (state.faq === i ? -1 : i); renderFaq(); });
+      wrap.appendChild(btn);
+      if (state.faq === i) {
+        var ans = document.createElement('p');
+        ans.setAttribute('style', 'font-size:15px; line-height:1.65; color:rgba(240,230,209,0.7); margin:0 0 22px; max-width:38em;');
+        ans.textContent = it.a;
+        wrap.appendChild(ans);
+      }
+      faqEl.appendChild(wrap);
+    });
+  }
+
+  function wireForms() {
+    document.querySelectorAll('[data-beta]').forEach(function (block) {
+      var form = block.querySelector('.beta-form');
+      var success = block.querySelector('.beta-success');
+      if (!form) return;
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var input = form.querySelector('input[type=email]');
+        var val = input && input.value ? input.value.trim() : '';
+        if (val && val.indexOf('@') !== -1) {
+          // Static site — no backend. Hand the signup to Jamey via the visitor's
+          // mail client, then show the confirmation state.
+          var subject = encodeURIComponent('Changes beta signup');
+          var body = encodeURIComponent('Please add me to the Changes beta list: ' + val);
+          window.location.href = 'mailto:jamey@jameywarren.com?subject=' + subject + '&body=' + body;
+          document.querySelectorAll('[data-beta]').forEach(function (b) {
+            var f = b.querySelector('.beta-form');
+            var s = b.querySelector('.beta-success');
+            if (f) f.style.display = 'none';
+            if (s) s.style.display = 'flex';
+          });
+        }
+      });
+    });
+  }
+
+  function wireReveal() {
+    var els = document.querySelectorAll('[data-reveal]');
+    els.forEach(function (el) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(20px)';
+      el.style.transition = 'opacity .7s ease, transform .7s ease';
+    });
+    var io = new IntersectionObserver(function (ents) {
+      ents.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'none';
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    els.forEach(function (el) { io.observe(el); });
+  }
+
+  renderChips();
+  renderChart();
+  renderWaveforms();
+  renderFaq();
+  wireForms();
+  wireReveal();
+  playBtn.addEventListener('click', togglePlay);
+})();
+</script>
+</body>
+</html>
