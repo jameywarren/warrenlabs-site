@@ -134,6 +134,17 @@
       ],
       meta: [['ROLE', 'Solo, learning by building'], ['STACK', 'C++, JUCE, CMake, Claude Code'], ['STATUS', 'Early; signal chain in progress'], ['THIS DEMO', 'Web Audio API, a sketch of the real thing']]
     },
+    changes: {
+      num: 'WL-CH1', title: 'Changes',
+      led: 'var(--led-amber)', blink: true, status: 'BETA',
+      link: '/changes/', linkLabel: 'OPEN THE LANDING PAGE ↗',
+      desc: [
+        "An <b>iPhone app</b> that turns a rough recording — played, hummed, or dropped in from a voice memo — into a session-ready <b>Nashville Number chart</b>, then a MIDI you open straight in Logic Pro. The whole thing runs <b>on-device</b>: your audio never leaves the phone.",
+        "Built like a musician's tool, not a transcriber. The chart is <b>transpose-proof</b> — one chart, any key — it <b>flags the bars it's unsure of</b> so you fix them in taps, and it plays your take back with a marker following the changes.",
+        "First milestone is a tight beta: capture, chart, fix, and export a MIDI for Logic — run Analyze for a Chord Track, then add Session Players that follow the changes."
+      ],
+      meta: [['ROLE', 'Solo — product + build'], ['PLATFORM', 'iPhone · iOS 27'], ['PRIVACY', 'On-device · no upload, no account'], ['STATUS', 'Beta list open']]
+    },
     maker: {
       num: 'WL-MP1', title: 'Maker Phones',
       led: 'var(--led-green)', status: 'LIVE',
@@ -209,7 +220,7 @@
         <div class="ov-grid">
           <div class="ov-desc">${u.desc.map(d => `<p>${d}</p>`).join('')}</div>
           <div class="ov-side">
-            ${u.link ? `<a class="ov-cta" href="${u.link}" target="_blank" rel="noopener">VISIT MAKERPHONES.COM ↗</a>` : ''}
+            ${u.link ? `<a class="ov-cta" href="${u.link}"${/^https?:/.test(u.link) ? ' target="_blank" rel="noopener"' : ''}>${u.linkLabel || 'VISIT ↗'}</a>` : ''}
             <div class="ov-meta">${u.meta.map(m =>
               `<div class="m"><span class="mk">${m[0]}</span><span class="mv">${m[1]}</span></div>`).join('')}</div>
             ${u.controls ? `<div class="ov-controls">${u.controls.map(knobHTML).join('')}</div>` : ''}
