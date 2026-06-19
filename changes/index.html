@@ -87,41 +87,14 @@ a { color: inherit; }
           </div>
         </div>
 
-        <!-- HERO PHONE -->
+        <!-- HERO PHONE — real screenshot of the app (demo chart, playing) -->
         <div style="flex:1 1 320px; min-width:280px; display:flex; justify-content:center;">
-          <div style="width:clamp(280px,86vw,340px); animation:floaty 7s ease-in-out infinite;">
-            <div style="background:#0c0a08; border-radius:46px; padding:12px; box-shadow:0 50px 90px -28px rgba(0,0,0,0.8), 0 0 0 1px rgba(240,230,209,0.07); position:relative;">
-              <div style="border-radius:35px; background:#14100D; overflow:hidden; border:1px solid rgba(240,230,209,0.06);">
-
-                <!-- notch -->
-                <div style="display:flex; justify-content:center; padding-top:11px;">
-                  <div style="width:96px; height:24px; background:#0c0a08; border-radius:999px;"></div>
-                </div>
-
-                <div style="padding:14px 16px 18px;">
-                  <!-- app header -->
-                  <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:4px;">
-                    <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(240,230,209,0.5);">‹ Ideas</span>
-                    <span style="display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; background:#F0E6D1; border-radius:4px; transform:rotate(45deg);"><span style="transform:rotate(-45deg); font-family:'Space Grotesk',sans-serif; font-weight:700; color:#14100D; font-size:10px;">1</span></span>
-                  </div>
-                  <div style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px; margin:6px 0 3px;">Back Roads</div>
-                  <div style="font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:0.04em; color:rgba(78,151,171,0.95); margin-bottom:14px;">Key of <span id="cur-key">G</span> · 132 BPM · 4/4</div>
-
-                  <!-- transpose chips -->
-                  <div style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.18em; color:rgba(240,230,209,0.42); margin-bottom:7px;">TRANSPOSE</div>
-                  <div id="chips" style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:16px;"></div>
-
-                  <!-- chart -->
-                  <div id="chart" style="display:flex; flex-direction:column; gap:9px; margin-bottom:16px;"></div>
-
-                  <!-- player -->
-                  <div style="display:flex; align-items:center; gap:10px; padding:10px; border-radius:13px; background:rgba(240,230,209,0.05); border:1px solid rgba(240,230,209,0.09);">
-                    <button id="playBtn" aria-label="Play" class="cta-orange" style="flex:none; width:38px; height:38px; border-radius:50%; border:none; background:#E5481F; color:#F0E6D1; cursor:pointer; font-size:13px; display:flex; align-items:center; justify-content:center;">▶</button>
-                    <div id="wave" style="flex:1; height:34px; display:flex; align-items:flex-end; gap:2px;"></div>
-                  </div>
-                  <div style="font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(240,230,209,0.62); margin-top:9px; text-align:center;">Tap play — the marker follows your changes.</div>
-                </div>
-              </div>
+          <div style="width:clamp(258px,80vw,312px); animation:floaty 7s ease-in-out infinite;">
+            <div style="background:#0c0a08; border-radius:46px; padding:10px; box-shadow:0 50px 90px -28px rgba(0,0,0,0.8), 0 0 0 1px rgba(240,230,209,0.07);">
+              <img src="img/hero-chart.png" width="1206" height="2622"
+                   alt="The Changes app showing the All My Days chart in the key of E with the waveform player playing"
+                   loading="eager" decoding="async"
+                   style="display:block; width:100%; height:auto; border-radius:36px;">
             </div>
           </div>
         </div>
@@ -408,6 +381,7 @@ a { color: inherit; }
   var keyEl = document.getElementById('cur-key');
 
   function renderChips() {
+    if (!chipsEl) return;
     chipsEl.innerHTML = '';
     Object.keys(roots).forEach(function (k) {
       var b = document.createElement('button');
@@ -419,6 +393,7 @@ a { color: inherit; }
   }
 
   function renderChart() {
+    if (!chartEl) return;
     chartEl.innerHTML = '';
     var gi = 0;
     structure.forEach(function (sec) {
@@ -458,12 +433,15 @@ a { color: inherit; }
 
   function renderWaveforms() {
     var i, h, bar;
-    for (i = 0; i < 26; i++) {
-      h = 24 + Math.round(Math.abs(Math.sin(i * 0.7) * 0.6 + Math.sin(i * 1.9) * 0.4) * 70);
-      bar = document.createElement('div');
-      bar.setAttribute('style', 'flex:1; border-radius:2px; background:rgba(240,230,209,0.35); height:' + h + '%;');
-      waveEl.appendChild(bar);
+    if (waveEl) {
+      for (i = 0; i < 26; i++) {
+        h = 24 + Math.round(Math.abs(Math.sin(i * 0.7) * 0.6 + Math.sin(i * 1.9) * 0.4) * 70);
+        bar = document.createElement('div');
+        bar.setAttribute('style', 'flex:1; border-radius:2px; background:rgba(240,230,209,0.35); height:' + h + '%;');
+        waveEl.appendChild(bar);
+      }
     }
+    if (!paperEl) return;
     for (i = 0; i < 30; i++) {
       h = 22 + Math.round(Math.abs(Math.sin(i * 0.9) * 0.55 + Math.sin(i * 2.3) * 0.45) * 74);
       var past = (i / 30) < 0.42;
@@ -591,7 +569,7 @@ a { color: inherit; }
   renderFaq();
   wireForms();
   wireReveal();
-  playBtn.addEventListener('click', togglePlay);
+  if (playBtn) playBtn.addEventListener('click', togglePlay);
 })();
 </script>
 </body>
