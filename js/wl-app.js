@@ -18,13 +18,6 @@
     mouseX = e.clientX;
     energy = Math.min(1.2, energy + 0.06);
   });
-  function accColor(alpha) {
-    const v = getComputedStyle(document.documentElement).getPropertyValue('--acc').trim();
-    // hex -> rgba
-    const n = parseInt(v.slice(1), 16);
-    return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${alpha})`;
-  }
-  const cachedAcc = accColor(1);
   function drawScope() {
     t += 0.016;
     energy += (0.4 - energy) * 0.012;
@@ -35,11 +28,12 @@
     sctx.beginPath();
     for (let x = 0; x <= W; x += 80) { sctx.moveTo(x, mid - 58); sctx.lineTo(x, mid + 58); }
     sctx.stroke();
-    const base = cachedAcc.replace('rgba(', '').replace(')', '').split(',').slice(0, 3).join(',');
+    // Hero waveform is decorative — neutral off-white trace (graphite world), not the amber accent.
+    const base = '232,235,237';
     const layers = [
-      { amp: 44, freq: 0.012, speed: 2.0, color: `rgba(${base},0.95)`, w: 2.2 },
-      { amp: 25, freq: 0.02, speed: -1.4, color: `rgba(${base},0.35)`, w: 1.4 },
-      { amp: 62, freq: 0.007, speed: 1.0, color: 'rgba(255,255,255,0.10)', w: 1 }
+      { amp: 44, freq: 0.012, speed: 2.0, color: `rgba(${base},0.60)`, w: 2.2 },
+      { amp: 25, freq: 0.02, speed: -1.4, color: `rgba(${base},0.22)`, w: 1.4 },
+      { amp: 62, freq: 0.007, speed: 1.0, color: 'rgba(255,255,255,0.07)', w: 1 }
     ];
     layers.forEach(L => {
       sctx.beginPath();
@@ -88,8 +82,8 @@
            + 5.0 * Math.exp(-Math.pow((t - 0.84) / 0.11, 2));
     }
     function drawMini() {
-      const acc = cssVarLocal('--acc') || '#3fd2e4';
-      const acc2 = cssVarLocal('--acc2') || '#ffb03c';
+      // Faceplate curve reads like the plugin screen: white trace, neutral band markers.
+      const dotc = '#c6cacd';
       mctx.clearRect(0, 0, MW, MH);
       // grid
       mctx.strokeStyle = 'rgba(255,255,255,0.06)';
@@ -110,7 +104,7 @@
       mctx.lineWidth = 3;
       mctx.stroke();
       // band dots
-      [[0.16, acc], [0.52, '#7ee787'], [0.84, acc2]].forEach(([t, c]) => {
+      [[0.16, dotc], [0.52, dotc], [0.84, dotc]].forEach(([t, c]) => {
         const x = 8 + t * (MW - 16);
         const y = MH / 2 - curveG(t) * 11;
         mctx.beginPath(); mctx.arc(x, y, 8, 0, Math.PI * 2);
@@ -170,7 +164,7 @@
     },
     bloom: {
       num: 'WL-SB1', title: 'Sonic Bloom',
-      led: 'var(--led-cyan)', blink: true, status: 'PRE-LAUNCH',
+      led: 'var(--led-amber)', blink: true, status: 'PRE-LAUNCH',
       desc: [
         "An all-in-one website, sales, and fan platform for working musicians: <b>one flat $20/month, no commission</b> on what they earn. Most musicians stitch together Squarespace, Bandcamp, Mailchimp, and Patreon, and most of those take a cut.",
         "The call I'm proudest of is what I left out: <b>a small, frozen feature set</b> and firm rules about what it would never do."
