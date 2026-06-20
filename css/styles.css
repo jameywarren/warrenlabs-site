@@ -1,9 +1,16 @@
-/* Warren Labs — locked identity: steel palette · Condensed display type · 12° rack */
+/* Warren Labs — graphite + amber (plugin palette) · Condensed display type · 12° rack */
 :root {
-  --bg: #0b0e12; --bg2: #0e1218; --ink: #e9edf0; --dim: #8b959e; --faint: #4b545e;
-  --line: #1d242c; --acc: #3fd2e4; --acc2: #ffb03c;
-  --panel: #141a21; --panel-hi: #1c242d; --panel-edge: #2a3540;
-  --led-green: #54e08a; --led-amber: #ffb13d; --led-cyan: #45c8da;
+  /* Surfaces — graphite anodize (from the Level plugin tokens) */
+  --bg: #0c0d0f; --bg2: #0f1012;
+  /* Text — neutral off-white / greys */
+  --ink: #e8ebed; --dim: #868d92; --faint: #565b60;
+  --line: #24272b;
+  /* Accent — amber signal accent, oklch(0.80 0.13 75) as sRGB hex. ONE accent, signal-state only. */
+  --acc: #eeb154; --acc2: #eeb154;
+  /* Decorative graphics that used to be blue now read as neutral graphite/white trace */
+  --decor: var(--ink);
+  --panel: #1b1d20; --panel-hi: #26292d; --panel-edge: #34383d;
+  --led-green: #54e08a; --led-amber: #eeb154; --led-cyan: #eeb154;
   --font-display: "Oswald", sans-serif; --disp-weight: 600; --disp-ls: 0.01em; --disp-tt: uppercase;
   --h1: clamp(110px, 13.5vw, 196px); --h1-lh: 0.95;
 }
@@ -31,14 +38,14 @@ nav a:hover { color: var(--acc); }
 
 /* ---------- hero ---------- */
 .hero { position: relative; padding-top: 72px; }
-.hero-kicker { display: flex; gap: 26px; font-size: 12px; letter-spacing: 0.2em; color: var(--acc); margin-bottom: 30px; }
+.hero-kicker { display: flex; gap: 26px; font-size: 12px; letter-spacing: 0.2em; color: var(--dim); margin-bottom: 30px; }
 .hero-kicker .sep { color: var(--faint); }
 .hero h1 { font-size: var(--h1); line-height: var(--h1-lh); position: relative; z-index: 2; }
 .hero h1 .accent { color: var(--acc); }
 #scope { display: block; width: 100vw; height: 230px; margin-top: -48px; position: relative; z-index: 1; margin-left: calc(50% - 50vw); }
 .hero-sub { display: grid; grid-template-columns: 1fr 480px; gap: 64px; padding: 10px 0 84px; align-items: start; }
 .hero-sub .lede { font-size: 25px; line-height: 1.45; max-width: 640px; text-wrap: pretty; }
-.hero-sub .lede em { font-style: normal; color: var(--acc); }
+.hero-sub .lede em { font-style: normal; color: var(--ink); }
 .creds { border-left: 1px solid var(--line); padding-left: 32px; display: grid; gap: 18px; }
 .cred { display: grid; grid-template-columns: 104px 1fr; gap: 16px; font-size: 12px; letter-spacing: 0.08em; }
 .cred .k { color: var(--faint); } .cred .v { color: var(--dim); }
@@ -46,9 +53,9 @@ nav a:hover { color: var(--acc); }
 /* ---------- rack section ---------- */
 .rack-zone { background: var(--bg2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 110px 0 130px; overflow: hidden; }
 .rack-head { text-align: center; margin-bottom: 24px; }
-.rack-head .k { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.26em; color: var(--acc); margin-bottom: 22px; }
+.rack-head .k { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.26em; color: var(--dim); margin-bottom: 22px; }
 .rack-head h2 { font-size: clamp(54px, 5.6vw, 84px); line-height: 1.02; }
-.rack-head h2 em { font-style: normal; color: var(--acc); }
+.rack-head h2 em { font-style: normal; color: var(--ink); }
 .rack-head .sub { margin-top: 20px; font-size: 17px; color: var(--dim); }
 .rack-instr { display: inline-flex; align-items: center; gap: 10px; margin-top: 26px; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: 0.2em; color: var(--ink); border: 1px solid var(--line); border-radius: 100px; padding: 10px 18px; }
 .rack-instr .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--acc); animation: instrblink 1.4s steps(2) infinite; }
@@ -121,16 +128,16 @@ nav a:hover { color: var(--acc); }
 .u-detail { display: flex; gap: 18px; align-items: center; }
 .tiny-label { font-family: "IBM Plex Mono", monospace; font-size: 7px; letter-spacing: 0.14em; color: var(--faint); text-align: center; margin-top: 6px; }
 .tknob { width: 22px; height: 22px; border-radius: 50%; background: radial-gradient(circle at 36% 30%, var(--panel-edge), var(--panel) 62%, #0c0c0f); border: 1px solid var(--panel-edge); position: relative; margin: 0 auto; }
-.tknob::after { content: ''; position: absolute; left: 50%; top: 2px; width: 2px; height: 7px; background: var(--acc); transform: translateX(-50%) rotate(var(--rot, 0deg)); transform-origin: 50% 9px; border-radius: 1px; }
+.tknob::after { content: ''; position: absolute; left: 50%; top: 2px; width: 2px; height: 7px; background: var(--decor); transform: translateX(-50%) rotate(var(--rot, 0deg)); transform-origin: 50% 9px; border-radius: 1px; }
 .utoggle { width: 16px; height: 30px; border-radius: 8px; background: #0c0d10; margin: 0 auto; position: relative; box-shadow: inset 0 1px 3px #000; }
 .utoggle::after { content: ''; position: absolute; left: 2px; right: 2px; top: 2px; height: 12px; border-radius: 6px; background: linear-gradient(180deg, #4a505a, #23262c); }
 .ujack { width: 26px; height: 26px; border-radius: 50%; background: radial-gradient(circle at 38% 32%, #3a3f47, #101116 58%, #060708 78%); position: relative; margin: 0 auto; }
 .ujack::after { content: ''; position: absolute; inset: 8px; border-radius: 50%; background: #040506; box-shadow: inset 0 1px 2px #000; }
 
 /* WL-EQ1: response screen */
-.uscreen { width: 116px; height: 52px; background: #0a0c10; border-radius: 3px; border: 1px solid #000; box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 1px 0 rgba(255,255,255,0.05); padding: 7px 9px; display: flex; gap: 3px; align-items: flex-end; position: relative; overflow: hidden; }
+.uscreen { width: 116px; height: 52px; background: #08090a; border-radius: 3px; border: 1px solid #000; box-shadow: inset 0 0 10px rgba(0,0,0,0.8), 0 1px 0 rgba(255,255,255,0.05); padding: 7px 9px; display: flex; gap: 3px; align-items: flex-end; position: relative; overflow: hidden; }
 .uscreen::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px); background-size: 100% 12px; pointer-events: none; }
-.uscreen i { flex: 1; border-radius: 1px 1px 0 0; background: linear-gradient(180deg, var(--acc), transparent); opacity: 0.9; transform-origin: bottom; animation: mbar 0.9s ease-in-out infinite alternate; }
+.uscreen i { flex: 1; border-radius: 1px 1px 0 0; background: linear-gradient(180deg, var(--decor), transparent); opacity: 0.9; transform-origin: bottom; animation: mbar 0.9s ease-in-out infinite alternate; }
 
 /* Tone Farmers: tape transport */
 .ucassette { width: 116px; height: 50px; border-radius: 4px; background: linear-gradient(180deg, #1b1d22, #121318); border: 1px solid #000; position: relative; padding: 0 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: inset 0 0 8px rgba(0,0,0,0.6); }
@@ -142,7 +149,7 @@ nav a:hover { color: var(--acc); }
 @keyframes hubspin { to { transform: rotate(360deg); } }
 .uvu { display: grid; gap: 5px; }
 .uvu .vrow { width: 54px; height: 6px; border-radius: 1px; background: repeating-linear-gradient(90deg, #1e2126 0 5px, #0b0c0e 5px 7px); position: relative; overflow: hidden; }
-.uvu .vrow::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, var(--acc) 0 5px, transparent 5px 7px); width: 60%; animation: vulevel 0.9s ease-in-out infinite alternate; }
+.uvu .vrow::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, var(--decor) 0 5px, transparent 5px 7px); width: 60%; animation: vulevel 0.9s ease-in-out infinite alternate; }
 .uvu .vrow:nth-child(2)::after { animation-duration: 0.72s; animation-delay: -0.3s; }
 @keyframes vulevel { from { width: 28%; } to { width: 88%; } }
 .utrans { display: flex; gap: 4px; }
@@ -150,18 +157,18 @@ nav a:hover { color: var(--acc); }
 .utrans i.rec { background: linear-gradient(180deg, #a8333f, #6d1f28); }
 
 /* Sonic Bloom: mini site with player */
-.usite { width: 126px; height: 56px; border-radius: 4px; background: #0c0e13; border: 1px solid #000; overflow: hidden; box-shadow: inset 0 0 10px rgba(0,0,0,0.7); }
+.usite { width: 126px; height: 56px; border-radius: 4px; background: #0a0b0d; border: 1px solid #000; overflow: hidden; box-shadow: inset 0 0 10px rgba(0,0,0,0.7); }
 .usite .ubar { height: 11px; background: #181b21; display: flex; gap: 3px; align-items: center; padding: 0 6px; }
 .usite .ubar i { width: 4px; height: 4px; border-radius: 50%; background: #2e333b; }
 .usite .ucontent { display: flex; gap: 7px; padding: 7px 8px 0; }
-.usite .album { width: 24px; height: 24px; border-radius: 2px; flex: none; background: linear-gradient(135deg, var(--acc), color-mix(in oklab, var(--acc) 25%, black)); position: relative; }
+.usite .album { width: 24px; height: 24px; border-radius: 2px; flex: none; background: linear-gradient(135deg, var(--dim), color-mix(in oklab, var(--dim) 25%, black)); position: relative; }
 .usite .album::after { content: ''; position: absolute; left: 9px; top: 7px; border-left: 8px solid rgba(255,255,255,0.9); border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
 .usite .ulines { flex: 1; display: grid; gap: 4px; align-content: start; padding-top: 1px; }
 .usite .ulines i { height: 4px; border-radius: 2px; background: #262b33; }
 .usite .ulines i:first-child { width: 82%; background: #39404a; }
 .usite .ulines i:nth-child(2) { width: 58%; }
 .usite .uwave { display: flex; gap: 2px; align-items: flex-end; height: 9px; margin-top: 3px; }
-.usite .uwave i { width: 3px; background: var(--acc); opacity: 0.35; border-radius: 1px; }
+.usite .uwave i { width: 3px; background: var(--decor); opacity: 0.35; border-radius: 1px; }
 .usite .uwave i.lit { opacity: 0.95; }
 .mini-faders { display: flex; gap: 12px; }
 .mini-faders i { width: 3px; height: 34px; background: #0c0b0e; position: relative; border-radius: 2px; }
@@ -174,12 +181,12 @@ nav a:hover { color: var(--acc); }
 
 /* Maker Phones: exploded headphone (placeholder) + chapters */
 .uhp { width: 120px; height: 48px; display: block; margin: 0 auto; }
-.uhp path, .uhp rect, .uhp circle, .uhp line { fill: none; stroke: var(--acc); stroke-width: 1.4; stroke-linecap: round; }
-.uhp .hp-cup { fill: rgba(63,210,228,0.08); }
+.uhp path, .uhp rect, .uhp circle, .uhp line { fill: none; stroke: var(--decor); stroke-width: 1.4; stroke-linecap: round; }
+.uhp .hp-cup { fill: rgba(255,255,255,0.06); }
 .uhp .hp-drv2 { stroke: var(--ink); opacity: 0.7; }
 .uhp .hp-x { stroke: var(--faint); stroke-dasharray: 2 3; }
 .uchap { display: flex; gap: 3px; align-items: flex-end; height: 48px; padding-bottom: 2px; justify-content: center; }
-.uchap i { width: 4px; height: 26px; border-radius: 1px; background: var(--acc); opacity: 0.9; }
+.uchap i { width: 4px; height: 26px; border-radius: 1px; background: var(--decor); opacity: 0.9; }
 
 /* ---------- overlay ---------- */
 .ov { position: fixed; inset: 0; z-index: 100; display: none; }
@@ -195,7 +202,7 @@ nav a:hover { color: var(--acc); }
 }
 @keyframes ovin { from { opacity: 0; transform: translate(-50%, -47%) scale(0.94); } }
 .ov-head { display: flex; align-items: center; gap: 24px; padding: 26px 40px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--panel-hi); z-index: 2; }
-.ov-head .u-num { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: 0.2em; color: var(--acc); }
+.ov-head .u-num { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: 0.2em; color: var(--dim); }
 .ov-head h2 { font-family: var(--font-display); font-weight: var(--disp-weight); text-transform: var(--disp-tt); letter-spacing: calc(var(--disp-ls) * 0.5); font-size: 34px; }
 .ov-head .u-status { margin-left: auto; }
 .ov-close { width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--line); background: none; color: var(--dim); font-size: 15px; cursor: pointer; flex: none; }
@@ -207,7 +214,7 @@ nav a:hover { color: var(--acc); }
 .ov-side { display: grid; gap: 28px; }
 .ov-meta { border: 1px solid var(--line); border-radius: 4px; padding: 24px 26px; display: grid; gap: 13px; }
 .ov-meta .m { display: grid; grid-template-columns: 84px 1fr; gap: 16px; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; letter-spacing: 0.05em; line-height: 1.6; }
-.ov-meta .mk { color: var(--acc); } .ov-meta .mv { color: var(--dim); }
+.ov-meta .mk { color: var(--dim); } .ov-meta .mv { color: var(--ink); }
 .ov-controls { border: 1px solid var(--line); border-radius: 4px; padding: 24px 26px; display: flex; gap: 34px; justify-content: center; align-items: flex-end; }
 .knob-group { text-align: center; }
 .knob {
@@ -216,9 +223,9 @@ nav a:hover { color: var(--acc); }
   border: 1px solid var(--panel-edge); box-shadow: 0 4px 10px rgba(0,0,0,0.5);
   position: relative; touch-action: none;
 }
-.knob::after { content: ''; position: absolute; left: 50%; top: 5px; width: 3px; height: 15px; background: var(--acc); border-radius: 2px; box-shadow: 0 0 6px color-mix(in oklab, var(--acc) 70%, transparent); transform-origin: 50% 24px; transform: translateX(-50%) rotate(var(--rot, 0deg)); }
+.knob::after { content: ''; position: absolute; left: 50%; top: 5px; width: 3px; height: 15px; background: var(--decor); border-radius: 2px; transform-origin: 50% 24px; transform: translateX(-50%) rotate(var(--rot, 0deg)); }
 .knob-label { font-family: "IBM Plex Mono", monospace; font-size: 9px; letter-spacing: 0.18em; color: var(--faint); margin-top: 10px; }
-.knob-val { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--acc); margin-top: 5px; }
+.knob-val { font-family: "IBM Plex Mono", monospace; font-size: 11px; color: var(--ink); margin-top: 5px; }
 .ov-cta { display: block; text-align: center; font-family: "IBM Plex Mono", monospace; font-size: 13px; letter-spacing: 0.12em; text-decoration: none; background: var(--acc); color: var(--bg); font-weight: 600; padding: 18px 24px; border-radius: 4px; transition: filter 0.2s; }
 .ov-cta:hover { filter: brightness(1.12); }
 
@@ -256,18 +263,18 @@ body.audio-on .plug-note .live { color: var(--acc2); }
   position: relative; overflow: hidden;
   transition: border-color 0.2s, transform 0.2s;
 }
-.era::before { content: ''; position: absolute; left: 0; top: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--acc), transparent 70%); }
+.era::before { content: ''; position: absolute; left: 0; top: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--panel-edge), transparent 70%); }
 .era:hover { border-color: color-mix(in oklab, var(--acc) 40%, var(--line)); transform: translateY(-3px); }
-.era .y { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: 0.2em; color: var(--acc); margin-bottom: 14px; display: flex; justify-content: space-between; }
+.era .y { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: 0.2em; color: var(--dim); margin-bottom: 14px; display: flex; justify-content: space-between; }
 .era .y span:last-child { color: var(--faint); }
 .era h4 { font-family: var(--font-display); font-weight: var(--disp-weight); text-transform: var(--disp-tt); letter-spacing: calc(var(--disp-ls) * 0.5); font-size: 23px; margin-bottom: 10px; }
 .era p { font-size: 14px; line-height: 1.65; color: var(--dim); }
 
 /* ---------- contact ---------- */
 .contact { border-top: 1px solid var(--line); padding-top: 120px; padding-bottom: 110px; position: relative; }
-.contact .k { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.26em; color: var(--acc); margin-bottom: 34px; }
+.contact .k { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.26em; color: var(--dim); margin-bottom: 34px; }
 .contact h2 { font-size: clamp(70px, 7.5vw, 112px); line-height: 1.0; max-width: 1000px; }
-.contact h2 .accent { color: var(--acc); }
+.contact h2 .accent { color: var(--ink); }
 /* ---------- patchbay ---------- */
 .pbay { position: relative; width: min(840px, 100%); margin: 44px 0 0; }
 .pbay-panel {

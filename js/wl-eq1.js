@@ -12,14 +12,14 @@
   }
 
   function mount(container) {
-    const acc = cssVar('--acc') || '#3fd2e4';
-    const acc2 = cssVar('--acc2') || '#ffb03c';
+    // Plugin screen look: white trace, neutral grey band markers; amber lights up the band you're dragging.
+    const band = '#c6cacd';
     container.innerHTML = `
       <div class="plug-graph-wrap"><canvas id="eqgraph" width="${CW}" height="${CH}"></canvas></div>
       <div class="plug-row">
-        <div class="band-pill"><div class="bl"><span class="bdot" style="background:${acc}"></span>LOW BAND</div><div class="bv" data-band="0">120 Hz · +3.0 dB</div></div>
-        <div class="band-pill"><div class="bl"><span class="bdot" style="background:#7ee787"></span>MID BAND</div><div class="bv" data-band="1">1.0 kHz · −2.5 dB</div></div>
-        <div class="band-pill"><div class="bl"><span class="bdot" style="background:${acc2}"></span>HIGH BAND</div><div class="bv" data-band="2">8.0 kHz · +4.0 dB</div></div>
+        <div class="band-pill"><div class="bl"><span class="bdot" style="background:${band}"></span>LOW BAND</div><div class="bv" data-band="0">120 Hz · +3.0 dB</div></div>
+        <div class="band-pill"><div class="bl"><span class="bdot" style="background:${band}"></span>MID BAND</div><div class="bv" data-band="1">1.0 kHz · −2.5 dB</div></div>
+        <div class="band-pill"><div class="bl"><span class="bdot" style="background:${band}"></span>HIGH BAND</div><div class="bv" data-band="2">8.0 kHz · +4.0 dB</div></div>
         <div class="knob-group">
           <div class="knob" id="xfKnob"></div>
           <div class="knob-label">CROSSFEED</div>
@@ -43,9 +43,9 @@
     const s = {
       container,
       bands: [
-        { f: 120, g: 3.0, q: 0.9, color: acc },
-        { f: 1000, g: -2.5, q: 1.1, color: '#7ee787' },
-        { f: 8000, g: 4.0, q: 0.8, color: acc2 }
+        { f: 120, g: 3.0, q: 0.9, color: band },
+        { f: 1000, g: -2.5, q: 1.1, color: band },
+        { f: 8000, g: 4.0, q: 0.8, color: band }
       ],
       xfeed: 0.35, outGain: -12,
       actx: null, filters: [], outNode: null, xfA: null, xfB: null, analyser: null, src: null,
@@ -152,7 +152,7 @@
     function draw() {
       const ctx = s.ctx;
       ctx.clearRect(0, 0, CW, CH);
-      ctx.fillStyle = '#0d0d11'; ctx.fillRect(0, 0, CW, CH);
+      ctx.fillStyle = '#0a0b0c'; ctx.fillRect(0, 0, CW, CH);
       ctx.font = '20px "IBM Plex Mono", monospace'; ctx.textAlign = 'left';
       [50, 100, 200, 500, 1000, 2000, 5000, 10000].forEach(f => {
         const x = fToX(f);
@@ -190,18 +190,21 @@
         x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
       }
       ctx.stroke();
+      const amber = cssVar('--acc') || '#eeb154';
       s.bands.forEach((b, i) => {
+        const active = s.dragBand === i;
+        const hc = active ? amber : b.color;   // amber lights up the band you're holding
         ctx.beginPath();
-        ctx.strokeStyle = b.color + '55'; ctx.lineWidth = 2;
+        ctx.strokeStyle = hc + '55'; ctx.lineWidth = 2;
         for (let x = 0; x <= CW; x += 8) {
           const y = gToY(bandResponse(b, xToF(x)));
           x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
         }
         ctx.stroke();
         const dx = fToX(b.f), dy = gToY(b.g);
-        ctx.beginPath(); ctx.arc(dx, dy, 16, 0, Math.PI * 2); ctx.fillStyle = b.color; ctx.fill();
+        ctx.beginPath(); ctx.arc(dx, dy, 16, 0, Math.PI * 2); ctx.fillStyle = hc; ctx.fill();
         ctx.beginPath(); ctx.arc(dx, dy, 26, 0, Math.PI * 2);
-        ctx.strokeStyle = b.color + (s.dragBand === i ? 'aa' : '44'); ctx.lineWidth = 2.5; ctx.stroke();
+        ctx.strokeStyle = hc + (active ? 'aa' : '44'); ctx.lineWidth = 2.5; ctx.stroke();
       });
       s.raf = requestAnimationFrame(draw);
     }
