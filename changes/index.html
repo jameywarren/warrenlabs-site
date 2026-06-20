@@ -24,6 +24,9 @@ a { color: inherit; }
 .cta-orange:hover { background: #c93d18 !important; }
 .email-input:focus { border-color: #4E97AB !important; box-shadow: 0 0 0 3px rgba(78,151,171,0.25) !important; }
 .foot-link:hover { color: #4E97AB !important; }
+.m-scroll::-webkit-scrollbar { width: 0; height: 0; }
+.m-scroll { scrollbar-width: none; }
+.m-key:hover, .m-letters:hover { border-color: #4E97AB !important; }
 </style>
 </head>
 <body>
@@ -87,16 +90,63 @@ a { color: inherit; }
           </div>
         </div>
 
-        <!-- HERO PHONE — real screenshot of the app (demo chart, playing) -->
-        <div style="flex:1 1 320px; min-width:280px; display:flex; justify-content:center;">
-          <div style="width:clamp(258px,80vw,312px); animation:floaty 7s ease-in-out infinite;">
-            <div style="background:#0c0a08; border-radius:46px; padding:10px; box-shadow:0 50px 90px -28px rgba(0,0,0,0.8), 0 0 0 1px rgba(240,230,209,0.07);">
-              <img src="img/hero-chart.png" width="1206" height="2622"
-                   alt="The Changes app showing the All My Days chart in the key of E with the waveform player playing"
-                   loading="eager" decoding="async"
-                   style="display:block; width:100%; height:auto; border-radius:36px;">
+        <!-- HERO PHONE — interactive mockup that mirrors the real app -->
+        <div style="flex:1 1 320px; min-width:300px; display:flex; flex-direction:column; align-items:center;">
+          <div style="width:clamp(266px,82vw,320px); animation:floaty 7s ease-in-out infinite;">
+            <div style="background:#0c0a08; border-radius:46px; padding:9px; box-shadow:0 50px 90px -28px rgba(0,0,0,0.8), 0 0 0 1px rgba(240,230,209,0.07);">
+              <div style="position:relative; aspect-ratio:1206/2560; border-radius:38px; background:#14100D; overflow:hidden; border:1px solid rgba(240,230,209,0.06); display:flex; flex-direction:column;">
+
+                <!-- status bar -->
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:9px 20px 3px; flex:none;">
+                  <span style="font-family:'Inter',sans-serif; font-weight:600; font-size:12px;">9:41</span>
+                  <span style="width:78px; height:19px; background:#0c0a08; border-radius:999px;"></span>
+                  <span style="display:inline-block; width:21px; height:10px; border:1px solid rgba(240,230,209,0.55); border-radius:2px; position:relative;"><span style="position:absolute; top:1.5px; bottom:1.5px; left:1.5px; right:5px; background:#F0E6D1; border-radius:1px;"></span></span>
+                </div>
+
+                <!-- app top bar -->
+                <div style="display:flex; align-items:center; justify-content:space-between; padding:6px 12px 8px; flex:none;">
+                  <span style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:9px; background:rgba(240,230,209,0.06); color:rgba(240,230,209,0.7); font-size:13px;">⌂</span>
+                  <span style="display:inline-flex; align-items:center; gap:6px; padding:5px 11px; border-radius:999px; background:rgba(78,151,171,0.16); font-family:'JetBrains Mono',monospace; font-size:10.5px; color:#9fd3df;"><span style="width:6px; height:6px; border-radius:50%; background:#4E97AB;"></span>1 to check</span>
+                  <span style="display:inline-flex; gap:6px;">
+                    <span style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:9px; background:rgba(240,230,209,0.06); color:rgba(240,230,209,0.7); font-size:13px;">⇪</span>
+                    <span style="display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px; border-radius:9px; background:rgba(240,230,209,0.06); color:rgba(240,230,209,0.7); font-size:13px;">⚙</span>
+                  </span>
+                </div>
+
+                <!-- title + meta -->
+                <div style="padding:0 16px; flex:none;">
+                  <div style="display:flex; align-items:center; gap:8px; margin-bottom:9px;">
+                    <span style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:19px;">All My Days</span>
+                    <span style="color:rgba(240,230,209,0.4); font-size:12px;">✎</span>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:6px; margin-bottom:12px;">
+                    <button class="m-key" id="m-key" aria-label="Transpose key" style="font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:13px; color:#F0E6D1; padding:5px 12px; border-radius:8px; border:1px solid rgba(240,230,209,0.22); background:rgba(240,230,209,0.04); cursor:pointer; transition:border-color .15s;">E</button>
+                    <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(240,230,209,0.6); padding:5px 10px; border-radius:8px; border:1px solid rgba(240,230,209,0.14);">♩ = 72</span>
+                    <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(240,230,209,0.6); padding:5px 10px; border-radius:8px; border:1px solid rgba(240,230,209,0.14);">4/4</span>
+                    <span style="flex:1;"></span>
+                    <button class="m-letters" id="m-letters" aria-label="Toggle note letters" style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:0.06em; padding:5px 9px; border-radius:8px; border:1px solid #4E97AB; background:rgba(78,151,171,0.2); color:#cfeaf0; cursor:pointer;">ABC</button>
+                    <span id="m-keyeq" style="font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(240,230,209,0.5);">1=E</span>
+                  </div>
+                  <div style="height:1px; background:rgba(240,230,209,0.1);"></div>
+                </div>
+
+                <!-- chart (scrolls under the pinned transport) -->
+                <div class="m-scroll" id="m-chart" style="flex:1; overflow-y:auto; padding:2px 16px 14px;"></div>
+
+                <!-- transport -->
+                <div style="display:flex; align-items:center; gap:9px; padding:9px 13px; flex:none; border-top:1px solid rgba(240,230,209,0.1); background:rgba(20,16,13,0.92);">
+                  <button id="m-prev" aria-label="Restart" style="flex:none; width:26px; height:26px; border:none; background:none; color:#F0E6D1; font-size:12px; cursor:pointer;">⏮</button>
+                  <button id="m-play" aria-label="Play" style="flex:none; width:30px; height:30px; border:none; background:none; color:#F0E6D1; font-size:15px; cursor:pointer;">▶</button>
+                  <button id="m-next" aria-label="Next section" style="flex:none; width:26px; height:26px; border:none; background:none; color:#F0E6D1; font-size:12px; cursor:pointer;">⏭</button>
+                  <span id="m-cur" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(240,230,209,0.6);">0:00</span>
+                  <span id="m-wave" style="flex:1; height:26px; display:flex; align-items:center; gap:1.5px;"></span>
+                  <span id="m-dur" style="font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(240,230,209,0.6);">0:12</span>
+                </div>
+
+              </div>
             </div>
           </div>
+          <p style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:0.02em; color:rgba(240,230,209,0.55); margin:18px 0 0; text-align:center;">Live demo — tap the key to transpose, ▶ to play along.</p>
         </div>
 
       </div>
@@ -197,7 +247,7 @@ a { color: inherit; }
           <div style="display:flex; gap:8px; margin-bottom:10px;">
             <div style="flex:1; aspect-ratio:1; display:flex; align-items:center; justify-content:center; border:1px solid rgba(20,16,13,0.18); border-radius:8px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px;">1</div>
             <div style="flex:1; aspect-ratio:1; display:flex; align-items:center; justify-content:center; border:1px solid rgba(20,16,13,0.18); border-radius:8px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px;">5</div>
-            <div style="position:relative; flex:1; aspect-ratio:1; display:flex; align-items:center; justify-content:center; border:2px solid #E5481F; border-radius:8px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px; background:rgba(229,72,31,0.1);">6m<span style="position:absolute; top:5px; right:6px; width:8px; height:8px; border-radius:50%; background:#4E97AB;"></span></div>
+            <div style="position:relative; flex:1; aspect-ratio:1; display:flex; align-items:center; justify-content:center; border:2px solid #E5481F; border-radius:8px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px; background:rgba(229,72,31,0.1);">6-<span style="position:absolute; top:5px; right:6px; width:8px; height:8px; border-radius:50%; background:#4E97AB;"></span></div>
             <div style="flex:1; aspect-ratio:1; display:flex; align-items:center; justify-content:center; border:1px solid rgba(20,16,13,0.18); border-radius:8px; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:22px;">4</div>
           </div>
           <p style="font-size:14px; line-height:1.55; color:rgba(20,16,13,0.7); margin:0;">Changes marks the one bar it wasn't sure about. Tap it, pick the right chord, done.</p>
@@ -325,19 +375,179 @@ a { color: inherit; }
 </div>
 
 <script>
-// Changes landing — interactivity ported from the Changes Landing design spec.
+// Changes landing — interactive app mockup that mirrors the real iOS app
+// (demo chart "All My Days", real Nashville tokens, transpose, play-marker + waveform).
 (function () {
   'use strict';
 
   var chromatic = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
-  var roots = { C: 0, G: 7, D: 2, A: 9, E: 4 };
-  var degInt = { 1: 0, 2: 2, 3: 4, 4: 5, 5: 7, 6: 9, 7: 11 };
-  var structure = [
-    { name: 'INTRO',  bars: [{ n: '1' }, { n: '4' }] },
-    { name: 'VERSE',  bars: [{ n: '1' }, { n: '5' }, { n: '6m' }, { n: '4' }] },
-    { name: 'PRE',    bars: [{ n: '4' }, { n: '5' }, { n: '6m', flag: true }, { n: '4' }] },
-    { name: 'CHORUS', bars: [{ n: '4' }, { n: '1' }, { n: '5' }, { n: '6m' }] }
-  ];
+  var rootIdx = { C:0, 'C#':1, D:2, 'D#':3, E:4, F:5, 'F#':6, G:7, 'G#':8, A:9, 'A#':10, B:11 };
+  var degSemi = { 1:0, 2:2, 3:4, 4:5, 5:7, 6:9, 7:11 };
+  var keyCycle = ['E', 'F', 'G', 'A', 'B', 'C', 'D', 'F#'];
+
+  // The bundled demo chart, identical to the app's ContentView.demoChart().
+  var song = {
+    sections: [
+      { name: 'INTRO',  lyric: '', bars: [{ n:1 }, { n:5 }, { n:6, min:true, unsure:true }, { n:4 }] },
+      { name: 'VERSE',  lyric: 'Morning light, I rise to find that You were already here',
+        bars: [{ n:1 }, { n:5, bass:7 }, { n:6, min:true }, { n:4, bass:6 }] },
+      { name: 'CHORUS', lyric: 'All my days I will wait on You, steady as the rising sun',
+        bars: [{ n:1 }, { n:5 }, { n:6, min:true }, { n:4 }, { n:1 }, { n:5 }, { n:4 }, { n:1, hold:true }] }
+    ]
+  };
+  var totalBars = song.sections.reduce(function (a, s) { return a + s.bars.length; }, 0);
+  var SEC_PER_BAR = 0.75;
+  var duration = totalBars * SEC_PER_BAR;
+
+  var state = { key: 'E', letters: true, playing: false, idx: -1, faq: 0 };
+  var timer = null;
+
+  var chartEl   = document.getElementById('m-chart');
+  var keyChip   = document.getElementById('m-key');
+  var keyEq     = document.getElementById('m-keyeq');
+  var lettersBtn= document.getElementById('m-letters');
+  var playBtn   = document.getElementById('m-play');
+  var prevBtn   = document.getElementById('m-prev');
+  var nextBtn   = document.getElementById('m-next');
+  var waveEl    = document.getElementById('m-wave');
+  var curT      = document.getElementById('m-cur');
+  var durT      = document.getElementById('m-dur');
+  var paperEl   = document.getElementById('paperWave');
+  var faqEl     = document.getElementById('faq');
+
+  function noteName(deg) { return chromatic[(rootIdx[state.key] + degSemi[deg]) % 12]; }
+  function fmt(t) { t = Math.max(0, Math.round(t)); return Math.floor(t / 60) + ':' + ('0' + (t % 60)).slice(-2); }
+
+  function barCore(b) {
+    var num = '<span style="font-family:\'Space Grotesk\',sans-serif;font-weight:600;font-size:21px;line-height:1;color:#F0E6D1;">' + b.n +
+      (b.min ? '<span style="font-size:13px;">-</span>' : '') +
+      (b.bass ? '<span style="font-size:12px;color:rgba(240,230,209,0.5);">/' + b.bass + '</span>' : '') + '</span>';
+    if (b.hold) {
+      num = '<span style="display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border:2px solid rgba(240,230,209,0.85);transform:rotate(45deg);">' +
+        '<span style="transform:rotate(-45deg);font-family:\'Space Grotesk\',sans-serif;font-weight:600;font-size:18px;color:#F0E6D1;">' + b.n + '</span></span>';
+    }
+    return num;
+  }
+
+  function barLetter(b) {
+    if (!state.letters) return '';
+    var txt = noteName(b.n) + (b.min ? 'm' : '') + (b.bass ? '/' + noteName(b.bass) : '');
+    return '<span style="font-family:\'JetBrains Mono\',monospace;font-size:9px;color:rgba(78,151,171,0.95);margin-top:3px;">' + txt + '</span>';
+  }
+
+  function renderMeta() {
+    if (keyChip) keyChip.textContent = state.key;
+    if (keyEq) keyEq.textContent = '1=' + state.key;
+    if (lettersBtn) {
+      lettersBtn.style.background  = state.letters ? 'rgba(78,151,171,0.2)' : 'transparent';
+      lettersBtn.style.color       = state.letters ? '#cfeaf0' : 'rgba(240,230,209,0.55)';
+      lettersBtn.style.borderColor = state.letters ? '#4E97AB' : 'rgba(240,230,209,0.22)';
+    }
+  }
+
+  function renderChart() {
+    if (!chartEl) return;
+    var gi = 0, out = '';
+    song.sections.forEach(function (s) {
+      out += '<div style="display:flex;align-items:center;gap:7px;margin:14px 0 7px;">' +
+             '<span style="width:13px;height:2px;background:#E5481F;display:inline-block;"></span>' +
+             '<span style="font-family:\'JetBrains Mono\',monospace;font-size:10px;letter-spacing:0.13em;color:#E5481F;">' + s.name + '</span>' +
+             '<span style="color:rgba(240,230,209,0.4);font-size:9px;">▾</span></div>';
+      out += '<div style="display:flex;">';
+      s.bars.forEach(function (b) {
+        var idx = gi++;
+        var playing = state.playing && state.idx === idx;
+        out += '<div data-bar="' + idx + '" style="flex:1;min-width:0;padding:9px 2px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;' +
+               (idx % 4 !== 0 ? 'border-left:1px solid rgba(240,230,209,0.12);' : '') +
+               (playing ? 'background:rgba(229,72,31,0.18);box-shadow:inset 2px 0 0 #E5481F;border-radius:4px;' : '') +
+               'transition:background .15s;">' + barCore(b) + barLetter(b);
+        if (b.unsure) out += '<span style="width:62%;height:0;border-bottom:2px dotted #4E97AB;margin-top:4px;"></span>';
+        out += '</div>';
+      });
+      out += '</div>';
+      out += '<div style="font-family:\'Inter\',sans-serif;font-size:11px;line-height:1.4;color:rgba(240,230,209,' + (s.lyric ? '0.58' : '0.3') + ');margin-top:7px;">' +
+             (s.lyric || 'Add lyrics…') + '</div>';
+    });
+    chartEl.innerHTML = out;
+    // tap a bar to jump there
+    var cells = chartEl.querySelectorAll('[data-bar]');
+    for (var i = 0; i < cells.length; i++) {
+      cells[i].addEventListener('click', function () { jumpTo(parseInt(this.getAttribute('data-bar'), 10)); });
+    }
+  }
+
+  var waveHeights = [];
+  (function () { for (var i = 0; i < 44; i++) waveHeights.push(22 + Math.abs(Math.sin(i * 0.7) * 0.6 + Math.sin(i * 1.9) * 0.4) * 76); })();
+
+  function renderWave() {
+    if (!waveEl) return;
+    var prog = state.idx >= 0 ? (state.idx + 1) / totalBars : 0;
+    var out = '';
+    for (var i = 0; i < waveHeights.length; i++) {
+      var played = (i / waveHeights.length) < prog;
+      out += '<span style="flex:1;border-radius:2px;background:' + (played ? '#E5481F' : 'rgba(240,230,209,0.22)') + ';height:' + waveHeights[i] + '%;"></span>';
+    }
+    waveEl.innerHTML = out;
+  }
+
+  function renderTime() {
+    var cur = state.idx >= 0 ? (state.idx + 1) * SEC_PER_BAR : 0;
+    if (curT) curT.textContent = fmt(cur);
+    if (durT) durT.textContent = fmt(duration);
+  }
+
+  function setPlaying(on) {
+    state.playing = on;
+    if (playBtn) { playBtn.textContent = on ? '❚❚' : '▶'; playBtn.setAttribute('aria-label', on ? 'Pause' : 'Play'); }
+  }
+
+  function step() {
+    state.idx++;
+    if (state.idx >= totalBars) state.idx = 0;   // loop
+    renderChart(); renderWave(); renderTime();
+  }
+
+  function play() {
+    if (state.idx >= totalBars - 1) state.idx = -1;
+    setPlaying(true);
+    renderChart();
+    timer = setInterval(step, SEC_PER_BAR * 1000);
+  }
+
+  function pause() {
+    setPlaying(false);
+    if (timer) { clearInterval(timer); timer = null; }
+    renderChart();
+  }
+
+  function toggle() { state.playing ? pause() : play(); }
+
+  function jumpTo(idx) {
+    state.idx = idx;
+    if (!state.playing) play(); else { renderChart(); renderWave(); renderTime(); }
+  }
+
+  function cycleKey() {
+    var i = keyCycle.indexOf(state.key);
+    state.key = keyCycle[(i + 1) % keyCycle.length];
+    renderMeta(); renderChart();
+  }
+
+  function toggleLetters() { state.letters = !state.letters; renderMeta(); renderChart(); }
+
+  // --- "plays along" paper-card waveform (decorative) ---
+  function renderPaper() {
+    if (!paperEl) return;
+    for (var i = 0; i < 30; i++) {
+      var h = 22 + Math.round(Math.abs(Math.sin(i * 0.9) * 0.55 + Math.sin(i * 2.3) * 0.45) * 74);
+      var past = (i / 30) < 0.42;
+      var bar = document.createElement('div');
+      bar.setAttribute('style', 'flex:1; border-radius:2px; background:' + (past ? 'rgba(20,16,13,0.55)' : 'rgba(20,16,13,0.2)') + '; height:' + h + '%;');
+      paperEl.appendChild(bar);
+    }
+  }
+
+  // --- FAQ ---
   var faqData = [
     { q: 'Does it need an internet connection?', a: 'No. Changes listens and writes the chart entirely on your phone. Nothing is uploaded.' },
     { q: 'Covers or original songs?', a: 'Built for your own songs. A hum or rough take gets harmonized into a chart — it is not a cover-detector.' },
@@ -346,155 +556,8 @@ a { color: inherit; }
     { q: 'When does the beta open?', a: 'It is gated on the public release of iOS 27. Join the list and we will send a TestFlight invite the moment it opens.' }
   ];
 
-  var totalBars = structure.reduce(function (a, s) { return a + s.bars.length; }, 0);
-  var state = { key: 'G', playing: false, playIndex: 0, faq: 0 };
-  var timer = null;
-
-  function letterFor(token, key) {
-    var m = String(token).match(/^(\d)(.*)$/);
-    var deg = parseInt(m[1], 10);
-    var qual = m[2] || '';
-    var idx = (roots[key] + degInt[deg]) % 12;
-    return chromatic[idx] + qual;
-  }
-
-  function barStyle(active) {
-    return 'position:relative; flex:1 1 44px; min-width:44px; min-height:58px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px; border-radius:9px; cursor:pointer; border:1px solid ' +
-      (active ? '#E5481F' : 'rgba(240,230,209,0.16)') + '; background:' +
-      (active ? 'rgba(229,72,31,0.18)' : 'rgba(240,230,209,0.035)') + '; box-shadow:' +
-      (active ? '0 0 0 3px rgba(229,72,31,0.18)' : 'none') + '; transition:all .16s ease;';
-  }
-
-  function chipStyle(sel) {
-    return "font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:0.03em; padding:6px 12px; border-radius:999px; cursor:pointer; border:1px solid " +
-      (sel ? '#4E97AB' : 'rgba(240,230,209,0.2)') + '; background:' +
-      (sel ? 'rgba(78,151,171,0.2)' : 'transparent') + '; color:' +
-      (sel ? '#cfeaf0' : 'rgba(240,230,209,0.65)') + '; transition:all .15s ease;';
-  }
-
-  var chartEl = document.getElementById('chart');
-  var chipsEl = document.getElementById('chips');
-  var waveEl = document.getElementById('wave');
-  var paperEl = document.getElementById('paperWave');
-  var faqEl = document.getElementById('faq');
-  var playBtn = document.getElementById('playBtn');
-  var keyEl = document.getElementById('cur-key');
-
-  function renderChips() {
-    if (!chipsEl) return;
-    chipsEl.innerHTML = '';
-    Object.keys(roots).forEach(function (k) {
-      var b = document.createElement('button');
-      b.textContent = k;
-      b.setAttribute('style', chipStyle(k === state.key));
-      b.addEventListener('click', function () { state.key = k; renderChips(); renderChart(); keyEl.textContent = k; });
-      chipsEl.appendChild(b);
-    });
-  }
-
-  function renderChart() {
-    if (!chartEl) return;
-    chartEl.innerHTML = '';
-    var gi = 0;
-    structure.forEach(function (sec) {
-      var row = document.createElement('div');
-      row.setAttribute('style', 'display:flex; gap:8px; align-items:stretch;');
-      var label = document.createElement('div');
-      label.setAttribute('style', "width:52px; flex:none; display:flex; align-items:center; font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:0.12em; color:rgba(240,230,209,0.45);");
-      label.textContent = sec.name;
-      row.appendChild(label);
-      var barsWrap = document.createElement('div');
-      barsWrap.setAttribute('style', 'flex:1; display:flex; gap:6px;');
-      sec.bars.forEach(function (bar) {
-        var idx = gi++;
-        var active = state.playing && state.playIndex === idx;
-        var cell = document.createElement('div');
-        cell.setAttribute('style', barStyle(active));
-        if (bar.flag) {
-          var dot = document.createElement('span');
-          dot.setAttribute('style', 'position:absolute; top:5px; right:6px; width:6px; height:6px; border-radius:50%; background:#4E97AB;');
-          cell.appendChild(dot);
-        }
-        var num = document.createElement('span');
-        num.setAttribute('style', "font-family:'Space Grotesk',sans-serif; font-size:21px; font-weight:600; color:#F0E6D1; line-height:1;");
-        num.textContent = bar.n;
-        var letter = document.createElement('span');
-        letter.setAttribute('style', "font-family:'JetBrains Mono',monospace; font-size:9.5px; color:rgba(78,151,171,0.95);");
-        letter.textContent = letterFor(bar.n, state.key);
-        cell.appendChild(num);
-        cell.appendChild(letter);
-        cell.addEventListener('click', function () { jumpTo(idx); });
-        barsWrap.appendChild(cell);
-      });
-      row.appendChild(barsWrap);
-      chartEl.appendChild(row);
-    });
-  }
-
-  function renderWaveforms() {
-    var i, h, bar;
-    if (waveEl) {
-      for (i = 0; i < 26; i++) {
-        h = 24 + Math.round(Math.abs(Math.sin(i * 0.7) * 0.6 + Math.sin(i * 1.9) * 0.4) * 70);
-        bar = document.createElement('div');
-        bar.setAttribute('style', 'flex:1; border-radius:2px; background:rgba(240,230,209,0.35); height:' + h + '%;');
-        waveEl.appendChild(bar);
-      }
-    }
-    if (!paperEl) return;
-    for (i = 0; i < 30; i++) {
-      h = 22 + Math.round(Math.abs(Math.sin(i * 0.9) * 0.55 + Math.sin(i * 2.3) * 0.45) * 74);
-      var past = (i / 30) < 0.42;
-      bar = document.createElement('div');
-      bar.setAttribute('style', 'flex:1; border-radius:2px; background:' + (past ? 'rgba(20,16,13,0.55)' : 'rgba(20,16,13,0.2)') + '; height:' + h + '%;');
-      paperEl.appendChild(bar);
-    }
-  }
-
-  function setPlaying(on) {
-    state.playing = on;
-    playBtn.textContent = on ? '■' : '▶';
-    playBtn.setAttribute('aria-label', on ? 'Stop' : 'Play');
-  }
-
-  function togglePlay() {
-    if (state.playing) {
-      clearInterval(timer); timer = null;
-      setPlaying(false); state.playIndex = 0; renderChart();
-      return;
-    }
-    setPlaying(true); state.playIndex = 0; renderChart();
-    timer = setInterval(function () {
-      var next = state.playIndex + 1;
-      if (next >= totalBars) {
-        clearInterval(timer); timer = null;
-        setPlaying(false); state.playIndex = 0; renderChart();
-        return;
-      }
-      state.playIndex = next;
-      renderChart();
-    }, 520);
-  }
-
-  function jumpTo(idx) {
-    if (!state.playing) setPlaying(true);
-    if (!timer) {
-      timer = setInterval(function () {
-        var next = state.playIndex + 1;
-        if (next >= totalBars) {
-          clearInterval(timer); timer = null;
-          setPlaying(false); state.playIndex = 0; renderChart();
-          return;
-        }
-        state.playIndex = next;
-        renderChart();
-      }, 520);
-    }
-    state.playIndex = idx;
-    renderChart();
-  }
-
   function renderFaq() {
+    if (!faqEl) return;
     faqEl.innerHTML = '';
     faqData.forEach(function (it, i) {
       var wrap = document.createElement('div');
@@ -521,15 +584,12 @@ a { color: inherit; }
   function wireForms() {
     document.querySelectorAll('[data-beta]').forEach(function (block) {
       var form = block.querySelector('.beta-form');
-      var success = block.querySelector('.beta-success');
       if (!form) return;
       form.addEventListener('submit', function (e) {
         e.preventDefault();
         var input = form.querySelector('input[type=email]');
         var val = input && input.value ? input.value.trim() : '';
         if (val && val.indexOf('@') !== -1) {
-          // Static site — no backend. Hand the signup to Jamey via the visitor's
-          // mail client, then show the confirmation state.
           var subject = encodeURIComponent('Changes beta signup');
           var body = encodeURIComponent('Please add me to the Changes beta list: ' + val);
           window.location.href = 'mailto:jamey@jameywarren.com?subject=' + subject + '&body=' + body;
@@ -553,23 +613,26 @@ a { color: inherit; }
     });
     var io = new IntersectionObserver(function (ents) {
       ents.forEach(function (e) {
-        if (e.isIntersecting) {
-          e.target.style.opacity = '1';
-          e.target.style.transform = 'none';
-          io.unobserve(e.target);
-        }
+        if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'none'; io.unobserve(e.target); }
       });
     }, { threshold: 0.1 });
     els.forEach(function (el) { io.observe(el); });
   }
 
-  renderChips();
+  // init
+  renderMeta();
   renderChart();
-  renderWaveforms();
+  renderWave();
+  renderTime();
+  renderPaper();
   renderFaq();
   wireForms();
   wireReveal();
-  if (playBtn) playBtn.addEventListener('click', togglePlay);
+  if (keyChip)    keyChip.addEventListener('click', cycleKey);
+  if (lettersBtn) lettersBtn.addEventListener('click', toggleLetters);
+  if (playBtn)    playBtn.addEventListener('click', toggle);
+  if (prevBtn)    prevBtn.addEventListener('click', function () { state.idx = -1; renderChart(); renderWave(); renderTime(); });
+  if (nextBtn)    nextBtn.addEventListener('click', function () { jumpTo(Math.min(totalBars - 1, (state.idx < 0 ? 0 : state.idx) + 4)); });
 })();
 </script>
 </body>
