@@ -119,14 +119,15 @@
   /* ---------------- unit data ---------------- */
   const UNITS = {
     eq: {
-      num: 'WL-EQ1', title: 'Headphone EQ + Crossfeed',
-      led: 'var(--led-amber)', blink: true, status: 'PROTOTYPE',
+      num: 'WL-EQ1', title: 'Level — Headphone Correction',
+      led: 'var(--led-amber)', blink: true, status: 'BETA',
       plugin: true,
+      link: '/plugins/level/', linkLabel: 'LEARN MORE ↗',
       desc: [
-        "A VST3 plugin I'm building in <b>C++ with JUCE</b>: headphone EQ correction that flattens a given headphone's response, plus Bauer-style crossfeed that blends the channels to ease the in-your-head feeling of headphones.",
-        "First milestone is deliberately narrow: <b>prove the signal chain end to end</b> with a hardcoded curve before adding real correction data and a UI. It's the part of audio I most want under my hands."
+        "<b>Level</b> is a VST3 / AU / Standalone plugin (C++ / JUCE) that flattens a headphone's measured response by inverting its EQ curve, then adds Bauer-style crossfeed — with a real interaural delay — so a mix translates the way speakers would. The signal comes out measurably corrected; the DSP being honest matters before anything else.",
+        "It's the flagship of a growing line of Warren Labs tools — reference, correction, and metering built on shared DSP (mono-compatibility, dynamic resonance suppression, matching EQ, mix translation), with a character line for color and space taking shape alongside."
       ],
-      meta: [['ROLE', 'Solo, learning by building'], ['STACK', 'C++, JUCE, CMake, Claude Code'], ['STATUS', 'Early; signal chain in progress'], ['THIS DEMO', 'Web Audio API, a sketch of the real thing']]
+      meta: [['ROLE', 'Solo — product + DSP'], ['STACK', 'C++, JUCE, CMake'], ['FORMATS', 'VST3 · AU · Standalone'], ['STATUS', 'Working build · correction + crossfeed + UI'], ['THIS DEMO', 'Web Audio sketch — the real plugin runs native']]
     },
     changes: {
       num: 'WL-CH1', title: 'Changes',
@@ -205,8 +206,11 @@
         <div id="wl-plugin-mount"></div>
         <div class="ov-grid" style="margin-top:40px">
           <div class="ov-desc">${u.desc.map(d => `<p>${d}</p>`).join('')}</div>
-          <div class="ov-side"><div class="ov-meta">${u.meta.map(m =>
-            `<div class="m"><span class="mk">${m[0]}</span><span class="mv">${m[1]}</span></div>`).join('')}</div></div>
+          <div class="ov-side">
+            ${u.link ? `<a class="ov-cta" href="${u.link}"${/^https?:/.test(u.link) ? ' target="_blank" rel="noopener"' : ''}>${u.linkLabel || 'LEARN MORE ↗'}</a>` : ''}
+            <div class="ov-meta">${u.meta.map(m =>
+              `<div class="m"><span class="mk">${m[0]}</span><span class="mv">${m[1]}</span></div>`).join('')}</div>
+          </div>
         </div>`;
       window.WLEQ1.mount(document.getElementById('wl-plugin-mount'));
     } else {

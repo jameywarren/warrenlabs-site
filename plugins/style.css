@@ -1,0 +1,84 @@
+/* Warren Labs — site styles. Graphite + amber, Barlow + JetBrains Mono. Generated pages link this. */
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root{
+  --bg:#16181b; --bg2:#1d2024; --panel:#212529; --line:#2c3137;
+  --ink:#e8ebed; --dim:#8a9098; --faint:#6e747a;
+  --accent:#eeb154; --accent-warm:#ff9e2c;
+  --sans:'Barlow',system-ui,-apple-system,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --r:12px;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{
+  background:radial-gradient(120% 90% at 50% -10%,#26292d,var(--bg) 70%);
+  color:var(--ink); font-family:var(--sans); line-height:1.55;
+  -webkit-font-smoothing:antialiased; min-height:100vh;
+}
+a{color:var(--accent); text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{max-width:1040px; margin:0 auto; padding:0 24px}
+
+/* header / footer */
+header.site{display:flex; align-items:center; justify-content:space-between; padding:26px 0 18px}
+.wordmark{display:flex; align-items:center; gap:9px; font-weight:600; letter-spacing:.18em; font-size:14px}
+.wordmark .dot{width:7px; height:7px; border-radius:50%; background:var(--accent-warm);
+  box-shadow:0 0 10px var(--accent-warm)}
+nav.site a{color:var(--dim); margin-left:22px; font-size:13px; letter-spacing:.04em}
+nav.site a:hover{color:var(--ink); text-decoration:none}
+footer.site{border-top:1px solid var(--line); margin-top:64px; padding:28px 0 48px;
+  color:var(--faint); font-size:12.5px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px}
+.mono{font-family:var(--mono)}
+
+/* hero */
+.hero{padding:40px 0 8px}
+.hero h1{font-size:clamp(34px,6vw,60px); font-weight:700; letter-spacing:-.01em; margin:.1em 0 .15em}
+.hero .lede{color:var(--dim); font-size:clamp(16px,2.4vw,21px); max-width:60ch}
+
+/* line badge + chips */
+.badge{display:inline-block; font-family:var(--mono); font-size:10.5px; letter-spacing:.14em;
+  text-transform:uppercase; padding:3px 9px; border-radius:999px; border:1px solid var(--line); color:var(--dim)}
+.badge.trueness{color:var(--accent); border-color:rgba(238,177,84,.35)}
+.badge.character{color:#e0a3ff; border-color:rgba(224,163,255,.30)}
+.chip{font-family:var(--mono); font-size:11px; color:var(--faint); letter-spacing:.04em}
+
+/* card grid */
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:18px; margin:18px 0}
+.card{display:block; background:linear-gradient(180deg,var(--panel),var(--bg2));
+  border:1px solid var(--line); border-radius:var(--r); padding:20px 20px 18px; transition:border-color .15s, transform .15s}
+.card:hover{border-color:rgba(238,177,84,.45); transform:translateY(-2px); text-decoration:none}
+.card h3{margin:.1em 0 .1em; font-size:23px; font-weight:600; color:var(--ink)}
+.card .cat{color:var(--dim); font-size:13.5px}
+.card .tl{color:var(--faint); font-size:13px; margin-top:9px}
+.card .meta{margin-top:13px; display:flex; gap:10px; align-items:center}
+
+.section-h{font-family:var(--mono); font-size:12px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--faint); margin:40px 0 4px}
+
+/* plugin page */
+.detail{padding:30px 0 0}
+.detail .top{display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:8px}
+.status{font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--accent)}
+.detail .blurb{font-size:18px; color:var(--ink); max-width:64ch; margin:14px 0 26px}
+ul.features{list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:10px}
+ul.features li{background:var(--panel); border:1px solid var(--line); border-radius:9px; padding:11px 13px;
+  font-size:14px; color:var(--ink)}
+ul.features li::before{content:"›"; color:var(--accent); margin-right:9px}
+.cta{margin:30px 0 8px}
+.btn{display:inline-block; background:var(--accent); color:#1a1405; font-weight:600; font-size:14px;
+  padding:11px 20px; border-radius:9px; letter-spacing:.01em}
+.btn:hover{background:#f3bd6a; text-decoration:none}
+.btn.ghost{background:transparent; color:var(--ink); border:1px solid var(--line); margin-left:10px}
+.note{color:var(--faint); font-size:12.5px; margin-top:12px}
+
+/* guide / prose */
+.prose{max-width:74ch; padding:8px 0 0}
+.prose h1{font-size:32px; font-weight:700; margin:18px 0 6px}
+.prose h2{font-size:21px; font-weight:600; margin:30px 0 8px; color:var(--ink)}
+.prose p{color:var(--ink)}
+.prose code{font-family:var(--mono); font-size:13px; background:#0f1113; border:1px solid var(--line);
+  padding:1px 5px; border-radius:5px; color:var(--accent)}
+.prose pre{background:#0f1113; border:1px solid var(--line); border-radius:9px; padding:14px 16px; overflow:auto}
+.prose pre code{background:none; border:0; padding:0; color:var(--ink)}
+.prose ul{padding-left:20px} .prose li{margin:4px 0}
