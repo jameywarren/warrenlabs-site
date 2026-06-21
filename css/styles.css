@@ -7,6 +7,8 @@
   --line: #24272b;
   /* Accent — amber signal accent, oklch(0.80 0.13 75) as sRGB hex. ONE accent, signal-state only. */
   --acc: #eeb154; --acc2: #eeb154;
+  /* Echo logo — locked identity color from the usage spec v1.0 (distinct from the signal accent). */
+  --echo-amber: #FF9E2C;
   /* Decorative graphics that used to be blue now read as neutral graphite/white trace */
   --decor: var(--ink);
   --panel: #1b1d20; --panel-hi: #26292d; --panel-edge: #34383d;
@@ -29,9 +31,9 @@ body {
 /* ---------- header ---------- */
 header { border-bottom: 1px solid var(--line); }
 .head-in { display: flex; justify-content: space-between; align-items: center; padding: 26px 60px; max-width: 1320px; margin: 0 auto; }
-.logo-mark { display: flex; align-items: center; gap: 14px; }
-.logo-dot { width: 12px; height: 12px; background: var(--acc); border-radius: 50%; }
-.logo-mark span { font-family: "IBM Plex Mono", monospace; font-size: 13px; letter-spacing: 0.18em; }
+.logo-mark { display: flex; align-items: center; gap: 7px; color: var(--echo-amber); }
+.echo-mark { width: 54px; height: auto; display: block; overflow: visible; flex: none; }
+.logo-mark span { font-family: "Barlow", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.22em; color: var(--ink); }
 nav { display: flex; gap: 36px; }
 nav a { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.14em; color: var(--dim); text-decoration: none; }
 nav a:hover { color: var(--acc); }
@@ -339,7 +341,10 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   :root { --h1: clamp(60px, 18vw, 104px); }
   .wrap { padding: 0 20px; }
   .head-in { padding: 16px 20px; }
-  nav { gap: 18px; }
+  .logo-mark { gap: 6px; }
+  .echo-mark { width: 38px; }
+  .logo-mark span { font-size: 11.5px; letter-spacing: 0.14em; }
+  nav { gap: 15px; }
   nav a { font-size: 10px; letter-spacing: 0.1em; }
   .hero { padding-top: 44px; }
   .hero-kicker { flex-wrap: wrap; gap: 8px 14px; font-size: 10px; margin-bottom: 20px; }
