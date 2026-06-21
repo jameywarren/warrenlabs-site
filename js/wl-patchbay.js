@@ -97,7 +97,7 @@
   }
 
   function accVar() {
-    return getComputedStyle(document.documentElement).getPropertyValue('--acc').trim() || '#eeb154';
+    return getComputedStyle(document.documentElement).getPropertyValue('--acc').trim() || '#FF9E2C';
   }
 
   function drawPlug(p, next) {

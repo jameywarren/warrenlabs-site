@@ -5,14 +5,15 @@
   /* Text — neutral off-white / greys */
   --ink: #e8ebed; --dim: #868d92; --faint: #565b60;
   --line: #24272b;
-  /* Accent — amber signal accent, oklch(0.80 0.13 75) as sRGB hex. ONE accent, signal-state only. */
-  --acc: #eeb154; --acc2: #eeb154;
-  /* Echo logo — locked identity color from the usage spec v1.0 (distinct from the signal accent). */
+  /* Accent — amber signal accent, unified with the Echo logo color (#FF9E2C, usage spec v1.0).
+     ONE accent, signal-state only. */
+  --acc: #FF9E2C; --acc2: #FF9E2C;
+  /* Echo logo — locked identity color; same amber as the signal accent. */
   --echo-amber: #FF9E2C;
   /* Decorative graphics that used to be blue now read as neutral graphite/white trace */
   --decor: var(--ink);
   --panel: #1b1d20; --panel-hi: #26292d; --panel-edge: #34383d;
-  --led-green: #54e08a; --led-amber: #eeb154; --led-cyan: #eeb154;
+  --led-green: #54e08a; --led-amber: #FF9E2C; --led-cyan: #FF9E2C;
   --font-display: "Oswald", sans-serif; --disp-weight: 600; --disp-ls: 0.01em; --disp-tt: uppercase;
   --h1: clamp(110px, 13.5vw, 196px); --h1-lh: 0.95;
 }
@@ -29,7 +30,7 @@ body {
 .wrap { max-width: 1320px; margin: 0 auto; padding: 0 60px; }
 
 /* ---------- header ---------- */
-header { border-bottom: 1px solid var(--line); }
+header { border-bottom: 1px solid var(--line); position: relative; }
 .head-in { display: flex; justify-content: space-between; align-items: center; padding: 26px 60px; max-width: 1320px; margin: 0 auto; }
 .logo-mark { display: flex; align-items: center; gap: 7px; color: var(--echo-amber); }
 .echo-mark { width: 54px; height: auto; display: block; overflow: visible; flex: none; }
@@ -37,6 +38,13 @@ header { border-bottom: 1px solid var(--line); }
 nav { display: flex; gap: 36px; }
 nav a { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.14em; color: var(--dim); text-decoration: none; }
 nav a:hover { color: var(--acc); }
+/* mobile menu toggle — hidden until the mobile breakpoint */
+.nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 38px; height: 32px; padding: 0 8px; background: none; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; flex: none; }
+.nav-toggle span { display: block; height: 1.5px; background: var(--ink); border-radius: 2px; transition: transform 0.25s, opacity 0.2s; }
+.nav-toggle:hover { border-color: var(--acc); }
+header.nav-open .nav-toggle span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+header.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
+header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 
 /* ---------- hero ---------- */
 .hero { position: relative; padding-top: 72px; }
@@ -346,9 +354,18 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   .head-in { padding: 16px 20px; }
   .logo-mark { gap: 6px; }
   .echo-mark { width: 38px; }
-  .logo-mark span { font-size: 11.5px; letter-spacing: 0.14em; }
-  nav { gap: 15px; }
-  nav a { font-size: 10px; letter-spacing: 0.1em; }
+  .logo-mark span { font-size: 12px; letter-spacing: 0.16em; }
+  .nav-toggle { display: flex; }
+  nav {
+    position: absolute; top: 100%; left: 0; right: 0; z-index: 60;
+    flex-direction: column; gap: 0;
+    background: var(--bg2); border-bottom: 1px solid var(--line);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.32s cubic-bezier(.2,.8,.3,1);
+  }
+  header.nav-open nav { max-height: 240px; }
+  nav a { font-size: 12px; letter-spacing: 0.16em; color: var(--ink); padding: 17px 20px; border-top: 1px solid var(--line); }
   .hero { padding-top: 44px; }
   .hero-kicker { flex-wrap: wrap; gap: 8px 14px; font-size: 10px; margin-bottom: 20px; }
   #scope { height: 150px; margin-top: -24px; }
