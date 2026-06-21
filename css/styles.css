@@ -43,7 +43,8 @@ nav a:hover { color: var(--acc); }
 .hero-kicker { display: flex; gap: 26px; font-size: 12px; letter-spacing: 0.2em; color: var(--dim); margin-bottom: 30px; }
 .hero-kicker .sep { color: var(--faint); }
 .hero h1 { font-size: var(--h1); line-height: var(--h1-lh); position: relative; z-index: 2; }
-.hero h1 .accent { color: var(--acc); }
+/* hero period = the Echo atom (lit lead-dot + glow) */
+.hero h1 .accent { display: inline-block; width: 0.17em; height: 0.17em; margin-left: 0.05em; border-radius: 50%; background: var(--echo-amber); box-shadow: 0 0 0.12em var(--echo-amber), 0 0 0.34em rgba(255,158,44,0.5); vertical-align: baseline; }
 #scope { display: block; width: 100vw; height: 230px; margin-top: -48px; position: relative; z-index: 1; margin-left: calc(50% - 50vw); }
 .hero-sub { display: grid; grid-template-columns: 1fr 480px; gap: 64px; padding: 10px 0 84px; align-items: start; }
 .hero-sub .lede { font-size: 25px; line-height: 1.45; max-width: 640px; text-wrap: pretty; }
@@ -56,11 +57,13 @@ nav a:hover { color: var(--acc); }
 .rack-zone { background: var(--bg2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 110px 0 130px; overflow: hidden; }
 .rack-head { text-align: center; margin-bottom: 24px; }
 .rack-head .k { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.26em; color: var(--dim); margin-bottom: 22px; }
+/* eyebrow separators quietly carry the Echo atom */
+.k .sig { color: var(--echo-amber); text-shadow: 0 0 6px rgba(255,158,44,0.5); }
 .rack-head h2 { font-size: clamp(54px, 5.6vw, 84px); line-height: 1.02; }
 .rack-head h2 em { font-style: normal; color: var(--ink); }
 .rack-head .sub { margin-top: 20px; font-size: 17px; color: var(--dim); }
 .rack-instr { display: inline-flex; align-items: center; gap: 10px; margin-top: 26px; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: 0.2em; color: var(--ink); border: 1px solid var(--line); border-radius: 100px; padding: 10px 18px; }
-.rack-instr .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--acc); animation: instrblink 1.4s steps(2) infinite; }
+.rack-instr .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--echo-amber); box-shadow: 0 0 7px rgba(255,158,44,0.6); animation: instrblink 1.4s steps(2) infinite; }
 @keyframes instrblink { 50% { opacity: 0.25; } }
 
 .rack-scene { perspective: 2000px; width: 980px; margin: 70px auto 0; position: relative; }
