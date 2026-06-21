@@ -1,76 +1,128 @@
-/* Warren Labs — site styles. Graphite + amber, Barlow + JetBrains Mono. Generated pages link this. */
-@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+/* Warren Labs — plugin site styles. Matches warrenlabs.com: near-black + echo amber,
+   Barlow + IBM Plex Mono, echo-mark logo. Generated pages (tools/gen_site.py) link this. */
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Oswald:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root{
-  --bg:#16181b; --bg2:#1d2024; --panel:#212529; --line:#2c3137;
-  --ink:#e8ebed; --dim:#8a9098; --faint:#6e747a;
-  --accent:#eeb154; --accent-warm:#ff9e2c;
+  /* homepage tokens — black & punchy */
+  --bg:#0c0d0f; --bg2:#0f1012; --panel:#1b1d20; --panel-hi:#26292d; --panel-edge:#34383d;
+  --ink:#e8ebed; --dim:#868d92; --faint:#565b60; --line:#24272b;
+  --acc:#FF9E2C;            /* echo amber — same as the homepage */
+  --character:#e0a3ff;
   --sans:'Barlow',system-ui,-apple-system,sans-serif;
-  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
   --r:12px;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
 body{
-  background:radial-gradient(120% 90% at 50% -10%,#26292d,var(--bg) 70%);
-  color:var(--ink); font-family:var(--sans); line-height:1.55;
+  background:var(--bg); color:var(--ink); font-family:var(--sans); line-height:1.55;
   -webkit-font-smoothing:antialiased; min-height:100vh;
 }
-a{color:var(--accent); text-decoration:none}
+a{color:var(--acc); text-decoration:none}
 a:hover{text-decoration:underline}
-.wrap{max-width:1040px; margin:0 auto; padding:0 24px}
-
-/* header / footer */
-header.site{display:flex; align-items:center; justify-content:space-between; padding:26px 0 18px}
-.wordmark{display:flex; align-items:center; gap:9px; font-weight:600; letter-spacing:.18em; font-size:14px}
-.wordmark .dot{width:7px; height:7px; border-radius:50%; background:var(--accent-warm);
-  box-shadow:0 0 10px var(--accent-warm)}
-nav.site a{color:var(--dim); margin-left:22px; font-size:13px; letter-spacing:.04em}
-nav.site a:hover{color:var(--ink); text-decoration:none}
-footer.site{border-top:1px solid var(--line); margin-top:64px; padding:28px 0 48px;
-  color:var(--faint); font-size:12.5px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px}
+.wrap{max-width:1080px; margin:0 auto; padding:0 24px}
 .mono{font-family:var(--mono)}
 
+/* header — echo-mark logo + mono nav, matching the homepage lockup */
+header.site{border-bottom:1px solid var(--line)}
+.head-in{display:flex; align-items:center; justify-content:space-between; padding:24px 0}
+.logo-mark{display:flex; align-items:center; gap:8px; color:var(--acc)}
+.logo-mark:hover{text-decoration:none}
+.logo-mark .echo-mark{width:46px; height:auto; display:block; overflow:visible; flex:none}
+.logo-mark span{font-family:var(--sans); font-weight:600; font-size:14px; letter-spacing:.22em; color:var(--ink)}
+nav.site{display:flex; align-items:center}
+nav.site a{font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--dim); margin-left:26px; text-decoration:none}
+nav.site a:hover{color:var(--acc); text-decoration:none}
+
+footer.site{border-top:1px solid var(--line); margin-top:72px; padding:30px 0 56px;
+  color:var(--faint); font-size:12.5px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px}
+
 /* hero */
-.hero{padding:40px 0 8px}
-.hero h1{font-size:clamp(34px,6vw,60px); font-weight:700; letter-spacing:-.01em; margin:.1em 0 .15em}
+.hero{padding:48px 0 8px}
+.hero h1{font-size:clamp(36px,6vw,62px); font-weight:700; letter-spacing:-.01em; margin:.12em 0 .18em}
 .hero .lede{color:var(--dim); font-size:clamp(16px,2.4vw,21px); max-width:60ch}
 
 /* line badge + chips */
 .badge{display:inline-block; font-family:var(--mono); font-size:10.5px; letter-spacing:.14em;
-  text-transform:uppercase; padding:3px 9px; border-radius:999px; border:1px solid var(--line); color:var(--dim)}
-.badge.trueness{color:var(--accent); border-color:rgba(238,177,84,.35)}
-.badge.character{color:#e0a3ff; border-color:rgba(224,163,255,.30)}
+  text-transform:uppercase; padding:3px 10px; border-radius:999px; border:1px solid var(--line); color:var(--dim)}
+.badge.trueness{color:var(--acc); border-color:rgba(255,158,44,.38)}
+.badge.character{color:var(--character); border-color:rgba(224,163,255,.32)}
 .chip{font-family:var(--mono); font-size:11px; color:var(--faint); letter-spacing:.04em}
 
 /* card grid */
-.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:18px; margin:18px 0}
-.card{display:block; background:linear-gradient(180deg,var(--panel),var(--bg2));
-  border:1px solid var(--line); border-radius:var(--r); padding:20px 20px 18px; transition:border-color .15s, transform .15s}
-.card:hover{border-color:rgba(238,177,84,.45); transform:translateY(-2px); text-decoration:none}
+.grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:18px; margin:18px 0}
+.card{display:block; background:var(--bg2); overflow:hidden;
+  border:1px solid var(--line); border-radius:var(--r); transition:border-color .15s, transform .15s}
+.card:hover{border-color:rgba(255,158,44,.45); transform:translateY(-2px); text-decoration:none}
+.card .card-body{padding:16px 20px 18px}
 .card h3{margin:.1em 0 .1em; font-size:23px; font-weight:600; color:var(--ink)}
 .card .cat{color:var(--dim); font-size:13.5px}
 .card .tl{color:var(--faint); font-size:13px; margin-top:9px}
 .card .meta{margin-top:13px; display:flex; gap:10px; align-items:center}
 
 .section-h{font-family:var(--mono); font-size:12px; letter-spacing:.16em; text-transform:uppercase;
-  color:var(--faint); margin:40px 0 4px}
+  color:var(--faint); margin:46px 0 6px}
 
-/* plugin page */
-.detail{padding:30px 0 0}
+/* plugin detail page */
+.detail{padding:34px 0 0}
 .detail .top{display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:8px}
-.status{font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--accent)}
+.status{font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--acc)}
 .detail .blurb{font-size:18px; color:var(--ink); max-width:64ch; margin:14px 0 26px}
 ul.features{list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:10px}
 ul.features li{background:var(--panel); border:1px solid var(--line); border-radius:9px; padding:11px 13px;
   font-size:14px; color:var(--ink)}
-ul.features li::before{content:"›"; color:var(--accent); margin-right:9px}
+ul.features li::before{content:"›"; color:var(--shot-accent,var(--acc)); margin-right:9px}
 .cta{margin:30px 0 8px}
-.btn{display:inline-block; background:var(--accent); color:#1a1405; font-weight:600; font-size:14px;
+.btn{display:inline-block; background:var(--acc); color:#1a1405; font-weight:600; font-size:14px;
   padding:11px 20px; border-radius:9px; letter-spacing:.01em}
-.btn:hover{background:#f3bd6a; text-decoration:none}
+.btn:hover{background:#ffb255; text-decoration:none}
 .btn.ghost{background:transparent; color:var(--ink); border:1px solid var(--line); margin-left:10px}
 .note{color:var(--faint); font-size:12.5px; margin-top:12px}
+
+/* ============================================================= faceplate "shot"
+   A themeable hardware front-panel rendered in CSS — same visual DNA as the
+   homepage rack. --shot-accent tints the trace, knob pointers, and identity. */
+.shot{--shot-accent:var(--acc);
+  position:relative; aspect-ratio:760/300; border-radius:10px; overflow:hidden;
+  background:linear-gradient(180deg,var(--panel-hi),var(--panel) 16%,var(--panel) 82%,#101014);
+  border:1px solid var(--panel-edge);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05), 0 20px 46px rgba(0,0,0,.55);}
+.shot::after{content:''; position:absolute; inset:0; pointer-events:none;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.012) 0 1px,transparent 1px 3px);}
+.shot .screw{position:absolute; width:9px; height:9px; border-radius:50%;
+  background:radial-gradient(circle at 36% 32%,#43484e,#24272a 70%); box-shadow:0 0 0 1px rgba(0,0,0,.5), inset 0 0 0 .5px rgba(255,255,255,.16);}
+.shot .screw.tl{left:12px; top:12px} .shot .screw.tr{right:12px; top:12px}
+.shot .screw.bl{left:12px; bottom:12px} .shot .screw.br{right:12px; bottom:12px}
+.shot .face{position:absolute; inset:0; display:flex; align-items:center; gap:4%; padding:7% 6.5%}
+.shot .screen{flex:0 0 52%; height:62%; background:#08090a; border-radius:5px;
+  border:1px solid #000; box-shadow:inset 0 0 16px rgba(0,0,0,.85), 0 1px 0 rgba(255,255,255,.04);
+  position:relative; overflow:hidden}
+.shot .screen svg{position:absolute; inset:0; width:100%; height:100%}
+.shot .screen .grid-x{stroke:rgba(220,228,232,.06); stroke-width:1}
+.shot .screen .trace{fill:none; stroke:var(--shot-accent); stroke-width:2.4; filter:drop-shadow(0 0 4px var(--shot-accent))}
+.shot .knobs{flex:1; display:flex; align-items:center; justify-content:space-around; gap:6%}
+.shot .knob{width:clamp(34px,7vw,52px); aspect-ratio:1; border-radius:50%; position:relative;
+  background:radial-gradient(circle at 36% 30%,var(--panel-edge),var(--panel) 60%,#0c0c0f);
+  border:1px solid var(--panel-edge); box-shadow:0 3px 7px rgba(0,0,0,.5)}
+.shot .knob::after{content:''; position:absolute; left:50%; top:13%; width:2.5px; height:30%;
+  background:var(--shot-accent); border-radius:2px; box-shadow:0 0 6px var(--shot-accent);
+  transform:translateX(-50%) rotate(var(--rot,0deg)); transform-origin:50% 130%}
+.shot .id{position:absolute; right:5%; bottom:8%; display:flex; align-items:center; gap:9px}
+.shot .id .echo-mark{width:34px; height:auto; color:var(--shot-accent); flex:none; overflow:visible}
+.shot .id .txt{line-height:1}
+.shot .id .nm{font-family:var(--sans); font-weight:600; font-size:clamp(16px,2.6vw,22px);
+  letter-spacing:.05em; text-transform:uppercase; color:var(--shot-accent)}
+.shot .id .br{font-family:var(--mono); font-size:8.5px; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--faint); margin-top:4px}
+.detail .shot{margin:6px 0 30px; max-width:760px}
+
+/* compact faceplate banner for index cards — name lives in the card title below,
+   so the banner is just the clean rack face (screen + knobs), themed by accent. */
+.card .shot{aspect-ratio:760/168; border-radius:0; border:0; border-bottom:1px solid var(--line)}
+.card .shot .screen{flex-basis:48%; height:66%}
+.card .shot .id{display:none}
+.card .shot .knobs{justify-content:center; gap:9%}
 
 /* guide / prose */
 .prose{max-width:74ch; padding:8px 0 0}
@@ -78,7 +130,16 @@ ul.features li::before{content:"›"; color:var(--accent); margin-right:9px}
 .prose h2{font-size:21px; font-weight:600; margin:30px 0 8px; color:var(--ink)}
 .prose p{color:var(--ink)}
 .prose code{font-family:var(--mono); font-size:13px; background:#0f1113; border:1px solid var(--line);
-  padding:1px 5px; border-radius:5px; color:var(--accent)}
+  padding:1px 5px; border-radius:5px; color:var(--acc)}
 .prose pre{background:#0f1113; border:1px solid var(--line); border-radius:9px; padding:14px 16px; overflow:auto}
 .prose pre code{background:none; border:0; padding:0; color:var(--ink)}
 .prose ul{padding-left:20px} .prose li{margin:4px 0}
+
+@media (max-width:560px){
+  .head-in{padding:18px 0}
+  .logo-mark .echo-mark{width:36px}
+  .logo-mark span{font-size:12px; letter-spacing:.18em}
+  nav.site a{margin-left:16px; font-size:11px}
+  nav.site a:last-child{display:none}   /* drop "The Lab ↗" — the logo links home */
+  .shot .id .br{display:none}
+}
