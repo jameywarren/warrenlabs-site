@@ -1,0 +1,62 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Capturing your own reverb (impulse responses) — Warren Labs</title><link rel="stylesheet" href="../style.css"></head><body><header class="site"><div class="wrap" style="display:flex;align-items:center;justify-content:space-between;width:100%;padding:0"><a class="wordmark" href="../index.html" style="color:inherit"><span class="dot"></span>WARREN LABS</a><nav class="site"><a href="../index.html">Plugins</a><a href="../guides/index.html">Guides</a></nav></div></header><main class="wrap"><article class="prose"><h1>Warren Labs — Impulse Response capture</h1>
+<p>Capture the reverb of a real space (a hall, your studio, that old-school auditorium) as an</p>
+<p><strong>impulse response (IR)</strong> you can load into a convolution reverb. The method is a **log sine</p>
+<p>sweep + deconvolution** — the studio standard, robust against background noise.</p>
+<p>Needs only <strong>Python 3 + numpy</strong> (the script has its own WAV reader/writer). Verify the math:</p>
+<pre><code>
+python3 ir_capture.py selftest          # → in-band IR correlation ~0.995 = PASS
+</code></pre>
+<h2>What you need</h2>
+<ul>
+<li>A <strong>speaker</strong> in the room (a decent full-range monitor or PA — one speaker, mono).</li>
+<li>A <strong>microphone</strong> at the listening position (one mic = mono IR; a spaced/stereo pair = stereo IR).</li>
+<li>A way to <strong>play a WAV</strong> through the speaker and <strong>record</strong> the mic — your DAW is perfect.</li>
+<li>A quiet room (turn off HVAC/fridges; the quieter, the cleaner).</li>
+</ul>
+<h2>Steps</h2>
+<p><strong>1 — Make the sweep</strong></p>
+<pre><code>
+python3 ir_capture.py make-sweep --out sweep.wav --seconds 8 --sr 48000
+</code></pre>
+<p>Use a longer sweep (<code>--seconds 10</code>–<code>15</code>) for big/loud spaces — more noise immunity. Keep the</p>
+<p>project <strong>sample rate</strong> consistent everywhere (48000 is a good default).</p>
+<p><strong>2 — Play + record</strong></p>
+<ul>
+<li>Put <code>sweep.wav</code> on a track and route it to the <strong>one</strong> speaker. Set a healthy but clean level</li>
+</ul>
+<p>  (loud enough to dominate the room noise; not so loud the speaker/room distorts).</p>
+<ul>
+<li>Arm the mic track and <strong>record while the sweep plays</strong>. Let it run through the <strong>1 s of silence</strong></li>
+</ul>
+<p>  at the end so the room&#x27;s tail is fully captured.</p>
+<ul>
+<li><strong>Export the mic recording</strong> as a WAV at the <strong>same sample rate</strong> → <code>take.wav</code></li>
+</ul>
+<p>  (16/24/32-bit PCM or 32-bit float all work; mono or stereo).</p>
+<p><strong>3 — Deconvolve into an IR</strong></p>
+<pre><code>
+python3 ir_capture.py deconvolve --sweep sweep.wav --response take.wav --out my_room.wav
+</code></pre>
+<p>Out comes <code>my_room.wav</code> — the room&#x27;s impulse response (mono or stereo, matching your recording),</p>
+<p>trimmed to the direct-sound onset and normalized. Options:</p>
+<ul>
+<li><code>--length 4.0</code> keep a longer tail (big halls)</li>
+<li><code>--reg-db 70</code> cleaner/softer if the capture was noisy (higher = more smoothing)</li>
+<li><code>--predelay 0.01</code> keep more air before the direct sound</li>
+</ul>
+<p><strong>4 — Use it</strong></p>
+<p>Load <code>my_room.wav</code> into any convolution reverb (Warren Labs <strong>Vault</strong> when it ships, or any IR</p>
+<p>loader) and you&#x27;re in that space.</p>
+<h2>Tips</h2>
+<ul>
+<li><strong>One speaker, mono.</strong> For a stereo IR, use a stereo/spaced <strong>mic</strong> pair — not two speakers.</li>
+<li><strong>Levels:</strong> watch for clipping on the mic input; the sweep should sit well above the room hiss.</li>
+<li><strong>Don&#x27;t move</strong> during the take; keep the room still (no talking, no footsteps).</li>
+<li><strong>Multiple positions</strong> make richer libraries — capture a few mic spots and pick the best.</li>
+<li><strong>No speaker?</strong> A sharp transient (balloon pop, starter pistol) is a cruder fallback: record it</li>
+</ul>
+<p>  and just trim/normalize the recording by hand — lower fidelity, no deconvolution needed.</p>
+<h2>Save your spaces</h2>
+<p>Each <code>my_room.wav</code> is a portable file — name them (<code>studio_live.wav</code>, <code>school_auditorium.wav</code>),</p>
+<p>keep them in a folder, and that&#x27;s your personal reverb library. (When Vault ships, the in-plugin</p>
+<p>About panel will link here for these instructions, and users can load their own saved spaces.)</p></article></main><footer class="site"><div class="wrap" style="display:flex;justify-content:space-between;width:100%;padding:0;flex-wrap:wrap;gap:12px"><span>Warren Labs — tools that tell the truth.</span><span class="mono">VST3 · AU · Standalone · macOS</span></div></footer></body></html>
