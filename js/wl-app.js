@@ -282,4 +282,17 @@
   document.getElementById('ovClose').addEventListener('click', closeUnit);
   document.getElementById('ovScrim').addEventListener('click', closeUnit);
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeUnit(); });
+
+  /* ---------------- mobile nav ---------------- */
+  const navToggle = document.querySelector('.nav-toggle');
+  const headerEl = document.querySelector('header');
+  if (navToggle && headerEl) {
+    const setNav = open => {
+      headerEl.classList.toggle('nav-open', open);
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+    navToggle.addEventListener('click', () => setNav(!headerEl.classList.contains('nav-open')));
+    headerEl.querySelectorAll('nav a').forEach(a => a.addEventListener('click', () => setNav(false)));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') setNav(false); });
+  }
 })();

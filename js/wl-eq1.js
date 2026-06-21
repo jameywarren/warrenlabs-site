@@ -190,7 +190,7 @@
         x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
       }
       ctx.stroke();
-      const amber = cssVar('--acc') || '#eeb154';
+      const amber = cssVar('--acc') || '#FF9E2C';
       s.bands.forEach((b, i) => {
         const active = s.dragBand === i;
         const hc = active ? amber : b.color;   // amber lights up the band you're holding
