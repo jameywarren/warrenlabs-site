@@ -174,7 +174,9 @@
     const shipping = /^shipping/i.test(p.status || '');
     const led = shipping ? 'var(--led-green)' : 'var(--led-amber)';
     const knobs = knobRots(p.slug || p.name, 3).map(r => `<span class="tknob" style="--rot:${r}deg"></span>`).join('');
-    return `<button class="unit plug" type="button" data-plugin="${esc(p.slug)}" style="--decor:${esc(p.accent || 'var(--acc)')}">
+    // A real <a> (fills the rack width, keeps right/middle-click → page, works without JS);
+    // the click handler intercepts a plain left-click to open the popup instead.
+    return `<a class="unit plug" href="plugins/${esc(p.slug)}/" data-plugin="${esc(p.slug)}" style="--decor:${esc(p.accent || 'var(--acc)')}">
       <span class="u-num">WL-${esc((p.code || '').toUpperCase())}</span>
       <div class="u-name"><h3>${esc(p.name)}</h3><span class="u-sub">${esc((p.category || '').toUpperCase())}</span></div>
       <div class="plug-knobs">${knobs}</div>
@@ -182,7 +184,7 @@
         <span class="u-status"><span class="led${shipping ? '' : ' blink'}" style="--led-c:${led}"></span>${esc((p.status || '').toUpperCase())}</span>
         <span class="u-open">OPEN ↗</span>
       </div>
-    </button>`;
+    </a>`;
   }
   (function buildPluginRack() {
     const host = document.getElementById('rackUnits');
@@ -201,7 +203,12 @@
         });
         host.innerHTML = html;
         host.querySelectorAll('[data-plugin]').forEach(el =>
-          el.addEventListener('click', () => openPlugin(el.dataset.plugin)));
+          el.addEventListener('click', e => {
+            // Let modified clicks (cmd/ctrl/middle, new tab) fall through to the real link.
+            if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+            e.preventDefault();
+            openPlugin(el.dataset.plugin);
+          }));
       })
       .catch(() => { host.innerHTML = '<div class="rack-line mono">See the full plugin line → <a href="plugins/">/plugins ↗</a></div>'; });
   })();
