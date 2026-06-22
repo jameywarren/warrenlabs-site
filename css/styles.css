@@ -471,15 +471,25 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
 
 @media (max-width: 880px) {
   .also-grid { grid-template-columns: repeat(2, 1fr); }
-  /* tablet: keep the screen, drop the knobs for room */
-  .unit.plug { grid-template-columns: 88px minmax(120px,1fr) auto 140px; }
-  .unit.plug .plug-knobs { display: none; }
+  /* tablet: single row, drop the model code + knobs, keep the screen */
+  .unit.plug { grid-template-columns: minmax(120px,1fr) auto auto; }
+  .unit.plug .u-num, .unit.plug .plug-knobs { display: none; }
 }
-@media (max-width: 680px) {
-  /* phones: name + status only — drop model code, screen, knobs */
-  .unit.plug { grid-template-columns: 1fr auto; padding-left: 22px; padding-right: 22px; }
-  .unit.plug .u-num, .unit.plug .plug-knobs, .unit.plug .plug-screen, .unit.plug .u-open { display: none; }
-  .unit.plug .u-hint { flex-direction: row; align-items: center; gap: 12px; }
+@media (max-width: 720px) {
+  /* phones: a compact stacked front panel — name + status on top, screen + knobs below,
+     so each unit still reads like the desktop one instead of going bare. (Overrides the
+     homepage's generic ≤720 unit-stacking, which hides .u-hint — we re-show it here.) */
+  .unit.plug {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    row-gap: 13px; column-gap: 14px;
+    height: auto; padding: 18px 20px; align-items: center;
+  }
+  .unit.plug .u-num, .unit.plug .u-open { display: none; }
+  .unit.plug .u-name   { grid-column: 1; grid-row: 1; }
+  .unit.plug .u-hint   { grid-column: 2; grid-row: 1; display: flex; justify-self: end; flex-direction: row; align-items: center; gap: 10px; }
+  .unit.plug .plug-screen { grid-column: 1; grid-row: 2; justify-self: start; display: block; width: 150px; }
+  .unit.plug .plug-knobs  { grid-column: 2; grid-row: 2; justify-self: end; display: flex; }
 }
 @media (max-width: 520px) { .also-grid { grid-template-columns: 1fr; } }
 
