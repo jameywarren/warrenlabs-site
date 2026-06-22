@@ -142,17 +142,35 @@
     + '<circle cx="34" cy="12" r="4.2" fill="currentColor" fill-opacity="0.26"></circle></svg>';
 
   // A signal trace shaped to the plugin's job (matches the /plugins page faceplate shots).
+  // Character line varies by color + shape; the Trueness line shares the amber identity but
+  // each tool's screen shows what it actually does, so they read as distinct instruments.
   function traceFor(p) {
-    const cat = ((p.category || '') + ' ' + (p.slug || '')).toLowerCase();
-    if (/echo|delay|ripple/.test(cat)) {
+    const slug = (p.slug || '').toLowerCase();
+    const cat = ((p.category || '') + ' ' + slug).toLowerCase();
+    // — Character line —
+    if (/echo|delay|ripple/.test(cat)) {                       // decaying repeats
       let bars = '', x = 18;
       [34, 26, 19, 13, 9, 6].forEach(h => { bars += `<line class="trace" x1="${x}" y1="46" x2="${x}" y2="${46 - h}"/>`; x += 28; });
       return bars;
     }
-    if (/modulation|eddy/.test(cat)) return '<path class="trace" d="M6,40 C30,8 54,8 78,40 S126,72 150,40 S198,8 218,28"/>';
+    if (/modulation|eddy/.test(cat)) return '<path class="trace" d="M6,40 C30,8 54,8 78,40 S126,72 150,40 S198,8 218,28"/>';  // sine swirl
     if (/saturation|drive|distortion|fuzz|temper|grind|burr/.test(cat))
-      return '<path class="trace" d="M6,64 C44,64 60,18 112,16 C164,14 180,60 218,60"/>';
-    return '<path class="trace" d="M6,52 C42,52 52,22 84,22 C120,22 132,54 160,40 C184,30 200,34 218,32"/>';
+      return '<path class="trace" d="M6,64 C44,64 60,18 112,16 C164,14 180,60 218,60"/>';  // soft-clip knee
+    // — Trueness line —
+    if (slug === 'square')                                     // goniometer / phase scope
+      return '<ellipse class="trace" cx="112" cy="32" rx="34" ry="12" transform="rotate(-34 112 32)"/>';
+    if (slug === 'scribe')                                     // matching EQ: source pulled to a target
+      return '<path class="trace-dim" d="M6,42 C56,42 66,22 112,22 C158,22 168,42 218,42"/>'
+           + '<path class="trace" d="M6,46 C56,46 70,26 112,26 C154,26 168,44 218,40"/>';
+    if (slug === 'reveal')                                     // dynamic resonance: surgical notches
+      return '<path class="trace" d="M6,26 L70,26 L77,26 L83,50 L89,26 L134,26 L141,26 L147,48 L153,26 L218,26"/>';
+    if (slug === 'plane')                                      // de-esser: one HF sibilance notch
+      return '<path class="trace" d="M6,26 L150,26 L160,26 L168,50 L176,26 L218,26"/>';
+    if (slug === 'seat')                                       // mix translation: overlaid device curves
+      return '<path class="trace" d="M6,40 C56,40 66,24 112,24 C158,24 168,40 218,40"/>'
+           + '<path class="trace-thin" d="M6,30 C56,30 66,42 112,42 C158,42 168,28 218,28"/>'
+           + '<path class="trace-thin" d="M6,46 C56,46 90,32 112,36 C150,40 180,44 218,30"/>';
+    return '<path class="trace" d="M6,30 C40,30 44,46 72,46 C104,46 110,20 140,22 C170,24 186,38 218,34"/>';  // level: correction curve
   }
   function faceplateHTML(p) {
     const knobs = knobRots(p.slug || p.name, 3).map(r => `<span class="knob" style="--rot:${r}deg"></span>`).join('');
