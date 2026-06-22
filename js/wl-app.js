@@ -154,8 +154,12 @@
       return bars;
     }
     if (/modulation|eddy/.test(cat)) return '<path class="trace" d="M6,40 C30,8 54,8 78,40 S126,72 150,40 S198,8 218,28"/>';  // sine swirl
-    if (/saturation|drive|distortion|fuzz|temper|grind|burr/.test(cat))
-      return '<path class="trace" d="M6,64 C44,64 60,18 112,16 C164,14 180,60 218,60"/>';  // soft-clip knee
+    // dirt trio — same engine, increasing "squareness": soft → clipped → near-square
+    if (slug === 'temper') return '<path class="trace" d="M6,32 C16,12 30,12 44,32 C58,52 72,52 86,32 C100,12 114,12 128,32 C142,52 156,52 170,32 C184,12 198,12 212,32"/>';
+    if (slug === 'grind')  return '<path class="trace" d="M6,34 C14,14 22,13 34,13 L54,13 C66,13 74,51 86,51 L106,51 C118,51 126,13 138,13 L158,13 C170,13 178,51 190,51 L210,51"/>';
+    if (slug === 'burr')   return '<path class="trace" d="M6,40 L20,12 L58,12 L74,52 L112,52 L128,12 L166,12 L182,52 L214,52"/>';
+    if (/saturation|drive|distortion|fuzz/.test(cat))
+      return '<path class="trace" d="M6,64 C44,64 60,18 112,16 C164,14 180,60 218,60"/>';  // generic dirt
     // — Trueness line —
     if (slug === 'square')                                     // goniometer / phase scope
       return '<ellipse class="trace" cx="112" cy="32" rx="34" ry="12" transform="rotate(-34 112 32)"/>';
