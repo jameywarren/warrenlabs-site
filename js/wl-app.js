@@ -116,19 +116,56 @@
     drawMini();
   }
 
-  /* ---------------- unit data ---------------- */
+  /* ---------------- plugin rack (data-driven from the catalog manifest) ----------------
+     The rack IS the plugin line now: it builds itself from plugins/plugins.json (the same
+     source of truth as the /plugins/ pages), so adding a plugin there + redeploying updates
+     the rack too — no hand-maintained list to go stale. Units link to their catalog page;
+     status LED = green (shipping) / amber blink (in development); knob pointers take each
+     plugin's real faceplate accent. The personal projects live in the "Also from the lab"
+     strip below (overlays, via UNITS). */
+  function knobRots(seed, n) {
+    let h = 0;
+    for (const ch of seed) h = (h * 131 + ch.charCodeAt(0)) >>> 0;
+    const out = [];
+    for (let i = 0; i < n; i++) { h = (h * 1103515245 + 12345) & 0x7fffffff; out.push(Math.round(h / 0x7fffffff * 240 - 120)); }
+    return out;
+  }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+  function pluginUnitHTML(p) {
+    const shipping = /^shipping/i.test(p.status || '');
+    const led = shipping ? 'var(--led-green)' : 'var(--led-amber)';
+    const knobs = knobRots(p.slug || p.name, 3).map(r => `<span class="tknob" style="--rot:${r}deg"></span>`).join('');
+    return `<a class="unit plug" href="plugins/${esc(p.slug)}/" style="--decor:${esc(p.accent || 'var(--acc)')}">
+      <span class="u-num">WL-${esc((p.code || '').toUpperCase())}</span>
+      <div class="u-name"><h3>${esc(p.name)}</h3><span class="u-sub">${esc((p.category || '').toUpperCase())}</span></div>
+      <div class="plug-knobs">${knobs}</div>
+      <div class="u-hint">
+        <span class="u-status"><span class="led${shipping ? '' : ' blink'}" style="--led-c:${led}"></span>${esc((p.status || '').toUpperCase())}</span>
+        <span class="u-open">OPEN ↗</span>
+      </div>
+    </a>`;
+  }
+  (function buildPluginRack() {
+    const host = document.getElementById('rackUnits');
+    if (!host) return;
+    fetch('plugins/plugins.json', { cache: 'no-cache' })
+      .then(r => r.json())
+      .then(data => {
+        let html = '';
+        ['Trueness', 'Character'].forEach((line, li) => {
+          const ps = (data.plugins || []).filter(p => (p.line || 'Trueness') === line);
+          if (!ps.length) return;
+          if (li > 0) html += '<div class="unit vent static"><div class="slots"></div></div>';
+          html += `<div class="rack-line mono">${line.toUpperCase()} LINE</div>`;
+          html += ps.map(pluginUnitHTML).join('');
+        });
+        host.innerHTML = html;
+      })
+      .catch(() => { host.innerHTML = '<div class="rack-line mono">See the full plugin line → <a href="plugins/">/plugins ↗</a></div>'; });
+  })();
+
+  /* ---------------- unit data (the "Also from the lab" projects) ---------------- */
   const UNITS = {
-    eq: {
-      num: 'WL-EQ1', title: 'Level — Headphone Correction',
-      led: 'var(--led-amber)', blink: true, status: 'BETA',
-      plugin: true,
-      link: '/plugins/level/', linkLabel: 'LEARN MORE ↗',
-      desc: [
-        "<b>Level</b> is a VST3 / AU / Standalone plugin (C++ / JUCE) that flattens a headphone's measured response by inverting its EQ curve, then adds Bauer-style crossfeed — with a real interaural delay — so a mix translates the way speakers would. The signal comes out measurably corrected; the DSP being honest matters before anything else.",
-        "It's the flagship of a growing line of Warren Labs tools — reference, correction, and metering built on shared DSP (mono-compatibility, dynamic resonance suppression, matching EQ, mix translation), with a character line for color and space taking shape alongside."
-      ],
-      meta: [['ROLE', 'Solo — product + DSP'], ['STACK', 'C++, JUCE, CMake'], ['FORMATS', 'VST3 · AU · Standalone'], ['STATUS', 'Working build · correction + crossfeed + UI'], ['THIS DEMO', 'Web Audio sketch — the real plugin runs native']]
-    },
     changes: {
       num: 'WL-CH1', title: 'Changes',
       led: 'var(--led-amber)', blink: true, status: 'BETA',
@@ -281,7 +318,7 @@
     });
   }
 
-  document.querySelectorAll('.unit[data-unit]').forEach(el =>
+  document.querySelectorAll('[data-unit]').forEach(el =>
     el.addEventListener('click', () => openUnit(el.dataset.unit)));
   document.getElementById('ovClose').addEventListener('click', closeUnit);
   document.getElementById('ovScrim').addEventListener('click', closeUnit);

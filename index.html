@@ -61,7 +61,7 @@
     <div class="k">HARDWARE <span class="sig">·</span> SOFTWARE <span class="sig">·</span> SOUND</div>
     <h2 class="display">Instruments that listen back.</h2>
     <p class="sub">Tools for people who care how it sounds — from the bench at Warren Labs.</p>
-    <div class="rack-instr mono"><span class="dot"></span>CLICK A UNIT TO PULL IT OUT OF THE RACK</div>
+    <div class="rack-instr mono"><span class="dot"></span>CLICK ANY UNIT FOR THE FULL SPEC ↗</div>
   </div>
 
   <div class="rack-scene">
@@ -70,130 +70,25 @@
       <div class="rail left"><div class="holes"></div></div>
       <div class="rail right"><div class="holes"></div></div>
 
-      <div class="unit u2" data-unit="eq">
-        <span class="u-num">WL-EQ1</span>
-        <div class="u-name"><h3>Headphone EQ + Crossfeed</h3><span class="u-sub">VST3 · C++ / JUCE · PLAYABLE DEMO INSIDE</span></div>
-        <div class="u2-right">
-          <div class="u-status"><div class="led blink" style="--led-c: var(--led-amber)"></div>PROTOTYPE</div>
-          <span class="u-open">OPEN ↗</span>
-        </div>
-        <div class="u2-panel">
-          <div>
-            <div class="uscreen big"><canvas id="eqMini" width="500" height="176"></canvas></div>
-            <div class="tiny-label">CORRECTION CURVE</div>
-          </div>
-          <div><div class="tknob lg" style="--rot:-35deg"></div><div class="tiny-label">LOW</div></div>
-          <div><div class="tknob lg" style="--rot:20deg"></div><div class="tiny-label">MID</div></div>
-          <div><div class="tknob lg" style="--rot:-70deg"></div><div class="tiny-label">HIGH</div></div>
-          <div class="u2-div"></div>
-          <div><div class="tknob lg" style="--rot:-50deg"></div><div class="tiny-label">XFEED</div></div>
-          <div><div class="tknob lg" style="--rot:25deg"></div><div class="tiny-label">GAIN</div></div>
-          <div class="u2-div"></div>
-          <div><div class="utoggle"></div><div class="tiny-label">BYPASS</div></div>
-          <div><div class="ujack"></div><div class="tiny-label">PHONES</div></div>
-        </div>
-      </div>
-
-      <div class="unit" data-unit="changes">
-        <span class="u-num">WL-CH1</span>
-        <div class="u-name"><h3>Changes</h3><span class="u-sub">iOS APP · HUM IN A SONG → NASHVILLE NUMBER CHART</span></div>
-        <div class="mini">
-          <div class="u-detail">
-            <div>
-              <div class="uchart"><i>1</i><i>4</i><i class="hot">5</i><i>6m</i></div>
-              <div class="tiny-label">NUMBER CHART</div>
-            </div>
-            <div>
-              <div class="uscreen"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-              <div class="tiny-label">PLAYS ALONG</div>
-            </div>
-          </div>
-          <div class="u-status"><div class="led blink" style="--led-c: var(--led-amber)"></div>BETA</div>
-        </div>
-        <div class="u-hint"><span class="u-open">OPEN ↗</span></div>
-      </div>
-
-      <div class="unit" data-unit="maker">
-        <span class="u-num">WL-MP1</span>
-        <div class="u-name"><h3>Maker Phones</h3><span class="u-sub">OPEN MANUAL · 32 CHAPTERS · DIY HEADPHONE DESIGN</span></div>
-        <div class="mini">
-          <div class="u-detail">
-            <div>
-              <!-- PLACEHOLDER: swap for the exploded-headphone line drawing from the makerphones.com hero (asset to be supplied) -->
-              <svg class="uhp" viewBox="0 0 134 54" aria-hidden="true">
-                <path class="hp-band" d="M14 34 C14 8 120 8 120 34" />
-                <rect class="hp-cup" x="6" y="30" width="22" height="20" rx="5" />
-                <rect class="hp-cup" x="106" y="30" width="22" height="20" rx="5" />
-                <circle class="hp-drv" cx="67" cy="20" r="10" />
-                <circle class="hp-drv2" cx="67" cy="20" r="4" />
-                <line class="hp-x" x1="67" y1="30" x2="67" y2="44" />
-                <line class="hp-x" x1="28" y1="40" x2="44" y2="40" />
-                <line class="hp-x" x1="90" y1="40" x2="106" y2="40" />
-              </svg>
-              <div class="tiny-label">EXPLODED VIEW</div>
-            </div>
-            <div>
-              <div class="uchap"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
-              <div class="tiny-label">32 CH · COMPLETE</div>
-            </div>
-          </div>
-          <div class="u-status"><div class="led" style="--led-c: var(--led-green)"></div>LIVE</div>
-        </div>
-        <div class="u-hint"><span class="u-open">makerphones.com ↗</span></div>
-      </div>
-
-      <div class="unit" data-unit="tone">
-        <span class="u-num">WL-TF1</span>
-        <div class="u-name"><h3>Tone Farmers</h3><span class="u-sub">RECORD LABEL · ARTIST-FAVORABLE SPLIT</span></div>
-        <div class="mini">
-          <div class="u-detail">
-            <div>
-              <div class="ucassette"><div class="uhub"></div><div class="tape"></div><div class="uhub r"></div></div>
-              <div class="tiny-label">MASTER · 30 IPS</div>
-            </div>
-            <div>
-              <div class="uvu"><div class="vrow"></div><div class="vrow"></div></div>
-              <div class="tiny-label">L / R</div>
-            </div>
-            <div>
-              <div class="utrans"><i></i><i></i><i class="rec"></i><i></i></div>
-              <div class="tiny-label">TRANSPORT</div>
-            </div>
-          </div>
-          <div class="u-status"><div class="led" style="--led-c: var(--led-green)"></div>ACTIVE</div>
-        </div>
-        <div class="u-hint"><span class="u-open">OPEN ↗</span></div>
-      </div>
-
-      <div class="unit" data-unit="bloom">
-        <span class="u-num">WL-SB1</span>
-        <div class="u-name"><h3>Sonic Bloom</h3><span class="u-sub">PLATFORM FOR WORKING MUSICIANS · $20 FLAT</span></div>
-        <div class="mini">
-          <div class="u-detail">
-            <div>
-              <div class="usite">
-                <div class="ubar"><i></i><i></i><i></i></div>
-                <div class="ucontent">
-                  <div class="album"></div>
-                  <div class="ulines">
-                    <i></i><i></i>
-                    <div class="uwave"><i class="lit" style="height:5px"></i><i class="lit" style="height:9px"></i><i class="lit" style="height:6px"></i><i style="height:8px"></i><i style="height:4px"></i><i style="height:7px"></i><i style="height:5px"></i><i style="height:9px"></i><i style="height:6px"></i></div>
-                  </div>
-                </div>
-              </div>
-              <div class="tiny-label">ARTIST SITE · PLAYER</div>
-            </div>
-            <div><div class="mini-faders"><i style="--p:60%"></i><i style="--p:12%"></i><i style="--p:38%"></i></div><div class="tiny-label">MIX</div></div>
-          </div>
-          <div class="u-status"><div class="led blink" style="--led-c: var(--led-amber)"></div>PRE-LAUNCH</div>
-        </div>
-        <div class="u-hint"><span class="u-open">OPEN ↗</span></div>
-      </div>
+      <div id="rackUnits"></div>
 
       <div class="unit vent static"><div class="slots"></div></div>
 
       <div class="rack-shadow"></div>
     </div>
+  </div>
+</section>
+
+<section class="also wrap" id="also">
+  <div class="also-head">
+    <div class="k mono">ALSO FROM THE LAB</div>
+    <p class="sub">Other things I'm building — a label, a platform, a manual, an app.</p>
+  </div>
+  <div class="also-grid">
+    <button class="also-card" data-unit="tone"><span class="led" style="--led-c:var(--led-green)"></span><h4>Tone Farmers</h4><span class="ac-cat">Record label</span><span class="ac-tl">Artist-favorable splits, recording through release.</span></button>
+    <button class="also-card" data-unit="bloom"><span class="led blink" style="--led-c:var(--led-amber)"></span><h4>Sonic Bloom</h4><span class="ac-cat">Musician platform</span><span class="ac-tl">One site, $20 flat, 0% commission.</span></button>
+    <button class="also-card" data-unit="maker"><span class="led" style="--led-c:var(--led-green)"></span><h4>Maker Phones</h4><span class="ac-cat">Open build manual</span><span class="ac-tl">Build your own headphones — 32 chapters, free.</span></button>
+    <button class="also-card" data-unit="changes"><span class="led blink" style="--led-c:var(--led-amber)"></span><h4>Changes</h4><span class="ac-cat">iOS app</span><span class="ac-tl">Hum a song → a Nashville number chart.</span></button>
   </div>
 </section>
 
