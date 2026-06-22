@@ -1,0 +1,216 @@
+{
+  "_comment": "Source of truth for warrenlabs.com plugin landing pages. tools/gen_site.py renders web/<slug>/index.html + web/index.html from this. tools/new_plugin.sh appends an entry on scaffold. Fluency/foundation builds (e.g. Curve, Press codenames) are intentionally NOT listed \u2014 only shipping lane products get public pages. Names marked 'pending' are working names not yet vetted; pages are staging until the name locks.",
+  "plugins": [
+    {
+      "slug": "level",
+      "name": "Level",
+      "code": "Levl",
+      "line": "Trueness",
+      "accent": "#FF9E2C",
+      "category": "Headphone correction + crossfeed",
+      "status": "Shipping",
+      "nameStatus": "assigned",
+      "tagline": "Hear your headphones honestly.",
+      "blurb": "Flattens a headphone's measured response by inverting its curve, then adds Bauer-style crossfeed so a mix translates the way speakers would. The signal comes out measurably corrected \u2014 honest before anything else.",
+      "features": [
+        "Measured-curve correction per model",
+        "Bauer crossfeed with interaural delay",
+        "Voicing + RTA layer",
+        "VST3 / AU / Standalone"
+      ]
+    },
+    {
+      "slug": "square",
+      "name": "Square",
+      "code": "Sqar",
+      "line": "Trueness",
+      "accent": "#FF9E2C",
+      "category": "Mono-compatibility + phase metering",
+      "status": "In development",
+      "nameStatus": "set",
+      "tagline": "Make the low end mono-proof.",
+      "blurb": "Sums the bass to mono below a crossover, auditions the result, and shows you the stereo field \u2014 goniometer and correlation \u2014 so the low end holds up everywhere it's played.",
+      "features": [
+        "Bass-mono below an adjustable crossover",
+        "Goniometer + correlation meter",
+        "Solo-low + full mono fold",
+        "VST3 / AU / Standalone"
+      ]
+    },
+    {
+      "slug": "scribe",
+      "name": "Scribe",
+      "code": "Scrb",
+      "line": "Trueness",
+      "accent": "#FF9E2C",
+      "category": "Matching EQ",
+      "status": "In development",
+      "nameStatus": "set",
+      "tagline": "Scribe a tonal fit to target.",
+      "blurb": "Learns a signal's tonal balance and gently pulls it toward a target curve \u2014 broad and musical, not surgical. The corrective half of the reference desk.",
+      "features": [
+        "Learns the source's tonal balance",
+        "Match toward flat + tilt",
+        "Freeze the learned profile",
+        "VST3 / AU / Standalone"
+      ]
+    },
+    {
+      "slug": "reveal",
+      "name": "Reveal",
+      "code": "Revl",
+      "line": "Trueness",
+      "accent": "#FF9E2C",
+      "category": "Dynamic resonance suppressor",
+      "status": "In development",
+      "nameStatus": "set",
+      "tagline": "Tame what rings, leave the rest.",
+      "blurb": "A dense dynamic filterbank that cuts resonant bands only where and when they spike \u2014 transparent when nothing's ringing, minimum-phase, no pre-ringing. A delta monitor shows exactly what's removed.",
+      "features": [
+        "Per-band resonance detection",
+        "Transparent at rest",
+        "Delta (listen to what's removed)",
+        "VST3 / AU / Standalone"
+      ]
+    },
+    {
+      "slug": "plane",
+      "name": "Plane",
+      "code": "Plne",
+      "line": "Trueness",
+      "accent": "#FF9E2C",
+      "category": "De-esser",
+      "status": "In development",
+      "nameStatus": "set",
+      "tagline": "Shave the harsh edge smooth.",
+      "blurb": "The resonance engine scoped to the sibilance band \u2014 frequency-conscious de-essing that catches the specific harsh frequencies dynamically instead of ducking one static band.",
+      "features": [
+        "Catches sibilant frequencies dynamically",
+        "Adjustable focus range",
+        "Delta monitor",
+        "VST3 / AU / Standalone"
+      ]
+    },
+    {
+      "slug": "seat",
+      "name": "Seat",
+      "code": "Seat",
+      "line": "Trueness",
+      "accent": "#FF9E2C",
+      "category": "Mix translation",
+      "status": "In development",
+      "nameStatus": "set",
+      "tagline": "Does it seat across systems?",
+      "blurb": "Auditions your mix through voiced phone / earbuds / laptop / car colorations so you hear how the balance holds up elsewhere \u2014 a check tool, bypassed for the render.",
+      "features": [
+        "Phone / earbuds / laptop / car targets",
+        "Blend the coloration in",
+        "Reference A/B",
+        "VST3 / AU / Standalone"
+      ]
+    },
+    {
+      "slug": "temper",
+      "name": "Temper",
+      "code": "Tmpr",
+      "line": "Character",
+      "accent": "#e8b066",
+      "category": "Saturation",
+      "status": "In development",
+      "nameStatus": "set",
+      "tagline": "Controlled heat.",
+      "blurb": "Oversampled tube, tape, and transformer saturation with a bias control for asymmetry and a tone tilt. Warm at a touch, characterful when pushed \u2014 the first tool on the Character line.",
+      "features": [
+        "Tube / Tape / Transformer models",
+        "Bias for even-harmonic asymmetry",
+        "Oversampled (anti-aliased)",
+        "Tone tilt + dry/wet",
+        "VST3 / AU / Standalone"
+      ]
+    },
+    {
+      "slug": "grind",
+      "name": "Grind",
+      "code": "Grnd",
+      "line": "Character",
+      "accent": "#ff7a33",
+      "category": "Drive / distortion",
+      "status": "In development",
+      "nameStatus": "set",
+      "tagline": "From bite to roar.",
+      "blurb": "Oversampled drive and distortion on the same engine as Temper, pushed hot: a diode-style overdrive, a crunchy cubic clip, and a compressed fuzz \u2014 with bias, tone, and dry/wet.",
+      "features": [
+        "Diode / Crunch / Fuzz models",
+        "Up to 48 dB of drive",
+        "Oversampled (anti-aliased)",
+        "Bias + tone + dry/wet",
+        "VST3 / AU / Standalone"
+      ]
+    },
+    {
+      "slug": "burr",
+      "name": "Burr",
+      "code": "Burr",
+      "line": "Character",
+      "accent": "#ff5535",
+      "category": "Fuzz",
+      "status": "In development",
+      "nameStatus": "set",
+      "tagline": "The rough edge.",
+      "blurb": "Extreme fuzz on the shared Saturator, pushed to the wall: a compressed near-square Fuzz, a hard-clipping Splat, and an asymmetric octave-y Buzz, with up to 60 dB of drive.",
+      "features": [
+        "Fuzz / Splat / Buzz models",
+        "Up to 60 dB of drive",
+        "Oversampled (anti-aliased)",
+        "Tone + dry/wet",
+        "VST3 / AU / Standalone"
+      ]
+    },
+    {
+      "slug": "ripple",
+      "name": "Ripple",
+      "code": "Ripl",
+      "line": "Character",
+      "accent": "#46c7c0",
+      "category": "Echo / delay",
+      "status": "In development",
+      "nameStatus": "set",
+      "tagline": "Repeats that ripple out.",
+      "blurb": "A stereo modulated echo: feedback, an in-loop tone that darkens the repeats, wow/flutter, ping-pong, and Clean / Tape / BBD character. The first tool on the time corner.",
+      "features": [
+        "Stereo delay up to 2 s",
+        "Clean / Tape / BBD character",
+        "In-loop tone + wow/flutter",
+        "Ping-pong + dry/wet",
+        "VST3 / AU / Standalone"
+      ]
+    },
+    {
+      "slug": "eddy",
+      "name": "Eddy",
+      "code": "Eddy",
+      "line": "Character",
+      "accent": "#7a86ff",
+      "category": "Modulation",
+      "status": "In development",
+      "nameStatus": "set",
+      "tagline": "Swirl, sweep, and shimmer.",
+      "blurb": "Chorus, flanger, and phaser on one engine: an LFO-modulated delay for chorus and flanger, a swept all-pass cascade for phaser, with rate, depth, feedback, and stereo width.",
+      "features": [
+        "Chorus / Flanger / Phaser",
+        "Rate \u00b7 Depth \u00b7 Feedback \u00b7 Width",
+        "Stereo spread",
+        "Dry/wet",
+        "VST3 / AU / Standalone"
+      ]
+    }
+  ],
+  "guides": [
+    {
+      "slug": "ir-capture",
+      "title": "Capturing your own reverb (impulse responses)",
+      "source": "tools/ir_capture/README.md",
+      "summary": "Sample the reverb of a real room \u2014 your studio, a hall \u2014 and load it into a convolution reverb."
+    }
+  ]
+}
