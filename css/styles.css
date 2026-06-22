@@ -440,6 +440,11 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
 .plug-screen .grid-x { stroke: rgba(220,228,232,.06); stroke-width: 1; }
 .plug-screen .trace { fill: none; stroke: var(--decor); stroke-width: 2.6;
   filter: drop-shadow(0 0 3px var(--decor)); }
+/* trace variants — dim dashed target (Scribe) + thin overlaid curves (Seat) */
+.plug-screen .trace-dim { fill: none; stroke: var(--decor); stroke-width: 1.5; opacity: .42; stroke-dasharray: 4 4; }
+.plug-screen .trace-thin { fill: none; stroke: var(--decor); stroke-width: 1.4; opacity: .5; }
+.shot .screen .trace-dim { fill: none; stroke: var(--shot-accent); stroke-width: 1.7; opacity: .42; stroke-dasharray: 4 4; }
+.shot .screen .trace-thin { fill: none; stroke: var(--shot-accent); stroke-width: 1.6; opacity: .5; }
 .plug-knobs { display: flex; gap: 16px; align-items: center; justify-self: end; }
 .plug-knobs .tknob { margin: 0; width: 24px; height: 24px; }
 .plug-knobs .tknob::after { height: 8px; transform-origin: 50% 10px;
