@@ -17,7 +17,8 @@
         "Bauer crossfeed with interaural delay",
         "Voicing + RTA layer",
         "VST3 / AU / Standalone"
-      ]
+      ],
+      "requestCurve": true
     },
     {
       "slug": "square",
