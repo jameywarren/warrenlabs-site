@@ -174,11 +174,17 @@
     const shipping = /^shipping/i.test(p.status || '');
     const led = shipping ? 'var(--led-green)' : 'var(--led-amber)';
     const knobs = knobRots(p.slug || p.name, 3).map(r => `<span class="tknob" style="--rot:${r}deg"></span>`).join('');
+    // A lit mini-screen on each panel — the plugin's signal trace (same shape as the popup
+    // faceplate / catalog shot), tinted with the plugin accent via --decor.
+    const screen = `<div class="plug-screen"><svg viewBox="0 0 224 64" preserveAspectRatio="none">`
+      + `<line class="grid-x" x1="0" y1="21" x2="224" y2="21"/><line class="grid-x" x1="0" y1="43" x2="224" y2="43"/>`
+      + `${traceFor(p)}</svg></div>`;
     // A real <a> (fills the rack width, keeps right/middle-click → page, works without JS);
     // the click handler intercepts a plain left-click to open the popup instead.
     return `<a class="unit plug" href="plugins/${esc(p.slug)}/" data-plugin="${esc(p.slug)}" style="--decor:${esc(p.accent || 'var(--acc)')}">
       <span class="u-num">WL-${esc((p.code || '').toUpperCase())}</span>
       <div class="u-name"><h3>${esc(p.name)}</h3><span class="u-sub">${esc((p.category || '').toUpperCase())}</span></div>
+      ${screen}
       <div class="plug-knobs">${knobs}</div>
       <div class="u-hint">
         <span class="u-status"><span class="led${shipping ? '' : ' blink'}" style="--led-c:${led}"></span>${esc((p.status || '').toUpperCase())}</span>
