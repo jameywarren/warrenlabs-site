@@ -464,3 +464,51 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   .unit.plug .u-hint { flex-direction: row; align-items: center; gap: 12px; }
 }
 @media (max-width: 520px) { .also-grid { grid-template-columns: 1fr; } }
+
+/* plugin rack units are <button>s now (open an info popup) — reset button chrome */
+button.unit.plug { appearance: none; -webkit-appearance: none; font: inherit; color: inherit;
+  text-align: left; border-left: 0; border-right: 0; border-bottom: 0; width: auto; }
+button.unit.plug:focus-visible { outline: 2px solid var(--acc); outline-offset: -2px; }
+/* the blurred rack shadow must not eat clicks on the bottom units */
+.rack-shadow { pointer-events: none; }
+
+/* ===================================== faceplate "shot" (shared with /plugins pages),
+   shown inside the plugin info popup. Themed by --shot-accent (the plugin's accent). */
+.shot { --shot-accent: var(--acc); position: relative; aspect-ratio: 760/300; border-radius: 10px;
+  overflow: hidden; border: 1px solid var(--panel-edge);
+  background: linear-gradient(180deg, var(--panel-hi), var(--panel) 16%, var(--panel) 82%, #101014);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 20px 46px rgba(0,0,0,.55); }
+.shot::after { content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: repeating-linear-gradient(90deg, rgba(255,255,255,.012) 0 1px, transparent 1px 3px); }
+.shot .screw { position: absolute; width: 9px; height: 9px; border-radius: 50%;
+  background: radial-gradient(circle at 36% 32%, #43484e, #24272a 70%);
+  box-shadow: 0 0 0 1px rgba(0,0,0,.5), inset 0 0 0 .5px rgba(255,255,255,.16); }
+.shot .screw.tl { left: 12px; top: 12px } .shot .screw.tr { right: 12px; top: 12px }
+.shot .screw.bl { left: 12px; bottom: 12px } .shot .screw.br { right: 12px; bottom: 12px }
+.shot .face { position: absolute; inset: 0; display: flex; align-items: center; gap: 4%; padding: 7% 6.5%; }
+.shot .screen { flex: 0 0 52%; height: 62%; background: #08090a; border-radius: 5px; border: 1px solid #000;
+  box-shadow: inset 0 0 16px rgba(0,0,0,.85), 0 1px 0 rgba(255,255,255,.04); position: relative; overflow: hidden; }
+.shot .screen svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.shot .screen .grid-x { stroke: rgba(220,228,232,.06); stroke-width: 1; }
+.shot .screen .trace { fill: none; stroke: var(--shot-accent); stroke-width: 2.4;
+  filter: drop-shadow(0 0 4px var(--shot-accent)); }
+.shot .knobs { flex: 1; display: flex; align-items: center; justify-content: space-around; gap: 6%; }
+.shot .knob { width: clamp(34px,7vw,52px); aspect-ratio: 1; border-radius: 50%; position: relative;
+  background: radial-gradient(circle at 36% 30%, var(--panel-edge), var(--panel) 60%, #0c0c0f);
+  border: 1px solid var(--panel-edge); box-shadow: 0 3px 7px rgba(0,0,0,.5); }
+.shot .knob::after { content: ''; position: absolute; left: 50%; top: 13%; width: 2.5px; height: 30%;
+  background: var(--shot-accent); border-radius: 2px; box-shadow: 0 0 6px var(--shot-accent);
+  transform: translateX(-50%) rotate(var(--rot,0deg)); transform-origin: 50% 130%; }
+.shot .id { position: absolute; right: 5%; bottom: 8%; display: flex; align-items: center; gap: 9px; }
+.shot .id .echo-mark { width: 34px; height: auto; color: var(--shot-accent); flex: none; overflow: visible; }
+.shot .id .txt { line-height: 1; }
+.shot .id .nm { font-family: "Barlow", sans-serif; font-weight: 600; font-size: clamp(16px,2.6vw,22px);
+  letter-spacing: .05em; text-transform: uppercase; color: var(--shot-accent); }
+.shot .id .br { font-family: "IBM Plex Mono", monospace; font-size: 8.5px; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--faint); margin-top: 4px; }
+.ov-body .shot { max-width: 720px; margin: 0 0 6px; }
+
+/* plugin popup feature list */
+.ov-features { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 8px; }
+.ov-features li { font-size: 13.5px; color: var(--dim); line-height: 1.5; }
+.ov-features li::before { content: "›"; color: var(--acc); margin-right: 9px; }

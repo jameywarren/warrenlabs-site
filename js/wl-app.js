@@ -131,11 +131,50 @@
     return out;
   }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+
+  // The echo mark, for the faceplate identity lockup inside the popup.
+  const ECHO_MARK = '<svg class="echo-mark" viewBox="-16 -16 232 132" aria-hidden="true">'
+    + '<defs><filter id="echoGlowB" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="7"></feGaussianBlur></filter></defs>'
+    + '<circle cx="152" cy="80" r="15" fill="currentColor" filter="url(#echoGlowB)" opacity="0.7"></circle>'
+    + '<circle cx="152" cy="80" r="15" fill="currentColor"></circle>'
+    + '<circle cx="104" cy="44" r="10.35" fill="currentColor" fill-opacity="0.66"></circle>'
+    + '<circle cx="66" cy="25" r="6.9" fill="currentColor" fill-opacity="0.42"></circle>'
+    + '<circle cx="34" cy="12" r="4.2" fill="currentColor" fill-opacity="0.26"></circle></svg>';
+
+  // A signal trace shaped to the plugin's job (matches the /plugins page faceplate shots).
+  function traceFor(p) {
+    const cat = ((p.category || '') + ' ' + (p.slug || '')).toLowerCase();
+    if (/echo|delay|ripple/.test(cat)) {
+      let bars = '', x = 18;
+      [34, 26, 19, 13, 9, 6].forEach(h => { bars += `<line class="trace" x1="${x}" y1="46" x2="${x}" y2="${46 - h}"/>`; x += 28; });
+      return bars;
+    }
+    if (/modulation|eddy/.test(cat)) return '<path class="trace" d="M6,40 C30,8 54,8 78,40 S126,72 150,40 S198,8 218,28"/>';
+    if (/saturation|drive|distortion|fuzz|temper|grind|burr/.test(cat))
+      return '<path class="trace" d="M6,64 C44,64 60,18 112,16 C164,14 180,60 218,60"/>';
+    return '<path class="trace" d="M6,52 C42,52 52,22 84,22 C120,22 132,54 160,40 C184,30 200,34 218,32"/>';
+  }
+  function faceplateHTML(p) {
+    const knobs = knobRots(p.slug || p.name, 3).map(r => `<span class="knob" style="--rot:${r}deg"></span>`).join('');
+    const brand = 'WARREN LABS &nbsp;&middot;&nbsp; ' + esc((p.category || '').toUpperCase());
+    return `<div class="shot" style="--shot-accent:${esc(p.accent || 'var(--acc)')}">
+      <span class="screw tl"></span><span class="screw tr"></span><span class="screw bl"></span><span class="screw br"></span>
+      <div class="face">
+        <div class="screen"><svg viewBox="0 0 224 64" preserveAspectRatio="none">
+          <line class="grid-x" x1="0" y1="21" x2="224" y2="21"/><line class="grid-x" x1="0" y1="43" x2="224" y2="43"/>
+          ${traceFor(p)}</svg></div>
+        <div class="knobs">${knobs}</div>
+      </div>
+      <div class="id">${ECHO_MARK}<div class="txt"><div class="nm">${esc(p.name)}</div><div class="br">${brand}</div></div></div>
+    </div>`;
+  }
+
+  const PLUGINS = {};   // slug → manifest entry, for the popup
   function pluginUnitHTML(p) {
     const shipping = /^shipping/i.test(p.status || '');
     const led = shipping ? 'var(--led-green)' : 'var(--led-amber)';
     const knobs = knobRots(p.slug || p.name, 3).map(r => `<span class="tknob" style="--rot:${r}deg"></span>`).join('');
-    return `<a class="unit plug" href="plugins/${esc(p.slug)}/" style="--decor:${esc(p.accent || 'var(--acc)')}">
+    return `<button class="unit plug" type="button" data-plugin="${esc(p.slug)}" style="--decor:${esc(p.accent || 'var(--acc)')}">
       <span class="u-num">WL-${esc((p.code || '').toUpperCase())}</span>
       <div class="u-name"><h3>${esc(p.name)}</h3><span class="u-sub">${esc((p.category || '').toUpperCase())}</span></div>
       <div class="plug-knobs">${knobs}</div>
@@ -143,7 +182,7 @@
         <span class="u-status"><span class="led${shipping ? '' : ' blink'}" style="--led-c:${led}"></span>${esc((p.status || '').toUpperCase())}</span>
         <span class="u-open">OPEN ↗</span>
       </div>
-    </a>`;
+    </button>`;
   }
   (function buildPluginRack() {
     const host = document.getElementById('rackUnits');
@@ -157,9 +196,12 @@
           if (!ps.length) return;
           if (li > 0) html += '<div class="unit vent static"><div class="slots"></div></div>';
           html += `<div class="rack-line mono">${line.toUpperCase()} LINE</div>`;
+          ps.forEach(p => { PLUGINS[p.slug] = p; });
           html += ps.map(pluginUnitHTML).join('');
         });
         host.innerHTML = html;
+        host.querySelectorAll('[data-plugin]').forEach(el =>
+          el.addEventListener('click', () => openPlugin(el.dataset.plugin)));
       })
       .catch(() => { host.innerHTML = '<div class="rack-line mono">See the full plugin line → <a href="plugins/">/plugins ↗</a></div>'; });
   })();
@@ -191,6 +233,7 @@
     tone: {
       num: 'WL-TF1', title: 'Tone Farmers',
       led: 'var(--led-green)', status: 'ACTIVE',
+      link: 'https://tonefarmers.com', linkLabel: 'TONEFARMERS.COM ↗',
       desc: [
         "A record label I started with an <b>artist-favorable split</b>, because the deals most artists get are bad. I work with them from recording through release."
       ],
@@ -203,6 +246,7 @@
     bloom: {
       num: 'WL-SB1', title: 'Sonic Bloom',
       led: 'var(--led-amber)', blink: true, status: 'PRE-LAUNCH',
+      link: 'https://sonicbloom.app', linkLabel: 'SONICBLOOM.APP ↗',
       desc: [
         "An all-in-one website, sales, and fan platform for working musicians: <b>one flat $20/month, no commission</b> on what they earn. Most musicians stitch together Squarespace, Bandcamp, Mailchimp, and Patreon, and most of those take a cut.",
         "The call I'm proudest of is what I left out: <b>a small, frozen feature set</b> and firm rules about what it would never do."
@@ -263,6 +307,37 @@
         </div>`;
       if (u.controls) wireKnobs(u.controls);
     }
+    ov.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // Plugin info popup — faceplate mockup + blurb + features + a link to the full catalog page.
+  function openPlugin(slug) {
+    const p = PLUGINS[slug];
+    if (!p) return;
+    openKey = null;   // not a UNITS (projects) overlay
+    const shipping = /^shipping/i.test(p.status || '');
+    document.getElementById('ovNum').textContent = 'WL-' + (p.code || '').toUpperCase();
+    document.getElementById('ovTitle').textContent = p.name;
+    document.getElementById('ovStatus').innerHTML =
+      `<div class="led${shipping ? '' : ' blink'}" style="--led-c:${shipping ? 'var(--led-green)' : 'var(--led-amber)'}"></div>${esc((p.status || '').toUpperCase())}`;
+    const feats = (p.features || []).map(f => `<li>${esc(f)}</li>`).join('');
+    ovBody.innerHTML = `
+      ${faceplateHTML(p)}
+      <div class="ov-grid" style="margin-top:32px">
+        <div class="ov-desc"><p>${esc(p.blurb || p.tagline || '')}</p>
+          ${feats ? `<ul class="ov-features">${feats}</ul>` : ''}
+        </div>
+        <div class="ov-side">
+          <a class="ov-cta" href="plugins/${esc(p.slug)}/">OPEN THE FULL PAGE ↗</a>
+          <div class="ov-meta">
+            <div class="m"><span class="mk">LINE</span><span class="mv">${esc(p.line || 'Trueness')}</span></div>
+            <div class="m"><span class="mk">TYPE</span><span class="mv">${esc(p.category || '')}</span></div>
+            <div class="m"><span class="mk">STATUS</span><span class="mv">${esc(p.status || '')}</span></div>
+            <div class="m"><span class="mk">FORMATS</span><span class="mv">VST3 · AU · Standalone</span></div>
+          </div>
+        </div>
+      </div>`;
     ov.classList.add('show');
     document.body.style.overflow = 'hidden';
   }
