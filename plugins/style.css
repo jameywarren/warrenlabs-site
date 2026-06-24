@@ -26,9 +26,9 @@ a:hover{text-decoration:underline}
 /* header — echo-mark logo + mono nav, matching the homepage lockup */
 header.site{border-bottom:1px solid var(--line)}
 .head-in{display:flex; align-items:center; justify-content:space-between; padding:24px 0}
-.logo-mark{display:flex; align-items:center; gap:8px; color:var(--acc)}
+.logo-mark{display:flex; align-items:center; gap:10px; color:var(--ink)}
 .logo-mark:hover{text-decoration:none}
-.logo-mark .echo-mark{width:46px; height:auto; display:block; overflow:visible; flex:none}
+.logo-mark .wl-mark{width:40px; height:auto; display:block; overflow:visible; flex:none}
 .logo-mark span{font-family:var(--sans); font-weight:600; font-size:14px; letter-spacing:.22em; color:var(--ink)}
 nav.site{display:flex; align-items:center}
 nav.site a{font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;

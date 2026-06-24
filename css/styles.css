@@ -32,8 +32,8 @@ body {
 /* ---------- header ---------- */
 header { border-bottom: 1px solid var(--line); position: relative; }
 .head-in { display: flex; justify-content: space-between; align-items: center; padding: 26px 60px; max-width: 1320px; margin: 0 auto; }
-.logo-mark { display: flex; align-items: center; gap: 7px; color: var(--echo-amber); }
-.echo-mark { width: 54px; height: auto; display: block; overflow: visible; flex: none; }
+.logo-mark { display: flex; align-items: center; gap: 11px; color: var(--ink); }
+.wl-mark { width: 44px; height: auto; display: block; overflow: visible; flex: none; }
 .logo-mark span { font-family: "Barlow", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.22em; color: var(--ink); }
 nav { display: flex; gap: 36px; }
 nav a { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.14em; color: var(--dim); text-decoration: none; }

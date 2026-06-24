@@ -1,0 +1,13 @@
+{
+  "name": "Warren Labs",
+  "short_name": "Warren Labs",
+  "icons": [
+    { "src": "/assets/brand/png/wl-appicon_amber-graphite_180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "/assets/brand/png/wl-appicon_amber-graphite_256.png", "sizes": "256x256", "type": "image/png" },
+    { "src": "/assets/brand/png/wl-appicon_amber-graphite_512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/assets/brand/png/wl-appicon_amber-graphite_1024.png", "sizes": "1024x1024", "type": "image/png" }
+  ],
+  "theme_color": "#16181B",
+  "background_color": "#0c0d0f",
+  "display": "standalone"
+}
