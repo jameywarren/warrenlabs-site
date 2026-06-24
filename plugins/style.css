@@ -1,5 +1,5 @@
 /* Warren Labs — plugin site styles. Matches warrenlabs.com: near-black + echo amber,
-   Barlow + IBM Plex Mono, echo-mark logo. Generated pages (tools/gen_site.py) link this. */
+   Barlow + IBM Plex Mono, Warren Labs Mark. Generated pages (tools/gen_site.py) link this. */
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Oswald:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root{
@@ -23,7 +23,7 @@ a:hover{text-decoration:underline}
 .wrap{max-width:1080px; margin:0 auto; padding:0 24px}
 .mono{font-family:var(--mono)}
 
-/* header — echo-mark logo + mono nav, matching the homepage lockup */
+/* header — Warren Labs Mark + mono nav, matching the homepage lockup */
 header.site{border-bottom:1px solid var(--line)}
 .head-in{display:flex; align-items:center; justify-content:space-between; padding:24px 0}
 .logo-mark{display:flex; align-items:center; gap:10px; color:var(--ink)}
@@ -111,7 +111,7 @@ ul.features li::before{content:"›"; color:var(--shot-accent,var(--acc)); margi
   background:var(--shot-accent); border-radius:2px; box-shadow:0 0 6px var(--shot-accent);
   transform:translateX(-50%) rotate(var(--rot,0deg)); transform-origin:50% 130%}
 .shot .id{position:absolute; right:5%; bottom:8%; display:flex; align-items:center; gap:9px}
-.shot .id .echo-mark{width:34px; height:auto; color:var(--shot-accent); flex:none; overflow:visible}
+.shot .id .wl-mark{width:30px; height:auto; color:var(--shot-accent); flex:none; overflow:visible}
 .shot .id .txt{line-height:1}
 .shot .id .nm{font-family:var(--sans); font-weight:600; font-size:clamp(16px,2.6vw,22px);
   letter-spacing:.05em; text-transform:uppercase; color:var(--shot-accent)}
@@ -139,7 +139,7 @@ ul.features li::before{content:"›"; color:var(--shot-accent,var(--acc)); margi
 
 @media (max-width:560px){
   .head-in{padding:18px 0}
-  .logo-mark .echo-mark{width:36px}
+  .logo-mark .wl-mark{width:34px}
   .logo-mark span{font-size:12px; letter-spacing:.18em}
   nav.site a{margin-left:16px; font-size:11px}
   nav.site a:last-child{display:none}   /* drop "The Lab ↗" — the logo links home */
