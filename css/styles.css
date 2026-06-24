@@ -352,8 +352,8 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   :root { --h1: clamp(60px, 18vw, 104px); }
   .wrap { padding: 0 20px; }
   .head-in { padding: 16px 20px; }
-  .logo-mark { gap: 6px; }
-  .echo-mark { width: 38px; }
+  .logo-mark { gap: 8px; }
+  .wl-mark { width: 34px; }
   .logo-mark span { font-size: 12px; letter-spacing: 0.16em; }
   .nav-toggle { display: flex; }
   nav {
@@ -531,7 +531,7 @@ a.unit.plug, a.unit.plug:hover { color: inherit; text-decoration: none; }
   background: var(--shot-accent); border-radius: 2px; box-shadow: 0 0 6px var(--shot-accent);
   transform: translateX(-50%) rotate(var(--rot,0deg)); transform-origin: 50% 130%; }
 .shot .id { position: absolute; right: 5%; bottom: 8%; display: flex; align-items: center; gap: 9px; }
-.shot .id .echo-mark { width: 34px; height: auto; color: var(--shot-accent); flex: none; overflow: visible; }
+.shot .id .wl-mark { width: 30px; height: auto; color: var(--shot-accent); flex: none; overflow: visible; }
 .shot .id .txt { line-height: 1; }
 .shot .id .nm { font-family: "Barlow", sans-serif; font-weight: 600; font-size: clamp(16px,2.6vw,22px);
   letter-spacing: .05em; text-transform: uppercase; color: var(--shot-accent); }

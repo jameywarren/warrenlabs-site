@@ -132,14 +132,12 @@
   }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
 
-  // The echo mark, for the faceplate identity lockup inside the popup.
-  const ECHO_MARK = '<svg class="echo-mark" viewBox="-16 -16 232 132" aria-hidden="true">'
-    + '<defs><filter id="echoGlowB" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="7"></feGaussianBlur></filter></defs>'
-    + '<circle cx="152" cy="80" r="15" fill="currentColor" filter="url(#echoGlowB)" opacity="0.7"></circle>'
-    + '<circle cx="152" cy="80" r="15" fill="currentColor"></circle>'
-    + '<circle cx="104" cy="44" r="10.35" fill="currentColor" fill-opacity="0.66"></circle>'
-    + '<circle cx="66" cy="25" r="6.9" fill="currentColor" fill-opacity="0.42"></circle>'
-    + '<circle cx="34" cy="12" r="4.2" fill="currentColor" fill-opacity="0.26"></circle></svg>';
+  // The Warren Labs Mark (onset sine-W) — canonical path, scale-only, stroke=currentColor so the
+  // popup faceplate tints it with the plugin accent. Matches the site logo + the real plugin etch.
+  const WL_MARK = '<svg class="wl-mark" viewBox="0 0 120 80" aria-hidden="true">'
+    + '<path d="M16 16 C20 38 28 62 39 62 C48 62 53 46 58 38 C63 30 70 30 76 38 C81 44 84 54 92 54 '
+    + 'C99 54 103 46 106 40" fill="none" stroke="currentColor" stroke-width="6.5" '
+    + 'stroke-linecap="round" stroke-linejoin="round"></path></svg>';
 
   // A signal trace shaped to the plugin's job (matches the /plugins page faceplate shots).
   // Character line varies by color + shape; the Trueness line shares the amber identity but
@@ -187,7 +185,7 @@
           ${traceFor(p)}</svg></div>
         <div class="knobs">${knobs}</div>
       </div>
-      <div class="id">${ECHO_MARK}<div class="txt"><div class="nm">${esc(p.name)}</div><div class="br">${brand}</div></div></div>
+      <div class="id">${WL_MARK}<div class="txt"><div class="nm">${esc(p.name)}</div><div class="br">${brand}</div></div></div>
     </div>`;
   }
 
