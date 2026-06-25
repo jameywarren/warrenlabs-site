@@ -1,6 +1,6 @@
 /* Warren Labs — plugin site styles. Matches warrenlabs.com: near-black + echo amber,
    Barlow + IBM Plex Mono, Warren Labs Mark. Generated pages (tools/gen_site.py) link this. */
-@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Oswald:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root{
   /* homepage tokens — black & punchy */
@@ -40,7 +40,7 @@ footer.site{border-top:1px solid var(--line); margin-top:72px; padding:30px 0 56
 
 /* hero */
 .hero{padding:48px 0 8px}
-.hero h1{font-size:clamp(36px,6vw,62px); font-weight:700; letter-spacing:-.01em; margin:.12em 0 .18em}
+.hero h1{font-size:clamp(36px,6vw,62px); font-weight:700; text-transform:uppercase; letter-spacing:.01em; margin:.12em 0 .18em}
 .hero .lede{color:var(--dim); font-size:clamp(16px,2.4vw,21px); max-width:60ch}
 
 /* line badge + chips */
@@ -56,7 +56,7 @@ footer.site{border-top:1px solid var(--line); margin-top:72px; padding:30px 0 56
   border:1px solid var(--line); border-radius:var(--r); transition:border-color .15s, transform .15s}
 .card:hover{border-color:rgba(255,158,44,.45); transform:translateY(-2px); text-decoration:none}
 .card .card-body{padding:16px 20px 18px}
-.card h3{margin:.1em 0 .1em; font-size:23px; font-weight:600; color:var(--ink)}
+.card h3{margin:.1em 0 .1em; font-size:23px; font-weight:700; text-transform:uppercase; letter-spacing:.01em; color:var(--ink)}
 .card .cat{color:var(--dim); font-size:13.5px}
 .card .tl{color:var(--faint); font-size:13px; margin-top:9px}
 .card .meta{margin-top:13px; display:flex; gap:10px; align-items:center}
@@ -66,6 +66,7 @@ footer.site{border-top:1px solid var(--line); margin-top:72px; padding:30px 0 56
 
 /* plugin detail page */
 .detail{padding:34px 0 0}
+.detail h1{text-transform:uppercase; letter-spacing:.01em}
 .detail .top{display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:8px}
 .status{font-family:var(--mono); font-size:11px; letter-spacing:.06em; color:var(--acc)}
 .detail .blurb{font-size:18px; color:var(--ink); max-width:64ch; margin:14px 0 26px}

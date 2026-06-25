@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en" data-palette="graphite" data-type="condensed">
+<html lang="en" data-palette="graphite" data-type="barlow">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Warren Labs · The Rack</title>
-<meta name="description" content="Warren Labs is Jamey Warren: musician, audio product builder, Livingston MT. Headphone EQ + crossfeed DSP, Tone Farmers record label, Sonic Bloom platform for working musicians.">
-<meta property="og:title" content="Warren Labs">
-<meta property="og:description" content="Don't read about my work. Turn it up. The lab of Jamey Warren: headphones, DSP, software, records.">
+<title>Warren Labs · Audio product work by Jamey Warren</title>
+<meta name="description" content="Jamey Warren helps the people who build audio — headphones, amps, DACs, DSP, software — work out what to make, what to leave out, and who it's for, then get it shipped. 25 years from Grace Design to HeadRoom.">
+<meta property="og:title" content="Warren Labs — Jamey Warren">
+<meta property="og:description" content="Audio product work, idea to shelf. What to make, what to leave out, who it's for. 25 years in pro audio — Grace Design, HeadRoom, now an independent line of tools.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://warrenlabs.com/">
 <meta property="og:image" content="https://warrenlabs.com/assets/brand/og-card.png">
@@ -21,7 +21,7 @@
 <link rel="apple-touch-icon" href="/assets/brand/png/wl-appicon_amber-graphite_180.png">
 <link rel="manifest" href="/site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600&family=Oswald:wght@500;600&family=IBM+Plex+Mono:wght@400;500&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -35,7 +35,7 @@
       <span>WARREN&nbsp;LABS</span>
     </div>
     <nav id="primary-nav">
-      <a href="#rack">RESEARCH</a><a href="plugins/">PLUGINS</a><a href="#about">ABOUT</a><a href="#patch">EXPLORE THE LAB</a>
+      <a href="#approach">WHAT&nbsp;I&nbsp;DO</a><a href="#work">THE&nbsp;WORK</a><a href="#about">ABOUT</a><a class="cta" href="#patch">PATCH&nbsp;IN</a>
     </nav>
     <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="primary-nav">
       <span></span><span></span><span></span>
@@ -46,27 +46,67 @@
 <section class="hero wrap">
   <div class="hero-kicker mono">
     <span>THE&nbsp;LAB&nbsp;OF&nbsp;JAMEY&nbsp;WARREN</span><span class="sep">/</span>
-    <span>MUSICIAN</span><span class="sep">/</span>
-    <span>AUDIO&nbsp;PRODUCT&nbsp;BUILDER</span><span class="sep">/</span>
+    <span>HEADPHONES&nbsp;·&nbsp;AMPS&nbsp;·&nbsp;DACS&nbsp;·&nbsp;DSP</span><span class="sep">/</span>
+    <span>IDEA&nbsp;→&nbsp;SHELF</span><span class="sep">/</span>
     <span>LIVINGSTON,&nbsp;MT</span>
   </div>
-  <h1 class="display">Warren<br>Labs<span class="accent" aria-hidden="true"></span></h1>
+  <h1 class="display">Warren<br>Labs</h1>
   <canvas id="scope" height="230"></canvas>
   <div class="hero-sub">
-    <p class="lede">Warren Labs is me, Jamey Warren. I make music, and I've spent 25 years building the things around it: the gear, the software, the records. This is home for my ongoing explorations into <em>where audio goes next</em>.</p>
+    <div class="hero-lede-col">
+      <p class="lede">I help the people who build audio — headphones, amps, converters, the DSP and software in between — work out <em>what to make, what to leave out, and who it's for.</em> Then I help get it built. Twenty-five years from the bench at Grace Design to running HeadRoom.</p>
+      <div class="hero-cta">
+        <a class="btn primary" href="#patch">Start a project <span aria-hidden="true">→</span></a>
+        <a class="btn ghost" href="#work">See the work</a>
+      </div>
+    </div>
     <div class="creds mono">
       <div class="cred"><span class="k">1997–2001</span><span class="v">GRACE DESIGN, EMPLOYEE #1</span></div>
-      <div class="cred"><span class="k">2003–2017</span><span class="v">HEADROOM, VP OPS TO CEO</span></div>
-      <div class="cred"><span class="k">NOW</span><span class="v">HEADPHONES · DSP · SOFTWARE</span></div>
+      <div class="cred"><span class="k">2003–2017</span><span class="v">HEADROOM, VP OPS → CEO</span></div>
+      <div class="cred"><span class="k">NOW</span><span class="v">WARREN LABS · INDEPENDENT</span></div>
     </div>
   </div>
 </section>
 
-<section class="rack-zone" id="rack">
+<section class="approach wrap" id="approach">
+  <div class="approach-head">
+    <div class="k mono">WHAT I DO <span class="sig">·</span> THE SIGNAL CHAIN</div>
+    <h2 class="display">The work of product, end to end.</h2>
+    <p class="sub">Every product runs the same chain — from a hunch to something on a shelf. Plug in for one stage or route the whole path.</p>
+  </div>
+  <div class="chain">
+    <div class="chain-mod">
+      <div class="stage"><span>SOURCE</span><span class="n">01</span></div>
+      <svg class="chain-icon" viewBox="0 0 48 32" aria-hidden="true"><path d="M2 16 q4 -11 8 0 t8 0 t8 0"/><line x1="34" y1="16" x2="43" y2="16"/><path d="M39 12 l5 4 -5 4"/></svg>
+      <h3>Find the signal</h3>
+      <p>What's actually worth building. The real problem, the honest market, the thing only you're set up to make.</p>
+    </div>
+    <div class="chain-mod">
+      <div class="stage"><span>SHAPE</span><span class="n">02</span></div>
+      <svg class="chain-icon" viewBox="0 0 48 32" aria-hidden="true"><path d="M2 22 C9 22 11 9 18 9 C25 9 27 23 34 23 C39 23 42 17 46 17"/><circle cx="18" cy="9" r="2.6"/><circle cx="34" cy="23" r="2.6"/></svg>
+      <h3>What's in, what's out</h3>
+      <p>Define the feature set and defend it. The calls I'm proudest of are usually the things I left out.</p>
+    </div>
+    <div class="chain-mod">
+      <div class="stage"><span>ROUTING</span><span class="n">03</span></div>
+      <svg class="chain-icon" viewBox="0 0 48 32" aria-hidden="true"><circle cx="7" cy="16" r="3"/><line x1="10" y1="16" x2="39" y2="7"/><line x1="10" y1="16" x2="40" y2="16"/><line x1="10" y1="16" x2="39" y2="25"/><circle cx="42" cy="6" r="2.4"/><circle cx="43" cy="16" r="2.4"/><circle cx="42" cy="26" r="2.4"/></svg>
+      <h3>Who it's for</h3>
+      <p>Audience, positioning, price, and the story that reaches them — where the product plugs into the market.</p>
+    </div>
+    <div class="chain-mod">
+      <div class="stage"><span>OUTPUT</span><span class="n">04</span></div>
+      <svg class="chain-icon" viewBox="0 0 48 32" aria-hidden="true"><line x1="6" y1="23" x2="6" y2="15"/><line x1="12" y1="23" x2="12" y2="9"/><line x1="18" y1="23" x2="18" y2="18"/><line x1="26" y1="16" x2="42" y2="16"/><path d="M38 11 l5 5 -5 5"/></svg>
+      <h3>Get it shipped</h3>
+      <p>Prototype to production. I've moved audio hardware and software from concept to the shelf for twenty-five years.</p>
+    </div>
+  </div>
+</section>
+
+<section class="rack-zone" id="work">
   <div class="rack-head wrap">
-    <div class="k">HARDWARE <span class="sig">·</span> SOFTWARE <span class="sig">·</span> SOUND</div>
-    <h2 class="display">Instruments that listen back.</h2>
-    <p class="sub">Tools for people who care how it sounds — from the bench at Warren Labs.</p>
+    <div class="k">BUILT <span class="sig">·</span> NOT PITCHED</div>
+    <h2 class="display">I ship the things I talk about.</h2>
+    <p class="sub">A working line of audio plugins — the DSP, the interface, and the go-to-market, mostly solo. Proof the product thinking holds up off the page.</p>
     <div class="rack-instr mono"><span class="dot"></span>CLICK ANY UNIT FOR THE FULL SPEC ↗</div>
   </div>
 
@@ -85,26 +125,26 @@
   </div>
 </section>
 
-<section class="also wrap" id="also">
+<section class="also wrap" id="projects">
   <div class="also-head">
-    <div class="k mono">ALSO FROM THE LAB</div>
-    <p class="sub">Other things I'm building — a label, a platform, a manual, an app.</p>
+    <div class="k mono">MORE FROM THE LAB</div>
+    <p class="sub">Four more products, four different product calls — a label, a platform, a manual, an app. Click any unit for the detail.</p>
   </div>
   <div class="also-grid">
-    <button class="also-card" data-unit="tone"><span class="led" style="--led-c:var(--led-green)"></span><h4>Tone Farmers</h4><span class="ac-cat">Record label</span><span class="ac-tl">Artist-favorable splits, recording through release.</span></button>
-    <button class="also-card" data-unit="bloom"><span class="led blink" style="--led-c:var(--led-amber)"></span><h4>Sonic Bloom</h4><span class="ac-cat">Musician platform</span><span class="ac-tl">One site, $20 flat, 0% commission.</span></button>
-    <button class="also-card" data-unit="maker"><span class="led" style="--led-c:var(--led-green)"></span><h4>Maker Phones</h4><span class="ac-cat">Open build manual</span><span class="ac-tl">Build your own headphones — 32 chapters, free.</span></button>
-    <button class="also-card" data-unit="changes"><span class="led blink" style="--led-c:var(--led-amber)"></span><h4>Changes</h4><span class="ac-cat">iOS app</span><span class="ac-tl">Hum a song → a Nashville number chart.</span></button>
+    <button class="also-card" data-unit="tone"><span class="led" style="--led-c:var(--led-green)"></span><h4>Tone Farmers</h4><span class="ac-cat">Record label · Founder</span><span class="ac-tl">Built the whole label around one call: an artist-favorable split, recording through release.</span></button>
+    <button class="also-card" data-unit="bloom"><span class="led blink" style="--led-c:var(--led-amber)"></span><h4>Sonic Bloom</h4><span class="ac-cat">Platform · Product &amp; scope</span><span class="ac-tl">$20 flat, 0% commission — and a feature set I deliberately froze. The win was what I left out.</span></button>
+    <button class="also-card" data-unit="maker"><span class="led" style="--led-c:var(--led-green)"></span><h4>Maker Phones</h4><span class="ac-cat">Build manual · Author</span><span class="ac-tl">32 chapters turning headphone design — driver physics to tuning — into something anyone can build.</span></button>
+    <button class="also-card" data-unit="changes"><span class="led blink" style="--led-c:var(--led-amber)"></span><h4>Changes</h4><span class="ac-cat">iOS app · Solo product + build</span><span class="ac-tl">Hum a song, get a Nashville number chart. Defined it, built it, shipped it — all on-device.</span></button>
   </div>
 </section>
 
 <section class="about wrap" id="about">
-  <h2 class="display">The one behind the lab</h2>
+  <h2 class="display">Who you'd be working with</h2>
   <div class="about-grid">
     <img src="assets/photo-desk.jpg" alt="Jamey at the Warren Labs desk">
     <div class="about-col">
       <p>I got my start at <strong>Grace Design</strong> and went on to run <strong>HeadRoom</strong> as president and CEO. Over 25 years I've shepherded audio hardware from prototype into production, built software, produced records, and stayed close to the music the whole time.</p>
-      <p>What I do best is sit between the engineering and the music, knowing enough about both to push a product toward something people can feel. I've been doing the work of product for a long time, <strong>whatever the title on the door happened to be.</strong></p>
+      <p>What I do best is sit between the engineering and the music, knowing enough about both to push a product toward something people can feel. I've been doing the work of product for a long time — <strong>whatever the title on the door happened to be.</strong></p>
     </div>
   </div>
   <div class="era-cards">
@@ -119,9 +159,9 @@
       <p>Relaunched the entire headphone-amplifier line: every model from concept through prototype into production.</p>
     </div>
     <div class="era">
-      <div class="y"><span>NOW · MAKER PHONES</span><span>03</span></div>
+      <div class="y"><span>NOW · WARREN LABS</span><span>03</span></div>
       <h4>Building in public</h4>
-      <p>An open field manual for building your own headphones — thirty-two chapters, free to read. It starts with the Daily Driver: a 40 mm open-back that's forgiving to build and good enough to keep wearing.</p>
+      <p>An independent line of audio tools and an open headphone field manual — running the whole product chain myself, in the open, so you can see exactly how I work.</p>
     </div>
   </div>
 </section>
@@ -129,6 +169,7 @@
 <section class="contact wrap" id="patch">
   <div class="k">OUTPUT SECTION · CONTACT</div>
   <h2 class="display">Building something in audio? <span class="accent">Patch in.</span></h2>
+  <p class="contact-sub">Advisory, a deep dive on one product, or hands-on from concept to launch. Tell me what you're building.</p>
   <div class="pbay" id="pbay">
     <div class="pbay-panel">
       <div class="pbay-title mono">WL PATCHBAY · 12 CH · CLICK A JACK TO RE-PATCH</div>
