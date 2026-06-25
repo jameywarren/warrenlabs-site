@@ -19,7 +19,7 @@
         "VST3 / AU / Standalone"
       ],
       "requestCurve": true,
-      "download": "https://github.com/jameywarren/warrenlabs-site/releases/tag/level-v0.2.26-beta"
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/level-v0.2.26-beta/Level-0.2.26-beta.pkg"
     },
     {
       "slug": "square",
@@ -37,7 +37,8 @@
         "Goniometer + correlation meter",
         "Solo-low + full mono fold",
         "VST3 / AU / Standalone"
-      ]
+      ],
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/square-v0.1.0-beta/Square-0.1.0-beta.pkg"
     },
     {
       "slug": "scribe",
