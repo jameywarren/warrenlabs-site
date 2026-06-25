@@ -67,6 +67,15 @@ header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) ro
 .btn.primary:hover { filter: brightness(1.12); }
 .btn.ghost { border: 1px solid var(--line); color: var(--ink); }
 .btn.ghost:hover { border-color: var(--acc); color: var(--acc); }
+/* availability cue — signals he's open to work */
+.now-chip { display: inline-flex; align-items: center; gap: 10px; margin-top: 4px; padding: 9px 16px; border: 1px solid color-mix(in oklab, var(--acc) 32%, var(--line)); border-radius: 100px; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); }
+.now-chip .now-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 8px var(--acc); animation: instrblink 1.4s steps(2) infinite; flex: none; }
+
+/* "how we could work together" — engagement options incl. full-time */
+.engage { margin-top: 40px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.1em; color: var(--dim); }
+.engage .lab { color: var(--faint); letter-spacing: 0.2em; text-transform: uppercase; }
+.engage .pill { border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; color: var(--ink); transition: border-color 0.15s, color 0.15s; }
+.engage .pill:hover { border-color: color-mix(in oklab, var(--acc) 40%, var(--line)); }
 
 /* ---------- approach / signal chain ---------- */
 .approach { padding: 116px 0 56px; }
