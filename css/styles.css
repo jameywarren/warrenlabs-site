@@ -14,7 +14,7 @@
   --decor: var(--ink);
   --panel: #1b1d20; --panel-hi: #26292d; --panel-edge: #34383d;
   --led-green: #54e08a; --led-amber: #FF9E2C; --led-cyan: #FF9E2C;
-  --font-display: "Oswald", sans-serif; --disp-weight: 600; --disp-ls: 0.01em; --disp-tt: uppercase;
+  --font-display: "Barlow", sans-serif; --disp-weight: 700; --disp-ls: 0.01em; --disp-tt: uppercase;
   --h1: clamp(110px, 13.5vw, 196px); --h1-lh: 0.95;
 }
 
@@ -35,9 +35,11 @@ header { border-bottom: 1px solid var(--line); position: relative; }
 .logo-mark { display: flex; align-items: center; gap: 11px; color: var(--ink); }
 .wl-mark { width: 44px; height: auto; display: block; overflow: visible; flex: none; }
 .logo-mark span { font-family: "Barlow", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.22em; color: var(--ink); }
-nav { display: flex; gap: 36px; }
+nav { display: flex; gap: 36px; align-items: center; }
 nav a { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.14em; color: var(--dim); text-decoration: none; }
 nav a:hover { color: var(--acc); }
+nav a.cta { color: var(--acc); border: 1px solid color-mix(in oklab, var(--acc) 45%, var(--line)); padding: 9px 16px; border-radius: 4px; transition: background 0.2s, color 0.2s; }
+nav a.cta:hover { background: var(--acc); color: var(--bg); }
 /* mobile menu toggle — hidden until the mobile breakpoint */
 .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 38px; height: 32px; padding: 0 8px; background: none; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; flex: none; }
 .nav-toggle span { display: block; height: 1.5px; background: var(--ink); border-radius: 2px; transition: transform 0.25s, opacity 0.2s; }
@@ -48,11 +50,9 @@ header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) ro
 
 /* ---------- hero ---------- */
 .hero { position: relative; padding-top: 72px; }
-.hero-kicker { display: flex; gap: 26px; font-size: 12px; letter-spacing: 0.2em; color: var(--dim); margin-bottom: 30px; }
+.hero-kicker { display: flex; flex-wrap: wrap; gap: 10px 24px; font-size: 12px; letter-spacing: 0.2em; color: var(--dim); margin-bottom: 30px; }
 .hero-kicker .sep { color: var(--faint); }
 .hero h1 { font-size: var(--h1); line-height: var(--h1-lh); position: relative; z-index: 2; }
-/* hero period = the Echo atom (lit lead-dot + glow) */
-.hero h1 .accent { display: inline-block; width: 0.17em; height: 0.17em; margin-left: 0.05em; border-radius: 50%; background: var(--echo-amber); box-shadow: 0 0 0.12em var(--echo-amber), 0 0 0.34em rgba(255,158,44,0.5); vertical-align: baseline; }
 #scope { display: block; width: 100vw; height: 230px; margin-top: -48px; position: relative; z-index: 1; margin-left: calc(50% - 50vw); }
 .hero-sub { display: grid; grid-template-columns: 1fr 480px; gap: 64px; padding: 10px 0 84px; align-items: start; }
 .hero-sub .lede { font-size: 25px; line-height: 1.45; max-width: 640px; text-wrap: pretty; }
@@ -60,6 +60,42 @@ header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) ro
 .creds { border-left: 1px solid var(--line); padding-left: 32px; display: grid; gap: 18px; }
 .cred { display: grid; grid-template-columns: 104px 1fr; gap: 16px; font-size: 12px; letter-spacing: 0.08em; }
 .cred .k { color: var(--faint); } .cred .v { color: var(--dim); }
+.hero-lede-col { display: grid; gap: 30px; align-content: start; }
+.hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+.btn { font-family: "IBM Plex Mono", monospace; font-size: 12.5px; letter-spacing: 0.1em; text-decoration: none; padding: 15px 26px; border-radius: 4px; display: inline-flex; align-items: center; gap: 9px; transition: filter 0.2s, border-color 0.2s, color 0.2s, background 0.2s; }
+.btn.primary { background: var(--acc); color: var(--bg); font-weight: 600; }
+.btn.primary:hover { filter: brightness(1.12); }
+.btn.ghost { border: 1px solid var(--line); color: var(--ink); }
+.btn.ghost:hover { border-color: var(--acc); color: var(--acc); }
+
+/* ---------- approach / signal chain ---------- */
+.approach { padding: 116px 0 56px; }
+.approach-head { max-width: 760px; margin-bottom: 54px; }
+.approach-head .k { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.26em; color: var(--dim); margin-bottom: 22px; }
+.approach-head h2 { font-size: clamp(40px, 5vw, 68px); line-height: 1.03; }
+.approach-head .sub { margin-top: 20px; font-size: 18px; line-height: 1.5; color: var(--dim); max-width: 640px; text-wrap: pretty; }
+.chain { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.chain-mod {
+  position: relative; border: 1px solid var(--line); border-top: 1px solid var(--panel-edge); border-radius: 8px;
+  background: linear-gradient(180deg, var(--panel-hi), var(--panel) 28%, #101014);
+  padding: 26px 24px 28px; display: flex; flex-direction: column; gap: 14px;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.chain-mod:hover { border-color: color-mix(in oklab, var(--acc) 40%, var(--line)); transform: translateY(-3px); }
+.chain-mod .stage { display: flex; justify-content: space-between; align-items: center; font-family: "IBM Plex Mono", monospace; font-size: 10.5px; letter-spacing: 0.2em; color: var(--dim); }
+.chain-mod .stage .n { color: var(--faint); }
+.chain-icon { width: 56px; height: 36px; display: block; margin: 4px 0 2px; }
+.chain-icon path, .chain-icon line, .chain-icon circle { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.chain-mod:hover .chain-icon path, .chain-mod:hover .chain-icon line, .chain-mod:hover .chain-icon circle { stroke: var(--acc); }
+.chain-mod h3 { font-family: var(--font-display); font-weight: var(--disp-weight); text-transform: var(--disp-tt); letter-spacing: calc(var(--disp-ls) * 0.5); font-size: 22px; line-height: 1.05; }
+.chain-mod p { font-size: 13.5px; line-height: 1.6; color: var(--dim); }
+/* signal flows module → module: a marching amber link across each gap */
+.chain-mod:not(:last-child)::after {
+  content: ''; position: absolute; right: -18px; top: 74px; width: 18px; height: 2px; z-index: 3;
+  background: repeating-linear-gradient(90deg, var(--acc) 0 4px, transparent 4px 8px);
+  background-size: 8px 2px; opacity: 0.72; animation: chainflow 0.62s linear infinite;
+}
+@keyframes chainflow { to { background-position: 8px 0; } }
 
 /* ---------- rack section ---------- */
 .rack-zone { background: var(--bg2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 110px 0 130px; overflow: hidden; }
@@ -288,6 +324,7 @@ body.audio-on .plug-note .live { color: var(--acc2); }
 .contact .k { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.26em; color: var(--dim); margin-bottom: 34px; }
 .contact h2 { font-size: clamp(70px, 7.5vw, 112px); line-height: 1.0; max-width: 1000px; }
 .contact h2 .accent { color: var(--ink); }
+.contact-sub { margin-top: 24px; font-size: 18px; line-height: 1.5; color: var(--dim); max-width: 660px; text-wrap: pretty; }
 /* ---------- patchbay ---------- */
 .pbay { position: relative; width: min(840px, 100%); margin: 44px 0 0; }
 .pbay-panel {
@@ -339,6 +376,8 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   .head-in { padding: 22px 32px; }
   .hero-sub { grid-template-columns: 1fr; gap: 36px; padding-bottom: 64px; }
   .creds { border-left: none; border-top: 1px solid var(--line); padding: 24px 0 0; }
+  .chain { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .chain-mod:not(:last-child)::after { display: none; }
   .rack-scene { width: min(980px, calc(100vw - 48px)); }
   .unit { height: auto; min-height: 112px; padding-top: 18px; padding-bottom: 18px; }
   .unit.vent { min-height: 0; padding-top: 0; padding-bottom: 0; height: 36px; }
@@ -366,6 +405,10 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   }
   header.nav-open nav { max-height: 240px; }
   nav a { font-size: 12px; letter-spacing: 0.16em; color: var(--ink); padding: 17px 20px; border-top: 1px solid var(--line); }
+  nav a.cta { border: none; border-top: 1px solid var(--line); border-radius: 0; padding: 17px 20px; }
+  .approach { padding: 64px 0 32px; }
+  .approach-head { margin-bottom: 36px; }
+  .chain { grid-template-columns: 1fr; gap: 12px; }
   .hero { padding-top: 44px; }
   .hero-kicker { flex-wrap: wrap; gap: 8px 14px; font-size: 10px; margin-bottom: 20px; }
   #scope { height: 150px; margin-top: -24px; }
