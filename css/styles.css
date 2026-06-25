@@ -52,7 +52,7 @@ header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) ro
 .hero { position: relative; padding-top: 72px; }
 .hero-kicker { display: flex; flex-wrap: wrap; gap: 10px 24px; font-size: 12px; letter-spacing: 0.2em; color: var(--dim); margin-bottom: 30px; }
 .hero-kicker .sep { color: var(--faint); }
-.hero h1 { font-size: var(--h1); line-height: var(--h1-lh); position: relative; z-index: 2; }
+.hero h1 { font-size: var(--h1); line-height: var(--h1-lh); letter-spacing: 0.06em; position: relative; z-index: 2; }
 #scope { display: block; width: 100vw; height: 230px; margin-top: -48px; position: relative; z-index: 1; margin-left: calc(50% - 50vw); }
 .hero-sub { display: grid; grid-template-columns: 1fr 480px; gap: 64px; padding: 10px 0 84px; align-items: start; }
 .hero-sub .lede { font-size: 25px; line-height: 1.45; max-width: 640px; text-wrap: pretty; }
