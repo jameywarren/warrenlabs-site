@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" data-palette="graphite" data-type="barlow">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Warren Labs — consultancy + fun (MOCKUP)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<style>
+/* ---- mockup-only bits, layered on the real brand CSS ---- */
+.mk-flag { background:var(--acc); color:#1a1405; font-family:"IBM Plex Mono",monospace; font-size:11px;
+  letter-spacing:.18em; text-transform:uppercase; text-align:center; padding:6px; }
+
+/* hero — value headline + the waveform back */
+.mk-hero2 { padding-top:60px; }
+.mk-hero2 h1 { font-size:clamp(40px,6.6vw,88px); line-height:1.0; max-width:18ch; margin:18px 0 0; position:relative; z-index:2; }
+.mk-hero2 h1 .amp { color:var(--acc); }
+#scope { margin-top:6px; }
+.mk-credstrip { display:flex; flex-wrap:wrap; gap:10px 28px; margin-top:14px;
+  font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.12em; color:var(--dim); text-transform:uppercase; }
+.mk-credstrip b { color:var(--ink); font-weight:500; } .mk-credstrip .sig { color:var(--acc); }
+
+/* "it's just me" band */
+.mk-band { padding-top:80px; padding-bottom:80px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
+.mk-band .k { font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.26em; color:var(--dim); margin-bottom:20px; }
+.mk-band h2 { font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:.01em;
+  font-size:clamp(30px,3.6vw,50px); line-height:1.05; max-width:20ch; }
+.mk-band p { margin-top:22px; font-size:18px; line-height:1.62; color:var(--dim); max-width:66ch; text-wrap:pretty; }
+.mk-band p strong { color:var(--ink); font-weight:500; }
+
+/* services */
+.mk-svc { padding-top:88px; padding-bottom:78px; }
+.mk-head { max-width:760px; margin-bottom:48px; }
+.mk-head .k { font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.26em; color:var(--dim); margin-bottom:20px; }
+.mk-head .k .sig { color:var(--acc); }
+.mk-head h2 { font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:.01em;
+  font-size:clamp(34px,4.4vw,58px); line-height:1.02; }
+.mk-head .sub { margin-top:18px; font-size:18px; line-height:1.5; color:var(--dim); max-width:60ch; }
+.mk-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:16px; }
+.mk-card { position:relative; border:1px solid var(--line); border-top:1px solid var(--panel-edge); border-radius:10px;
+  background:linear-gradient(180deg,var(--panel-hi),var(--panel) 30%,#101014); padding:28px 28px 30px;
+  display:grid; grid-template-columns:50px 1fr; gap:5px 20px; align-items:start; transition:border-color .2s, transform .2s; }
+.mk-card:hover { border-color:color-mix(in oklab,var(--acc) 40%,var(--line)); transform:translateY(-3px); }
+.mk-card .num { grid-row:1 / span 3; font-family:"IBM Plex Mono",monospace; font-size:13px; letter-spacing:.1em; color:var(--acc); padding-top:5px; }
+.mk-card .stage { font-family:"IBM Plex Mono",monospace; font-size:10.5px; letter-spacing:.2em; color:var(--dim); text-transform:uppercase; }
+.mk-card h3 { font-family:var(--font-display); font-weight:700; text-transform:uppercase; letter-spacing:.01em; font-size:23px; line-height:1.05; margin:5px 0 0; }
+.mk-card p { font-size:14.5px; line-height:1.6; color:var(--dim); margin:9px 0 0; }
+.mk-engage { margin-top:28px; display:flex; flex-wrap:wrap; align-items:center; gap:12px 13px;
+  font-family:"IBM Plex Mono",monospace; font-size:12px; letter-spacing:.1em; color:var(--dim); }
+.mk-engage .lab { color:var(--faint); letter-spacing:.2em; text-transform:uppercase; }
+.mk-engage .pill { border:1px solid var(--line); border-radius:999px; padding:8px 15px; color:var(--ink); }
+
+.mk-svc, .mk-hero2 { border-bottom:1px solid transparent; }
+@media (max-width:860px){ .mk-grid { grid-template-columns:1fr; } }
+</style>
+</head>
+<body>
+
+<div class="mk-flag">Mockup · consultancy + the fun stuff · not live</div>
+
+<header>
+  <div class="head-in">
+    <div class="logo-mark">
+      <svg class="wl-mark" viewBox="0 0 120 80" aria-hidden="true">
+        <path d="M16 16 C20 38 28 62 39 62 C48 62 53 46 58 38 C63 30 70 30 76 38 C81 44 84 54 92 54 C99 54 103 46 106 40" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <span>WARREN&nbsp;LABS</span>
+    </div>
+    <nav id="primary-nav">
+      <a href="#services">WHAT&nbsp;I&nbsp;DO</a><a href="#work">THE&nbsp;WORK</a><a href="#about">ABOUT</a><a class="cta" href="#patch">PATCH&nbsp;IN</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="primary-nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- HERO — value headline + the waveform -->
+<section class="mk-hero2 wrap">
+  <div class="hero-kicker mono">
+    <span>THE&nbsp;LAB&nbsp;OF&nbsp;JAMEY&nbsp;WARREN</span><span class="sep">/</span>
+    <span>AUDIO&nbsp;PRODUCT&nbsp;WORK</span><span class="sep">/</span>
+    <span>LIVINGSTON,&nbsp;MT</span>
+  </div>
+  <h1 class="display">Good audio is hard.<br><span class="amp">Let's get yours right.</span></h1>
+  <canvas id="scope" height="230"></canvas>
+  <div class="hero-sub">
+    <div class="hero-lede-col">
+      <p class="lede">I'm Jamey. I've spent 25 years in this — soldering and testing benches at Grace Design, then running HeadRoom as its CEO, and lately building a whole line of audio plugins on my own from a desk in Montana. If you make headphones, amps, converters, or the software behind them, I help you figure out what to build, what to skip, and how to get it out the door without the usual wrong turns. <strong>I've been the engineer and the guy who has to make it sell — usually on the same product.</strong></p>
+      <div class="hero-cta">
+        <a class="btn primary" href="#patch">Book a call <span aria-hidden="true">→</span></a>
+        <a class="btn ghost" href="#work">See the work</a>
+      </div>
+      <div class="mk-credstrip">
+        <span>GRACE&nbsp;DESIGN, <b>EMPLOYEE&nbsp;#1</b></span><span class="sig">·</span>
+        <span>HEADROOM, <b>VP&nbsp;→&nbsp;CEO</b></span><span class="sig">·</span>
+        <span>25&nbsp;YEARS</span>
+      </div>
+    </div>
+    <div class="creds mono">
+      <div class="cred"><span class="k">1997–2001</span><span class="v">GRACE DESIGN, EMPLOYEE #1</span></div>
+      <div class="cred"><span class="k">2003–2017</span><span class="v">HEADROOM, VP OPS → CEO</span></div>
+      <div class="cred"><span class="k">NOW</span><span class="v">WARREN LABS · INDEPENDENT</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- IT'S JUST ME -->
+<section class="mk-band wrap">
+  <div class="k">WHY ME</div>
+  <h2>It's just me. That's the point.</h2>
+  <p>You won't get handed to a junior or buried in a 60-slide deck. When we talk, you're talking to the one person who's actually done all of it — the engineering, the factory headaches, the launch, and yeah, sweating whether the numbers worked afterward. <strong>I keep Warren Labs small on purpose,</strong> so the person who picks up is the person who does the work, and so I genuinely care how your thing turns out.</p>
+</section>
+
+<!-- SERVICES -->
+<section class="mk-svc wrap" id="services">
+  <div class="mk-head">
+    <div class="k">WHAT I CAN DO <span class="sig">·</span> ENGAGEMENTS</div>
+    <h2>Jump in anywhere.</h2>
+    <p class="sub">Take one piece or the whole thing — from "is this even worth building?" to "it's on the shelf."</p>
+  </div>
+  <div class="mk-grid">
+    <div class="mk-card"><span class="num">01</span><span class="stage">Strategy</span><h3>Figure out what to build</h3><p>We pin down what's actually worth making and who it's really for — and we're honest about what to leave out. You walk away with a plan you can build, not a binder.</p></div>
+    <div class="mk-card"><span class="num">02</span><span class="stage">Engineering</span><h3>Keep the build honest</h3><p>Acoustics, transducers, DSP, the software around them. I've shipped all of it myself, so I can steer the engineering without you paying me to learn it on your dime.</p></div>
+    <div class="mk-card"><span class="num">03</span><span class="stage">Supply</span><h3>Get it made</h3><p>Suppliers, factories, samples, and the QC to actually land it. I've signed the POs and lived through the bad batches, so I know where this stuff goes sideways.</p></div>
+    <div class="mk-card"><span class="num">04</span><span class="stage">Market</span><h3>Get it out the door</h3><p>Pricing, positioning, and a launch that moves units. I've had to make the math work after launch, so I won't wave my hands at this part.</p></div>
+  </div>
+  <div class="mk-engage">
+    <span class="lab">How we'd work</span>
+    <span class="pill">Advisory retainer</span>
+    <span class="pill">Fractional product lead</span>
+    <span class="pill">One-product deep dive</span>
+    <span class="pill">Concept → launch</span>
+  </div>
+</section>
+
+<!-- THE WORK — the rack is back -->
+<section class="rack-zone" id="work">
+  <div class="rack-head wrap">
+    <div class="k">THE WORK <span class="sig">·</span> BUILT, NOT PITCHED</div>
+    <h2 class="display">I ship the stuff I talk about.</h2>
+    <p class="sub">A working line of audio plugins — I wrote the DSP, drew the interface, and did the go-to-market, mostly solo. Best proof I've got of how I'd work on yours. Poke around.</p>
+    <div class="rack-instr mono"><span class="dot"></span>CLICK ANY UNIT FOR THE FULL SPEC ↗</div>
+  </div>
+
+  <div class="rack-scene">
+    <div class="rack" id="rack3d">
+      <div class="rack-side"></div>
+      <div class="rail left"><div class="holes"></div></div>
+      <div class="rail right"><div class="holes"></div></div>
+
+      <div id="rackUnits"></div>
+
+      <div class="unit vent static"><div class="slots"></div></div>
+
+      <div class="rack-shadow"></div>
+    </div>
+  </div>
+</section>
+
+<!-- MORE FROM THE LAB -->
+<section class="also wrap" id="projects">
+  <div class="also-head">
+    <div class="k mono">MORE FROM THE LAB</div>
+    <p class="sub">A few other things I've made — a label, a platform, a manual, an app. Each one was a different product call. Click any to dig in.</p>
+  </div>
+  <div class="also-grid">
+    <button class="also-card" data-unit="tone"><span class="led" style="--led-c:var(--led-green)"></span><h4>Tone Farmers</h4><span class="ac-cat">Record label · Founder</span><span class="ac-tl">Built the whole label around one call: an artist-favorable split, recording through release.</span></button>
+    <button class="also-card" data-unit="bloom"><span class="led blink" style="--led-c:var(--led-amber)"></span><h4>Sonic Bloom</h4><span class="ac-cat">Platform · Product &amp; scope</span><span class="ac-tl">$20 flat, 0% commission — and a feature set I deliberately froze. The win was what I left out.</span></button>
+    <button class="also-card" data-unit="maker"><span class="led" style="--led-c:var(--led-green)"></span><h4>Maker Phones</h4><span class="ac-cat">Build manual · Author</span><span class="ac-tl">32 chapters turning headphone design — driver physics to tuning — into something anyone can build.</span></button>
+    <button class="also-card" data-unit="changes"><span class="led blink" style="--led-c:var(--led-amber)"></span><h4>Changes</h4><span class="ac-cat">iOS app · Solo product + build</span><span class="ac-tl">Hum a song, get a Nashville number chart. Defined it, built it, shipped it — all on-device.</span></button>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about wrap" id="about">
+  <h2 class="display">Hi — I'm Jamey.</h2>
+  <div class="about-grid">
+    <img src="assets/photo-desk.jpg" alt="Jamey at the Warren Labs desk">
+    <div class="about-col">
+      <p>I got my start at <strong>Grace Design</strong> and went on to run <strong>HeadRoom</strong> as president and CEO. Over 25 years I've taken audio hardware from prototype to production, written a pile of software, produced records, and stayed close to the music the whole time.</p>
+      <p>What I'm best at is sitting between the engineering and the music — knowing enough about both to push a product toward something people can actually feel. I've been doing product work for a long time, <strong>whatever the title on the door happened to say.</strong></p>
+    </div>
+  </div>
+  <div class="era-cards">
+    <div class="era">
+      <div class="y"><span>1997 · GRACE DESIGN</span><span>01</span></div>
+      <h4>Employee #1</h4>
+      <p>Production, testing, repair, prototyping, and the automated measurement rig the gear got judged against. Two founders and me, to twenty people and gear in studios worldwide.</p>
+    </div>
+    <div class="era">
+      <div class="y"><span>2003 · HEADROOM</span><span>02</span></div>
+      <h4>VP Ops → President &amp; CEO</h4>
+      <p>Relaunched the whole headphone-amplifier line — every model, concept through prototype into production.</p>
+    </div>
+    <div class="era">
+      <div class="y"><span>NOW · WARREN LABS</span><span>03</span></div>
+      <h4>Out on my own</h4>
+      <p>A line of audio tools and an open headphone manual, built in the open from Montana — so you can see exactly how I work before you hire me.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PATCH IN — patchbay is back -->
+<section class="contact wrap" id="patch">
+  <div class="k">LET'S TALK</div>
+  <h2 class="display">Building something in audio? <span class="accent">Patch in.</span></h2>
+  <p class="contact-sub">A 30-minute call, no pitch. Tell me what you're making and I'll tell you straight whether I'm the right person — and where I'd start.</p>
+  <div class="pbay" id="pbay">
+    <div class="pbay-panel">
+      <div class="pbay-title mono">WL PATCHBAY · 12 CH · CLICK A JACK TO RE-PATCH</div>
+      <div class="pbay-row" id="pbayRow"></div>
+    </div>
+    <canvas id="pbayCv"></canvas>
+    <div class="pbay-readout mono" id="pbayReadout"></div>
+  </div>
+  <div class="contact-links">
+    <a class="primary" href="mailto:jamey@jameywarren.com">JAMEY@JAMEYWARREN.COM</a>
+    <a href="https://www.linkedin.com/in/jameywarren" target="_blank" rel="noopener">LINKEDIN ↗</a>
+    <a href="https://github.com/jameywarren" target="_blank" rel="noopener">GITHUB ↗</a>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-in"><span>WARREN LABS · JAMEY WARREN</span><span>BUILT IN LIVINGSTON, MONTANA</span></div>
+</footer>
+
+<!-- fullscreen unit overlay -->
+<div class="ov" id="ov">
+  <div class="ov-scrim" id="ovScrim"></div>
+  <div class="ov-card">
+    <div class="ov-head">
+      <span class="u-num" id="ovNum"></span>
+      <h2 id="ovTitle"></h2>
+      <div class="u-status" id="ovStatus"></div>
+      <button class="ov-close" id="ovClose">✕</button>
+    </div>
+    <div class="ov-body" id="ovBody"></div>
+  </div>
+</div>
+
+<script src="js/wl-eq1.js"></script>
+<script src="js/wl-app.js"></script>
+<script src="js/wl-patchbay.js"></script>
+</body>
+</html>
