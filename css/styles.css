@@ -505,7 +505,7 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
 .unit.plug .u-status { font-size: 9.5px; }
 
 /* ============================================================ "Also from the lab" */
-.also { padding: 70px 0 8px; }
+.also { padding: 80px 0 88px; }
 .also-head { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; margin-bottom: 24px; }
 .also-head .k { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: 0.26em; color: var(--dim); }
 .also-head .sub { color: var(--faint); font-size: 14px; }
