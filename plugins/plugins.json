@@ -281,6 +281,28 @@
       "price": 0,
       "buyUrl": "",
       "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/eddy-v0.1.0-beta/Eddy-0.1.0-beta.pkg"
+    },
+    {
+      "slug": "wake",
+      "name": "Wake",
+      "code": "Wake",
+      "line": "Character",
+      "accent": "#8f86e6",
+      "category": "Reverb",
+      "status": "Beta",
+      "nameStatus": "set",
+      "tagline": "The space a sound leaves behind.",
+      "blurb": "An algorithmic FDN reverb and a convolution engine in one \u2014 six bundled spaces from tight rooms to cathedrals, or load your own impulse response. A modulated tail stays lush without turning metallic.",
+      "features": [
+        "FDN algorithmic + convolution engines",
+        "Six bundled impulse responses",
+        "Load your own IR",
+        "Modulated tail (no metallic ring)",
+        "VST3 / AU / Standalone"
+      ],
+      "price": 0,
+      "buyUrl": "",
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/wake-v0.1.0-beta/Wake-0.1.0-beta.pkg"
     }
   ],
   "guides": [
