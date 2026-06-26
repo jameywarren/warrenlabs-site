@@ -19,7 +19,9 @@
         "VST3 / AU / Standalone"
       ],
       "requestCurve": true,
-      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/level-v0.2.26-beta/Level-0.2.26-beta.pkg"
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/level-v0.2.26-beta/Level-0.2.26-beta.pkg",
+      "price": 0,
+      "buyUrl": ""
     },
     {
       "slug": "square",
@@ -38,7 +40,9 @@
         "Solo-low + full mono fold",
         "VST3 / AU / Standalone"
       ],
-      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/square-v0.1.0-beta/Square-0.1.0-beta.pkg"
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/square-v0.1.0-beta/Square-0.1.0-beta.pkg",
+      "price": 0,
+      "buyUrl": ""
     },
     {
       "slug": "scribe",
@@ -56,7 +60,10 @@
         "Match toward flat + tilt",
         "Freeze the learned profile",
         "VST3 / AU / Standalone"
-      ]
+      ],
+      "price": 0,
+      "buyUrl": "",
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/scribe-v0.1.0-beta/Scribe-0.1.0-beta.pkg"
     },
     {
       "slug": "reveal",
@@ -74,7 +81,10 @@
         "Transparent at rest",
         "Delta (listen to what's removed)",
         "VST3 / AU / Standalone"
-      ]
+      ],
+      "price": 0,
+      "buyUrl": "",
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/reveal-v0.1.0-beta/Reveal-0.1.0-beta.pkg"
     },
     {
       "slug": "plane",
@@ -92,7 +102,10 @@
         "Adjustable focus range",
         "Delta monitor",
         "VST3 / AU / Standalone"
-      ]
+      ],
+      "price": 0,
+      "buyUrl": "",
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/plane-v0.1.0-beta/Plane-0.1.0-beta.pkg"
     },
     {
       "slug": "seat",
@@ -110,7 +123,10 @@
         "Blend the coloration in",
         "Reference A/B",
         "VST3 / AU / Standalone"
-      ]
+      ],
+      "price": 0,
+      "buyUrl": "",
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/seat-v0.1.0-beta/Seat-0.1.0-beta.pkg"
     },
     {
       "slug": "temper",
@@ -129,7 +145,10 @@
         "Oversampled (anti-aliased)",
         "Tone tilt + dry/wet",
         "VST3 / AU / Standalone"
-      ]
+      ],
+      "price": 0,
+      "buyUrl": "",
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/temper-v0.1.0-beta/Temper-0.1.0-beta.pkg"
     },
     {
       "slug": "grind",
@@ -148,7 +167,10 @@
         "Oversampled (anti-aliased)",
         "Bias + tone + dry/wet",
         "VST3 / AU / Standalone"
-      ]
+      ],
+      "price": 0,
+      "buyUrl": "",
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/grind-v0.1.0-beta/Grind-0.1.0-beta.pkg"
     },
     {
       "slug": "burr",
@@ -167,7 +189,10 @@
         "Oversampled (anti-aliased)",
         "Tone + dry/wet",
         "VST3 / AU / Standalone"
-      ]
+      ],
+      "price": 0,
+      "buyUrl": "",
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/burr-v0.1.0-beta/Burr-0.1.0-beta.pkg"
     },
     {
       "slug": "ripple",
@@ -186,7 +211,10 @@
         "In-loop tone + wow/flutter",
         "Ping-pong + dry/wet",
         "VST3 / AU / Standalone"
-      ]
+      ],
+      "price": 0,
+      "buyUrl": "",
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/ripple-v0.1.0-beta/Ripple-0.1.0-beta.pkg"
     },
     {
       "slug": "eddy",
@@ -205,7 +233,10 @@
         "Stereo spread",
         "Dry/wet",
         "VST3 / AU / Standalone"
-      ]
+      ],
+      "price": 0,
+      "buyUrl": "",
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/eddy-v0.1.0-beta/Eddy-0.1.0-beta.pkg"
     }
   ],
   "guides": [
@@ -215,5 +246,15 @@
       "source": "tools/ir_capture/README.md",
       "summary": "Sample the reverb of a real room \u2014 your studio, a hall \u2014 and load it into a convolution reverb."
     }
-  ]
+  ],
+  "delivery": "https://lean-budgie-8375.warrenlabs.deno.net/download",
+  "bundle": {
+    "slug": "bundle",
+    "name": "The Whole Lab",
+    "tagline": "Every Warren Labs plugin, one install.",
+    "blurb": "The entire Trueness + Character line in a single installer \u2014 every plugin, free during the beta. Individual downloads stay available; this is just the fast way to get everything.",
+    "price": 0,
+    "buyUrl": "",
+    "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/bundle-v0.1.0-beta/WarrenLabs-Bundle-0.1.0-beta.pkg"
+  }
 }
