@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en" data-palette="graphite" data-type="barlow">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>404 · No signal · Warren Labs</title>
+<meta name="description" content="Signal not found — this patch point isn't routed to anything.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_black_32.svg">
+<link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_white_32.svg" media="(prefers-color-scheme: dark)">
+<link rel="apple-touch-icon" href="/assets/brand/png/wl-appicon_amber-graphite_180.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/styles.css">
+<style>
+  /* 404 — audio-desk "no signal" screen. Reuses the site tokens (--acc, --bg, --line, fonts). */
+  .e404 { min-height: calc(100vh - 168px); display: flex; flex-direction: column;
+          justify-content: center; gap: 22px; padding: 48px 0 64px; max-width: 780px; }
+  .e404-eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.26em;
+                  color: var(--dim); display: inline-flex; align-items: center; gap: 11px; }
+  .e404-eyebrow .led { width: 8px; height: 8px; border-radius: 50%; background: var(--acc);
+                       box-shadow: 0 0 9px var(--acc); animation: e404blink 1.25s steps(1) infinite; }
+  @keyframes e404blink { 50% { opacity: 0.25; box-shadow: none; } }
+  .e404-title { font-size: clamp(64px, 13vw, 140px); line-height: 0.92; letter-spacing: 0.04em; }
+  .e404-title .amp { color: var(--acc); }
+  .e404-sub { font-size: 19px; line-height: 1.5; color: var(--dim); max-width: 580px; text-wrap: pretty; }
+  .e404-scope { border: 1px solid var(--line); border-radius: 8px; background: #08090a; padding: 14px;
+                box-shadow: inset 0 0 70px rgba(0,0,0,0.65); }
+  .e404-scope canvas { display: block; width: 100%; height: 188px; border-radius: 3px; }
+  .e404-diag { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; letter-spacing: 0.06em;
+               color: var(--faint); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .e404-diag .ok { color: var(--acc); }
+  .e404-cta { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 6px; align-items: center; }
+  .e404-cta button.btn { border: none; cursor: pointer; }
+  .e404-cta button.btn.primary:active { filter: brightness(0.92); }
+  @media (max-width: 720px) { #primary-nav { display: none; } .e404-sub { font-size: 17px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="head-in">
+    <a class="logo-mark" href="/" style="text-decoration:none;">
+      <svg class="wl-mark" viewBox="0 0 120 80" aria-hidden="true">
+        <path d="M16 16 C20 38 28 62 39 62 C48 62 53 46 58 38 C63 30 70 30 76 38 C81 44 84 54 92 54 C99 54 103 46 106 40" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <span>WARREN&nbsp;LABS</span>
+    </a>
+    <nav id="primary-nav">
+      <a href="/#approach">WHAT&nbsp;I&nbsp;DO</a><a href="/#work">THE&nbsp;WORK</a><a href="/#about">ABOUT</a><a class="cta" href="/#patch">PATCH&nbsp;IN</a>
+    </nav>
+  </div>
+</header>
+
+<main class="e404 wrap">
+  <div class="e404-eyebrow"><span class="led"></span>ERROR 404 · SIGNAL NOT FOUND</div>
+  <h1 class="display e404-title">No signal<span class="amp">.</span></h1>
+  <p class="e404-sub">This patch point isn't routed to anything. The page you're after moved, shipped, or never made it off the bench — but the rest of the rig still works.</p>
+
+  <div class="e404-scope"><canvas id="scope404"></canvas></div>
+  <div class="e404-diag" id="diag">› probing route…</div>
+
+  <div class="e404-cta">
+    <button class="btn primary" id="toneBtn" type="button">▶ Send a test tone</button>
+    <a class="btn ghost" href="/">← Back to the rack</a>
+  </div>
+</main>
+
+<script>
+(function () {
+  // ---- diagnostic readout: show the route they actually hit ---------------------------------
+  var diag = document.getElementById('diag');
+  var hit = (location.pathname || '/') + (location.search || '');
+  diag.innerHTML = '› GET ' + hit.replace(/[<>&]/g, '') + '  →  <span class="ok">404</span> · no route · output muted';
+
+  // ---- oscilloscope: idle flatline, lights up with a 1 kHz line-up tone ----------------------
+  var cv = document.getElementById('scope404'), sc = cv.parentNode, ctx = cv.getContext('2d');
+  var css = getComputedStyle(document.documentElement);
+  var ACC = (css.getPropertyValue('--acc') || '#FF9E2C').trim();
+  var GRID = (css.getPropertyValue('--line') || '#24272b').trim();
+  var FAINT = (css.getPropertyValue('--faint') || '#565b60').trim();
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W = 1, H = 188, dpr = 1;
+
+  // Size the backing store from the PARENT box (minus its 14px padding) and pin the canvas to
+  // explicit pixels — avoids the circular clientWidth/`width:100%` measurement, and re-runs via
+  // ResizeObserver so it's correct regardless of when layout settles.
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = Math.max(1, Math.floor((sc.clientWidth || 600) - 28));
+    H = 188;
+    cv.style.width = W + 'px'; cv.style.height = H + 'px';
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    draw(performance.now());            // paint immediately — don't depend on rAF alone
+  }
+
+  // amplitude envelope driven by the test tone (0 = flatline)
+  var toneStart = -1e9, TONE_MS = 600;
+  function env(ms) {
+    if (ms < 0 || ms > TONE_MS) return 0;
+    var a = 70, r = 220;
+    if (ms < a) return ms / a;
+    if (ms > TONE_MS - r) return (TONE_MS - ms) / r;
+    return 1;
+  }
+
+  function draw(now) {
+    var t = now / 1000, amp = env(now - toneStart);
+    ctx.clearRect(0, 0, W, H);
+
+    // grid
+    ctx.lineWidth = 1; ctx.strokeStyle = GRID;
+    for (var gx = 0; gx <= 8; gx++) { var x = gx / 8 * W; ctx.globalAlpha = gx % 4 === 0 ? 0.85 : 0.38;
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+    for (var gy = 0; gy <= 4; gy++) { var y = gy / 4 * H; ctx.globalAlpha = gy === 2 ? 0.85 : 0.38;
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+    ctx.globalAlpha = 1;
+
+    // trace: 8 cycles across when toned; near-flat with a faint shimmer when idle
+    var mid = H / 2, h = H * 0.36;
+    function trace() {
+      ctx.beginPath();
+      for (var px = 0; px <= W; px++) {
+        var wave = Math.sin((px / W) * Math.PI * 2 * 8 + t * 9) * amp;
+        var idle = (amp < 0.02 && !reduce) ? Math.sin(px * 0.05 + t * 1.6) * 0.5 : 0;
+        var yv = mid - wave * h - idle;
+        if (px === 0) ctx.moveTo(px, yv); else ctx.lineTo(px, yv);
+      }
+      ctx.stroke();
+    }
+    ctx.strokeStyle = ACC;
+    ctx.globalAlpha = 0.16; ctx.lineWidth = 5; trace();          // glow
+    ctx.globalAlpha = 1;    ctx.lineWidth = 2; trace();          // trace
+
+    // corner label
+    ctx.fillStyle = FAINT; ctx.font = '10px "IBM Plex Mono", monospace';
+    ctx.fillText(amp < 0.02 ? 'CH 404 · NO INPUT · −∞ dB' : 'CH 404 · TEST TONE · 1 kHz', 10, 16);
+  }
+
+  function loop(now) { draw(now); requestAnimationFrame(loop); }
+
+  // ---- the line-up tone: real 1 kHz sine, gently enveloped so it never clicks ----------------
+  var actx = null;
+  document.getElementById('toneBtn').addEventListener('click', function () {
+    try {
+      actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+      if (actx.state === 'suspended') actx.resume();
+      var o = actx.createOscillator(), g = actx.createGain();
+      o.type = 'sine'; o.frequency.value = 1000;
+      var t = actx.currentTime, dur = TONE_MS / 1000;
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.linearRampToValueAtTime(0.12, t + 0.06);
+      g.gain.setValueAtTime(0.12, t + dur - 0.22);
+      g.gain.linearRampToValueAtTime(0.0001, t + dur);
+      o.connect(g).connect(actx.destination);
+      o.start(t); o.stop(t + dur + 0.03);
+    } catch (e) { /* no audio context — the scope still animates */ }
+    toneStart = performance.now();
+  });
+
+  if (window.ResizeObserver) new ResizeObserver(resize).observe(sc);
+  window.addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(loop);
+})();
+</script>
+</body>
+</html>
