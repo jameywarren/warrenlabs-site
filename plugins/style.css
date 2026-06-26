@@ -164,3 +164,20 @@ ul.features li::before{content:"›"; color:var(--shot-accent,var(--acc)); margi
 .install code{ font-family:var(--mono); font-size:12px; background:#0f1113; border:1px solid var(--line);
   border-radius:5px; padding:1px 5px; color:var(--ink); word-break:break-all}
 .install-paths{ font-size:13px }
+
+/* email-gated download form (free beta capture → deliver via the delivery Worker) */
+.gate{ display:flex; flex-wrap:wrap; gap:10px; align-items:center; max-width:520px }
+.gate-email{ flex:1 1 220px; min-width:200px; background:var(--bg2); border:1px solid var(--line);
+  border-radius:8px; color:var(--ink); font-size:14px; padding:9px 12px; font-family:inherit }
+.gate-email:focus{ outline:none; border-color:var(--acc) }
+.gate-email:disabled{ opacity:.5 }
+.gate .btn{ border:0; cursor:pointer }
+.gate .btn:disabled{ opacity:.6; cursor:default }
+.gate-msg{ flex-basis:100%; color:var(--dim); font-size:13px; min-height:1.1em }
+
+/* the bundle strip on the home page — sits alongside the individual plugins */
+.bundle{ margin:8px 0 30px; padding:22px 24px; border:1px solid var(--line); border-radius:var(--r);
+  background:var(--bg2) }
+.bundle-h{ font-weight:700; font-size:20px; color:var(--ink) }
+.bundle-tl{ color:var(--dim); font-size:15px; margin:4px 0 0 }
+.bundle .cta{ margin:16px 0 0 }
