@@ -129,6 +129,50 @@
       "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/seat-v0.1.0-beta/Seat-0.1.0-beta.pkg"
     },
     {
+      "slug": "bevel",
+      "name": "Bevel",
+      "code": "Bevl",
+      "line": "Trueness",
+      "accent": "#6F9AA3",
+      "category": "Parametric EQ + analyzer",
+      "status": "In development",
+      "nameStatus": "set",
+      "tagline": "Ease every band true.",
+      "blurb": "A clean six-band parametric EQ with a real-time analyzer \u2014 surgical when you need it, musical when you don't. It shapes the tonal balance without a voice of its own, so what you hear is the move you made and nothing else.",
+      "features": [
+        "Six bands: shelves, peaks, pass filters",
+        "Real-time FFT analyzer",
+        "Draggable nodes on a log-freq plot",
+        "Transparent, minimum-phase",
+        "VST3 / AU / Standalone"
+      ],
+      "price": 0,
+      "buyUrl": "",
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/bevel-v0.1.0-beta/Bevel-0.1.0-beta.pkg"
+    },
+    {
+      "slug": "brace",
+      "name": "Brace",
+      "code": "Brac",
+      "line": "Trueness",
+      "accent": "#84909B",
+      "category": "Compressor",
+      "status": "In development",
+      "nameStatus": "set",
+      "tagline": "Hold the level steady.",
+      "blurb": "A compressor with three voices \u2014 a clean VCA-style grip, a fast FET bite, and a smooth optical glue. It braces the dynamics where they need it and gets out of the way where they don't.",
+      "features": [
+        "Clean / FET / Opto models",
+        "Program-dependent optical mode",
+        "Parallel mix (dry/wet)",
+        "Make-up gain + transfer display",
+        "VST3 / AU / Standalone"
+      ],
+      "price": 0,
+      "buyUrl": "",
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/brace-v0.1.0-beta/Brace-0.1.0-beta.pkg"
+    },
+    {
       "slug": "temper",
       "name": "Temper",
       "code": "Tmpr",
