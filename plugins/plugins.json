@@ -66,9 +66,9 @@
       "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/scribe-v0.1.0-beta/Scribe-0.1.0-beta.pkg"
     },
     {
-      "slug": "reveal",
-      "name": "Reveal",
-      "code": "Revl",
+      "slug": "pare",
+      "name": "Pare",
+      "code": "Pare",
       "line": "Trueness",
       "accent": "#C4825A",
       "category": "Dynamic resonance suppressor",
@@ -84,7 +84,7 @@
       ],
       "price": 0,
       "buyUrl": "",
-      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/reveal-v0.1.0-beta/Reveal-0.1.0-beta.pkg"
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/pare-v0.1.0-beta/Pare-0.1.0-beta.pkg"
     },
     {
       "slug": "plane",
