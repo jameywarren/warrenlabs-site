@@ -152,6 +152,11 @@
       return bars;
     }
     if (/modulation|eddy/.test(cat)) return '<path class="trace" d="M6,40 C30,8 54,8 78,40 S126,72 150,40 S198,8 218,28"/>';  // sine swirl
+    if (/reverb/.test(cat) || slug === 'wake') {               // diffuse decaying tail
+      let bars = '', x = 12;
+      [40, 33, 27, 22, 18, 14, 11, 9, 7, 5, 4, 3].forEach(h => { bars += `<line class="trace" x1="${x}" y1="46" x2="${x}" y2="${46 - h}"/>`; x += 17; });
+      return bars;
+    }
     // dirt trio — same engine, increasing "squareness": soft → clipped → near-square
     if (slug === 'temper') return '<path class="trace" d="M6,32 C16,12 30,12 44,32 C58,52 72,52 86,32 C100,12 114,12 128,32 C142,52 156,52 170,32 C184,12 198,12 212,32"/>';
     if (slug === 'grind')  return '<path class="trace" d="M6,34 C14,14 22,13 34,13 L54,13 C66,13 74,51 86,51 L106,51 C118,51 126,13 138,13 L158,13 C170,13 178,51 190,51 L210,51"/>';
@@ -164,7 +169,7 @@
     if (slug === 'scribe')                                     // matching EQ: source pulled to a target
       return '<path class="trace-dim" d="M6,42 C56,42 66,22 112,22 C158,22 168,42 218,42"/>'
            + '<path class="trace" d="M6,46 C56,46 70,26 112,26 C154,26 168,44 218,40"/>';
-    if (slug === 'reveal')                                     // dynamic resonance: surgical notches
+    if (slug === 'pare')                                       // dynamic resonance: surgical notches (renamed from reveal)
       return '<path class="trace" d="M6,26 L70,26 L77,26 L83,50 L89,26 L134,26 L141,26 L147,48 L153,26 L218,26"/>';
     if (slug === 'plane')                                      // de-esser: one HF sibilance notch
       return '<path class="trace" d="M6,26 L150,26 L160,26 L168,50 L176,26 L218,26"/>';
