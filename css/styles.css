@@ -330,12 +330,15 @@ body.audio-on .plug-note .live { color: var(--acc2); }
 
 /* the book — field-manual credential plate */
 .book {
-  margin-top: 40px; max-width: 880px;
+  margin-top: 40px; max-width: 920px;
+  display: flex; align-items: flex-start; gap: 32px;
   border: 1px solid var(--line); border-radius: 6px; padding: 30px 34px 28px;
   background: linear-gradient(180deg, var(--panel-hi), var(--panel) 30%);
   position: relative; overflow: hidden;
 }
 .book::before { content: ''; position: absolute; left: 0; top: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--panel-edge), transparent 70%); }
+.book-cover { flex: none; width: 132px; height: auto; display: block; border-radius: 3px; border: 1px solid var(--line); box-shadow: 0 10px 26px rgba(0,0,0,0.4); }
+.book-body { flex: 1; min-width: 0; }
 .book-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; font-size: 10.5px; letter-spacing: 0.2em; margin-bottom: 16px; }
 .book-meta .bk-k { color: var(--faint); }
 .book-meta .bk-stat { display: inline-flex; align-items: center; gap: 8px; color: var(--dim); }
@@ -442,6 +445,8 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   #scope { height: 150px; margin-top: -24px; }
   .hero-sub .lede { font-size: 19px; }
   .cred { grid-template-columns: 92px 1fr; font-size: 11px; }
+  .book { flex-direction: column; gap: 22px; padding: 26px 24px; }
+  .book-cover { width: 108px; }
   .rack-zone { padding: 64px 0 80px; }
   .rack-head h2 { font-size: clamp(34px, 9.5vw, 54px); }
   .rack-head .sub { font-size: 14.5px; }
