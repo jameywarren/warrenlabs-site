@@ -328,6 +328,25 @@ body.audio-on .plug-note .live { color: var(--acc2); }
 .era h4 { font-family: var(--font-display); font-weight: var(--disp-weight); text-transform: var(--disp-tt); letter-spacing: calc(var(--disp-ls) * 0.5); font-size: 23px; margin-bottom: 10px; }
 .era p { font-size: 14px; line-height: 1.65; color: var(--dim); }
 
+/* the book — field-manual credential plate */
+.book {
+  margin-top: 40px; max-width: 880px;
+  border: 1px solid var(--line); border-radius: 6px; padding: 30px 34px 28px;
+  background: linear-gradient(180deg, var(--panel-hi), var(--panel) 30%);
+  position: relative; overflow: hidden;
+}
+.book::before { content: ''; position: absolute; left: 0; top: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--panel-edge), transparent 70%); }
+.book-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; font-size: 10.5px; letter-spacing: 0.2em; margin-bottom: 16px; }
+.book-meta .bk-k { color: var(--faint); }
+.book-meta .bk-stat { display: inline-flex; align-items: center; gap: 8px; color: var(--dim); }
+.book-title { font-family: var(--font-display); font-weight: var(--disp-weight); text-transform: var(--disp-tt); letter-spacing: calc(var(--disp-ls) * 0.5); font-size: 25px; margin-bottom: 14px; }
+.book-copy { font-size: 16px; line-height: 1.7; color: var(--dim); max-width: 660px; text-wrap: pretty; }
+.book-copy em { font-style: normal; color: var(--ink); }
+.book-copy a { color: var(--acc); text-decoration: none; border-bottom: 1px solid color-mix(in oklab, var(--acc) 40%, transparent); transition: border-color 0.15s; }
+.book-copy a:hover { border-bottom-color: var(--acc); }
+.book-links { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 22px; }
+.book-links .btn.soon { border: 1px dashed var(--line); color: var(--faint); cursor: default; }
+
 /* ---------- contact ---------- */
 .contact { border-top: 1px solid var(--line); padding-top: 120px; padding-bottom: 110px; position: relative; }
 .contact .k { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.26em; color: var(--dim); margin-bottom: 34px; }
