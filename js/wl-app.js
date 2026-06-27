@@ -258,7 +258,7 @@
       meta: [['ROLE', 'Solo — product + build'], ['PLATFORM', 'iPhone · iOS 27'], ['PRIVACY', 'On-device · no upload, no account'], ['STATUS', 'Beta list open']]
     },
     maker: {
-      num: 'WL-MP1', title: 'Maker Phones',
+      num: 'WL-MP1', title: 'makerphones',
       led: 'var(--led-green)', status: 'LIVE',
       link: 'https://makerphones.com',
       desc: [
