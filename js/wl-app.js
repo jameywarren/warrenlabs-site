@@ -132,7 +132,7 @@
   }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
 
-  // The Warren Labs Mark (onset sine-W) — canonical path, scale-only, stroke=currentColor so the
+  // The Warren Labs Mark (wave sine-W) — canonical path, scale-only, stroke=currentColor so the
   // popup faceplate tints it with the plugin accent. Matches the site logo + the real plugin etch.
   const WL_MARK = '<svg class="wl-mark" viewBox="0 0 120 80" aria-hidden="true">'
     + '<path d="M16 16 C20 38 28 62 39 62 C48 62 53 46 58 38 C63 30 70 30 76 38 C81 44 84 54 92 54 '
