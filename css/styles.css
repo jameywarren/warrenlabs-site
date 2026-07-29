@@ -1,14 +1,14 @@
-/* Warren Labs — graphite + amber (plugin palette) · Condensed display type · 12° rack */
+/* Warren Labs: graphite + amber (plugin palette) · Condensed display type · 12° rack */
 :root {
-  /* Surfaces — graphite anodize (from the Level plugin tokens) */
+  /* Surfaces: graphite anodize (from the Level plugin tokens) */
   --bg: #0c0d0f; --bg2: #0f1012;
-  /* Text — neutral off-white / greys */
+  /* Text: neutral off-white / greys */
   --ink: #e8ebed; --dim: #868d92; --faint: #565b60;
   --line: #24272b;
-  /* Accent — amber signal accent, unified with the Echo logo color (#FF9E2C, usage spec v1.0).
+  /* Accent: amber signal accent, unified with the Echo logo color (#FF9E2C, usage spec v1.0).
      ONE accent, signal-state only. */
   --acc: #FF9E2C; --acc2: #FF9E2C;
-  /* Echo logo — locked identity color; same amber as the signal accent. */
+  /* Echo logo: locked identity color, same amber as the signal accent. */
   --echo-amber: #FF9E2C;
   /* Decorative graphics that used to be blue now read as neutral graphite/white trace */
   --decor: var(--ink);
@@ -40,7 +40,7 @@ nav a { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing
 nav a:hover { color: var(--acc); }
 nav a.cta { color: var(--acc); border: 1px solid color-mix(in oklab, var(--acc) 45%, var(--line)); padding: 9px 16px; border-radius: 4px; transition: background 0.2s, color 0.2s; }
 nav a.cta:hover { background: var(--acc); color: var(--bg); }
-/* mobile menu toggle — hidden until the mobile breakpoint */
+/* mobile menu toggle, hidden until the mobile breakpoint */
 .nav-toggle { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 38px; height: 32px; padding: 0 8px; background: none; border: 1px solid var(--line); border-radius: 6px; cursor: pointer; flex: none; }
 .nav-toggle span { display: block; height: 1.5px; background: var(--ink); border-radius: 2px; transition: transform 0.25s, opacity 0.2s; }
 .nav-toggle:hover { border-color: var(--acc); }
@@ -67,18 +67,12 @@ header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) ro
 .btn.primary:hover { filter: brightness(1.12); }
 .btn.ghost { border: 1px solid var(--line); color: var(--ink); }
 .btn.ghost:hover { border-color: var(--acc); color: var(--acc); }
-/* availability cue — signals he's open to work */
+/* availability cue: signals he's open to work */
 .now-chip { display: inline-flex; align-items: center; gap: 10px; margin-top: 4px; padding: 9px 16px; border: 1px solid color-mix(in oklab, var(--acc) 32%, var(--line)); border-radius: 100px; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink); }
 .now-chip .now-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--acc); box-shadow: 0 0 8px var(--acc); animation: instrblink 1.4s steps(2) infinite; flex: none; }
 
-/* "how we could work together" — engagement options incl. full-time */
-.engage { margin-top: 40px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 14px; font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.1em; color: var(--dim); }
-.engage .lab { color: var(--faint); letter-spacing: 0.2em; text-transform: uppercase; }
-.engage .pill { border: 1px solid var(--line); border-radius: 999px; padding: 8px 15px; color: var(--ink); transition: border-color 0.15s, color 0.15s; }
-.engage .pill:hover { border-color: color-mix(in oklab, var(--acc) 40%, var(--line)); }
-
 /* ---------- approach / signal chain ---------- */
-.approach { padding: 116px 0 56px; }
+.approach { padding-top: 116px; padding-bottom: 56px; }
 .approach-head { max-width: 760px; margin-bottom: 54px; }
 .approach-head .k { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.26em; color: var(--dim); margin-bottom: 22px; }
 .approach-head h2 { font-size: clamp(40px, 5vw, 68px); line-height: 1.03; }
@@ -328,7 +322,7 @@ body.audio-on .plug-note .live { color: var(--acc2); }
 .era h4 { font-family: var(--font-display); font-weight: var(--disp-weight); text-transform: var(--disp-tt); letter-spacing: calc(var(--disp-ls) * 0.5); font-size: 23px; margin-bottom: 10px; }
 .era p { font-size: 14px; line-height: 1.65; color: var(--dim); }
 
-/* the book — field-manual credential plate */
+/* the book: field-manual credential plate */
 .book {
   margin-top: 40px; max-width: 920px;
   display: flex; align-items: flex-start; gap: 32px;
@@ -356,6 +350,32 @@ body.audio-on .plug-note .live { color: var(--acc2); }
 .contact h2 { font-size: clamp(70px, 7.5vw, 112px); line-height: 1.0; max-width: 1000px; }
 .contact h2 .accent { color: var(--ink); }
 .contact-sub { margin-top: 24px; font-size: 18px; line-height: 1.5; color: var(--dim); max-width: 660px; text-wrap: pretty; }
+/* ---------- the offer (primary CTA) ----------
+   One concrete, priced engagement, built as a rack panel so it sits inside the existing
+   aesthetic rather than reading like a pricing box bolted on. */
+.offer {
+  display: grid; grid-template-columns: 1.5fr 1fr; gap: 44px; align-items: center;
+  margin-top: 40px; max-width: 900px; text-decoration: none; color: inherit;
+  border: 1px solid var(--panel-edge); border-radius: 6px; padding: 32px 36px;
+  background: linear-gradient(180deg, var(--panel-hi), var(--panel) 30%);
+  position: relative; overflow: hidden;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.offer::before { content: ''; position: absolute; left: 0; top: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--acc), transparent 70%); }
+.offer:hover { border-color: color-mix(in oklab, var(--acc) 50%, var(--panel-edge));
+  transform: translateY(-3px); box-shadow: 0 20px 48px rgba(0,0,0,0.45); }
+.offer-k { font-size: 11px; letter-spacing: 0.26em; color: var(--dim); margin-bottom: 16px; }
+.offer h3 { font-size: 31px; line-height: 1.05; margin-bottom: 14px; }
+.offer-main p { font-size: 15.5px; line-height: 1.65; color: var(--dim); max-width: 46em; text-wrap: pretty; }
+.offer-side { display: grid; gap: 11px; align-content: center;
+  border-left: 1px solid var(--line); padding-left: 32px; }
+.offer-spec { display: grid; grid-template-columns: 96px 1fr; gap: 12px; font-size: 11.5px; letter-spacing: 0.06em; }
+/* NOTE: not .ov here. That class is the fullscreen unit overlay (display:none), and
+   reusing it hid these values. */
+.offer-spec .sk { color: var(--faint); } .offer-spec .sv { color: var(--ink); }
+.offer-go { margin-top: 10px; font-size: 11px; letter-spacing: 0.18em; color: var(--acc); }
+
 /* ---------- patchbay ---------- */
 .pbay { position: relative; width: min(840px, 100%); margin: 44px 0 0; }
 .pbay-panel {
@@ -417,6 +437,8 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   .uscreen.big { width: 210px; height: 76px; }
   .about-grid { grid-template-columns: 1fr; gap: 44px; }
   .ov-grid { grid-template-columns: 1fr; gap: 32px; }
+  .offer { grid-template-columns: 1fr; gap: 28px; }
+  .offer-side { border-left: none; border-top: 1px solid var(--line); padding: 24px 0 0; }
 }
 @media (max-width: 720px) {
   :root { --h1: clamp(60px, 18vw, 104px); }
@@ -437,7 +459,7 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   header.nav-open nav { max-height: 240px; }
   nav a { font-size: 12px; letter-spacing: 0.16em; color: var(--ink); padding: 17px 20px; border-top: 1px solid var(--line); }
   nav a.cta { border: none; border-top: 1px solid var(--line); border-radius: 0; padding: 17px 20px; }
-  .approach { padding: 64px 0 32px; }
+  .approach { padding-top: 64px; padding-bottom: 32px; }
   .approach-head { margin-bottom: 36px; }
   .chain { grid-template-columns: 1fr; gap: 12px; }
   .hero { padding-top: 44px; }
@@ -508,7 +530,7 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
 .rack-line a { color: var(--acc); }
 .unit.plug { grid-template-columns: 92px minmax(150px,1fr) auto auto 150px; text-decoration: none; color: inherit; }
 .unit.plug .u-name h3 { font-size: 25px; }
-/* lit mini-screen — the plugin's signal trace, accent-tinted (--decor) */
+/* lit mini-screen: the product's signal trace, accent-tinted (--decor) */
 .plug-screen { width: 138px; height: 48px; flex: none; justify-self: end; position: relative; overflow: hidden;
   background: #08090a; border-radius: 4px; border: 1px solid #000;
   box-shadow: inset 0 0 10px rgba(0,0,0,.85), 0 1px 0 rgba(255,255,255,.04); }
@@ -516,7 +538,7 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
 .plug-screen .grid-x { stroke: rgba(220,228,232,.06); stroke-width: 1; }
 .plug-screen .trace { fill: none; stroke: var(--decor); stroke-width: 2.6;
   filter: drop-shadow(0 0 3px var(--decor)); }
-/* trace variants — dim dashed target (Scribe) + thin overlaid curves (Seat) */
+/* trace variants: dim dashed target (Scribe) + thin overlaid curves (Seat) */
 .plug-screen .trace-dim { fill: none; stroke: var(--decor); stroke-width: 1.5; opacity: .42; stroke-dasharray: 4 4; }
 .plug-screen .trace-thin { fill: none; stroke: var(--decor); stroke-width: 1.4; opacity: .5; }
 .shot .screen .trace-dim { fill: none; stroke: var(--shot-accent); stroke-width: 1.7; opacity: .42; stroke-dasharray: 4 4; }
@@ -528,12 +550,19 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
 .unit.plug .u-hint { flex-direction: column; align-items: flex-end; gap: 7px; }
 .unit.plug .u-status { font-size: 9.5px; }
 
+/* The rest of the Trueness line as one static row: named, not sold. No LED, no badge,
+   no click target, because there is nothing to open. */
+.unit.suite { grid-template-columns: 260px 1fr; gap: 28px; }
+.suite-spec { display: grid; gap: 9px; justify-self: end; text-align: right; }
+.suite-mods { font-size: 12.5px; letter-spacing: 0.06em; color: var(--ink); line-height: 1.5; white-space: nowrap; }
+.suite-note { font-size: 12.5px; color: var(--faint); line-height: 1.5; }
+
 /* ============================================================ "Also from the lab" */
-.also { padding: 80px 0 88px; }
+.also { padding-top: 80px; padding-bottom: 88px; }
 .also-head { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; margin-bottom: 24px; }
 .also-head .k { font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: 0.26em; color: var(--dim); }
 .also-head .sub { color: var(--faint); font-size: 14px; }
-.also-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.also-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
 .also-card { text-align: left; background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
   padding: 18px; cursor: pointer; display: flex; flex-direction: column; gap: 5px; font: inherit; color: inherit;
   transition: border-color 0.15s, transform 0.15s; }
@@ -552,9 +581,9 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   .unit.plug .u-num, .unit.plug .plug-knobs { display: none; }
 }
 @media (max-width: 720px) {
-  /* phones: a compact stacked front panel — name + status on top, screen + knobs below,
+  /* phones: a compact stacked front panel. Name + status on top, screen + knobs below,
      so each unit still reads like the desktop one instead of going bare. (Overrides the
-     homepage's generic ≤720 unit-stacking, which hides .u-hint — we re-show it here.) */
+     homepage's generic ≤720 unit-stacking, which hides .u-hint, so we re-show it here.) */
   .unit.plug {
     grid-template-columns: 1fr auto;
     grid-template-rows: auto auto;
@@ -566,16 +595,31 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   .unit.plug .u-hint   { grid-column: 2; grid-row: 1; display: flex; justify-self: end; flex-direction: row; align-items: center; gap: 10px; }
   .unit.plug .plug-screen { grid-column: 1; grid-row: 2; justify-self: start; display: block; width: 150px; }
   .unit.plug .plug-knobs  { grid-column: 2; grid-row: 2; justify-self: end; display: flex; }
+  /* the suite row stacks: name over the module list, both left-aligned */
+  .unit.suite { grid-template-columns: 1fr; grid-template-rows: auto auto; gap: 12px; padding: 18px 20px; }
+  .suite-spec { justify-self: start; text-align: left; }
+  .suite-mods { white-space: normal; }
+  .offer { padding: 24px 22px; margin-top: 32px; }
+  .offer h3 { font-size: 24px; }
+  .offer-main p { font-size: 14.5px; }
 }
 @media (max-width: 520px) { .also-grid { grid-template-columns: 1fr; } }
 
-/* the JS-filled wrapper must not form its own box, or the units shrink-wrap inside it —
+/* the JS-filled wrapper must not form its own box, or the units shrink-wrap inside it.
    display:contents lets the units lay out as direct children of .rack (full rack width). */
 #rackUnits { display: contents; }
-/* plugin rack units are <a>s (click → popup, intercepted in JS). Keep them looking like
-   units and override the global a{} styles; they fill the rack width like the others. */
-a.unit.plug, a.unit.plug:hover { color: inherit; text-decoration: none; }
+/* Rack units are <button>s now (click opens the detail popup; there is no per-unit page
+   to link out to). Strip the UA button chrome but keep the panel's own top edge. */
+/* No width:100% here. .unit carries margin: 0 26px, and a percentage width would be
+   measured against the full rack, pushing the panel (and its status label) past the
+   right rail where .rack-zone's overflow:hidden clips it. Auto width respects margins. */
+button.unit.plug {
+  font: inherit; color: inherit; text-align: left; display: grid;
+  border: none; border-top: 1px solid var(--panel-edge); border-radius: 0;
+  -webkit-appearance: none; appearance: none;
+}
 .unit.plug:focus-visible { outline: 2px solid var(--acc); outline-offset: -2px; }
+
 /* the blurred rack shadow must not eat clicks on the bottom units */
 .rack-shadow { pointer-events: none; }
 
@@ -615,7 +659,71 @@ a.unit.plug, a.unit.plug:hover { color: inherit; text-decoration: none; }
   text-transform: uppercase; color: var(--faint); margin-top: 4px; }
 .ov-body .shot { max-width: 720px; margin: 0 0 6px; }
 
+/* ============================================================ /design-review/
+   The fixed-fee offer page. Same tokens, same type system, same panel treatment as the
+   rack; no new palette and no new fonts. Section numbers stand in for the rack's unit
+   numbers so the page reads as part of the same instrument. */
+.dr-hero { padding-top: 88px; padding-bottom: 56px; }
+.dr-hero .k { font-size: 12px; letter-spacing: 0.26em; color: var(--dim); margin-bottom: 26px; }
+.dr-hero h1 { font-size: clamp(46px, 7vw, 96px); line-height: 0.98; }
+.dr-lede { margin-top: 30px; font-size: 22px; line-height: 1.5; color: var(--dim); max-width: 30em; text-wrap: pretty; }
+.dr-terms { display: flex; flex-wrap: wrap; gap: 10px 12px; margin-top: 34px; }
+.dr-terms .t { border: 1px solid var(--line); border-radius: 999px; padding: 9px 17px;
+  font-size: 11px; letter-spacing: 0.18em; color: var(--ink); }
+
+.dr-block { padding-top: 46px; padding-bottom: 46px; border-top: 1px solid var(--line); }
+.dr-head { margin-bottom: 30px; }
+.dr-head .k { font-size: 11.5px; letter-spacing: 0.26em; color: var(--dim); margin-bottom: 18px; }
+.dr-head h2 { font-size: clamp(30px, 4vw, 46px); line-height: 1.06; max-width: 18em; }
+.dr-body { display: grid; gap: 18px; max-width: 44em; }
+.dr-body p { font-size: 17px; line-height: 1.7; color: var(--dim); text-wrap: pretty; }
+.dr-body p strong { color: var(--ink); font-weight: 500; }
+.dr-body p em { font-style: normal; color: var(--ink); }
+
+.dr-list { display: grid; gap: 14px; }
+.dr-item { display: grid; grid-template-columns: 56px 1fr; gap: 22px; align-items: start;
+  border: 1px solid var(--line); border-top: 1px solid var(--panel-edge); border-radius: 8px;
+  background: linear-gradient(180deg, var(--panel-hi), var(--panel) 30%, #101014);
+  padding: 24px 28px; transition: border-color 0.2s, transform 0.2s; }
+.dr-item:hover { border-color: color-mix(in oklab, var(--acc) 40%, var(--line)); transform: translateY(-2px); }
+.dr-item .n { font-size: 11px; letter-spacing: 0.2em; color: var(--faint); padding-top: 5px; }
+.dr-item:hover .n { color: var(--acc); }
+.dr-item h3 { font-family: var(--font-display); font-weight: var(--disp-weight); text-transform: var(--disp-tt);
+  letter-spacing: calc(var(--disp-ls) * 0.5); font-size: 21px; line-height: 1.05; margin-bottom: 9px; }
+.dr-item p { font-size: 15px; line-height: 1.6; color: var(--dim); text-wrap: pretty; }
+.dr-plus { margin-top: 26px; font-size: 16px; line-height: 1.65; color: var(--dim); max-width: 44em; text-wrap: pretty; }
+
+.dr-price { display: grid; gap: 0; border: 1px solid var(--panel-edge); border-radius: 6px;
+  background: linear-gradient(180deg, var(--panel-hi), var(--panel) 30%); max-width: 760px; overflow: hidden; }
+.dr-price-row { display: grid; grid-template-columns: 130px 150px 1fr; gap: 24px; align-items: baseline;
+  padding: 24px 30px; }
+.dr-price-row + .dr-price-row { border-top: 1px solid var(--line); }
+.dr-price-row .pk { font-size: 11px; letter-spacing: 0.2em; color: var(--faint); }
+.dr-price-row .pv { font-size: 30px; color: var(--ink); }
+.dr-price-row .pn { font-size: 14.5px; line-height: 1.55; color: var(--dim); }
+
+.dr-cta { padding-top: 64px; padding-bottom: 96px; border-top: 1px solid var(--line); }
+.dr-cta h2 { font-size: clamp(38px, 6vw, 72px); line-height: 1.02; }
+.dr-cta p { margin: 20px 0 30px; font-size: 17.5px; line-height: 1.6; color: var(--dim); max-width: 40em; text-wrap: pretty; }
+
+@media (max-width: 720px) {
+  .dr-hero { padding-top: 48px; padding-bottom: 36px; }
+  .dr-lede { font-size: 18px; }
+  .dr-block { padding-top: 34px; padding-bottom: 34px; }
+  .dr-item { grid-template-columns: 1fr; gap: 10px; padding: 20px 22px; }
+  .dr-item .n { padding-top: 0; }
+  .dr-body p { font-size: 15.5px; }
+  .dr-price-row { grid-template-columns: 1fr; gap: 8px; padding: 20px 22px; }
+  .dr-cta { padding-top: 44px; padding-bottom: 64px; }
+}
+
 /* plugin popup feature list */
 .ov-features { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 8px; }
 .ov-features li { font-size: 13.5px; color: var(--dim); line-height: 1.5; }
 .ov-features li::before { content: "›"; color: var(--acc); margin-right: 9px; }
+
+/* ============================================================ lowercase brands
+   makerphones is lowercase one word by definition, so it has to survive the display
+   font's uppercase transform. Element-qualified and placed last so it outranks the
+   heading rules above it (.also-card h4, .ov-head h2) rather than tying and losing. */
+h1.lc, h2.lc, h3.lc, h4.lc, span.lc, .lc { text-transform: lowercase; }

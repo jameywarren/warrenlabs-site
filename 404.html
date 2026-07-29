@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>404 · No signal · Warren Labs</title>
-<meta name="description" content="Signal not found — this patch point isn't routed to anything.">
+<meta name="description" content="Signal not found. This patch point isn't routed to anything.">
 <meta name="robots" content="noindex">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_black_32.svg">
@@ -14,7 +14,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/styles.css">
 <style>
-  /* 404 — audio-desk "no signal" screen. Reuses the site tokens (--acc, --bg, --line, fonts). */
+  /* 404 audio-desk "no signal" screen. Reuses the site tokens (--acc, --bg, --line, fonts). */
   .e404 { min-height: calc(100vh - 168px); display: flex; flex-direction: column;
           justify-content: center; gap: 22px; padding: 48px 0 64px; max-width: 780px; }
   .e404-eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.26em;
@@ -56,7 +56,7 @@
 <main class="e404 wrap">
   <div class="e404-eyebrow"><span class="led"></span>ERROR 404 · SIGNAL NOT FOUND</div>
   <h1 class="display e404-title">No signal<span class="amp">.</span></h1>
-  <p class="e404-sub">This patch point isn't routed to anything. The page you're after moved, shipped, or never made it off the bench — but the rest of the rig still works.</p>
+  <p class="e404-sub">This patch point isn't routed to anything. The page you're after moved, shipped, or never made it off the bench, but the rest of the rig still works.</p>
 
   <div class="e404-scope"><canvas id="scope404"></canvas></div>
   <div class="e404-diag" id="diag">› probing route…</div>
@@ -84,7 +84,7 @@
   var W = 1, H = 188, dpr = 1;
 
   // Size the backing store from the PARENT box (minus its 14px padding) and pin the canvas to
-  // explicit pixels — avoids the circular clientWidth/`width:100%` measurement, and re-runs via
+  // explicit pixels, avoids the circular clientWidth/`width:100%` measurement, and re-runs via
   // ResizeObserver so it's correct regardless of when layout settles.
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -93,7 +93,7 @@
     cv.style.width = W + 'px'; cv.style.height = H + 'px';
     cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    draw(performance.now());            // paint immediately — don't depend on rAF alone
+    draw(performance.now());            // paint immediately, do not depend on rAF alone
   }
 
   // amplitude envelope driven by the test tone (0 = flatline)
@@ -156,7 +156,7 @@
       g.gain.linearRampToValueAtTime(0.0001, t + dur);
       o.connect(g).connect(actx.destination);
       o.start(t); o.stop(t + dur + 0.03);
-    } catch (e) { /* no audio context — the scope still animates */ }
+    } catch (e) { /* no audio context, the scope still animates */ }
     toneStart = performance.now();
   });
 

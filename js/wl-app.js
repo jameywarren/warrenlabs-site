@@ -1,4 +1,4 @@
-// Warren Labs — core app: oscilloscope, 3D rack, unit overlays
+// Warren Labs core app: oscilloscope, 3D rack, unit overlays
 (function () {
   'use strict';
 
@@ -28,7 +28,7 @@
     sctx.beginPath();
     for (let x = 0; x <= W; x += 80) { sctx.moveTo(x, mid - 58); sctx.lineTo(x, mid + 58); }
     sctx.stroke();
-    // Hero waveform is decorative — neutral off-white trace (graphite world), not the amber accent.
+    // Hero waveform is decorative. Neutral off-white trace (graphite world), not the amber accent.
     const base = '232,235,237';
     const layers = [
       { amp: 44, freq: 0.012, speed: 2.0, color: `rgba(${base},0.60)`, w: 2.2 },
@@ -116,13 +116,12 @@
     drawMini();
   }
 
-  /* ---------------- plugin rack (data-driven from the catalog manifest) ----------------
-     The rack IS the plugin line now: it builds itself from plugins/plugins.json (the same
-     source of truth as the /plugins/ pages), so adding a plugin there + redeploying updates
-     the rack too — no hand-maintained list to go stale. Units link to their catalog page;
-     status LED = green (shipping) / amber blink (in development); knob pointers take each
-     plugin's real faceplate accent. The personal projects live in the "Also from the lab"
-     strip below (overlays, via UNITS). */
+  /* ---------------- the rack ----------------
+     The rack used to build itself from plugins/plugins.json and render the full 12-unit
+     catalog. It is now a curated shortlist defined in FEATURED below, because this section
+     is portfolio evidence rather than a storefront. Status LED = green (shipping) / amber
+     blink (in development); knob pointers take each product's faceplate accent. The
+     personal projects live in the "More from the lab" strip below (overlays, via UNITS). */
   function knobRots(seed, n) {
     let h = 0;
     for (const ch of seed) h = (h * 131 + ch.charCodeAt(0)) >>> 0;
@@ -132,7 +131,7 @@
   }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
 
-  // The Warren Labs Mark (wave sine-W) — canonical path, scale-only, stroke=currentColor so the
+  // The Warren Labs Mark (wave sine-W). Canonical path, scale-only, stroke=currentColor so the
   // popup faceplate tints it with the plugin accent. Matches the site logo + the real plugin etch.
   const WL_MARK = '<svg class="wl-mark" viewBox="0 0 120 80" aria-hidden="true">'
     + '<path d="M16 16 C20 38 28 62 39 62 C48 62 53 46 58 38 C63 30 70 30 76 38 C81 44 84 54 92 54 '
@@ -145,7 +144,7 @@
   function traceFor(p) {
     const slug = (p.slug || '').toLowerCase();
     const cat = ((p.category || '') + ' ' + slug).toLowerCase();
-    // — Character line —
+    // Character line
     if (/echo|delay|ripple/.test(cat)) {                       // decaying repeats
       let bars = '', x = 18;
       [34, 26, 19, 13, 9, 6].forEach(h => { bars += `<line class="trace" x1="${x}" y1="46" x2="${x}" y2="${46 - h}"/>`; x += 28; });
@@ -157,13 +156,20 @@
       [40, 33, 27, 22, 18, 14, 11, 9, 7, 5, 4, 3].forEach(h => { bars += `<line class="trace" x1="${x}" y1="46" x2="${x}" y2="${46 - h}"/>`; x += 17; });
       return bars;
     }
-    // dirt trio — same engine, increasing "squareness": soft → clipped → near-square
+    // dirt trio, same engine, increasing "squareness": soft → clipped → near-square
     if (slug === 'temper') return '<path class="trace" d="M6,32 C16,12 30,12 44,32 C58,52 72,52 86,32 C100,12 114,12 128,32 C142,52 156,52 170,32 C184,12 198,12 212,32"/>';
     if (slug === 'grind')  return '<path class="trace" d="M6,34 C14,14 22,13 34,13 L54,13 C66,13 74,51 86,51 L106,51 C118,51 126,13 138,13 L158,13 C170,13 178,51 190,51 L210,51"/>';
     if (slug === 'burr')   return '<path class="trace" d="M6,40 L20,12 L58,12 L74,52 L112,52 L128,12 L166,12 L182,52 L214,52"/>';
     if (/saturation|drive|distortion|fuzz/.test(cat))
       return '<path class="trace" d="M6,64 C44,64 60,18 112,16 C164,14 180,60 218,60"/>';  // generic dirt
-    // — Trueness line —
+    // Attune: a personal-EQ A/B, the stock curve read against the one you land on.
+    if (slug === 'attune')
+      return '<path class="trace-dim" d="M6,40 C50,40 62,48 112,44 C158,40 172,26 218,30"/>'
+           + '<path class="trace" d="M6,34 C50,34 64,20 112,24 C160,28 174,42 218,38"/>';
+    // Tone Farm: a guitar signal driven into soft clip.
+    if (slug === 'tonefarm')
+      return '<path class="trace" d="M6,54 C34,54 44,16 74,14 C104,12 112,50 142,50 C172,50 184,14 218,16"/>';
+    // Trueness line
     if (slug === 'square')                                     // goniometer / phase scope
       return '<ellipse class="trace" cx="112" cy="32" rx="34" ry="12" transform="rotate(-34 112 32)"/>';
     if (slug === 'scribe')                                     // matching EQ: source pulled to a target
@@ -194,54 +200,117 @@
     </div>`;
   }
 
-  const PLUGINS = {};   // slug → manifest entry, for the popup
+  /* The rack is portfolio evidence, not a product catalog. Three products carry a full
+     unit card (Level shipping, Attune and Tone Farm in development); everything else on
+     the Trueness line collapses into one static spec row underneath. Entries keep the old
+     plugins.json shape so traceFor() and faceplateHTML() render them unchanged. The
+     per-unit spec pages under /plugins/ are deliberately no longer linked from here. */
+  const FEATURED = [
+    {
+      slug: 'level', name: 'Level', code: 'Levl', accent: '#D8A24E',
+      category: 'Headphone correction + crossfeed', status: 'Shipping',
+      blurb: "Flattens a headphone's measured response by inverting its curve, then adds Bauer-style crossfeed so a mix translates the way speakers would. The signal comes out measurably corrected, honest before anything else.",
+      features: [
+        'Measured-curve correction per model',
+        'Bauer crossfeed with interaural delay',
+        'Voicing + RTA layer',
+        'VST3 / AU / Standalone'
+      ],
+      meta: [
+        ['ROLE', 'Solo. Product, DSP, and build'],
+        ['TYPE', 'Audio plugin'],
+        ['FORMATS', 'VST3 · AU · Standalone'],
+        ['STATUS', 'Shipping']
+      ]
+    },
+    {
+      slug: 'attune', name: 'Attune', code: 'Attn', accent: '#E9A24A',
+      category: 'Headphone compensation', status: 'In development',
+      blurb: 'Pick your wired headphone, then find your own sound in about a minute. A blind, loudness-matched A/B on your own music walks you through a five-axis ear exam and lands on a personal curve, with stock against yours on an instant toggle. It runs on the same correction engine as Level.',
+      features: [
+        'Blind, loudness-matched A/B on your own music',
+        'Five-axis ear exam in about a minute',
+        'Personal curve, saved and recallable',
+        'macOS app on the shared Level engine'
+      ],
+      meta: [
+        ['ROLE', 'Solo. Product, DSP, and build'],
+        ['TYPE', 'macOS app'],
+        ['ENGINE', 'Shared with Level'],
+        ['STATUS', 'In development']
+      ]
+    },
+    {
+      slug: 'tonefarm', name: 'Tone Farm', code: 'Tnfm', accent: '#F0A644',
+      category: 'Guitar amp + FX', status: 'In development',
+      blurb: 'A whole guitar rig in one plugin: three amps captured from real hardware with a neural model, plus pedals, cab, room, console, and effects. Being finished in the open at tone.farm.',
+      features: [
+        'Three neural-captured amp models',
+        'Pedals, cab, room, console, effects',
+        'The whole chain in a single plugin',
+        'VST3 / AU / Standalone'
+      ],
+      meta: [
+        ['ROLE', 'Solo. Product, DSP, and build'],
+        ['TYPE', 'Audio plugin'],
+        ['CAPTURE', 'Neural models off a real rig'],
+        ['STATUS', 'In development']
+      ],
+      link: 'https://tone.farm', linkLabel: 'TONE.FARM ↗'
+    }
+  ];
+
+  // The rest of the Trueness line, shown as one spec row rather than a rack of its own.
+  const SUITE = {
+    name: 'Trueness suite',
+    sub: 'Reference + correction modules',
+    note: 'Seven more tools on the shared DSP library, built alongside Level.',
+    modules: ['Bevel', 'Brace', 'Square', 'Pare', 'Plane', 'Scribe', 'Seat']
+  };
+
+  const PLUGINS = {};   // slug → entry, for the popup
   function pluginUnitHTML(p) {
     const shipping = /^shipping/i.test(p.status || '');
     const led = shipping ? 'var(--led-green)' : 'var(--led-amber)';
     const knobs = knobRots(p.slug || p.name, 3).map(r => `<span class="tknob" style="--rot:${r}deg"></span>`).join('');
-    // A lit mini-screen on each panel — the plugin's signal trace (same shape as the popup
-    // faceplate / catalog shot), tinted with the plugin accent via --decor.
+    // A lit mini-screen on each panel: the product's signal trace (same shape as the popup
+    // faceplate), tinted with its accent via --decor.
     const screen = `<div class="plug-screen"><svg viewBox="0 0 224 64" preserveAspectRatio="none">`
       + `<line class="grid-x" x1="0" y1="21" x2="224" y2="21"/><line class="grid-x" x1="0" y1="43" x2="224" y2="43"/>`
       + `${traceFor(p)}</svg></div>`;
-    // A real <a> (fills the rack width, keeps right/middle-click → page, works without JS);
-    // the click handler intercepts a plain left-click to open the popup instead.
-    return `<a class="unit plug" href="plugins/${esc(p.slug)}/" data-plugin="${esc(p.slug)}" style="--decor:${esc(p.accent || 'var(--acc)')}">
+    // A button, not a link: there is no per-unit page to fall through to any more, so a
+    // plain click opens the detail popup and that is the only destination.
+    return `<button type="button" class="unit plug" data-plugin="${esc(p.slug)}" style="--decor:${esc(p.accent || 'var(--acc)')}">
       <span class="u-num">WL-${esc((p.code || '').toUpperCase())}</span>
       <div class="u-name"><h3>${esc(p.name)}</h3><span class="u-sub">${esc((p.category || '').toUpperCase())}</span></div>
       ${screen}
       <div class="plug-knobs">${knobs}</div>
       <div class="u-hint">
         <span class="u-status"><span class="led${shipping ? '' : ' blink'}" style="--led-c:${led}"></span>${esc((p.status || '').toUpperCase())}</span>
-        <span class="u-open">OPEN ↗</span>
+        <span class="u-open">DETAIL ↗</span>
       </div>
-    </a>`;
+    </button>`;
   }
-  (function buildPluginRack() {
+  // One static row for the remainder of the line. No status LED and no badge: these are
+  // listed as evidence of the body of work, not offered as downloads.
+  function suiteUnitHTML(s) {
+    return `<div class="unit suite static">
+      <div class="u-name"><h3>${esc(s.name)}</h3><span class="u-sub">${esc(s.sub.toUpperCase())}</span></div>
+      <div class="suite-spec">
+        <span class="suite-mods mono">${s.modules.map(esc).join(' · ')}</span>
+        <span class="suite-note">${esc(s.note)}</span>
+      </div>
+    </div>`;
+  }
+  (function buildRack() {
     const host = document.getElementById('rackUnits');
     if (!host) return;
-    fetch('plugins/plugins.json', { cache: 'no-cache' })
-      .then(r => r.json())
-      .then(data => {
-        let html = '';
-        ['Trueness', 'Character'].forEach((line, li) => {
-          const ps = (data.plugins || []).filter(p => (p.line || 'Trueness') === line);
-          if (!ps.length) return;
-          if (li > 0) html += '<div class="unit vent static"><div class="slots"></div></div>';
-          html += `<div class="rack-line mono">${line.toUpperCase()} LINE</div>`;
-          ps.forEach(p => { PLUGINS[p.slug] = p; });
-          html += ps.map(pluginUnitHTML).join('');
-        });
-        host.innerHTML = html;
-        host.querySelectorAll('[data-plugin]').forEach(el =>
-          el.addEventListener('click', e => {
-            // Let modified clicks (cmd/ctrl/middle, new tab) fall through to the real link.
-            if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
-            e.preventDefault();
-            openPlugin(el.dataset.plugin);
-          }));
-      })
-      .catch(() => { host.innerHTML = '<div class="rack-line mono">See the full plugin line → <a href="plugins/">/plugins ↗</a></div>'; });
+    FEATURED.forEach(p => { PLUGINS[p.slug] = p; });
+    host.innerHTML = FEATURED.map(pluginUnitHTML).join('')
+      + '<div class="unit vent static"><div class="slots"></div></div>'
+      + suiteUnitHTML(SUITE);
+    host.querySelectorAll('[data-plugin]').forEach(el =>
+      el.addEventListener('click', () => openPlugin(el.dataset.plugin)));
   })();
 
   /* ---------------- unit data (the "Also from the lab" projects) ---------------- */
@@ -251,50 +320,23 @@
       led: 'var(--led-amber)', blink: true, status: 'BETA',
       link: '/changes/', linkLabel: 'OPEN THE LANDING PAGE ↗',
       desc: [
-        "An <b>iPhone app</b> that turns a rough recording — played, hummed, or dropped in from a voice memo — into a session-ready <b>Nashville Number chart</b>, then a MIDI you open straight in Logic Pro. The whole thing runs <b>on-device</b>: your audio never leaves the phone.",
-        "Built like a musician's tool, not a transcriber. The chart is <b>transpose-proof</b> — one chart, any key — it <b>flags the bars it's unsure of</b> so you fix them in taps, and it plays your take back with a marker following the changes.",
-        "First milestone is a tight beta: capture, chart, fix, and export a MIDI for Logic — run Analyze for a Chord Track, then add Session Players that follow the changes."
+        "An <b>iPhone app</b> that turns a rough recording, played, hummed, or dropped in from a voice memo, into a session-ready <b>Nashville Number chart</b>, then a MIDI you open straight in Logic Pro. The whole thing runs <b>on-device</b>: your audio never leaves the phone.",
+        "Built like a musician's tool, not a transcriber. The chart is <b>transpose-proof</b>, one chart in any key, and it <b>flags the bars it's unsure of</b> so you fix them in taps, and it plays your take back with a marker following the changes.",
+        "First milestone is a tight beta: capture, chart, fix, and export a MIDI for Logic. Run Analyze for a Chord Track, then add Session Players that follow the changes."
       ],
-      meta: [['ROLE', 'Solo — product + build'], ['PLATFORM', 'iPhone · iOS 27'], ['PRIVACY', 'On-device · no upload, no account'], ['STATUS', 'Beta list open']]
+      meta: [['ROLE', 'Solo. Product + build'], ['PLATFORM', 'iPhone · iOS 27'], ['PRIVACY', 'On-device · no upload, no account'], ['STATUS', 'Beta list open']]
     },
     maker: {
-      num: 'WL-MP1', title: 'makerphones',
+      num: 'WL-MP1', title: 'makerphones', lowercase: true,
       led: 'var(--led-green)', status: 'LIVE',
       link: 'https://makerphones.com',
       desc: [
-        "An open field manual for building your own headphones — driver physics through measurement and tuning. Thirty-two chapters off the bench, all done and free to read. The resource I wish I'd had thirty years ago.",
-        "It starts with the <b>Daily Driver</b>: a 40 mm open-back that's forgiving to design and to assemble, buildable by a first-timer, and good enough to keep wearing once it's done. The model is <b>fully parametric</b> — change the driver, the pad, or the head size and it follows.",
-        "Honest sonic target: a <b>bright, open, detailed open-back</b> — strong mids and treble, modest bass. That's what a small driver in an open baffle does, and the design leans into it instead of chasing sub-bass the hardware can't make.",
+        "An open field manual for building your own headphones, driver physics through measurement and tuning. Thirty-two chapters off the bench, all done and free to read. The resource I wish I'd had thirty years ago.",
+        "It starts with the <b>Daily Driver</b>: a 40 mm open-back that's forgiving to design and to assemble, buildable by a first-timer, and good enough to keep wearing once it's done. The model is <b>fully parametric</b>: change the driver, the pad, or the head size and it follows.",
+        "Honest sonic target: a <b>bright, open, detailed open-back</b>, strong mids and treble, modest bass. That's what a small driver in an open baffle does, and the design leans into it instead of chasing sub-bass the hardware can't make.",
         "The same reference is also a book, <b>The Art and Science of Headphone Design</b>: free and open to read online, with a print and Kindle edition for anyone who wants it on the bench."
       ],
       meta: [['ROLE', 'Author'], ['FORMAT', 'Free online · print + Kindle'], ['FIRST BUILD', 'Daily Driver · 40 mm open-back'], ['SCOPE', 'Driver physics → measurement → tuning'], ['STATUS', '32 chapters · complete']]
-    },
-    tone: {
-      num: 'WL-TF1', title: 'Tone Farmers',
-      led: 'var(--led-green)', status: 'ACTIVE',
-      link: 'https://tonefarmers.com', linkLabel: 'TONEFARMERS.COM ↗',
-      desc: [
-        "A record label I started with an <b>artist-favorable split</b>, because the deals most artists get are bad. I work with them from recording through release."
-      ],
-      meta: [['ROLE', 'Founder'], ['FOCUS', 'A&R, production, release'], ['STATUS', 'Active']],
-      controls: [
-        { type: 'knob', label: 'ARTIST CUT', init: 0.75, fmt: v => Math.round(v * 100) + '%' },
-        { type: 'knob', label: 'LABEL CUT', init: 0.25, fmt: v => Math.round(v * 100) + '%', linkInvert: 0 }
-      ]
-    },
-    bloom: {
-      num: 'WL-SB1', title: 'Sonic Bloom',
-      led: 'var(--led-amber)', blink: true, status: 'PRE-LAUNCH',
-      link: 'https://sonicbloom.app', linkLabel: 'SONICBLOOM.APP ↗',
-      desc: [
-        "An all-in-one website, sales, and fan platform for working musicians: <b>one flat $20/month, no commission</b> on what they earn. Most musicians stitch together Squarespace, Bandcamp, Mailchimp, and Patreon, and most of those take a cut.",
-        "The call I'm proudest of is what I left out: <b>a small, frozen feature set</b> and firm rules about what it would never do."
-      ],
-      meta: [['ROLE', 'Product, scope, architecture'], ['STACK', 'Laravel 12, PostgreSQL, Stripe'], ['STATUS', 'Built; path to beta in progress']],
-      controls: [
-        { type: 'knob', label: 'MONTHLY FEE', init: 0.2, fixed: true, fmt: () => '$20 FLAT' },
-        { type: 'knob', label: 'COMMISSION', init: 0, locked: true, fmt: v => v < 0.02 ? '0% · ALWAYS' : Math.round(v * 100) + '%?!' }
-      ]
     }
   };
 
@@ -317,7 +359,11 @@
     if (!u) return;
     openKey = key;
     document.getElementById('ovNum').textContent = u.num;
-    document.getElementById('ovTitle').textContent = u.title;
+    const ovTitle = document.getElementById('ovTitle');
+    ovTitle.textContent = u.title;
+    // Brands that are lowercase by definition (makerphones) must survive the display
+    // font's uppercase transform, so the name is right in the source AND on screen.
+    ovTitle.classList.toggle('lc', !!u.lowercase);
     document.getElementById('ovStatus').innerHTML =
       `<div class="led${u.blink ? ' blink' : ''}" style="--led-c:${u.led}"></div>${u.status}`;
 
@@ -350,7 +396,8 @@
     document.body.style.overflow = 'hidden';
   }
 
-  // Plugin info popup — faceplate mockup + blurb + features + a link to the full catalog page.
+  // Product detail popup: faceplate mockup, blurb, features, and the build facts. No
+  // catalog CTA. The rack shows what the work is, it does not sell units.
   function openPlugin(slug) {
     const p = PLUGINS[slug];
     if (!p) return;
@@ -361,6 +408,8 @@
     document.getElementById('ovStatus').innerHTML =
       `<div class="led${shipping ? '' : ' blink'}" style="--led-c:${shipping ? 'var(--led-green)' : 'var(--led-amber)'}"></div>${esc((p.status || '').toUpperCase())}`;
     const feats = (p.features || []).map(f => `<li>${esc(f)}</li>`).join('');
+    const meta = (p.meta || []).map(m =>
+      `<div class="m"><span class="mk">${esc(m[0])}</span><span class="mv">${esc(m[1])}</span></div>`).join('');
     ovBody.innerHTML = `
       ${faceplateHTML(p)}
       <div class="ov-grid" style="margin-top:32px">
@@ -368,13 +417,8 @@
           ${feats ? `<ul class="ov-features">${feats}</ul>` : ''}
         </div>
         <div class="ov-side">
-          <a class="ov-cta" href="plugins/${esc(p.slug)}/">OPEN THE FULL PAGE ↗</a>
-          <div class="ov-meta">
-            <div class="m"><span class="mk">LINE</span><span class="mv">${esc(p.line || 'Trueness')}</span></div>
-            <div class="m"><span class="mk">TYPE</span><span class="mv">${esc(p.category || '')}</span></div>
-            <div class="m"><span class="mk">STATUS</span><span class="mv">${esc(p.status || '')}</span></div>
-            <div class="m"><span class="mk">FORMATS</span><span class="mv">VST3 · AU · Standalone</span></div>
-          </div>
+          ${p.link ? `<a class="ov-cta" href="${esc(p.link)}" target="_blank" rel="noopener">${esc(p.linkLabel || 'VISIT ↗')}</a>` : ''}
+          <div class="ov-meta">${meta}</div>
         </div>
       </div>`;
     ov.classList.add('show');
@@ -421,7 +465,7 @@
         if (!drag) return;
         drag = false;
         if (c.locked && v > 0) {
-          // spring back to zero — some knobs aren't negotiable
+          // spring back to zero. Some knobs aren't negotiable
           springTimer = setInterval(() => {
             v = Math.max(0, v - 0.06);
             render();

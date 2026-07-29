@@ -1,4 +1,4 @@
-// Warren Labs — interactive patchbay with verlet cable physics
+// Warren Labs interactive patchbay with verlet cable physics
 (function () {
   'use strict';
 

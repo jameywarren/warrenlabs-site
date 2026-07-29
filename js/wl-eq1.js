@@ -1,4 +1,4 @@
-// WL-EQ1 — playable headphone EQ + crossfeed (Web Audio), mounts into the unit overlay
+// WL-EQ1: playable headphone EQ + crossfeed (Web Audio), mounts into the unit overlay
 (function () {
   'use strict';
 
