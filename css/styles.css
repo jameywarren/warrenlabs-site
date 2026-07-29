@@ -113,9 +113,11 @@ header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) ro
 .rack-instr .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--echo-amber); box-shadow: 0 0 7px rgba(255,158,44,0.6); animation: instrblink 1.4s steps(2) infinite; }
 @keyframes instrblink { 50% { opacity: 0.25; } }
 
-.rack-scene { perspective: 2000px; width: 980px; margin: 70px auto 0; position: relative; }
+.rack-scene { perspective: 2000px; width: min(1200px, calc(100vw - 120px)); margin: 70px auto 0; position: relative; }
 .rack {
   position: relative; transform-style: preserve-3d;
+  /* flex column so the unit <button>s stretch instead of shrink-to-fitting their content */
+  display: flex; flex-direction: column;
   transform: rotateX(calc(var(--tilt, 12) * 0.45deg)) rotateY(calc(var(--tilt, 12) * -1deg + var(--mx, 0deg))) rotateX(var(--my, 0deg));
   transition: transform 0.15s ease-out;
 }
@@ -350,12 +352,22 @@ body.audio-on .plug-note .live { color: var(--acc2); }
 .contact h2 { font-size: clamp(70px, 7.5vw, 112px); line-height: 1.0; max-width: 1000px; }
 .contact h2 .accent { color: var(--ink); }
 .contact-sub { margin-top: 24px; font-size: 18px; line-height: 1.5; color: var(--dim); max-width: 660px; text-wrap: pretty; }
-/* ---------- the offer (primary CTA) ----------
+/* ---------- the offer band ----------
+   Its own section between the signal chain and the work, rather than sitting inside the
+   contact block where it interrupted the patchbay. */
+.offer-zone { background: var(--bg2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  padding-top: 84px; padding-bottom: 84px; }
+.offer-head { margin-bottom: 34px; max-width: 760px; }
+.offer-head .k { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.26em; color: var(--dim); margin-bottom: 20px; }
+.offer-head h2 { font-size: clamp(34px, 4.4vw, 56px); line-height: 1.04; }
+.offer-head .sub { margin-top: 18px; font-size: 17px; line-height: 1.55; color: var(--dim); max-width: 44em; text-wrap: pretty; }
+
+/* ---------- the offer panel ----------
    One concrete, priced engagement, built as a rack panel so it sits inside the existing
    aesthetic rather than reading like a pricing box bolted on. */
 .offer {
   display: grid; grid-template-columns: 1.5fr 1fr; gap: 44px; align-items: center;
-  margin-top: 40px; max-width: 900px; text-decoration: none; color: inherit;
+  max-width: 980px; text-decoration: none; color: inherit;
   border: 1px solid var(--panel-edge); border-radius: 6px; padding: 32px 36px;
   background: linear-gradient(180deg, var(--panel-hi), var(--panel) 30%);
   position: relative; overflow: hidden;
@@ -429,7 +441,7 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   .creds { border-left: none; border-top: 1px solid var(--line); padding: 24px 0 0; }
   .chain { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .chain-mod:not(:last-child)::after { display: none; }
-  .rack-scene { width: min(980px, calc(100vw - 48px)); }
+  .rack-scene { width: min(1200px, calc(100vw - 48px)); }
   .unit { height: auto; min-height: 112px; padding-top: 18px; padding-bottom: 18px; }
   .unit.vent { min-height: 0; padding-top: 0; padding-bottom: 0; height: 36px; }
   .u-sub-clamp, .unit .u-name .u-sub { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -552,9 +564,24 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
 
 /* The rest of the Trueness line as one static row: named, not sold. No LED, no badge,
    no click target, because there is nothing to open. */
-.unit.suite { grid-template-columns: 260px 1fr; gap: 28px; }
+.unit.suite { grid-template-columns: 240px auto 1fr; gap: 28px; }
+/* the suite screen: one cell per module, each drawing that tool's own trace, so the
+   summary row still reads as a faceplate rather than a list of names */
+.suite-screen { display: flex; align-items: stretch; gap: 1px; height: 56px; flex: none;
+  background: #08090a; border-radius: 4px; border: 1px solid #000; padding: 3px;
+  box-shadow: inset 0 0 10px rgba(0,0,0,.85), 0 1px 0 rgba(255,255,255,.04); }
+.suite-cell { position: relative; width: 46px; display: block;
+  border-right: 1px solid rgba(220,228,232,.07); }
+.suite-cell:last-child { border-right: none; }
+.suite-cell svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.suite-cell .trace { fill: none; stroke: var(--decor); stroke-width: 3.2; opacity: .78;
+  filter: drop-shadow(0 0 3px var(--decor)); }
+.suite-cell .trace-dim { fill: none; stroke: var(--decor); stroke-width: 2; opacity: .3; stroke-dasharray: 5 5; }
+.suite-cell .trace-thin { fill: none; stroke: var(--decor); stroke-width: 1.8; opacity: .38; }
+.suite-cell .grid-x { display: none; }
 .suite-spec { display: grid; gap: 9px; justify-self: end; text-align: right; }
-.suite-mods { font-size: 12.5px; letter-spacing: 0.06em; color: var(--ink); line-height: 1.5; white-space: nowrap; }
+.unit.suite { --decor: #D8A24E; }
+.suite-mods { font-size: 12px; letter-spacing: 0.05em; color: var(--ink); line-height: 1.5; white-space: nowrap; }
 .suite-note { font-size: 12.5px; color: var(--faint); line-height: 1.5; }
 
 /* ============================================================ "Also from the lab" */
@@ -596,10 +623,14 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   .unit.plug .plug-screen { grid-column: 1; grid-row: 2; justify-self: start; display: block; width: 150px; }
   .unit.plug .plug-knobs  { grid-column: 2; grid-row: 2; justify-self: end; display: flex; }
   /* the suite row stacks: name over the module list, both left-aligned */
-  .unit.suite { grid-template-columns: 1fr; grid-template-rows: auto auto; gap: 12px; padding: 18px 20px; }
+  .unit.suite { grid-template-columns: 1fr; grid-template-rows: auto auto auto; gap: 12px; padding: 18px 20px; }
+  .suite-screen { width: 100%; }
+  .suite-cell { width: auto; flex: 1; }
   .suite-spec { justify-self: start; text-align: left; }
   .suite-mods { white-space: normal; }
-  .offer { padding: 24px 22px; margin-top: 32px; }
+  .offer { padding: 24px 22px; }
+  .offer-zone { padding-top: 52px; padding-bottom: 52px; }
+  .offer-head { margin-bottom: 24px; }
   .offer h3 { font-size: 24px; }
   .offer-main p { font-size: 14.5px; }
 }
@@ -610,9 +641,10 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
 #rackUnits { display: contents; }
 /* Rack units are <button>s now (click opens the detail popup; there is no per-unit page
    to link out to). Strip the UA button chrome but keep the panel's own top edge. */
-/* No width:100% here. .unit carries margin: 0 26px, and a percentage width would be
-   measured against the full rack, pushing the panel (and its status label) past the
-   right rail where .rack-zone's overflow:hidden clips it. Auto width respects margins. */
+/* No width here on purpose. .unit carries margin: 0 26px, so width:100% would measure
+   against the full rack and push the panel (and its status label) past the right rail,
+   where .rack-zone's overflow:hidden clips it. The stretch comes from .rack's column
+   flex instead, which accounts for the margins. */
 button.unit.plug {
   font: inherit; color: inherit; text-align: left; display: grid;
   border: none; border-top: 1px solid var(--panel-edge); border-radius: 0;
