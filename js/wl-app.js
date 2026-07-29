@@ -179,6 +179,10 @@
       return '<path class="trace" d="M6,26 L70,26 L77,26 L83,50 L89,26 L134,26 L141,26 L147,48 L153,26 L218,26"/>';
     if (slug === 'plane')                                      // de-esser: one HF sibilance notch
       return '<path class="trace" d="M6,26 L150,26 L160,26 L168,50 L176,26 L218,26"/>';
+    if (slug === 'bevel')                                      // parametric EQ: a boost and a cut
+      return '<path class="trace" d="M6,34 C40,34 48,12 78,12 C104,12 108,34 134,34 C158,34 164,54 190,54 C206,54 212,40 218,38"/>';
+    if (slug === 'brace')                                      // compressor: peaks held to a plateau
+      return '<path class="trace" d="M6,50 L44,50 C56,50 58,18 70,18 L150,18 C164,18 166,50 178,50 L218,50"/>';
     if (slug === 'seat')                                       // mix translation: overlaid device curves
       return '<path class="trace" d="M6,40 C56,40 66,24 112,24 C158,24 168,40 218,40"/>'
            + '<path class="trace-thin" d="M6,30 C56,30 66,42 112,42 C158,42 168,28 218,28"/>'
@@ -261,11 +265,21 @@
   ];
 
   // The rest of the Trueness line, shown as one spec row rather than a rack of its own.
+  // Each module carries its slug so the row's screen can draw that tool's real trace,
+  // which is what keeps the row from reading as a plain list.
   const SUITE = {
     name: 'Trueness suite',
     sub: 'Reference + correction modules',
     note: 'Seven more tools on the shared DSP library, built alongside Level.',
-    modules: ['Bevel', 'Brace', 'Square', 'Pare', 'Plane', 'Scribe', 'Seat']
+    modules: [
+      { name: 'Bevel',  slug: 'bevel',  category: 'Parametric EQ' },
+      { name: 'Brace',  slug: 'brace',  category: 'Compressor' },
+      { name: 'Square', slug: 'square', category: 'Mono compatibility' },
+      { name: 'Pare',   slug: 'pare',   category: 'Resonance suppressor' },
+      { name: 'Plane',  slug: 'plane',  category: 'De-esser' },
+      { name: 'Scribe', slug: 'scribe', category: 'Matching EQ' },
+      { name: 'Seat',   slug: 'seat',   category: 'Mix translation' }
+    ]
   };
 
   const PLUGINS = {};   // slug → entry, for the popup
@@ -292,12 +306,19 @@
     </button>`;
   }
   // One static row for the remainder of the line. No status LED and no badge: these are
-  // listed as evidence of the body of work, not offered as downloads.
+  // listed as evidence of the body of work, not offered as downloads. The screen is a
+  // seven-cell strip, one live trace per module, in the same left-to-right order as the
+  // spec line that names them, so the row reads as a faceplate rather than a bare list.
   function suiteUnitHTML(s) {
+    const cells = s.modules.map(m =>
+      `<span class="suite-cell" title="${esc(m.name)}: ${esc(m.category)}">
+        <svg viewBox="0 0 224 64" preserveAspectRatio="none">${traceFor(m)}</svg>
+      </span>`).join('');
     return `<div class="unit suite static">
       <div class="u-name"><h3>${esc(s.name)}</h3><span class="u-sub">${esc(s.sub.toUpperCase())}</span></div>
+      <div class="suite-screen">${cells}</div>
       <div class="suite-spec">
-        <span class="suite-mods mono">${s.modules.map(esc).join(' · ')}</span>
+        <span class="suite-mods mono">${s.modules.map(m => esc(m.name)).join(' · ')}</span>
         <span class="suite-note">${esc(s.note)}</span>
       </div>
     </div>`;
