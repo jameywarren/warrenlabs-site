@@ -224,17 +224,19 @@
         ['ROLE', 'Solo. Product, DSP, and build'],
         ['TYPE', 'Audio plugin'],
         ['FORMATS', 'VST3 · AU · Standalone'],
-        ['STATUS', 'Shipping']
-      ]
+        ['BUILD', '0.2.26 · macOS · not yet notarized']
+      ],
+      link: 'https://github.com/jameywarren/warrenlabs-site/releases/download/level-v0.2.26-beta/Level-0.2.26-beta.pkg',
+      linkLabel: 'DOWNLOAD FOR MACOS ↗'
     },
     {
       slug: 'attune', name: 'Attune', code: 'Attn', accent: '#E9A24A',
       category: 'Headphone compensation', status: 'In development',
-      blurb: 'Pick your wired headphone, then find your own sound in about a minute. A blind, loudness-matched A/B on your own music walks you through a five-axis ear exam and lands on a personal curve, with stock against yours on an instant toggle. It runs on the same correction engine as Level.',
+      blurb: 'Correction usually means somebody else\'s idea of flat. Attune finds yours instead: pick your headphone, then let a blind, loudness-matched A/B on your own music narrow in on the curve you actually prefer. It takes about a minute, and stock against yours stays on one toggle. Same correction engine as Level, wrapped in something a listener can use.',
       features: [
         'Blind, loudness-matched A/B on your own music',
-        'Five-axis ear exam in about a minute',
-        'Personal curve, saved and recallable',
+        'Lands on a personal curve in about a minute',
+        'Stock against yours on one toggle',
         'macOS app on the shared Level engine'
       ],
       meta: [
@@ -247,11 +249,11 @@
     {
       slug: 'tonefarm', name: 'Tone Farm', code: 'Tnfm', accent: '#F0A644',
       category: 'Guitar amp + FX', status: 'In development',
-      blurb: 'A whole guitar rig in one plugin: three amps captured from real hardware with a neural model, plus pedals, cab, room, console, and effects. Being finished in the open at tone.farm.',
+      blurb: 'Most amp sims ask you to assemble a rig. Tone Farm ships three amps that never switch off, captured from real hardware with a neural model, and builds the pedals, cab, room, and console around them. One plugin, one signal path, no blank canvas. Being finished in the open at tone.farm.',
       features: [
-        'Three neural-captured amp models',
+        'Three amps, neural-captured off real hardware',
         'Pedals, cab, room, console, effects',
-        'The whole chain in a single plugin',
+        'One signal path, not a blank pedalboard',
         'VST3 / AU / Standalone'
       ],
       meta: [
@@ -267,20 +269,40 @@
   // The rest of the Trueness line, shown as one spec row rather than a rack of its own.
   // Each module carries its slug so the row's screen can draw that tool's real trace,
   // which is what keeps the row from reading as a plain list.
-  const SUITE = {
-    name: 'Trueness suite',
-    sub: 'Reference + correction modules',
-    note: 'Seven more tools on the shared DSP library, built alongside Level.',
-    modules: [
-      { name: 'Bevel',  slug: 'bevel',  category: 'Parametric EQ' },
-      { name: 'Brace',  slug: 'brace',  category: 'Compressor' },
-      { name: 'Square', slug: 'square', category: 'Mono compatibility' },
-      { name: 'Pare',   slug: 'pare',   category: 'Resonance suppressor' },
-      { name: 'Plane',  slug: 'plane',  category: 'De-esser' },
-      { name: 'Scribe', slug: 'scribe', category: 'Matching EQ' },
-      { name: 'Seat',   slug: 'seat',   category: 'Mix translation' }
-    ]
-  };
+  // Both lines get a card. Trueness runs one accent across its screen because the whole
+  // line is the same promise (say what is there, honestly); Character takes each tool's
+  // real faceplate color, which is the point of that line.
+  const SUITES = [
+    {
+      name: 'Trueness suite',
+      sub: 'Reference + correction modules',
+      note: 'Seven more tools on the shared DSP library, built alongside Level.',
+      accent: '#D8A24E',
+      modules: [
+        { name: 'Bevel',  slug: 'bevel',  category: 'Parametric EQ' },
+        { name: 'Brace',  slug: 'brace',  category: 'Compressor' },
+        { name: 'Square', slug: 'square', category: 'Mono compatibility' },
+        { name: 'Pare',   slug: 'pare',   category: 'Resonance suppressor' },
+        { name: 'Plane',  slug: 'plane',  category: 'De-esser' },
+        { name: 'Scribe', slug: 'scribe', category: 'Matching EQ' },
+        { name: 'Seat',   slug: 'seat',   category: 'Mix translation' }
+      ]
+    },
+    {
+      name: 'Character suite',
+      sub: 'Dirt, space, and motion',
+      note: 'Six tools for saturation, echo, modulation, and reverb.',
+      accent: '#e8b066',
+      modules: [
+        { name: 'Temper', slug: 'temper', category: 'Saturation',       accent: '#e8b066' },
+        { name: 'Grind',  slug: 'grind',  category: 'Drive / distortion', accent: '#ff7a33' },
+        { name: 'Burr',   slug: 'burr',   category: 'Fuzz',             accent: '#ff5535' },
+        { name: 'Ripple', slug: 'ripple', category: 'Echo / delay',      accent: '#46c7c0' },
+        { name: 'Eddy',   slug: 'eddy',   category: 'Modulation',        accent: '#7a86ff' },
+        { name: 'Wake',   slug: 'wake',   category: 'Reverb',            accent: '#8f86e6' }
+      ]
+    }
+  ];
 
   const PLUGINS = {};   // slug → entry, for the popup
   function pluginUnitHTML(p) {
@@ -311,10 +333,10 @@
   // spec line that names them, so the row reads as a faceplate rather than a bare list.
   function suiteUnitHTML(s) {
     const cells = s.modules.map(m =>
-      `<span class="suite-cell" title="${esc(m.name)}: ${esc(m.category)}">
+      `<span class="suite-cell"${m.accent ? ` style="--decor:${esc(m.accent)}"` : ''} title="${esc(m.name)}: ${esc(m.category)}">
         <svg viewBox="0 0 224 64" preserveAspectRatio="none">${traceFor(m)}</svg>
       </span>`).join('');
-    return `<div class="unit suite static">
+    return `<div class="unit suite static" style="--decor:${esc(s.accent)}">
       <div class="u-name"><h3>${esc(s.name)}</h3><span class="u-sub">${esc(s.sub.toUpperCase())}</span></div>
       <div class="suite-screen">${cells}</div>
       <div class="suite-spec">
@@ -329,7 +351,7 @@
     FEATURED.forEach(p => { PLUGINS[p.slug] = p; });
     host.innerHTML = FEATURED.map(pluginUnitHTML).join('')
       + '<div class="unit vent static"><div class="slots"></div></div>'
-      + suiteUnitHTML(SUITE);
+      + SUITES.map(suiteUnitHTML).join('');
     host.querySelectorAll('[data-plugin]').forEach(el =>
       el.addEventListener('click', () => openPlugin(el.dataset.plugin)));
   })();

@@ -1,12 +1,12 @@
-/* Warren Labs — plugin site styles. Matches warrenlabs.com: near-black + echo amber,
+/* Warren Labs plugin site styles. Matches warrenlabs.com: near-black + echo amber,
    Barlow + IBM Plex Mono, Warren Labs Mark. Generated pages (tools/gen_site.py) link this. */
 @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
 :root{
-  /* homepage tokens — black & punchy */
+  /* homepage tokens: black & punchy */
   --bg:#0c0d0f; --bg2:#0f1012; --panel:#1b1d20; --panel-hi:#26292d; --panel-edge:#34383d;
   --ink:#e8ebed; --dim:#868d92; --faint:#565b60; --line:#24272b;
-  --acc:#FF9E2C;            /* echo amber — same as the homepage */
+  --acc:#FF9E2C;            /* echo amber, same as the homepage */
   --character:#e0a3ff;
   --sans:'Barlow',system-ui,-apple-system,sans-serif;
   --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
@@ -23,7 +23,7 @@ a:hover{text-decoration:underline}
 .wrap{max-width:1080px; margin:0 auto; padding:0 24px}
 .mono{font-family:var(--mono)}
 
-/* header — Warren Labs Mark + mono nav, matching the homepage lockup */
+/* header: Warren Labs Mark + mono nav, matching the homepage lockup */
 header.site{border-bottom:1px solid var(--line)}
 .head-in{display:flex; align-items:center; justify-content:space-between; padding:24px 0}
 .logo-mark{display:flex; align-items:center; gap:10px; color:var(--ink)}
@@ -82,7 +82,7 @@ ul.features li::before{content:"›"; color:var(--shot-accent,var(--acc)); margi
 .note{color:var(--faint); font-size:12.5px; margin-top:12px}
 
 /* ============================================================= faceplate "shot"
-   A themeable hardware front-panel rendered in CSS — same visual DNA as the
+   A themeable hardware front-panel rendered in CSS, same visual DNA as the
    homepage rack. --shot-accent tints the trace, knob pointers, and identity. */
 .shot{--shot-accent:var(--acc);
   position:relative; aspect-ratio:760/300; border-radius:10px; overflow:hidden;
@@ -120,7 +120,7 @@ ul.features li::before{content:"›"; color:var(--shot-accent,var(--acc)); margi
   color:var(--faint); margin-top:4px}
 .detail .shot{margin:6px 0 30px; max-width:760px}
 
-/* compact faceplate banner for index cards — name lives in the card title below,
+/* compact faceplate banner for index cards; name lives in the card title below,
    so the banner is just the clean rack face (screen + knobs), themed by accent. */
 .card .shot{aspect-ratio:760/168; border-radius:0; border:0; border-bottom:1px solid var(--line)}
 .card .shot .screen{flex-basis:48%; height:66%}
@@ -143,7 +143,7 @@ ul.features li::before{content:"›"; color:var(--shot-accent,var(--acc)); margi
   .logo-mark .wl-mark{width:34px}
   .logo-mark span{font-size:12px; letter-spacing:.18em}
   nav.site a{margin-left:16px; font-size:11px}
-  nav.site a:last-child{display:none}   /* drop "The Lab ↗" — the logo links home */
+  nav.site a:last-child{display:none}   /* drop "The Lab ↗", the logo links home */
   .shot .id .br{display:none}
 }
 
@@ -153,7 +153,7 @@ ul.features li::before{content:"›"; color:var(--shot-accent,var(--acc)); margi
 .request-h{ font-weight:600; font-size:18px; color:var(--ink); margin-bottom:6px}
 .request p{ color:var(--dim); font-size:14px; margin:0 0 16px; line-height:1.5}
 
-/* unsigned-beta install note — rendered on the plugin page so users never visit GitHub */
+/* unsigned-beta install note, rendered on the plugin page so users never visit GitHub */
 .install{ margin:30px 0 8px; padding:22px 24px; border:1px solid var(--line); border-radius:var(--r);
   background:var(--bg2); max-width:660px}
 .install-h{ font-weight:600; font-size:18px; color:var(--ink); margin-bottom:8px}
@@ -175,7 +175,7 @@ ul.features li::before{content:"›"; color:var(--shot-accent,var(--acc)); margi
 .gate .btn:disabled{ opacity:.6; cursor:default }
 .gate-msg{ flex-basis:100%; color:var(--dim); font-size:13px; min-height:1.1em }
 
-/* the bundle strip on the home page — sits alongside the individual plugins */
+/* the bundle strip on the home page, sits alongside the individual plugins */
 .bundle{ margin:8px 0 30px; padding:22px 24px; border:1px solid var(--line); border-radius:var(--r);
   background:var(--bg2) }
 .bundle-h{ font-weight:700; font-size:20px; color:var(--ink) }

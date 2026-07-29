@@ -565,12 +565,13 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
 /* The rest of the Trueness line as one static row: named, not sold. No LED, no badge,
    no click target, because there is nothing to open. */
 .unit.suite { grid-template-columns: 240px auto 1fr; gap: 28px; }
+.unit.suite + .unit.suite { border-top: 1px solid #0a0a0c; box-shadow: inset 0 1px 0 var(--panel-edge); }
 /* the suite screen: one cell per module, each drawing that tool's own trace, so the
    summary row still reads as a faceplate rather than a list of names */
-.suite-screen { display: flex; align-items: stretch; gap: 1px; height: 56px; flex: none;
+.suite-screen { display: flex; align-items: stretch; gap: 1px; height: 56px; flex: none; width: 340px;
   background: #08090a; border-radius: 4px; border: 1px solid #000; padding: 3px;
   box-shadow: inset 0 0 10px rgba(0,0,0,.85), 0 1px 0 rgba(255,255,255,.04); }
-.suite-cell { position: relative; width: 46px; display: block;
+.suite-cell { position: relative; flex: 1; min-width: 0; display: block;
   border-right: 1px solid rgba(220,228,232,.07); }
 .suite-cell:last-child { border-right: none; }
 .suite-cell svg { position: absolute; inset: 0; width: 100%; height: 100%; }
@@ -580,7 +581,6 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
 .suite-cell .trace-thin { fill: none; stroke: var(--decor); stroke-width: 1.8; opacity: .38; }
 .suite-cell .grid-x { display: none; }
 .suite-spec { display: grid; gap: 9px; justify-self: end; text-align: right; }
-.unit.suite { --decor: #D8A24E; }
 .suite-mods { font-size: 12px; letter-spacing: 0.05em; color: var(--ink); line-height: 1.5; white-space: nowrap; }
 .suite-note { font-size: 12.5px; color: var(--faint); line-height: 1.5; }
 
@@ -601,6 +601,13 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   color: var(--dim); text-transform: uppercase; }
 .also-card .ac-tl { font-size: 13.5px; color: var(--faint); margin-top: 5px; line-height: 1.45; }
 
+/* Between the phone layout and full desktop the rack is narrower than the suite row's
+   fixed columns, so the nowrap spec line ran past the rail. Relax it here. */
+@media (max-width: 1180px) {
+  .unit.suite { grid-template-columns: 180px auto 1fr; gap: 20px; }
+  .suite-screen { width: 250px; }
+  .suite-mods { white-space: normal; }
+}
 @media (max-width: 880px) {
   .also-grid { grid-template-columns: repeat(2, 1fr); }
   /* tablet: single row, drop the model code + knobs, keep the screen */
