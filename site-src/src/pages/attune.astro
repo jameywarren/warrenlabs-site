@@ -14,9 +14,15 @@ const attuneApp = {
   name: 'Attune',
   applicationCategory: 'MultimediaApplication',
   operatingSystem: 'macOS',
-  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  offers: {
+    '@type': 'AggregateOffer',
+    priceCurrency: 'USD',
+    lowPrice: '0',
+    highPrice: '39',
+    offerCount: 2,
+  },
   description:
-    'Personal-EQ and real-time A/B auditioning for macOS. Tune any headphone to your taste — blind, loudness-matched, on your own music.',
+    'Personal-EQ and real-time A/B auditioning for macOS. Tune any headphone to your taste: blind, loudness-matched, on your own music.',
   brand: { '@type': 'Brand', name: 'Warren Labs' },
   publisher: { '@id': 'https://warrenlabs.com/#organization' },
 };
@@ -107,7 +113,7 @@ const attuneApp = {
             </svg>
           </div>
           <h3>Pick your headphone</h3>
-          <p>Search a curated library of popular wired cans &amp; IEMs, or import your own measurement (CSV, AutoEQ, squig).</p>
+          <p>Search a curated library of popular wired cans &amp; IEMs. Pro adds importing your own measurement (CSV, AutoEQ, squig).</p>
           <svg class="arrow" width="18" height="18" viewBox="0 0 18 18"><path d="M6 4l5 5-5 5" stroke="#5f646b" stroke-width="1.5" fill="none" stroke-linecap="round"></path></svg>
         </div>
         <!-- 2 -->
@@ -235,21 +241,22 @@ const attuneApp = {
     <div class="wrap sec">
       <div class="mem-head">
         <div class="sec-head">
-          <span class="eyebrow">Free &middot; with a one-time Pro unlock</span>
-          <h2>The audition is free. Forever.</h2>
+          <span class="eyebrow">Free to find it &middot; free to keep it &middot; one-time Pro</span>
+          <h2>Free to find it. Free to keep it.</h2>
           <p class="sec-lede">
-            Tuning your headphones and hearing the difference costs nothing: no card, no subscription. When you
-            want to <b style="color:var(--text)">keep</b> what you found, a one-time Pro unlock saves it. The
-            community is open to everyone &mdash; no membership.
+            Free correction presets are everywhere, and they are good. What a preset cannot do is play you your
+            own music, blind and loudness-matched, and let you pick. That part is free here, and so is <b
+              style="color:var(--text)">keeping</b> what you find. Pro is a one-time unlock for people who want
+            more than one profile and want to take their curve elsewhere.
           </p>
         </div>
       </div>
 
       <div class="incl">
         <div><span class="chk">&#9670;</span> The real-time audition engine, free forever</div>
-        <div><span class="chk">&#9670;</span> Bring your own measurement (CSV, AutoEQ, squig)</div>
-        <div><span class="chk">&#9670;</span> Open community access &mdash; no membership</div>
-        <div><span class="chk">&#9670;</span> No subscription &mdash; Pro is a one-time unlock</div>
+        <div><span class="chk">&#9670;</span> One saved profile, kept, at no cost</div>
+        <div><span class="chk">&#9670;</span> No account and no card to start</div>
+        <div><span class="chk">&#9670;</span> No subscription. Pro is a one-time unlock.</div>
       </div>
 
       <div class="tiers two">
@@ -257,12 +264,13 @@ const attuneApp = {
         <div class="tier">
           <div class="tname">Free <span class="badge">No card</span></div>
           <div class="price">$0<small></small></div>
-          <div class="per">free, forever</div>
+          <div class="per">no account, no trial clock</div>
           <ul>
-            <li><span class="chk">&#9670;</span> Real-time A/B audition engine</li>
-            <li><span class="chk">&#9670;</span> The ear exam &amp; voice-match</li>
-            <li><span class="chk">&#9670;</span> Bring your own measurement</li>
-            <li><span class="chk">&#9670;</span> Open community access</li>
+            <li><span class="chk">&#9670;</span> Blind, loudness-matched A/B on your own music</li>
+            <li><span class="chk">&#9670;</span> The ear exam and voice match</li>
+            <li><span class="chk">&#9670;</span> One saved profile, kept and reloaded every launch</li>
+            <li><span class="chk">&#9670;</span> Built-in curves for popular wired cans and IEMs</li>
+            <li><span class="chk">&#9670;</span> The same correction engine that ships in Level</li>
           </ul>
           <Button href={BETA_DMG} variant="primary">Download the free beta</Button>
           <p class="beta-req">Requires macOS on Apple&nbsp;Silicon (M1 or later)</p>
@@ -270,19 +278,23 @@ const attuneApp = {
         <!-- Pro (one-time unlock) -->
         <div class="tier feat">
           <div class="tname">Pro <span class="badge">One-time</span></div>
-          <div class="price">Once<small></small></div>
-          <div class="per">a single unlock &middot; no subscription</div>
+          <div class="price">$39<small></small></div>
+          <div class="per">paid once, never a subscription</div>
           <ul>
             <li><span class="chk">&#9670;</span> Everything in Free</li>
-            <li><span class="chk">&#9670;</span> Save &amp; keep your tunings across launches</li>
-            <li><span class="chk">&#9670;</span> Import your own measurements</li>
-            <li><span class="chk">&#9670;</span> Multiple saved profiles</li>
+            <li><span class="chk">&#9670;</span> Unlimited saved profiles, across as many headphones as you own</li>
+            <li><span class="chk">&#9670;</span> Export your curve and use it outside Attune</li>
+            <li><span class="chk">&#9670;</span> Import your own measurements (CSV, AutoEQ, squig)</li>
           </ul>
           <Button href="#get" variant="ghost" data-signup data-intent="notify">Coming with the App Store release</Button>
         </div>
       </div>
 
-      <div class="mem-foot">The same loudness-matched, click-free engine, free or Pro. <span class="accent">No subscription, ever.</span></div>
+      <div class="mem-foot">
+        The same loudness-matched, click-free engine either way. <span class="accent">No subscription, ever.</span>{' '}
+        EQ moves tonal balance and nothing else: it will not buy you resolution, soundstage, lower distortion or
+        different driver physics, and nothing on this page claims otherwise.
+      </div>
     </div>
   </section>
 
