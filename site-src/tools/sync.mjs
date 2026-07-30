@@ -20,7 +20,13 @@ const ROOT = join(here, '..', '..');
 // viewer: it fetches /api/archive from the DigitalOcean gate service and has no static
 // fallback, so on GitHub Pages it renders a permanent "not on this server" state. The source
 // stays in src/pages/graphs.astro; add 'graphs' back here once there is data to show.
-const ROUTES = ['attune', 'learn', 'measure', 'support', 'privacy'];
+// 'measure' is also held back as of 2026-07-30. The page asks people to ship their physical
+// headphones, and pays them in a points/level/contributor-board system on a 'free community
+// profile' plus 'a permanent product page built to rank'. The community forum was deleted and
+// the /products/<handle> pages were retired in this migration, so none of that exists. The
+// send-in service itself is real and about to be operable; the copy needs the invented
+// ecosystem stripped out before it goes back up.
+const ROUTES = ['attune', 'learn', 'support', 'privacy'];
 // Astro's hashed asset bundle, plus the audio the Attune demos play.
 const ASSETS = ['_astro', 'audio'];
 

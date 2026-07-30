@@ -10,8 +10,9 @@ export default defineConfig({
   site: 'https://warrenlabs.com',
   integrations: [
     sitemap({
-      // /graphs is built but NOT published (see tools/sync.mjs), so it must not be advertised.
-      filter: (page) => !page.includes('/graphs'),
+      // /graphs and /measure are built but NOT published (see tools/sync.mjs), so they must
+      // not be advertised.
+      filter: (page) => !page.includes('/graphs') && !page.includes('/measure'),
       // The hand-written pages live outside this Astro project, so list them explicitly.
       customPages: [
         'https://warrenlabs.com/',
