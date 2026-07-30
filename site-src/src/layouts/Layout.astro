@@ -11,6 +11,8 @@ interface Props {
   ogType?: 'website' | 'article';
   signup?: 'sonicTemple' | 'attune';
   jsonLd?: object | object[];
+  /** Load Instrument Serif. Only /attune needs it, for the product wordmark. */
+  wordmark?: boolean;
 }
 
 const {
@@ -20,6 +22,7 @@ const {
   ogType = 'website',
   signup = 'sonicTemple',
   jsonLd,
+  wordmark = false,
 } = Astro.props;
 
 // Migrated from sonictemple.io 2026-07-30. Canonical is warrenlabs.com now; the old domain gets
@@ -77,6 +80,16 @@ const ld = { '@context': 'https://schema.org', '@graph': [organization, website,
       href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Archivo:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
+    {
+      /* Instrument Serif is NOT part of the Warren Labs type system. It is loaded only on pages
+         that render the Attune wordmark, which keeps its own signature the way the app does. */
+      wordmark && (
+        <link
+          href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400&display=swap"
+          rel="stylesheet"
+        />
+      )
+    }
     <title>{title}</title>
     <meta name="description" content={description} />
 
