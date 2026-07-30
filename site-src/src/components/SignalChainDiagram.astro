@@ -4,7 +4,7 @@
 ---
 
 <figure class="fig">
-  <svg viewBox="0 0 760 216" role="img" aria-label="A signal chain: source to DAC to amplifier to headphone, with a bracket showing a dongle combines the DAC and amp.">
+  <div class="figscroll"><svg viewBox="0 0 760 216" role="img" aria-label="A signal chain: source to DAC to amplifier to headphone, with a bracket showing a dongle combines the DAC and amp.">
     <defs>
       <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
         <path d="M0 0 L10 5 L0 10 z" fill="#FF9E2C"></path>
@@ -46,7 +46,7 @@
     <!-- bracket: dongle combines DAC + amp -->
     <path d="M216 150 L216 160 L552 160 L552 150" fill="none" stroke="#565b60" stroke-width="1"></path>
     <text x="384" y="182" text-anchor="middle" font-family="var(--mono)" font-size="11" fill="#868d92">a USB-C dongle / DAC-amp combines these</text>
-  </svg>
+  </svg></div>
   <figcaption>
     The DAC converts, the amp powers, the headphone plays. Every device already has a DAC &mdash; and one small
     dongle usually does both jobs, which is why you rarely think about them separately.
@@ -65,6 +65,19 @@
     display: block;
     width: 100%;
     height: auto;
+    /* These diagrams are drawn on a fixed 760-unit grid, so scaling the SVG to a narrow column
+       scales the labels with it: at a 342px article column a 10px label lands near 4.5 CSS px.
+       Hold a legible floor and let the figure scroll sideways instead of shrinking the type. */
+    min-width: 600px;
+  }
+  .fig .figscroll {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  @media (min-width: 700px) {
+    .fig svg { min-width: 0; }
+    .fig .figscroll { overflow-x: visible; }
   }
   .fig figcaption {
     margin-top: 12px;

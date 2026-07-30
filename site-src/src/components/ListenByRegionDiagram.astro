@@ -10,7 +10,7 @@ const regions = [
 ---
 
 <figure class="fig">
-  <svg viewBox="0 0 760 176" role="img" aria-label="A frequency spectrum split into four regions — bass, mids, presence, treble — each with a question to ask when listening.">
+  <div class="figscroll"><svg viewBox="0 0 760 176" role="img" aria-label="A frequency spectrum split into four regions — bass, mids, presence, treble — each with a question to ask when listening.">
     {
       regions.map((r) => (
         <>
@@ -32,7 +32,7 @@ const regions = [
       <text x="720" y="128">20 kHz</text>
     </g>
     <line x1="40" y1="138" x2="720" y2="138" stroke="#34383d" stroke-width="1"></line>
-  </svg>
+  </svg></div>
   <figcaption>
     Don&rsquo;t listen for vague &ldquo;detail&rdquo; &mdash; walk up the spectrum and ask a specific question of each
     region. Naming what you hear, region by region, is the whole skill.
@@ -41,6 +41,13 @@ const regions = [
 
 <style>
   .fig { margin: 28px 0 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 18px 14px; }
-  .fig svg { display: block; width: 100%; height: auto; }
+  /* Fixed 760-unit grid: scaling to a narrow column scales the labels with it, so hold a
+     legible floor and let the figure scroll sideways instead of shrinking the type. */
+  .fig svg { display: block; width: 100%; height: auto; min-width: 600px; }
+  .fig .figscroll { overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+  @media (min-width: 700px) {
+    .fig svg { min-width: 0; }
+    .fig .figscroll { overflow-x: visible; }
+  }
   .fig figcaption { margin-top: 12px; font-size: 13px; line-height: 1.5; color: var(--muted-2); font-family: var(--mono); }
 </style>

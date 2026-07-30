@@ -22,7 +22,7 @@ const panels = [
 ---
 
 <figure class="fig">
-  <svg viewBox="0 0 760 300" role="img" aria-label="Two headphone cups seen face-on: an open-back with a vented ring letting sound pass both ways, and a closed-back with a sealed ring keeping sound contained.">
+  <div class="figscroll"><svg viewBox="0 0 760 300" role="img" aria-label="Two headphone cups seen face-on: an open-back with a vented ring letting sound pass both ways, and a closed-back with a sealed ring keeping sound contained.">
     <defs>
       <marker id="oc-out" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
         <path d="M0 0 L10 5 L0 10 z" fill="#FF9E2C"></path>
@@ -72,7 +72,7 @@ const panels = [
         </>
       ))
     }
-  </svg>
+  </svg></div>
   <figcaption>
     Same driver, different back. The <em>open</em> cup lets sound pass both ways &mdash; airier and wider, but no
     isolation. The <em>closed</em> cup seals it in: isolation and more bass, a slightly smaller stage.
@@ -91,6 +91,19 @@ const panels = [
     display: block;
     width: 100%;
     height: auto;
+    /* These diagrams are drawn on a fixed 760-unit grid, so scaling the SVG to a narrow column
+       scales the labels with it: at a 342px article column a 10px label lands near 4.5 CSS px.
+       Hold a legible floor and let the figure scroll sideways instead of shrinking the type. */
+    min-width: 600px;
+  }
+  .fig .figscroll {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  @media (min-width: 700px) {
+    .fig svg { min-width: 0; }
+    .fig .figscroll { overflow-x: visible; }
   }
   .fig figcaption {
     margin-top: 12px;
