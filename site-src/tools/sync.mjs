@@ -20,7 +20,7 @@ const ROOT = join(here, '..', '..');
 // viewer: it fetches /api/archive from the DigitalOcean gate service and has no static
 // fallback, so on GitHub Pages it renders a permanent "not on this server" state. The source
 // stays in src/pages/graphs.astro; add 'graphs' back here once there is data to show.
-const ROUTES = ['attune', 'learn', 'graphs', 'products', 'collections', 'support', 'privacy'];
+const ROUTES = ['attune', 'learn', 'graphs', 'products', 'collections', 'measure', 'support', 'privacy'];
 // Astro's hashed asset bundle, plus the audio the Attune demos play.
 const ASSETS = ['_astro', 'audio'];
 

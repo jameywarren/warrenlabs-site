@@ -4,12 +4,13 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
 import { FORMSPREE } from '../data/config.js';
+import { WANTED } from '../data/wanted.js';
 
 const SITE = 'https://warrenlabs.com';
 const url = `${SITE}/measure`;
 const title = 'Send us your headphones to measure';
 const description =
-  'Mail in your headphones and we measure them on our rig — you get your unit’s exact curve, points toward your level, and a permanent, credited page in the Archive. Insured both ways, back within days.';
+  'Mail in your headphones and we measure them on our rig. You get your unit’s exact curve back, and the model gets a credited page in the Archive. Insured both ways, back in about a week.';
 
 // Dedicated intake endpoint (see src/data/config.js). Empty is safe: the form validates and shows a
 // friendly confirmation instead of POSTing nowhere, so the page ships before the Formspree form exists.
@@ -39,7 +40,7 @@ const faq: [string, string][] = [
   ],
   [
     'Do I need an account?',
-    'No account is required to send one in. Points, your level, and your on-page credit ride on a free community profile, so making one is just how they attach to you — the measurement and your curve are yours either way.',
+    'No. There is no account, no profile and no sign-up. Tell us on the intake form how you want to be credited, and that is all we need.',
   ],
   [
     'What headphones can you measure?',
@@ -73,8 +74,8 @@ const steps: [string, string][] = [
   ['Tell us what you’ve got', 'Fill in the form below — make, model, and how to reach you. Takes a minute.'],
   ['We send a label', 'You get a prepaid, insured return label, our address, and simple packing notes by email.'],
   ['You ship it', 'Box it up and send it. It’s insured to the value you declare, door to door.'],
-  ['We measure & publish', 'It goes on the rig, gets an honest page in the Archive, and heads back to you within days.'],
-  ['You get your curve + points', 'Your unit’s exact measurement lands in your inbox, with points and credit on your profile.'],
+  ['We measure & publish', 'It goes on the rig, gets an honest page in the Archive, and heads back to you in about a week.'],
+  ['You get your curve', 'Your unit’s exact measurement lands in your inbox, credited however you asked.'],
 ];
 ---
 
@@ -84,20 +85,21 @@ const steps: [string, string][] = [
   <!-- ---------- hero ---------- -->
   <section class="sec hero">
     <div class="wrap">
-      <span class="eyebrow">The Archive &middot; Contribute</span>
+      <span class="eyebrow">The Archive &middot; Send one in</span>
       <h1>Send us your headphones.<br />We&rsquo;ll measure them.</h1>
       <p class="lede">
-        We&rsquo;re growing the Archive with our own measurements &mdash; and the fastest way to get a
-        headphone in is for the people who own one to mail it to us. You get your unit&rsquo;s
-        <em>exact</em> curve back, points toward your level, and a permanent, credited page. We insure it
-        both ways and send it home within days.
+        Every correction you can buy is built from somebody else&rsquo;s sample of your model. This is the
+        one way to get the curve of the pair actually in your hands. Your unit&rsquo;s
+        <em>exact</em> measurement comes back by email, and if that model has no page in the Archive yet,
+        it gets one. Two ways in: if it is a model we are asking for, it is free and we cover shipping
+        both ways. Any other headphone you own is $89, and you cover the postage.
       </p>
       <div class="cta-row">
         <Button href="#intake" variant="primary" size="lg">Send one in</Button>
         <Button href="#how" variant="ghost" size="lg">How it works</Button>
       </div>
       <p class="hero-fine">
-        Measured here on a miniDSP&nbsp;EARS&nbsp;Pro, labeled by rig, published honestly. No pay-for-praise.
+        Measured on a miniDSP&nbsp;EARS&nbsp;Pro, labelled by rig, and published either way, flattering or not. About a week on the bench.
       </p>
     </div>
   </section>
@@ -107,7 +109,7 @@ const steps: [string, string][] = [
     <div class="wrap">
       <div class="sec-head">
         <span class="eyebrow">What you get</span>
-        <h2>Four reasons worth the shipping.</h2>
+        <h2>What you get back.</h2>
       </div>
       <div class="grid4">
         <div class="card">
@@ -119,25 +121,26 @@ const steps: [string, string][] = [
           </p>
         </div>
         <div class="card">
-          <h3>Points toward your level</h3>
+          <h3>Free if we are asking for it</h3>
           <p>
-            Every published measurement earns <b>points</b> &mdash; more for a model we haven&rsquo;t
-            measured yet &mdash; building your level and your place on the contributor board. What they
-            unlock down the road, we&rsquo;ll shape with the community.
+            We keep a public list of the models we most want on the bench. If yours is on it, the
+            measurement is free and we pay shipping both ways. Anything else you own is <b>$89</b>,
+            and you cover the postage.
           </p>
         </div>
         <div class="card">
           <h3>Your name on the page</h3>
           <p>
-            Published measurements carry a <b>credit line</b> &mdash; &ldquo;unit courtesy of you&rdquo;
-            &mdash; on a permanent product page built to rank. Prefer to stay anonymous? Just say so.
+            Published measurements carry a <b>credit line</b>, named however you want: your name, a
+            handle, or not at all. Just tell us which.
           </p>
         </div>
         <div class="card">
-          <h3>You grow an open Archive</h3>
+          <h3>Every result gets published</h3>
           <p>
-            First-party, honest, community-owned. Each headphone you send makes the Archive a little more
-            complete for the next person &mdash; and a little more ours.
+            We publish what the rig says, flattering or not. A headphone that measures badly is as
+            useful to the next person as one that measures well, and an archive that quietly drops
+            the bad ones is worth nothing.
           </p>
         </div>
       </div>
@@ -184,7 +187,7 @@ const steps: [string, string][] = [
           <p>You declare the value; we insure to it, inbound and outbound. We photograph condition on arrival and before return.</p>
         </div>
         <div class="trust-item">
-          <div class="trust-k">Back within days</div>
+          <div class="trust-k">Back in about a week</div>
           <p>Measured and shipped home within about five business days of arrival. If anything will run long, you hear it first.</p>
         </div>
         <div class="trust-item">
@@ -203,6 +206,42 @@ const steps: [string, string][] = [
   </section>
 
   <!-- ---------- intake form ---------- -->
+
+  <!-- ---------- the requested list ---------- -->
+  <section id="wanted" class="sec band">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">The list</span>
+        <h2>What we&rsquo;re asking for.</h2>
+        <p class="sec-lede">
+          The Archive is strong through about 2014 and thin after it. These are the models we most want
+          on the bench, and the reason each one earns a slot. Send one of these and the measurement is
+          free, with shipping covered both ways. Anything else you own is $89.
+        </p>
+      </div>
+      <div class="wantgrid">
+        {WANTED.map((b) => (
+          <div class="wantcol">
+            <h3>{b.name}</h3>
+            <ul>
+              {b.items.map((it) => (
+                <li>
+                  <span class="wn">{it.name}</span>
+                  <span class={'wp ' + it.pri.toLowerCase()}>{it.pri}</span>
+                  <span class="ww">{it.why}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <p class="wantfoot">
+        P1 is what we want first. P2 is the second wave. P3 fills a real gap when one turns up. Not on
+        the list and still want yours measured? That is the $89 lane, and the answer is yes.
+      </p>
+    </div>
+  </section>
+
   <section id="intake" class="sec band">
     <div class="wrap intake-wrap">
       <div class="sec-head center">
@@ -260,7 +299,7 @@ const steps: [string, string][] = [
             <input type="text" name="location" autocomplete="address-level2" placeholder="e.g. Bozeman, US" />
           </label>
           <label class="field">
-            <span>Community handle <i>(for credit)</i></span>
+            <span>Credit as <i>(name, handle, or leave blank)</i></span>
             <input type="text" name="handle" placeholder="optional" />
           </label>
         </div>
@@ -388,6 +427,39 @@ const steps: [string, string][] = [
 </script>
 
 <style>
+  /* the requested list */
+  .wantgrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 26px 34px;
+  }
+  .wantcol h3 {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+  .wantcol ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .wantcol li { display: grid; grid-template-columns: 1fr auto; gap: 2px 10px; }
+  .wn { font-size: 14.5px; color: var(--text); font-weight: 500; }
+  .wp {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--muted-2);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1px 5px;
+    align-self: start;
+  }
+  .wp.p1 { color: var(--accent); border-color: color-mix(in oklab, var(--accent) 40%, var(--line)); }
+  .ww { grid-column: 1 / -1; font-size: 12.5px; line-height: 1.5; color: var(--muted-2); }
+  .wantfoot { margin-top: 28px; font-size: 13.5px; color: var(--muted); max-width: 62ch; }
+
   /* hero */
   .hero {
     padding-top: 72px;
