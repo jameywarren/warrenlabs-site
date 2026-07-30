@@ -1,0 +1,56 @@
+---
+// IEM (in the canal) vs over-ear (around the ear) — schematic placement. Static teaching diagram for
+// the IEMs-vs-over-ear article.
+---
+
+<figure class="fig">
+  <svg viewBox="0 0 760 280" role="img" aria-label="Two schematics: an in-ear monitor sealing the ear canal, and an over-ear cup enclosing the whole ear at a distance.">
+    <defs>
+      <marker id="ep-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#FF9E2C"></path></marker>
+    </defs>
+
+    <!-- ===== IEM panel ===== -->
+    <g>
+      <!-- ear (pinna) + canal -->
+      <ellipse cx="230" cy="120" rx="30" ry="44" fill="#1b1d20" stroke="#868d92" stroke-width="1.6"></ellipse>
+      <path d="M212 120 L150 120" stroke="#34383d" stroke-width="14" stroke-linecap="round"></path>
+      <path d="M212 120 L152 120" stroke="#0f1012" stroke-width="9" stroke-linecap="round"></path>
+      <!-- IEM tip in the canal + body outside -->
+      <ellipse cx="200" cy="120" rx="16" ry="9" fill="#26292d" stroke="#FF9E2C" stroke-width="1.8"></ellipse>
+      <path d="M186 111 q-22 -6 -34 3 q-6 6 2 13 q14 6 32 2 z" fill="#26292d" stroke="#FF9E2C" stroke-width="1.6"></path>
+      <!-- sound into the canal -->
+      <line x1="212" y1="120" x2="248" y2="120" stroke="#FF9E2C" stroke-width="2" marker-end="url(#ep-ar)"></line>
+      <text x="190" y="212" text-anchor="middle" font-family="var(--mono)" font-size="13" letter-spacing="0.08em" fill="#e8ebed">IEM</text>
+      <text x="190" y="232" text-anchor="middle" font-family="var(--mono)" font-size="10.5" fill="#565b60">seals the canal · isolates</text>
+    </g>
+
+    <!-- ===== over-ear panel ===== -->
+    <g>
+      <ellipse cx="565" cy="120" rx="30" ry="44" fill="#1b1d20" stroke="#868d92" stroke-width="1.6"></ellipse>
+      <path d="M547 120 L485 120" stroke="#34383d" stroke-width="14" stroke-linecap="round"></path>
+      <path d="M547 120 L487 120" stroke="#0f1012" stroke-width="9" stroke-linecap="round"></path>
+      <!-- cup enclosing the whole ear, at a distance -->
+      <path d="M636 58 A72 72 0 0 1 636 182" fill="none" stroke="#e8ebed" stroke-width="2.4"></path>
+      <path d="M628 74 A56 56 0 0 1 628 166" fill="none" stroke="#34383d" stroke-width="10"></path>
+      <!-- driver + sound across the gap to the ear -->
+      <line x1="620" y1="120" x2="622" y2="120" stroke="#FF9E2C" stroke-width="12" stroke-linecap="round"></line>
+      <line x1="612" y1="120" x2="600" y2="120" stroke="#FF9E2C" stroke-width="2" marker-end="url(#ep-ar)"></line>
+      <line x1="608" y1="102" x2="596" y2="106" stroke="#FF9E2C" stroke-width="2" marker-end="url(#ep-ar)"></line>
+      <line x1="608" y1="138" x2="596" y2="134" stroke="#FF9E2C" stroke-width="2" marker-end="url(#ep-ar)"></line>
+      <text x="565" y="212" text-anchor="middle" font-family="var(--mono)" font-size="13" letter-spacing="0.08em" fill="#e8ebed">OVER-EAR</text>
+      <text x="565" y="232" text-anchor="middle" font-family="var(--mono)" font-size="10.5" fill="#565b60">around the ear · roomier</text>
+    </g>
+  </svg>
+  <figcaption>
+    Where the driver sits changes everything. An <em>IEM</em> seals in the ear canal &mdash; tiny, isolating,
+    fit-critical. An <em>over-ear</em> plays from a distance around the whole ear &mdash; roomier and comfier, less
+    isolating.
+  </figcaption>
+</figure>
+
+<style>
+  .fig { margin: 28px 0 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 18px 14px; }
+  .fig svg { display: block; width: 100%; height: auto; }
+  .fig figcaption { margin-top: 12px; font-size: 13px; line-height: 1.5; color: var(--muted-2); font-family: var(--mono); }
+  .fig figcaption em { color: var(--muted); font-style: italic; }
+</style>

@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const updated = 'July 2026';
+---
+
+<Layout
+  title="Privacy · Warren Labs"
+  description="How Warren Labs and the Attune macOS app handle your data. Short version: the app collects nothing, and this website only stores an email if you choose to give us one."
+>
+  <Nav variant="home" />
+  <section class="sec">
+    <div class="wrap prose">
+      <span class="eyebrow">Privacy</span>
+      <h2>Privacy Policy</h2>
+      <p class="sec-lede">
+        Short version: the Attune app collects nothing at all, and this website only stores an
+        email address if you choose to give us one.
+      </p>
+
+      <h3>Attune (the macOS app)</h3>
+      <p>
+        <strong>Attune collects, stores, transmits, and shares no personal data.</strong> It runs
+        entirely on your Mac, has no network access, and contains no analytics, telemetry, or
+        tracking of any kind. Audio files you choose are read locally only to play them — nothing
+        about your music library, your listening, or your tunings ever leaves your device.
+      </p>
+
+      <h3>This website (warrenlabs.com)</h3>
+      <p>
+        If you enter your email address in a signup or waitlist form, we use it only to contact you
+        about Warren Labs and Attune. It is stored by our form provider (Formspree) and by us, and
+        is never sold or shared with advertisers. Ask us to delete it at any time. The site sets no
+        advertising or cross-site tracking cookies.
+      </p>
+
+      <h3>Contact</h3>
+      <p>
+        Questions, or a deletion request: <a href="mailto:jamey@warrenlabs.com">jamey@warrenlabs.com</a>.
+      </p>
+
+      <p class="updated">Last updated: {updated}</p>
+    </div>
+  </section>
+  <Footer variant="home" />
+</Layout>
+
+<style>
+  .prose { max-width: 720px; }
+  .prose h3 { margin: 30px 0 8px; font-size: 1.15rem; }
+  .prose p { margin: 0 0 14px; line-height: 1.65; }
+  .prose .updated { margin-top: 30px; font-size: 0.85rem; opacity: 0.55; }
+</style>

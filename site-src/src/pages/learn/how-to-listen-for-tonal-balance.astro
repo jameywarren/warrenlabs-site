@@ -1,0 +1,163 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/Button.astro';
+import ListenByRegionDiagram from '../../components/ListenByRegionDiagram.astro';
+
+const SITE = 'https://warrenlabs.com';
+const url = `${SITE}/learn/how-to-listen-for-tonal-balance`;
+const title = 'How to listen for tonal balance';
+const description =
+  'You don’t need golden ears to hear how a headphone is voiced — you need a method: familiar tracks, matched levels, and knowing which regions to listen to. Here is how to train attentive listening without the mysticism.';
+
+const faq: [string, string][] = [
+  [
+    'How do I train my ears for audio?',
+    'With attention and reference, not talent. Use a handful of tracks you know intimately, listen for regions (bass, mids, presence, treble) rather than vague “detail,” match levels before comparing, and keep sessions short. It builds faster than people expect.',
+  ],
+  [
+    'What should I listen for in headphones?',
+    'Tonal balance first: is it warm or bright, is the bass full or lean, are vocals forward or recessed, is the treble airy or harsh? Those regions map directly onto a frequency-response graph and are the most reliable things to judge by ear.',
+  ],
+  [
+    'What are good reference tracks?',
+    'Tracks you know cold and that span the range — something with deep bass, a natural voice you know well, and clean high-frequency detail like cymbals or strings. Familiarity matters more than the specific songs; you are listening for changes from a known reference.',
+  ],
+  [
+    'Why do headphones sound different after listening for a while?',
+    'Your hearing adapts — after a few minutes your brain normalizes to a tuning, so a bright headphone seems less bright over time. That is why quick, level-matched switching beats long solo sessions for judging tone.',
+  ],
+  [
+    'Do I need golden ears to hear differences?',
+    'No. “Golden ears” is mostly practiced attention plus honest test conditions. With familiar tracks and level-matched comparisons, ordinary listeners reliably hear tonal differences — and stop hearing the ones that were only expectation.',
+  ],
+];
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: title,
+    description,
+    author: { '@type': 'Person', name: 'Jamey Warren' },
+    publisher: { '@id': `${SITE}/#organization` },
+    datePublished: '2026-07-20',
+    dateModified: '2026-07-20',
+    mainEntityOfPage: url,
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn/learn` },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
+    ],
+  },
+];
+---
+
+<Layout title={`${title} · Warren Labs`} description={description} ogType="article" jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <article class="doc">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Listening</span>
+    </nav>
+
+    <span class="eyebrow">Learn &middot; Listening</span>
+    <h1>How to listen for tonal balance</h1>
+
+    <div class="answer">
+      <div class="answer-k">Short answer</div>
+      <p>
+        You don&rsquo;t need golden ears &mdash; you need a <b>method</b>. Use a few <b>tracks you know cold</b>,
+        <b>match levels</b> before comparing, and listen for <b>regions</b> (bass, mids, presence, treble) instead of
+        vague &ldquo;detail.&rdquo; Do that and you will reliably hear how a headphone is voiced &mdash; and stop
+        hearing the differences that were only in your head.
+      </p>
+    </div>
+
+    <h2>It&rsquo;s attention, not talent</h2>
+    <p>
+      &ldquo;Critical listening&rdquo; sounds mystical and mostly isn&rsquo;t. It is knowing what to listen for, having
+      a reference to compare against, and removing the things that fool you. Anyone with normal hearing can get
+      noticeably better at it in an afternoon &mdash; the skill is structured attention, not a gift.
+    </p>
+
+    <h2>Build a small reference set</h2>
+    <p>
+      Pick three or four tracks you know intimately, spanning the range: something with <b>deep, textured bass</b>, a
+      <b>natural voice</b> you have heard a thousand times, and clean <b>high-frequency detail</b> (cymbals, strings,
+      breath). You are not judging the songs &mdash; you are listening for how <em>this headphone</em> renders sounds
+      you already have memorized. Familiarity is the whole trick.
+    </p>
+
+    <h2>Listen by region</h2>
+    <p>Walk up the spectrum and put words to what you hear &mdash; the same regions a graph shows:</p>
+    <ul>
+      <li><b>Bass.</b> Full or lean? Tight or bloated? Does it stay out of the way of the vocal?</li>
+      <li><b>Mids.</b> Are voices forward and present, or set back? Natural, or honky/hollow?</li>
+      <li><b>Presence (2&ndash;5&nbsp;kHz).</b> Is there bite and clarity, or is it soft &mdash; or too sharp?</li>
+      <li><b>Treble.</b> Airy and extended, harsh and sibilant, or rolled-off and dark?</li>
+    </ul>
+
+    <ListenByRegionDiagram />
+    <p>
+      Naming the region is more useful than reaching for &ldquo;detail&rdquo; or &ldquo;musicality&rdquo; &mdash; and
+      it connects straight to <a href="/learn/how-to-read-a-frequency-response-graph">the graph</a>.
+    </p>
+
+    <h2>Remove the things that fool you</h2>
+    <ul>
+      <li><b>Match levels.</b> The louder option always sounds better &mdash; <a href="/learn/why-level-matching-changes-everything">here is why</a>. Match them, or you are just hearing volume.</li>
+      <li><b>Switch quickly and take breaks.</b> Auditory memory is short and your ears <em>adapt</em> to a tuning within minutes, so fast comparisons and short sessions beat long ones.</li>
+      <li><b>Trust your reaction, then find the words.</b> Notice what you feel first, then locate it by region. Don&rsquo;t reverse-engineer the consensus opinion.</li>
+    </ul>
+
+    <div class="funnel">
+      <p>
+        If structuring all that yourself sounds like work, that is exactly what <b>Attune&rsquo;s ear exam</b> does for
+        you: a blind, loudness-matched A/B on your own music that turns &ldquo;I think I like this&rdquo; into a curve
+        you would actually pick with your eyes closed.
+      </p>
+      <Button href="/attune" variant="primary">Try the ear exam in Attune</Button>
+    </div>
+
+    <h2>The honest bottom line</h2>
+    <p>
+      Listening well is a habit, not a birthright: familiar tracks, matched levels, region-by-region attention, and
+      honesty about what you actually hear versus what you expected. Practice that and your own ears become the most
+      trustworthy reviewer you have.
+    </p>
+
+    <h2>Common questions</h2>
+    <div class="faq">
+      {
+        faq.map(([q, a]) => (
+          <div class="faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="related">
+      <a href="/learn/how-to-read-a-frequency-response-graph">How to read a graph &rarr;</a>
+      <a href="/learn/why-level-matching-changes-everything">Why level-matching matters &rarr;</a>
+      <a href="/learn/choosing-your-first-serious-headphone">Choosing your first serious headphone &rarr;</a>
+      <a href="/learn">Back to Learn &rarr;</a>
+    </div>
+  </article>
+
+  <Footer variant="home" />
+</Layout>

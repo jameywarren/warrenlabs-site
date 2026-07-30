@@ -1,0 +1,245 @@
+---
+interface Props {
+  endpoint?: string;
+}
+const { endpoint = '' } = Astro.props;
+---
+
+<dialog id="signup" class="su" aria-labelledby="su-title" data-endpoint={endpoint}>
+  <form class="su-card">
+    <button type="button" class="su-x" data-su-close aria-label="Close">&times;</button>
+    <div class="su-eyebrow">Warren Labs</div>
+    <h2 class="su-title" id="su-title">Get launch news</h2>
+    <p class="su-lede" id="su-lede">
+      Attune is free and coming to the Mac App Store. Leave your email and we&rsquo;ll tell you the moment
+      it&rsquo;s live &mdash; plus the occasional honest update.
+    </p>
+
+    <div class="su-body">
+      <input type="hidden" name="interest" value="notify" data-su-interest />
+      <input type="text" name="_gotcha" class="su-hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+      <label class="su-field">
+        <span>Email</span>
+        <input type="email" name="email" required autocomplete="email" placeholder="you@example.com" />
+      </label>
+      <button type="submit" class="btn btn-primary btn-lg su-submit">Notify me</button>
+      <p class="su-fine">No spam. Unsubscribe anytime.</p>
+    </div>
+
+    <p class="su-note" data-su-note hidden></p>
+  </form>
+</dialog>
+
+<script>
+  const dlg = document.getElementById('signup');
+  if (dlg instanceof HTMLDialogElement) {
+    const form = dlg.querySelector('form');
+    const titleEl = dlg.querySelector('#su-title');
+    const ledeEl = dlg.querySelector('#su-lede');
+    const interestEl = dlg.querySelector('[data-su-interest]') as HTMLInputElement | null;
+    const submitEl = dlg.querySelector('.su-submit') as HTMLButtonElement | null;
+    const bodyEl = dlg.querySelector('.su-body') as HTMLElement | null;
+    const noteEl = dlg.querySelector('[data-su-note]') as HTMLElement | null;
+    const endpoint = dlg.getAttribute('data-endpoint') || '';
+
+    const COPY: Record<string, { title: string; submit: string; lede: string }> = {
+      notify: {
+        title: 'Get launch news',
+        submit: 'Notify me',
+        lede: "Attune is free and coming to the Mac App Store. Leave your email and we'll tell you the moment it's live — plus the occasional honest update.",
+      },
+    };
+
+    function setNote(msg: string, kind: string) {
+      if (!noteEl) return;
+      noteEl.textContent = msg;
+      noteEl.hidden = !msg;
+      noteEl.dataset.kind = kind;
+    }
+
+    function open(intent: string) {
+      const key = COPY[intent] ? intent : 'notify';
+      const c = COPY[key];
+      if (titleEl) titleEl.textContent = c.title;
+      if (ledeEl) ledeEl.textContent = c.lede;
+      if (submitEl) submitEl.textContent = c.submit;
+      form?.reset();
+      if (interestEl) interestEl.value = key;
+      if (bodyEl) bodyEl.hidden = false;
+      setNote('', '');
+      (dlg as HTMLDialogElement).showModal();
+    }
+
+    document.addEventListener('click', (e) => {
+      const t = e.target instanceof Element ? e.target.closest('[data-signup]') : null;
+      if (t) {
+        e.preventDefault();
+        open(t.getAttribute('data-intent') || 'notify');
+      }
+    });
+
+    dlg.addEventListener('click', (e) => {
+      if (e.target === dlg) (dlg as HTMLDialogElement).close();
+      if (e.target instanceof Element && e.target.closest('[data-su-close]')) (dlg as HTMLDialogElement).close();
+    });
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      if (data.get('_gotcha')) {
+        (dlg as HTMLDialogElement).close();
+        return;
+      }
+      const email = String(data.get('email') || '').trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setNote('Please enter a valid email.', 'err');
+        return;
+      }
+      if (!endpoint) {
+        if (bodyEl) bodyEl.hidden = true;
+        setNote("You're on the list — we'll be in touch.", 'ok');
+        return;
+      }
+      if (submitEl) submitEl.disabled = true;
+      setNote('Sending…', '');
+      try {
+        const res = await fetch(endpoint, { method: 'POST', headers: { Accept: 'application/json' }, body: data });
+        if (res.ok) {
+          if (bodyEl) bodyEl.hidden = true;
+          setNote("You're on the list. We'll be in touch soon.", 'ok');
+        } else {
+          setNote('Something went wrong. Please try again in a moment.', 'err');
+        }
+      } catch {
+        setNote('Network error. Please try again in a moment.', 'err');
+      } finally {
+        if (submitEl) submitEl.disabled = false;
+      }
+    });
+  }
+</script>
+
+<style>
+  .su {
+    width: min(92vw, 440px);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 0;
+    background: linear-gradient(180deg, var(--surface), var(--bg-deep));
+    color: var(--text);
+    box-shadow: 0 40px 90px -40px rgba(0, 0, 0, 0.9);
+  }
+  .su::backdrop {
+    background: rgba(9, 5, 11, 0.62);
+    backdrop-filter: blur(3px);
+  }
+  .su[open] {
+    animation: su-in 0.18s ease-out;
+  }
+  @keyframes su-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+  .su-card {
+    position: relative;
+    padding: 30px 28px 26px;
+  }
+  .su-x {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    border: 0;
+    background: transparent;
+    color: var(--muted-2);
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 4px;
+  }
+  .su-x:hover {
+    color: var(--text);
+  }
+  .su-eyebrow {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+  }
+  .su-title {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 27px;
+    margin: 8px 0 0;
+    line-height: 1.1;
+  }
+  .su-lede {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.55;
+    margin: 12px 0 20px;
+  }
+  .su-field {
+    display: block;
+    margin-bottom: 14px;
+  }
+  .su-field span {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 7px;
+  }
+  .su-field input {
+    width: 100%;
+    background: var(--bg);
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 14.5px;
+    padding: 12px 13px;
+    outline: none;
+    transition:
+      border-color 0.15s,
+      box-shadow 0.15s;
+  }
+  .su-field input:focus {
+    border-color: var(--accent-line);
+    box-shadow: 0 0 0 3px var(--accent-dim);
+  }
+  .su-submit {
+    width: 100%;
+  }
+  .su-fine {
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted-2);
+    font-family: var(--mono);
+    letter-spacing: 0.03em;
+    margin: 12px 0 0;
+  }
+  .su-hp {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+  .su-note {
+    margin: 16px 0 0;
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .su-note[data-kind='ok'] {
+    color: var(--good);
+  }
+  .su-note[data-kind='err'] {
+    color: #e88a7a;
+  }
+</style>

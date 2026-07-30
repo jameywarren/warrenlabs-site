@@ -1,0 +1,89 @@
+---
+// Real interactive ear-exam flow, adapted from attune/web/index.html's .exam card.
+// "A" and "B" each apply a distinct demo tuning to the CC-BY music loop so the choice is audible;
+// "This one →" advances the same six-step progress the real app uses.
+const uid = 'exam';
+---
+
+<div data-attune-exam>
+  <div class="at-exam-top">
+    <div>
+      <div class="at-lbl" style="margin-bottom:4px">Try it</div>
+      <div class="why">Tap A or B to hear each tuning, then pick the one you'd choose.</div>
+    </div>
+    <button class="at-btn primary" id={`start-${uid}`}>Start</button>
+  </div>
+
+  <div id={`body-${uid}`} style="display:none">
+    <div class="at-ab-cards">
+      <button data-opt="A">A</button>
+      <button data-opt="B">B</button>
+    </div>
+    <div class="at-exam-row">
+      <div class="at-dots" id={`dots-${uid}`}></div>
+      <button class="at-btn" id={`choose-${uid}`} style="margin-left:auto">This one →</button>
+    </div>
+  </div>
+
+  <div class="at-exam-cap" id={`cap-${uid}`}>Comparison <span class="mono">0</span> of <span class="mono">6</span></div>
+</div>
+
+<script>
+  import '../scripts/attune-engine.js';
+
+  document.querySelectorAll('[data-attune-exam]').forEach((root) => {
+    if (root.dataset.attuneInit) return;
+    root.dataset.attuneInit = '1';
+    const S = window.AttuneShared;
+    const uid = 'exam';
+    const audio = new S.WebAudioEngine();
+    const baseline = S.curveFor(3);
+    const optionCurve = { A: S.curveFor(6), B: S.curveFor(11) };
+
+    const startBtn = root.querySelector(`#start-${uid}`);
+    const body = root.querySelector(`#body-${uid}`);
+    const dotsEl = root.querySelector(`#dots-${uid}`);
+    const chooseBtn = root.querySelector(`#choose-${uid}`);
+    const cap = root.querySelector(`#cap-${uid}`);
+
+    for (let i = 0; i < 6; i++) dotsEl.innerHTML += '<i></i>';
+    let step = 0;
+    let selected = 'A';
+
+    function setCap() {
+      cap.innerHTML = `Comparison <span class="mono">${Math.min(step, 6)}</span> of <span class="mono">6</span>`;
+    }
+
+    startBtn.addEventListener('click', () => {
+      body.style.display = 'block';
+      startBtn.style.display = 'none';
+      playOption('A');
+    });
+
+    function playOption(opt) {
+      selected = opt;
+      root.querySelectorAll('.at-ab-cards button').forEach((b) => b.classList.toggle('sel', b.dataset.opt === opt));
+      audio.setCurves({ yours: baseline, matched: optionCurve[opt] });
+      audio.setMode('matched');
+      audio.play();
+    }
+
+    root.querySelectorAll('.at-ab-cards button').forEach((b) => {
+      b.addEventListener('click', () => playOption(b.dataset.opt));
+    });
+
+    chooseBtn.addEventListener('click', () => {
+      if (step >= 6) return;
+      step += 1;
+      [...dotsEl.children].forEach((x, i) => x.classList.toggle('done', i < step));
+      setCap();
+      if (step >= 6) {
+        chooseBtn.textContent = 'Curve complete';
+        chooseBtn.disabled = true;
+        audio.pause();
+      } else {
+        playOption(step % 2 === 0 ? 'A' : 'B');
+      }
+    });
+  });
+</script>

@@ -1,2 +1,11 @@
 .DS_Store
 .claude/
+
+# Astro build inputs/outputs for the migrated Sonic Temple content.
+# site-src/ holds the SOURCE (committed). Its dependencies and raw build output are not:
+# `cd site-src && npm run build` regenerates dist/ and syncs the finished routes
+# (/attune, /learn, /graphs, /measure, /support, /privacy, /_astro, /audio) to the repo root,
+# and THOSE are committed, because GitHub Pages serves this repo as-is with no build step.
+site-src/node_modules/
+site-src/dist/
+site-src/.astro/

@@ -1,0 +1,156 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/Button.astro';
+
+const SITE = 'https://warrenlabs.com';
+const url = `${SITE}/learn/wireless-and-bluetooth-headphones`;
+const title = 'Wireless & Bluetooth: what you actually give up';
+const description =
+  'Modern Bluetooth is good enough that the codec is rarely the weak link — tuning, latency, and battery matter more. Here is what going wireless actually costs you, and what the codec wars get wrong.';
+
+const faq: [string, string][] = [
+  [
+    'Is Bluetooth audio worse than wired?',
+    'Less than the internet thinks. A good modern codec at a healthy bitrate is audibly close to wired for most listening. What you actually give up is latency, battery dependence, and control over the DAC/amp — not, usually, obvious sound quality.',
+  ],
+  [
+    'Which Bluetooth codec is best?',
+    'For most people the codec is not the deciding factor. AAC (Apple devices), aptX, and LDAC are all fine; LDAC and aptX can carry more data, but the headphone’s tuning affects what you hear far more than the codec does.',
+  ],
+  [
+    'Does aptX or LDAC actually sound better?',
+    'They can carry more bits, but whether you hear a difference over a good AAC or aptX connection is marginal and source-dependent. Do not choose a headphone for its codec; choose it for how it is tuned and how it fits your life.',
+  ],
+  [
+    'Is wireless bad for gaming or video?',
+    'Standard Bluetooth adds latency that can desync audio from video or games. Low-latency modes and dedicated wireless dongles help, but for competitive gaming or critical video, wired is still the safe choice.',
+  ],
+  [
+    'Do wireless headphones have a DAC and amp?',
+    'Yes — they have to. The DAC and amp are built into the headphone and run off its battery. That is the real trade: you cannot change or upgrade that chain the way you can with a wired headphone.',
+  ],
+];
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: title,
+    description,
+    author: { '@type': 'Person', name: 'Jamey Warren' },
+    publisher: { '@id': `${SITE}/#organization` },
+    datePublished: '2026-07-20',
+    dateModified: '2026-07-20',
+    mainEntityOfPage: url,
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn/learn` },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
+    ],
+  },
+];
+---
+
+<Layout title={`${title} · Warren Labs`} description={description} ogType="article" jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <article class="doc">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Wireless</span>
+    </nav>
+
+    <span class="eyebrow">Learn &middot; Understanding the gear</span>
+    <h1>Wireless &amp; Bluetooth: what you actually give up</h1>
+
+    <div class="answer">
+      <div class="answer-k">Short answer</div>
+      <p>
+        Modern Bluetooth is good enough that the <b>codec is rarely the weak link</b>. What you actually give up going
+        wireless is <b>latency</b>, <b>battery dependence</b>, and <b>control over the DAC and amp</b> (they now live
+        inside the headphone). The tuning of the headphone still matters far more than the codec &mdash; the
+        codec wars are mostly noise.
+      </p>
+    </div>
+
+    <h2>How Bluetooth audio works</h2>
+    <p>
+      Bluetooth cannot carry a full uncompressed stream, so it uses a <b>codec</b> &mdash; SBC, AAC, aptX, LDAC and
+      friends &mdash; to compress the audio, send it, and rebuild it in the headphone. Each trades bitrate, latency,
+      and compatibility differently. The headline fear is that this compression wrecks quality; in practice, at a
+      healthy bitrate on a good codec, it is close to inaudible for normal listening.
+    </p>
+
+    <h2>What you actually give up</h2>
+    <ul>
+      <li><b>Latency.</b> Wireless adds delay. Fine for music; a problem for gaming and video unless you use a low-latency mode or a dedicated dongle.</li>
+      <li><b>The DAC and amp move inside the headphone</b>, running off its battery. You inherit whatever chain the maker chose and cannot change it — the opposite of the wired freedom to swap sources.</li>
+      <li><b>Battery and lifespan.</b> A dead battery is a dead headphone, and batteries age. Wired headphones just work, indefinitely.</li>
+      <li><b>Connection reliability.</b> Occasional dropouts, pairing quirks, and codec negotiation you do not control.</li>
+    </ul>
+
+    <h2>What you don&rsquo;t (usually) give up</h2>
+    <p>
+      Obvious sound quality. A well-tuned wireless headphone on a good codec beats a poorly-tuned wired one every time,
+      because <b>tuning dominates what you hear</b> and the codec is a second-order effect. Chasing the &ldquo;best
+      codec&rdquo; while ignoring the frequency response is optimizing the wrong variable.
+    </p>
+
+    <h2>A note on noise cancelling</h2>
+    <p>
+      Active noise cancelling is a wireless-era feature, and it is genuinely useful for travel and offices. Know that
+      the ANC processing usually shifts the tuning a little &mdash; sometimes between ANC-on and ANC-off &mdash; so a
+      noise-cancelling headphone is really two slightly different tunings in one. Judge it in the mode you will
+      actually use.
+    </p>
+
+    <div class="funnel">
+      <p>
+        The through-line of everything above: how a headphone is <em>tuned</em> matters more than whether it is
+        wireless. That is the part we obsess over &mdash; honest <a href="/measure">measurements</a>
+        and, for wired headphones and IEMs, tuning them to your taste with <b>Attune</b>.
+      </p>
+      <Button href="/attune" variant="primary">Explore Attune</Button>
+    </div>
+
+    <h2>The honest bottom line</h2>
+    <p>
+      Go wireless for the convenience &mdash; it is real and it is fine. Just buy it for the tuning, the comfort, and
+      the features (ANC, battery, latency) rather than the codec on the box. And keep a wired option around for gaming,
+      video, and the day the battery dies.
+    </p>
+
+    <h2>Common questions</h2>
+    <div class="faq">
+      {
+        faq.map(([q, a]) => (
+          <div class="faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="related">
+      <a href="/learn/what-a-dac-is">What a DAC is &rarr;</a>
+      <a href="/learn/how-to-read-a-frequency-response-graph">How to read a graph &rarr;</a>
+      <a href="/learn/open-back-vs-closed-back-headphones">Open vs closed &rarr;</a>
+      <a href="/learn">Back to Learn &rarr;</a>
+    </div>
+  </article>
+
+  <Footer variant="home" />
+</Layout>

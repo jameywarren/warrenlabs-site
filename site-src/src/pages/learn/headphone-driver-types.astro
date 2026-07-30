@@ -1,0 +1,157 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/Button.astro';
+
+const SITE = 'https://warrenlabs.com';
+const url = `${SITE}/learn/headphone-driver-types`;
+const title = 'Driver types: dynamic, planar, and electrostatic';
+const description =
+  'The driver is the motor that moves air. Dynamic is common and easy to drive; planar magnetic is fast with tight bass but power-hungry; electrostatic is effortless but needs a special energizer. What each type actually changes — and why tuning still matters more.';
+
+const faq: [string, string][] = [
+  [
+    'What is the difference between dynamic and planar headphones?',
+    'A dynamic driver uses a voice coil and a cone or dome, like a tiny speaker — efficient and easy to drive. A planar magnetic driver uses a thin flat diaphragm between magnets — fast, low-distortion, with tight bass, but heavier and usually power-hungry.',
+  ],
+  [
+    'Are planar magnetic headphones better?',
+    'Not automatically. Planars tend toward tight, controlled bass and low distortion, but a well-tuned dynamic beats a poorly-tuned planar. The driver sets tendencies; the tuning decides whether you enjoy it.',
+  ],
+  [
+    'What is an electrostatic headphone?',
+    'One that uses an ultra-thin charged film between two stators, driven by high voltage from a dedicated energizer — not a normal headphone amp. They are prized for effortless detail and very low distortion, but they are expensive and rare.',
+  ],
+  [
+    'Do planar magnetic headphones need an amp?',
+    'Usually yes. Most planars are relatively insensitive and want clean power to sound their best. Check impedance and sensitivity together to know how hard a specific one is to drive.',
+  ],
+  [
+    'Which driver type is best?',
+    'None, universally. Each has tendencies — dynamic punch and efficiency, planar speed and bass control, electrostatic delicacy — but tuning matters more than the driver. Choose by the sound and the practicalities, not the technology label.',
+  ],
+];
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: title,
+    description,
+    author: { '@type': 'Person', name: 'Jamey Warren' },
+    publisher: { '@id': `${SITE}/#organization` },
+    datePublished: '2026-07-20',
+    dateModified: '2026-07-20',
+    mainEntityOfPage: url,
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn/learn` },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
+    ],
+  },
+];
+---
+
+<Layout title={`${title} · Warren Labs`} description={description} ogType="article" jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <article class="doc">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Driver types</span>
+    </nav>
+
+    <span class="eyebrow">Learn &middot; Understanding the gear</span>
+    <h1>Driver types: dynamic, planar, and electrostatic</h1>
+
+    <div class="answer">
+      <div class="answer-k">Short answer</div>
+      <p>
+        The driver is the motor that moves air in a headphone. <b>Dynamic</b> is the common, efficient, easy-to-drive
+        type; <b>planar magnetic</b> is fast with tight bass but heavier and power-hungry; <b>electrostatic</b> is
+        effortless and ultra-low-distortion but needs a special energizer and deep pockets. The type sets
+        <em>tendencies</em> &mdash; but the tuning still decides what you actually hear.
+      </p>
+    </div>
+
+    <h2>Dynamic — the default, and it&rsquo;s good</h2>
+    <p>
+      A dynamic driver is a voice coil attached to a cone or dome that moves in a magnetic field &mdash; a
+      miniature loudspeaker. It powers everything from earbuds to flagships because it is <b>efficient</b> (easy to
+      drive off a phone), robust, and can sound superb. Its reputation for &ldquo;punch&rdquo; and warmth is a
+      tendency, not a rule; plenty of dynamics are ruler-neutral. Most of the <a href="/measure">Archive</a>
+      is dynamic.
+    </p>
+
+    <h2>Planar magnetic — fast and tight, but hungry</h2>
+    <p>
+      A planar driver stretches a very thin, flat diaphragm between arrays of magnets, so the whole surface moves
+      as one. The payoff is <b>speed, low distortion, and tight, even bass</b>. The costs are weight and appetite:
+      most planars are relatively insensitive and want a <a href="/learn/what-headphone-impedance-means">real amp</a>.
+      The Audeze LCD line is the classic example.
+    </p>
+
+    <h2>Electrostatic — effortless, and expensive</h2>
+    <p>
+      An electrostatic driver suspends an ultra-thin charged film between two perforated plates and moves it with
+      high voltage &mdash; supplied by a dedicated <b>energizer</b>, not an ordinary amp. The result is a delicate,
+      effortless, extremely low-distortion sound that many consider the pinnacle. The catch is cost, rarity, and
+      the matched energizer. The Sennheiser Orpheus in the Archive is the legend here.
+    </p>
+
+    <h2>A word on IEM drivers</h2>
+    <p>
+      In-ears add their own vocabulary: tiny <b>balanced-armature</b> drivers (efficient, often stacked several to
+      a shell) and dynamic drivers, sometimes combined. The same rule holds &mdash; the driver mix shapes
+      tendencies, but a well-tuned single dynamic can beat a badly-tuned multi-driver.
+    </p>
+
+    <div class="funnel">
+      <p>
+        The through-line: driver technology sets a headphone&rsquo;s <em>character</em>, but <b>tuning</b> &mdash;
+        its frequency balance &mdash; is what you notice first and what you can actually change. That is the part
+        <b>Attune</b> lets you tailor, whatever the driver behind it.
+      </p>
+      <Button href="/attune" variant="primary">Explore Attune</Button>
+    </div>
+
+    <h2>The honest bottom line</h2>
+    <p>
+      Learn the tendencies &mdash; dynamic efficiency, planar control, electrostatic delicacy &mdash; but don&rsquo;t
+      shop by driver type. A great tuning on a humble dynamic beats a mediocre tuning on an exotic driver. The
+      technology is the character; the tuning is the sound.
+    </p>
+
+    <h2>Common questions</h2>
+    <div class="faq">
+      {
+        faq.map(([q, a]) => (
+          <div class="faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="related">
+      <a href="/learn/what-headphone-impedance-means">Will it be hard to drive? &rarr;</a>
+      <a href="/measure">Browse the Archive &rarr;</a>
+      <a href="/learn/how-to-read-a-frequency-response-graph">How to read a graph &rarr;</a>
+      <a href="/learn">Back to Learn &rarr;</a>
+    </div>
+  </article>
+
+  <Footer variant="home" />
+</Layout>

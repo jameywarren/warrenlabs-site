@@ -1,0 +1,339 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/Button.astro';
+import FrRegionsDiagram from '../../components/FrRegionsDiagram.astro';
+
+const SITE = 'https://warrenlabs.com';
+const url = `${SITE}/learn/how-to-read-a-frequency-response-graph`;
+const title = 'How to read a frequency-response graph';
+const description =
+  'A frequency-response graph shows how loud a headphone plays each pitch, bass to treble. Here is how to read the axes, the peaks and dips, and what the graph can and cannot tell you — without the mysticism.';
+
+// Visible FAQ and FAQPage schema are built from one source so they can never drift apart.
+const faq: [string, string][] = [
+  [
+    'What is a good frequency response for headphones?',
+    'There is no single “good” curve — it depends on your taste and the target you compare against. Many people prefer something close to a gentle downward tilt from bass to treble, but flatter-measuring is not automatically better. The graph tells you the character; whether you like it is the real question.',
+  ],
+  [
+    'Why isn’t a headphone’s frequency response flat?',
+    'Two reasons. Real headphones have peaks and dips from their physical design, and the measurement includes the response of the ear and the rig — so a headphone that sounds neutral does not measure as a flat line. That is why curves are read against a target, not against a ruler.',
+  ],
+  [
+    'What does a bump around 3 kHz mean?',
+    'That “presence” region controls how forward vocals and instruments sound. A bump there reads as more present or brighter; a dip reads as more distant or laid-back. Most tuning targets have some rise here by design.',
+  ],
+  [
+    'Can you tell if a headphone is bright or bassy from the graph?',
+    'Yes — that is exactly what a frequency-response graph shows well. More energy on the left is more bass; a lift in the upper mids and treble reads as brighter. Tonal balance is the graph’s home turf.',
+  ],
+  [
+    'What can’t a frequency-response graph tell you?',
+    'Plenty: soundstage, imaging, detail retrieval, distortion, comfort, and how a headphone holds together on busy passages. The graph is the single best predictor of tonal balance and a weak predictor of almost everything else.',
+  ],
+];
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: title,
+    description,
+    author: { '@type': 'Person', name: 'Jamey Warren' },
+    publisher: { '@id': `${SITE}/#organization` },
+    datePublished: '2026-07-17',
+    dateModified: '2026-07-17',
+    mainEntityOfPage: url,
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn/learn` },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
+    ],
+  },
+];
+---
+
+<Layout title={`${title} · Warren Labs`} description={description} ogType="article" jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <article class="doc">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Reading a graph</span>
+    </nav>
+
+    <span class="eyebrow">Learn &middot; Measurement &amp; tuning</span>
+    <h1>How to read a frequency-response graph</h1>
+
+    <div class="answer">
+      <div class="answer-k">Short answer</div>
+      <p>
+        A frequency-response graph shows <b>how loud a headphone plays each pitch</b>, from deep bass on the left to
+        high treble on the right. The <em>shape</em> tells you the tonal character &mdash; where it is warm, neutral,
+        or bright. A flat line is not the goal, and the graph does not tell you everything. Here is how to read one.
+      </p>
+    </div>
+
+    <h2>What the two axes are</h2>
+    <p>
+      The horizontal axis is <b>frequency</b> &mdash; pitch, in hertz (Hz), from 20&nbsp;Hz (the lowest bass you can
+      feel) to 20,000&nbsp;Hz (the top of human hearing). It is spaced logarithmically, so each equal step is a
+      doubling &mdash; 100, 200, 400, 800 &mdash; because that is how we hear pitch. The vertical axis is <b>level</b>
+      in decibels (dB): how loud the headphone plays that pitch relative to the rest. Higher on the graph means more of
+      that region; lower means less. That is the whole language.
+    </p>
+
+    <h2>Reading it left to right</h2>
+    <p>Four regions carry most of the character:</p>
+    <ul>
+      <li><b>Bass (20&ndash;250&nbsp;Hz).</b> Weight and warmth. More here reads as fuller and warmer; less reads as lean or clean.</li>
+      <li><b>Mids (250&nbsp;Hz&ndash;2&nbsp;kHz).</b> The body of voices and most instruments. Big dips or bumps here are the most audible of all, because this is where our hearing is most sensitive.</li>
+      <li><b>Presence (2&ndash;5&nbsp;kHz).</b> Forwardness and “detail.” A rise pushes vocals toward you and can add bite; a dip pulls them back and softens the sound.</li>
+      <li><b>Treble (5&ndash;20&nbsp;kHz).</b> Air, sparkle, and sibilance. A lift reads as bright and airy or, taken too far, sharp; a roll-off reads as smooth or dark.</li>
+    </ul>
+
+    <FrRegionsDiagram />
+
+    <h2>Why a flat line isn’t the goal</h2>
+    <p>
+      This trips up almost everyone: a headphone that sounds neutral does <em>not</em> measure as a flat horizontal
+      line. The measurement includes the response of the artificial ear and the rig it is measured on, and your own
+      ear adds its own shape too. So instead of comparing a curve to a ruler, we compare it to a <b>target curve</b>
+      &mdash; a shape that has been found to sound neutral or preferred (diffuse-field, Harman, or a house curve). A
+      headphone that tracks the target sounds balanced; deviations from it are what you actually hear.
+    </p>
+    <p>
+      In practice a pleasant tuning is usually a gentle <em>downward tilt</em> &mdash; a little more bass than treble
+      &mdash; not a flat line and not a wild zig-zag.
+    </p>
+
+    <h2>Peaks and dips: reading the shape</h2>
+    <p>
+      Once you stop expecting flat, the shape reads simply. A <b>bump</b> means more energy there (a bass bump = warmer;
+      a presence bump = more forward; a treble bump = brighter). A <b>dip</b> means less (a mid dip = scooped or
+      distant; a treble dip = smoother, darker). Narrow spikes above about 5&nbsp;kHz are the least trustworthy part of
+      any measurement &mdash; see the limits below &mdash; so read the broad trends first and treat the fine wiggles up
+      top as directional, not exact.
+    </p>
+
+    <h2>The honest limits of any curve</h2>
+    <p>
+      A frequency-response graph is the most useful single measurement of a headphone, and it is still only part of the
+      picture. Be honest about what it can and cannot resolve:
+    </p>
+    <ul>
+      <li><b>The rig matters.</b> Different measurement rigs give different curves for the same headphone, especially in the treble. Compare curves measured on the <em>same</em> rig, and note which rig you are looking at.</li>
+      <li><b>Seating varies.</b> How the headphone sits on the fixture (and on your head) shifts the response — a little in the mids, a lot above 10&nbsp;kHz. Fine treble detail off a single curve is not settled fact.</li>
+      <li><b>Open-backs read bass-light on some fixtures</b> because the seal leaks. That can be the measurement, not the headphone.</li>
+    </ul>
+    <p>
+      This is why every graph in our <a href="/measure">Archive</a> names its rig and its limits. A
+      curve with its limits stated is worth trusting; a curve presented as gospel is not.
+    </p>
+
+    <h2>What a graph can’t tell you</h2>
+    <p>
+      Tonal balance is the graph’s home turf. Soundstage, imaging, detail, distortion, and comfort are not &mdash;
+      those need other measurements or your own ears. So use the curve for what it is great at (is this bright or warm,
+      forward or laid-back?) and do not ask it to settle questions it was never measuring.
+    </p>
+
+    <div class="funnel">
+      <p>
+        And here is the honest catch: <b>a graph is a line, and listening is personal</b>. Two people reading the same
+        curve want different things from it. That is why we built <b>Attune</b> &mdash; instead of guessing from the
+        graph, you audition tunings blind and loudness-matched on your own music, and keep the shape you would actually
+        pick by ear.
+      </p>
+      <Button href="/attune" variant="primary">Hear a graph, don’t just read it</Button>
+    </div>
+
+    <h2>The honest bottom line</h2>
+    <p>
+      Read the axes, read the broad shape against a target, and trust the bass and mids more than the fine treble.
+      The graph will reliably tell you a headphone’s tonal balance &mdash; warm or bright, forward or relaxed &mdash;
+      and almost nothing about the rest. For the rest, you have to listen.
+    </p>
+
+    <h2>Common questions</h2>
+    <div class="faq">
+      {
+        faq.map(([q, a]) => (
+          <div class="faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="related">
+      <a href="/measure">Browse the measurement Archive &rarr;</a>
+      <a href="/learn/do-i-need-a-headphone-amp">Do you need a headphone amp? &rarr;</a>
+      <a href="/attune">What Attune does &rarr;</a>
+      <a href="/learn">Back to Learn &rarr;</a>
+    </div>
+  </article>
+
+  <Footer variant="home" />
+</Layout>
+
+<style>
+  .doc {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 56px 24px 20px;
+  }
+  .crumb {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted-2);
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+    margin-bottom: 26px;
+  }
+  .crumb a:hover {
+    color: var(--text);
+  }
+  .crumb [aria-current] {
+    color: var(--muted);
+  }
+  .doc h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(34px, 5vw, 50px);
+    line-height: 1.05;
+    letter-spacing: -0.005em;
+    margin: 12px 0 0;
+  }
+  .doc h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(24px, 3vw, 31px);
+    line-height: 1.15;
+    margin: 44px 0 0;
+  }
+  .doc h2 em {
+    font-style: italic;
+    color: var(--accent-soft);
+  }
+  .doc p {
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.68;
+    margin: 16px 0 0;
+  }
+  .doc p b {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .doc em {
+    color: var(--text);
+    font-style: italic;
+  }
+  .doc a {
+    color: var(--accent-soft);
+  }
+  .doc a:hover {
+    color: var(--accent);
+  }
+  .doc ul {
+    margin: 16px 0 0;
+    padding-left: 0;
+    list-style: none;
+  }
+  .doc li {
+    position: relative;
+    color: var(--muted);
+    font-size: 16.5px;
+    line-height: 1.6;
+    padding: 9px 0 9px 26px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .doc li:first-child {
+    border-top: none;
+  }
+  .doc li::before {
+    content: '\25C6';
+    color: var(--accent);
+    position: absolute;
+    left: 4px;
+    top: 9px;
+    font-size: 11px;
+  }
+  .answer {
+    margin-top: 26px;
+    border: 1px solid var(--accent-line);
+    background: var(--accent-dim);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+  }
+  .answer-k {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 6px;
+  }
+  .answer p {
+    margin: 0;
+    color: var(--text);
+    font-size: 17px;
+  }
+  .funnel {
+    margin-top: 22px;
+    background: linear-gradient(120deg, rgba(255, 158, 44, 0.07), var(--surface) 60%);
+    border: 1px solid var(--accent-line);
+    border-radius: var(--radius);
+    padding: 24px 26px;
+  }
+  .funnel p {
+    margin: 0 0 18px;
+  }
+  .faq {
+    margin-top: 12px;
+  }
+  .faq-item {
+    border-top: 1px solid var(--line-soft);
+    padding: 20px 0 4px;
+  }
+  .faq-item h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text);
+  }
+  .faq-item p {
+    margin-top: 8px;
+    font-size: 16px;
+  }
+  .related {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 28px;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 15px;
+  }
+  .related a {
+    color: var(--accent-soft);
+  }
+  .related a:hover {
+    color: var(--accent);
+  }
+</style>

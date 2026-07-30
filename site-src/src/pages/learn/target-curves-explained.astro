@@ -1,0 +1,176 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/Button.astro';
+
+const SITE = 'https://warrenlabs.com';
+const url = `${SITE}/learn/target-curves-explained`;
+const title = 'Target curves: Harman, diffuse-field, and a house curve';
+const description =
+  'A target curve is the “ideal” shape a headphone is measured against, because a flat line doesn’t sound neutral. Here’s what diffuse-field, Harman, and house curves actually are — and why none of them is objectively “correct.”';
+
+const faq: [string, string][] = [
+  [
+    'What is a target curve?',
+    'A target curve is a reference frequency-response shape that a headphone’s measurement is compared against. Because the ear and the measurement rig add their own response, a headphone that sounds neutral does not measure flat — so we judge it against a target instead of a ruler.',
+  ],
+  [
+    'What is the Harman target curve?',
+    'It is a target derived from listener preference studies (led by Sean Olive at Harman): a diffuse-field-like shape with a deliberate bass boost and a defined treble. It has become the most-cited “preferred” target, but it represents average preference, not a law.',
+  ],
+  [
+    'What’s the difference between Harman and diffuse-field?',
+    'Diffuse-field is a neutral acoustic reference — how a flat source measures at the ear in a reflective space — and tends to read bass-light and a touch bright to many listeners. Harman starts from that idea but adds bass and reshapes the treble based on what people actually preferred.',
+  ],
+  [
+    'Should a headphone follow a target curve exactly?',
+    'No. A good target is a starting reference, not a rule. Close tracking usually sounds balanced, but small deliberate deviations are how headphones get their character — and your own preferred target is personal.',
+  ],
+  [
+    'What target curve does Warren Labs use?',
+    'Attune ships a diffuse-field reference and a Warren Labs house curve (neutral with a little more bass), both built from public research. We do not default to Harman, which is Harman International’s IP — we reference it honestly rather than ship it.',
+  ],
+];
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: title,
+    description,
+    author: { '@type': 'Person', name: 'Jamey Warren' },
+    publisher: { '@id': `${SITE}/#organization` },
+    datePublished: '2026-07-20',
+    dateModified: '2026-07-20',
+    mainEntityOfPage: url,
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn/learn` },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
+    ],
+  },
+];
+---
+
+<Layout title={`${title} · Warren Labs`} description={description} ogType="article" jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <article class="doc">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Target curves</span>
+    </nav>
+
+    <span class="eyebrow">Learn &middot; Measurement &amp; tuning</span>
+    <h1>Target curves: Harman, diffuse-field, and a house curve</h1>
+
+    <div class="answer">
+      <div class="answer-k">Short answer</div>
+      <p>
+        A target curve is the <b>reference shape a headphone is measured against</b> &mdash; because, as any
+        frequency-response graph shows, a flat line does not sound neutral. <b>Diffuse-field</b>, <b>Harman</b>, and a
+        <b>house curve</b> are three different answers to &ldquo;what should neutral sound like.&rdquo; None is
+        objectively correct; they are reference points, and your own preferred target is personal.
+      </p>
+    </div>
+
+    <h2>Why a target exists at all</h2>
+    <p>
+      A headphone that sounds perfectly neutral does not measure as a flat horizontal line. The measurement includes
+      the response of the artificial ear and the rig, and your own ear adds its own shape &mdash; so &ldquo;flat&rdquo;
+      on the graph would actually sound thin and harsh. Instead of comparing a curve to a ruler, we compare it to a
+      <b>target</b>: a shape that has been found to sound neutral or preferred. How far a headphone deviates from the
+      target is what you actually hear. (If that is new, start with
+      <a href="/learn/how-to-read-a-frequency-response-graph">how to read a graph</a>.)
+    </p>
+
+    <h2>Diffuse-field: the neutral reference</h2>
+    <p>
+      The <b>diffuse-field</b> target is the older, more academic reference: roughly how a flat, neutral sound source
+      measures at your eardrum in a space full of reflections coming from all directions. It is a principled anchor
+      &mdash; but on a headphone it tends to read <em>bass-light and a little bright</em> to most listeners, because
+      real music and real preference are not the same as an idealized acoustic average. Useful as a baseline; rarely
+      anyone&rsquo;s favorite as-is.
+    </p>
+
+    <h2>Harman: the preference target</h2>
+    <p>
+      The <b>Harman target</b> came from a different question: not &ldquo;what is acoustically neutral,&rdquo; but
+      &ldquo;what do listeners actually prefer?&rdquo; Through blind, level-matched studies, Harman&rsquo;s research
+      (led by Sean Olive) landed on a shape that starts diffuse-field-ish and then adds a deliberate <b>bass shelf</b>
+      and a defined presence/treble region. It is now the most-cited &ldquo;preferred&rdquo; target, and for good
+      reason &mdash; it is grounded in real data.
+    </p>
+    <p>
+      Two honest caveats. First, it is <b>average</b> preference: a lot of people cluster near it, plenty sit to one
+      side (more or less bass, gentler treble). Second, the Harman target is <b>Harman International&rsquo;s research
+      and IP</b> &mdash; we reference it because you should understand it, but we do not ship it as our default.
+    </p>
+
+    <h2>House curves: a brand&rsquo;s chosen default</h2>
+    <p>
+      A <b>house curve</b> is simply the target a brand, reviewer, or tuning tool picks as its own reference &mdash;
+      usually a preference-style curve with small deliberate choices baked in (a touch more sub-bass, a slightly
+      gentler top). It is not a claim of universal truth; it is a considered default. <b>Attune</b> ships a
+      diffuse-field reference and a <b>Warren Labs house curve</b> &mdash; neutral with a little more bass, built
+      cleanly from public research &mdash; as honest starting points, not commandments.
+    </p>
+
+    <h2>The part everyone forgets: the target is a reference, not a rule</h2>
+    <p>
+      Because Harman is so widely cited, it is easy to treat &ldquo;closer to Harman&rdquo; as &ldquo;better.&rdquo; It
+      is not. A target tells you what a tuning is <em>relative to a reference many people like</em> &mdash; which is
+      genuinely useful for comparison. But the right target for <em>you</em> is the one you would pick by ear, and it
+      may sit a few dB off any published curve. When someone calls a headphone &ldquo;neutral,&rdquo; the honest
+      question is always: <em>neutral against which target?</em>
+    </p>
+
+    <div class="funnel">
+      <p>
+        This is exactly what <b>Attune</b> is built around. Instead of chasing someone else&rsquo;s target, you take a
+        blind, loudness-matched ear exam on your own music and let <em>your</em> preferred curve build itself &mdash;
+        then you can see how it compares to diffuse-field or a house curve, rather than assuming one is right.
+      </p>
+      <Button href="/attune" variant="primary">Find your own target in Attune</Button>
+    </div>
+
+    <h2>The honest bottom line</h2>
+    <p>
+      Diffuse-field is the neutral anchor, Harman is the data-backed preference average, and a house curve is a
+      considered default. They are reference points for reading a graph and comparing headphones &mdash; not a
+      ranking. Learn what each represents, then trust your own ears over any one line.
+    </p>
+
+    <h2>Common questions</h2>
+    <div class="faq">
+      {
+        faq.map(([q, a]) => (
+          <div class="faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="related">
+      <a href="/learn/how-to-read-a-frequency-response-graph">How to read a graph &rarr;</a>
+      <a href="/measure">Browse the Archive &rarr;</a>
+      <a href="/attune">What Attune does &rarr;</a>
+      <a href="/learn">Back to Learn &rarr;</a>
+    </div>
+  </article>
+
+  <Footer variant="home" />
+</Layout>

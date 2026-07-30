@@ -1,0 +1,113 @@
+---
+// Live voice-match picker + mini graph, adapted from attune/web/index.html's target
+// picker. Your headphone is fixed for this demo; pick a target and hear its tonal
+// signature matched onto it.
+//
+// "Yours" is the HD 650, not the HD 6XX it used to be: every curve on this page is now a
+// real measurement, and the corpus has an HD 650 (same driver, still in production) but no
+// HD 6XX. Ids are corpus slugs — see src/data/demo-curves.js.
+const uid = 'vm';
+---
+
+<div data-attune-vm>
+  <div class="at-exam-cap" style="margin-top:0;margin-bottom:14px;text-align:left">Your Sennheiser HD 650 &middot; voice-matched to:</div>
+
+  <div class="at-field">
+    <div class="at-select" id={`sel-${uid}`}>
+      <input type="text" autocomplete="off" placeholder="Search headphones…" />
+      <div class="at-menu"></div>
+    </div>
+    <div class="at-sub-link">
+      or a neutral target: <a data-neutral="Diffuse Field">Diffuse Field</a> &middot; <a data-neutral="ST House">ST House</a>
+    </div>
+  </div>
+
+  <div class="at-mini-graph">
+    <canvas class="at-canvas" id={`graph-${uid}`} style="height:150px"></canvas>
+  </div>
+
+  <div class="at-transport" style="border-top:none;padding-top:10px;margin-top:6px">
+    <button class="at-play" id={`play-${uid}`} aria-label="Play demo">▶</button>
+    <button class="at-track at-trackbtn" id={`track-${uid}`} type="button" title="Change demo music">
+      <span class="t"><span id={`track-vibe-${uid}`}>Cinematic</span> <span class="tk-swap" aria-hidden="true">⇄</span></span>
+      <span class="a" id={`track-credit-${uid}`}>Aphelion · Scott Buckley · CC-BY</span>
+    </button>
+    <div class="at-abtoggle" id={`ab-${uid}`}>
+      <button data-ab="stock" class="on">Stock</button>
+      <button data-ab="matched">Matched</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  import '../scripts/attune-engine.js';
+
+  document.querySelectorAll('[data-attune-vm]').forEach((root) => {
+    if (root.dataset.attuneInit) return;
+    root.dataset.attuneInit = '1';
+    const S = window.AttuneShared;
+    const uid = 'vm';
+    const yoursId = 'sennheiser-hd-650';
+    const graph = root.querySelector(`#graph-${uid}`);
+    const audio = new S.WebAudioEngine();
+
+    let targetId = 'sennheiser-hd-800';
+    let curves = { yours: [], target: [], matched: [] };
+
+    function refresh() {
+      const r = S.selectPair(yoursId, targetId);
+      curves = r;
+      S.sizeAndDraw(graph, () => curves);
+      audio.setCurves(curves);
+    }
+
+    // Don't offer to voice-match the HD 650 to itself.
+    const targets = S.CANS.filter((c) => c.id !== yoursId);
+    const picker = S.initPicker(root.querySelector(`#sel-${uid}`), targets, (id) => {
+      targetId = id;
+      refresh();
+    });
+    picker.setValue(targetId);
+
+    root.querySelectorAll('[data-neutral]').forEach((a) => {
+      a.addEventListener('click', () => {
+        root.querySelector(`#sel-${uid} input`).value = a.dataset.neutral;
+      });
+    });
+
+    const playBtn = root.querySelector(`#play-${uid}`);
+    playBtn.addEventListener('click', async () => {
+      await audio.toggle();
+      playBtn.textContent = audio.playing ? '❚❚' : '▶';
+    });
+
+    const ab = root.querySelector(`#ab-${uid}`);
+    ab.addEventListener('click', (e) => {
+      const b = e.target.closest('button');
+      if (!b) return;
+      [...ab.children].forEach((x) => x.classList.remove('on'));
+      b.classList.add('on');
+      audio.setMode(b.dataset.ab);
+    });
+
+    // Demo music picker — cycles the CC-BY loops (src/scripts/attune-engine.js / CREDITS.md).
+    const tracks = S.TRACKS;
+    let trackIdx = 0;
+    const vibeEl = root.querySelector(`#track-vibe-${uid}`);
+    const creditEl = root.querySelector(`#track-credit-${uid}`);
+    const showTrack = () => {
+      const t = tracks[trackIdx];
+      vibeEl.textContent = t.label;
+      creditEl.textContent = `${t.title} · ${t.credit}`;
+    };
+    showTrack();
+    root.querySelector(`#track-${uid}`).addEventListener('click', () => {
+      trackIdx = (trackIdx + 1) % tracks.length;
+      showTrack();
+      audio.setTrack(tracks[trackIdx].url);
+    });
+
+    S.observeAndDraw(graph, () => curves);
+    refresh();
+  });
+</script>

@@ -1,0 +1,74 @@
+---
+// "Will it be hard to drive?" — impedance x sensitivity, the two axes read together. Static teaching
+// diagram for the impedance article. Example points are illustrative, not exact.
+---
+
+<figure class="fig">
+  <svg viewBox="0 0 760 424" role="img" aria-label="A chart with impedance on the horizontal axis and sensitivity on the vertical axis, divided into four quadrants showing when a headphone is easy or hard to drive, with example headphones plotted.">
+    <!-- plot box -->
+    <rect x="112" y="40" width="600" height="292" fill="none" stroke="#34383d" stroke-width="1.2"></rect>
+    <!-- quadrant dividers -->
+    <g stroke="#34383d" stroke-width="1" stroke-dasharray="3 4">
+      <line x1="412" y1="40" x2="412" y2="332"></line>
+      <line x1="112" y1="186" x2="712" y2="186"></line>
+    </g>
+
+    <!-- axis labels -->
+    <g font-family="var(--mono)" fill="#565b60" font-size="11">
+      <text x="112" y="356" text-anchor="start">low  &#8592; &nbsp;IMPEDANCE (&#8486;)&nbsp; &#8594;  high</text>
+      <text x="412" y="356" text-anchor="middle"></text>
+      <text x="118" y="52" fill="#868d92" font-size="10" letter-spacing="0.1em">SENSITIVITY &#9650; high</text>
+      <text x="118" y="326" fill="#868d92" font-size="10" letter-spacing="0.1em">low</text>
+    </g>
+
+    <!-- quadrant captions -->
+    <g font-family="var(--mono)" fill="#565b60" font-size="11.5" text-anchor="middle">
+      <text x="262" y="106">easy &mdash; runs off<tspan x="262" dy="15">a phone (can hiss)</tspan></text>
+      <text x="562" y="106">wants clean<tspan x="562" dy="15">voltage</tspan></text>
+      <text x="262" y="250">wants current<tspan x="262" dy="15">&amp; real power</tspan></text>
+      <text x="562" y="242" fill="#868d92">hard to drive &mdash;<tspan x="562" dy="15">needs a real amp</tspan></text>
+    </g>
+
+    <!-- example points -->
+    <g font-family="var(--mono)" font-size="11" fill="#e8ebed">
+      <circle cx="188" cy="96" r="5.5" fill="#FF9E2C"></circle>
+      <text x="200" y="100">IEM</text>
+      <circle cx="648" cy="150" r="5.5" fill="#FF9E2C"></circle>
+      <text x="638" y="154" text-anchor="end">HD 650</text>
+      <circle cx="286" cy="256" r="5.5" fill="#FF9E2C"></circle>
+      <text x="298" y="260">K701</text>
+      <circle cx="672" cy="238" r="5.5" fill="#FF9E2C"></circle>
+      <text x="662" y="242" text-anchor="end">DT 880 (600&#8486;)</text>
+    </g>
+  </svg>
+  <figcaption>
+    &ldquo;Hard to drive&rdquo; is impedance <em>and</em> sensitivity together, not either alone. A 300&nbsp;&#8486;
+    HD&nbsp;650 wants voltage; a 62&nbsp;&#8486; K701 wants current; a sensitive IEM wants a quiet source.
+  </figcaption>
+</figure>
+
+<style>
+  .fig {
+    margin: 28px 0 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 18px 14px;
+  }
+  .fig svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .fig figcaption {
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--muted-2);
+    font-family: var(--mono);
+  }
+  .fig figcaption em {
+    color: var(--muted);
+    font-style: italic;
+  }
+</style>

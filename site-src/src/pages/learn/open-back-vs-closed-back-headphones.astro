@@ -1,0 +1,317 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/Button.astro';
+import OpenClosedDiagram from '../../components/OpenClosedDiagram.astro';
+
+const SITE = 'https://warrenlabs.com';
+const url = `${SITE}/learn/open-back-vs-closed-back-headphones`;
+const title = 'Open-back vs closed-back headphones';
+const description =
+  'Open-back headphones sound more spacious and natural but leak sound and don’t isolate; closed-back headphones isolate and reinforce bass but stage a little smaller. Neither is “better” — here is how to choose.';
+
+// Visible FAQ and FAQPage schema are built from one source so they can never drift apart.
+const faq: [string, string][] = [
+  [
+    'Are open-back headphones better than closed-back?',
+    'No — neither is universally better. Open-backs tend to sound more spacious and natural; closed-backs isolate and reinforce bass. The right one depends on where you listen and who is around, not on a hierarchy.',
+  ],
+  [
+    'Do open-back headphones leak sound?',
+    'Yes, both ways. They let sound out (people near you will hear it) and let ambient noise in. That openness is exactly what gives them their airy sound — it is a trade, not a flaw.',
+  ],
+  [
+    'Can you use open-back headphones in an office or on a commute?',
+    'Not well. They do not isolate, so you will bother people nearby and hear everything around you. For shared or noisy spaces, closed-back headphones or IEMs are the honest answer.',
+  ],
+  [
+    'Are closed-back headphones worse for soundstage?',
+    'Often a little narrower and more “in your head,” yes — the sealed cup reflects sound back at your ear. But good closed-backs have closed much of the gap, and staging depends on tuning too, not just the cup.',
+  ],
+  [
+    'Which is better for mixing or gaming?',
+    'For critical listening in a quiet room, many prefer open-back for the more natural stage; for tracking, gaming with a mic, or any shared space, closed-back isolation wins. Match the tool to the situation.',
+  ],
+];
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: title,
+    description,
+    author: { '@type': 'Person', name: 'Jamey Warren' },
+    publisher: { '@id': `${SITE}/#organization` },
+    datePublished: '2026-07-17',
+    dateModified: '2026-07-17',
+    mainEntityOfPage: url,
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn/learn` },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
+    ],
+  },
+];
+---
+
+<Layout title={`${title} · Warren Labs`} description={description} ogType="article" jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <article class="doc">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Open vs closed</span>
+    </nav>
+
+    <span class="eyebrow">Learn &middot; Understanding the gear</span>
+    <h1>Open-back vs closed-back headphones</h1>
+
+    <div class="answer">
+      <div class="answer-k">Short answer</div>
+      <p>
+        <b>Open-back</b> headphones vent the ear cup, which makes them sound more spacious and natural &mdash; but they
+        leak sound both ways and give <b>no isolation</b>. <b>Closed-back</b> headphones seal the cup, so they isolate,
+        keep your music to yourself, and reinforce bass &mdash; at the cost of a slightly smaller, more &ldquo;in your
+        head&rdquo; stage. Neither is better. It comes down to <b>where and around whom you listen</b>.
+      </p>
+    </div>
+
+    <h2>The physical difference</h2>
+    <p>
+      It is exactly what the names say. A <b>closed-back</b> headphone has a sealed outer cup; an <b>open-back</b> has a
+      vented, grille, or mesh outer cup that lets air (and sound) pass through. That one design choice drives almost
+      every difference you hear, because it changes how the driver loads against the air behind it and whether sound
+      escapes or reflects back toward your ear.
+    </p>
+
+    <OpenClosedDiagram />
+
+    <h2>What open-back does to the sound</h2>
+    <ul>
+      <li><b>A wider, more natural stage.</b> Without a sealed cup bouncing sound back, open-backs tend to sound more spacious and out-of-your-head — the main reason listeners love them.</li>
+      <li><b>Airier, cleaner treble and mids</b>, with fewer internal reflections and resonances to muddy things.</li>
+      <li><b>No isolation, in either direction.</b> People near you hear your music, and you hear the room. That is the price of the openness.</li>
+      <li><b>Bass that leans clean rather than huge</b> — the open design does not pressurize the way a sealed cup can.</li>
+    </ul>
+
+    <h2>What closed-back does to the sound</h2>
+    <ul>
+      <li><b>Isolation.</b> They block a good amount of outside noise and keep your music in — essential in offices, studios, planes, and shared rooms.</li>
+      <li><b>More bass reinforcement and impact.</b> The sealed cup can pressurize the bass, which is why a lot of bass-forward and closed studio cans hit harder.</li>
+      <li><b>A smaller, more intimate stage</b>, and sometimes a little added coloration from reflections inside the cup — though good designs manage this well.</li>
+    </ul>
+
+    <h2>How to choose — by where you listen</h2>
+    <p>This is genuinely simpler than the forums make it. Ask where and around whom you listen:</p>
+    <ul>
+      <li><b>Alone in a quiet room?</b> Open-back. You get the stage and air with nothing to lose.</li>
+      <li><b>Office, commute, shared space, or recording with a live mic?</b> Closed-back (or IEMs). You need isolation, and open-backs will leak into a meeting or a take.</li>
+      <li><b>One pair for everything?</b> A good closed-back is the safer default, because isolation is the harder problem to solve after the fact.</li>
+    </ul>
+
+    <h2>The honest part: open isn’t automatically “better”</h2>
+    <p>
+      Audiophile consensus leans hard toward open-back, and it overstates the case. Open-backs earn their reputation on
+      staging and a certain effortless quality &mdash; but closed-back design has come a long way, and a great closed
+      headphone in the situation it is built for beats a great open one you cannot actually use. &ldquo;Better&rdquo; is
+      the wrong frame; <em>fit for your situation</em> is the right one.
+    </p>
+
+    <div class="funnel">
+      <p>
+        One more honest note: the open-vs-closed difference is mostly <em>physics you can’t EQ away</em> — the staging
+        and isolation come from the cup, not the tuning. What you <em>can</em> change is the tonal balance. If a
+        headphone fits your situation but you wish it sounded warmer, brighter, or fuller, that is a tuning question,
+        and <b>Attune</b> is how you answer it by ear.
+      </p>
+      <Button href="/attune" variant="primary">Explore Attune</Button>
+    </div>
+
+    <h2>The honest bottom line</h2>
+    <p>
+      Open-back for a quiet room where the stage matters and no one else does; closed-back when you need to keep sound
+      in, out, or both. Pick for your situation first, then pick the tuning you like within that &mdash; and you can
+      hear the tonal part instead of guessing.
+    </p>
+
+    <h2>Common questions</h2>
+    <div class="faq">
+      {
+        faq.map(([q, a]) => (
+          <div class="faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="related">
+      <a href="/measure">Browse the measurement Archive &rarr;</a>
+      <a href="/learn/how-to-read-a-frequency-response-graph">How to read a graph &rarr;</a>
+      <a href="/learn/do-i-need-a-headphone-amp">Do you need a headphone amp? &rarr;</a>
+      <a href="/learn">Back to Learn &rarr;</a>
+    </div>
+  </article>
+
+  <Footer variant="home" />
+</Layout>
+
+<style>
+  .doc {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 56px 24px 20px;
+  }
+  .crumb {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted-2);
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+    margin-bottom: 26px;
+  }
+  .crumb a:hover {
+    color: var(--text);
+  }
+  .crumb [aria-current] {
+    color: var(--muted);
+  }
+  .doc h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(34px, 5vw, 50px);
+    line-height: 1.05;
+    letter-spacing: -0.005em;
+    margin: 12px 0 0;
+  }
+  .doc h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(24px, 3vw, 31px);
+    line-height: 1.15;
+    margin: 44px 0 0;
+  }
+  .doc h2 em {
+    font-style: italic;
+    color: var(--accent-soft);
+  }
+  .doc p {
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.68;
+    margin: 16px 0 0;
+  }
+  .doc p b {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .doc em {
+    color: var(--text);
+    font-style: italic;
+  }
+  .doc a {
+    color: var(--accent-soft);
+  }
+  .doc a:hover {
+    color: var(--accent);
+  }
+  .doc ul {
+    margin: 16px 0 0;
+    padding-left: 0;
+    list-style: none;
+  }
+  .doc li {
+    position: relative;
+    color: var(--muted);
+    font-size: 16.5px;
+    line-height: 1.6;
+    padding: 9px 0 9px 26px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .doc li:first-child {
+    border-top: none;
+  }
+  .doc li::before {
+    content: '\25C6';
+    color: var(--accent);
+    position: absolute;
+    left: 4px;
+    top: 9px;
+    font-size: 11px;
+  }
+  .answer {
+    margin-top: 26px;
+    border: 1px solid var(--accent-line);
+    background: var(--accent-dim);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+  }
+  .answer-k {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 6px;
+  }
+  .answer p {
+    margin: 0;
+    color: var(--text);
+    font-size: 17px;
+  }
+  .funnel {
+    margin-top: 22px;
+    background: linear-gradient(120deg, rgba(255, 158, 44, 0.07), var(--surface) 60%);
+    border: 1px solid var(--accent-line);
+    border-radius: var(--radius);
+    padding: 24px 26px;
+  }
+  .funnel p {
+    margin: 0 0 18px;
+  }
+  .faq {
+    margin-top: 12px;
+  }
+  .faq-item {
+    border-top: 1px solid var(--line-soft);
+    padding: 20px 0 4px;
+  }
+  .faq-item h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text);
+  }
+  .faq-item p {
+    margin-top: 8px;
+    font-size: 16px;
+  }
+  .related {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 28px;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 15px;
+  }
+  .related a {
+    color: var(--accent-soft);
+  }
+  .related a:hover {
+    color: var(--accent);
+  }
+</style>

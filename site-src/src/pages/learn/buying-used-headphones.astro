@@ -1,0 +1,148 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/Button.astro';
+
+const SITE = 'https://warrenlabs.com';
+const url = `${SITE}/learn/buying-used-headphones`;
+const title = 'Buying used headphones without getting burned';
+const description =
+  'Used is where the value and the discontinued classics live — but check the channel balance, pads, cable, and seller first. A quick pre-purchase checklist so a great deal doesn’t turn into a repair.';
+
+const faq: [string, string][] = [
+  [
+    'Is it safe to buy used headphones?',
+    'Yes, if you check a few things and buy from a reputable seller. Used is often the smart move — it is the only way to get many discontinued classics — but a five-minute check for channel balance, pad condition, and a solid cable saves you from the one that is broken.',
+  ],
+  [
+    'How do I check used headphones before buying?',
+    'Play a centered, mono-ish track and confirm the image sits dead center (a weak channel pulls it to one side). Wiggle the cable and jack for crackle, tap the cups for rattles, and inspect the pads and headband. Ask the seller to verify both channels work.',
+  ],
+  [
+    'What should I look for in used headphones?',
+    'Channel balance first (a dying driver is the big risk), then pad wear, a solid cable and jack, and any cracks or rattles. Cosmetic scuffs do not matter; the drivers and connections do.',
+  ],
+  [
+    'Are used headphones worth it?',
+    'Often, yes — you get more sound for the money and access to discontinued models that no longer sell new. Just factor in the cost of fresh pads or a replacement cable if they are worn.',
+  ],
+  [
+    'How do I know if a headphone driver is bad?',
+    'Listen for an image that will not center, one side quieter or distorted, or a rattle or buzz on bass notes. Any of those points at a damaged driver — walk away or negotiate hard.',
+  ],
+];
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: title,
+    description,
+    author: { '@type': 'Person', name: 'Jamey Warren' },
+    publisher: { '@id': `${SITE}/#organization` },
+    datePublished: '2026-07-20',
+    dateModified: '2026-07-20',
+    mainEntityOfPage: url,
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn/learn` },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
+    ],
+  },
+];
+---
+
+<Layout title={`${title} · Warren Labs`} description={description} ogType="article" jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <article class="doc">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Buying used</span>
+    </nav>
+
+    <span class="eyebrow">Learn &middot; Listening</span>
+    <h1>Buying used headphones without getting burned</h1>
+
+    <div class="answer">
+      <div class="answer-k">Short answer</div>
+      <p>
+        Used is where the <b>value</b> and the <b>discontinued classics</b> live &mdash; but check the
+        <b>channel balance</b>, the <b>pads</b>, the <b>cable and jack</b>, and the <b>seller</b> before you buy. A
+        five-minute check keeps a great deal from turning into a repair. Here is the pre-purchase list.
+      </p>
+    </div>
+
+    <h2>Why buy used at all</h2>
+    <p>
+      Two reasons. Value &mdash; last generation&rsquo;s reference is this year&rsquo;s bargain. And access: many of
+      the best headphones ever made are <b>discontinued</b>, and used is the only way to hear them. A good chunk of
+      our <a href="/measure">Archive</a> &mdash; Denon&rsquo;s wood-cup flagships, the Ultrasone
+      Edition&nbsp;8, the classics &mdash; only exists on the used market now.
+    </p>
+
+    <h2>The five-minute check</h2>
+    <ul>
+      <li><b>Channel balance first.</b> Play a centered, mono-ish track and make sure the image sits dead center. A weak or dead channel &mdash; the biggest risk in used headphones &mdash; pulls it to one side.</li>
+      <li><b>Listen for driver trouble.</b> Rattle or buzz on bass notes, or one side distorting, means a damaged driver. Walk away.</li>
+      <li><b>Pads.</b> Flattened or crumbling pads change the sound and comfort. Many are replaceable &mdash; factor the cost.</li>
+      <li><b>Cable and jack.</b> Wiggle them; crackle means a bad connection. A detachable cable is a cheap fix; a fixed one is a repair.</li>
+      <li><b>Structure.</b> Check the headband, hinges, and cups for cracks. Cosmetic scuffs are fine &mdash; focus on function.</li>
+    </ul>
+
+    <h2>Buy from the right place</h2>
+    <p>
+      Favor sellers with history and feedback, ask for real photos (and a serial number on models that get
+      counterfeited &mdash; some popular Sennheiser, Sony, and Beats units are faked). If a price is far below
+      everyone else, assume there is a reason. When you can, buy where returns are possible.
+    </p>
+
+    <div class="funnel">
+      <p>
+        Once you&rsquo;ve landed a good used pair, two things finish the job: check how it actually
+        <a href="/measure">measures</a> in the Archive, and tune it to your taste with <b>Attune</b>
+        &mdash; because a classic with fresh pads and the right EQ can beat something far newer.
+      </p>
+      <Button href="/attune" variant="primary">Explore Attune</Button>
+    </div>
+
+    <h2>The honest bottom line</h2>
+    <p>
+      Used is the smart way to buy headphones &mdash; more sound per dollar and the only door to the classics. Do
+      the quick channel/pad/cable check, buy from someone reputable, and budget for fresh pads. Get those right and
+      the deal stays a deal.
+    </p>
+
+    <h2>Common questions</h2>
+    <div class="faq">
+      {
+        faq.map(([q, a]) => (
+          <div class="faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="related">
+      <a href="/learn/choosing-your-first-serious-headphone">Choosing your first serious headphone &rarr;</a>
+      <a href="/measure">Browse the Archive &rarr;</a>
+      <a href="/learn/what-headphone-impedance-means">Will it be hard to drive? &rarr;</a>
+      <a href="/learn">Back to Learn &rarr;</a>
+    </div>
+  </article>
+
+  <Footer variant="home" />
+</Layout>

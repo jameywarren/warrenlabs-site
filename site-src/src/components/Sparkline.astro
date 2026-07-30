@@ -1,0 +1,51 @@
+---
+// Tiny frequency-response sparkline (no axes) for the homepage Archive cards. Static SVG from the
+// committed curated curves; shares the grid + smoothing with ProductGraph.
+import { GRID_HZ } from '../data/curves.js';
+
+interface Props {
+  dbs: number[];
+}
+const { dbs } = Astro.props;
+
+function smooth(a: number[]): number[] {
+  const o = a.slice();
+  for (let i = 1; i < a.length - 1; i++) o[i] = a[i - 1] * 0.25 + a[i] * 0.5 + a[i + 1] * 0.25;
+  return o;
+}
+const Y = smooth(smooth(dbs));
+
+const W = 250,
+  H = 56,
+  mT = 8,
+  mB = 8;
+const x0 = Math.log10(20),
+  x1 = Math.log10(20000),
+  yMin = -14,
+  yMax = 14;
+const PX = (hz: number) => ((Math.log10(hz) - x0) / (x1 - x0)) * W;
+const PY = (db: number) => mT + ((yMax - db) / (yMax - yMin)) * (H - mT - mB);
+
+const pts = GRID_HZ.map((hz: number, i: number) => `${PX(hz).toFixed(1)},${PY(Y[i]).toFixed(1)}`).join(' ');
+const zero = PY(0).toFixed(1);
+---
+
+<svg class="spark" viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Frequency response">
+  <line x1="0" y1={zero} x2={W} y2={zero} stroke="var(--line)" stroke-width="1"></line>
+  <polyline
+    points={pts}
+    fill="none"
+    stroke="var(--accent)"
+    stroke-width="1.6"
+    stroke-linejoin="round"
+    stroke-linecap="round"></polyline>
+</svg>
+
+<style>
+  .spark {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin: 14px 0 2px;
+  }
+</style>
