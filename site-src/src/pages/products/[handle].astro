@@ -6,6 +6,7 @@ import Button from '../../components/Button.astro';
 import ProductGraph from '../../components/ProductGraph.astro';
 import { HEADPHONES, BY_HANDLE } from '../../data/headphones.js';
 import { CURVES } from '../../data/curves.js';
+import { fixtureOf } from '../../data/fixtures.js';
 
 export function getStaticPaths() {
   return HEADPHONES.map((hp) => ({ params: { handle: hp.handle }, props: { hp } }));
@@ -17,6 +18,9 @@ const url = `${SITE}/products/${hp.handle}`;
 const full = `${hp.brand} ${hp.name}`;
 
 const dbs = CURVES[hp.curveId];
+// Which bench made this curve. Everything published today is the archive rig; the registry
+// keeps that a data fact rather than a hardcoded string, so EARS Pro curves need no page edits.
+const fx = fixtureOf(hp.curveId);
 
 const title = `${full} — frequency response & honest take · Warren Labs`;
 const description = `${full} measured frequency response, specs, and a plain-English take: ${hp.signature.toLowerCase()}. ${hp.type}, ${hp.impedance}. See how it measures and tune it to your taste in Attune.`;
@@ -69,8 +73,8 @@ const jsonLd = [
           <span class="gtag">Raw &middot; L/R averaged</span>
         </div>
         <div class="brail">
-          <span class="bn">Head Acoustics HMS II.3<i>2005 to 2014</i></span>
-          <span class="bc">Open backs read bass-light on this fixture.</span>
+          <span class="bn">{fx.name}<i>{fx.years}</i></span>
+          <span class="bc">{fx.caveat}</span>
         </div>
         <ProductGraph dbs={dbs} label={full} />
         <div class="grig">
@@ -104,11 +108,8 @@ const jsonLd = [
       <span class="dot"></span>
       <div class="prov-body">
         <p>
-          Measured on a Head Acoustics HMS II.3 artificial head &mdash; raw response,
-          left/right averaged, normalized to 0&nbsp;dB at 1&nbsp;kHz. From the <b>Sonic Temple Archive</b>
-          (2008&ndash;2014, one unit per model). <b>Honest limits:</b> seating variance runs &plusmn;0.4&nbsp;dB in
-          the mids to &plusmn;3.9&nbsp;dB above 12&nbsp;kHz, and open headphones read bass-light on this fixture
-          &mdash; don&rsquo;t read fine treble detail as settled. <a href="/learn">How we measure &rarr;</a>
+          {fx.limits} Do not read fine treble detail as settled.
+          <a href="/learn">How we measure &rarr;</a>
         </p>
         {hp.caveat && <p class="caveat"><b>On this measurement:</b> {hp.caveat}</p>}
       </div>

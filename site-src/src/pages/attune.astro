@@ -33,6 +33,7 @@ const attuneApp = {
   description="Attune is a Warren Labs product: personal-EQ and real-time A/B auditioning for macOS. Tune any headphone to your taste — blind, loudness-matched, on your own music. Free — coming to the Mac App Store."
   signup="attune"
   jsonLd={attuneApp}
+  wordmark
 >
   <Nav variant="attune" />
 
@@ -40,6 +41,13 @@ const attuneApp = {
   <header class="hero">
     <div class="wrap hero-grid">
       <div>
+        <span class="brand-lockup">
+          <span class="wordmark">Attune</span>
+          <span class="by">
+            <svg class="by-mark" viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 16 C20 38 28 62 39 62 C48 62 53 46 58 38 C63 30 70 30 76 38 C81 44 84 54 92 54 C99 54 103 46 106 40"/></svg>
+            <span class="by-name">Warren Labs</span>
+          </span>
+        </span>
         <span class="eyebrow">Free &middot; coming to the Mac App Store</span>
         <h1>Find <em>your</em> sound.</h1>
         <p class="lede">
@@ -51,7 +59,7 @@ const attuneApp = {
           <Button href={BETA_DMG} variant="primary" size="lg">Download the free beta</Button>
           <Button href="#get" variant="ghost" size="lg" data-signup data-intent="notify">Get launch news</Button>
         </div>
-        <div class="hero-note"><span class="dot"></span> A Warren Labs product &middot; macOS &middot; Apple&nbsp;Silicon only</div>
+        <div class="hero-note"><span class="dot"></span> macOS &middot; Apple&nbsp;Silicon only</div>
       </div>
 
       <AttuneCockpitDemo />
@@ -559,6 +567,47 @@ const attuneApp = {
     font-size: 12.5px;
     color: var(--muted-2);
     margin-top: 16px;
+  }
+
+  /* ---------- product wordmark ----------
+     Mirrors the app's header lockup in web/index.html: the Attune wordmark stays Instrument
+     Serif as the product's signature, with the Warren Labs mark beneath it as the maker credit.
+     Everything else on the page is the Warren Labs type system. */
+  .brand-lockup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: fit-content;
+    margin-bottom: 20px;
+  }
+  .wordmark {
+    font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+    font-size: 44px;
+    line-height: 0.9;
+    letter-spacing: 0.3px;
+    color: var(--text);
+  }
+  .by {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+  }
+  .by-mark {
+    width: 19px;
+    height: 13px;
+    flex: 0 0 auto;
+  }
+  .by-name {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  @media (max-width: 720px) {
+    .wordmark { font-size: 34px; }
+    .brand-lockup { margin-bottom: 16px; }
   }
 
   /* ---------- membership ---------- */
