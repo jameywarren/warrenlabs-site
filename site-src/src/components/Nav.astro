@@ -1,21 +1,18 @@
 ---
 // Warren Labs header for the migrated pages.
 //
+// The link list comes from src/data/nav.js, which is also what tools/sync-chrome.mjs renders
+// into the hand-written pages. Change the nav there, not here.
+//
 // Deliberately NOT sharing /css/styles.css with the hand-written site: that sheet and this
 // section's global.css both define .wrap, .btn, .mono, body and a, so linking both would collide.
-// The styles here are scoped by Astro and are a visual match for the site header. If the main
-// header changes, change it here too.
+// These styles are scoped by Astro and are a visual match for the site header.
+import { NAV, MARK_PATH, nbsp } from '../data/nav.js';
+
 interface Props {
   variant?: 'home' | 'attune';
 }
 const { variant = 'home' } = Astro.props;
-const links = [
-  { href: '/attune', label: 'ATTUNE' },
-  { href: '/collections/headphones', label: 'HEADPHONES' },
-  { href: '/graphs', label: 'COMPARE' },
-  { href: '/learn', label: 'LEARN' },
-  { href: '/measure', label: 'MEASURE' },
-];
 ---
 
 <header class="wl-head" data-variant={variant}>
@@ -23,7 +20,7 @@ const links = [
     <a class="wl-logo" href="/" aria-label="Warren Labs">
       <svg class="wl-mark" viewBox="0 0 120 80" aria-hidden="true">
         <path
-          d="M16 16 C20 38 28 62 39 62 C48 62 53 46 58 38 C63 30 70 30 76 38 C81 44 84 54 92 54 C99 54 103 46 106 40"
+          d={MARK_PATH}
           fill="none"
           stroke="currentColor"
           stroke-width="6.5"
@@ -34,8 +31,7 @@ const links = [
     </a>
 
     <nav id="wl-nav">
-      {links.map((l) => <a href={l.href}>{l.label}</a>)}
-      <a class="cta" href="/design-review/">DESIGN&nbsp;REVIEW</a>
+      {NAV.map((l) => <a href={l.href} class={l.cta ? 'cta' : undefined} set:html={nbsp(l.label)} />)}
     </nav>
 
     <button class="wl-toggle" aria-label="Menu" aria-expanded="false" aria-controls="wl-nav">

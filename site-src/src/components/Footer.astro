@@ -1,6 +1,7 @@
 ---
-// Warren Labs footer for the migrated pages. Matches the hand-written site's footer by eye;
-// see the note in Nav.astro for why these are not sharing /css/styles.css.
+// Warren Labs footer. Links come from src/data/nav.js; see the note in Nav.astro.
+import { FOOTER_LINKS, FOOTER_META, nbsp } from '../data/nav.js';
+
 interface Props {
   variant?: 'home' | 'attune';
 }
@@ -10,16 +11,10 @@ const { variant = 'home' } = Astro.props;
 <footer class="wl-foot" data-variant={variant}>
   <div class="wl-foot-in">
     <div class="wl-foot-links">
-      <a href="/">The&nbsp;lab</a>
-      <a href="/attune">Attune</a>
-      <a href="/collections/headphones">Headphones</a>
-      <a href="/graphs">Compare</a>
-      <a href="/learn">Learn</a>
-      <a href="/measure">Measure</a>
-      <a href="/design-review/">Design&nbsp;review</a>
+      {FOOTER_LINKS.map((l) => <a href={l.href} set:html={nbsp(l.label)} />)}
     </div>
     <div class="wl-foot-meta">
-      <span>WARREN LABS · JAMEY WARREN</span><span>BUILT IN LIVINGSTON, MONTANA</span>
+      {FOOTER_META.map((m) => <span>{m}</span>)}
     </div>
   </div>
 </footer>

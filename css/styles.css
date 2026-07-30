@@ -432,7 +432,13 @@ body.audio-on .plug-note .live { color: var(--acc2); }
 .contact-links a.primary.patched { filter: brightness(1.15); color: var(--bg); box-shadow: 0 0 22px color-mix(in oklab, var(--acc) 45%, transparent); }
 .contact-links a.primary:hover { filter: brightness(1.12); color: var(--bg); }
 footer { border-top: 1px solid var(--line); position: relative; z-index: 4; background: var(--bg); }
-.foot-in { display: flex; justify-content: space-between; padding: 26px 60px; max-width: 1320px; margin: 0 auto; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: 0.16em; color: var(--faint); }
+/* Footer chrome is generated from site-src/src/data/nav.js by tools/sync-chrome.mjs, so the
+   markup here must match what that script emits. Two rows: the link set, then the meta line. */
+.foot-in { display: flex; flex-direction: column; gap: 18px; padding: 30px 60px 34px; max-width: 1320px; margin: 0 auto; }
+.foot-links { display: flex; flex-wrap: wrap; gap: 12px 26px; }
+.foot-links a { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.12em; color: var(--dim); text-decoration: none; }
+.foot-links a:hover { color: var(--acc); }
+.foot-meta { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 18px; font-family: "IBM Plex Mono", monospace; font-size: 11px; letter-spacing: 0.16em; color: var(--faint); }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1080px) {
@@ -532,7 +538,8 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   .pbay-readout { font-size: 9.5px; letter-spacing: 0.08em; }
   .contact-links { flex-wrap: wrap; gap: 10px; padding: 12px; }
   .contact-links a { font-size: 10.5px; padding: 12px 16px; }
-  .foot-in { flex-direction: column; gap: 8px; padding: 18px 20px; }
+  .foot-in { padding: 22px 20px 26px; }
+  .foot-meta { flex-direction: column; gap: 8px; }
 }
 
 /* ============================================================ plugin rack units
