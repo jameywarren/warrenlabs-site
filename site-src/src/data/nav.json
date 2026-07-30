@@ -1,0 +1,73 @@
+{
+  "_comment": "Canonical header/footer for warrenlabs.com. Read by nav.js (Astro) and by tools/gen_site.py in the monorepo (the /plugins pages). Edit here only.",
+  "nav": [
+    {
+      "href": "/attune",
+      "label": "ATTUNE"
+    },
+    {
+      "href": "/collections/headphones",
+      "label": "HEADPHONES"
+    },
+    {
+      "href": "/graphs",
+      "label": "MEASUREMENTS"
+    },
+    {
+      "href": "/learn",
+      "label": "LEARN"
+    },
+    {
+      "href": "/design-review/",
+      "label": "DESIGN REVIEW"
+    },
+    {
+      "href": "/#patch",
+      "label": "PATCH IN",
+      "cta": true
+    }
+  ],
+  "footerLinks": [
+    {
+      "href": "/",
+      "label": "The lab"
+    },
+    {
+      "href": "/attune",
+      "label": "Attune"
+    },
+    {
+      "href": "/collections/headphones",
+      "label": "Headphones"
+    },
+    {
+      "href": "/graphs",
+      "label": "Measurements"
+    },
+    {
+      "href": "/measure",
+      "label": "Send yours in"
+    },
+    {
+      "href": "/learn",
+      "label": "Learn"
+    },
+    {
+      "href": "/plugins/",
+      "label": "Plugins"
+    },
+    {
+      "href": "/design-review/",
+      "label": "Design review"
+    },
+    {
+      "href": "/#patch",
+      "label": "Contact"
+    }
+  ],
+  "footerMeta": [
+    "WARREN LABS · JAMEY WARREN",
+    "BUILT IN LIVINGSTON, MONTANA"
+  ],
+  "markPath": "M16 16 C20 38 28 62 39 62 C48 62 53 46 58 38 C63 30 70 30 76 38 C81 44 84 54 92 54 C99 54 103 46 106 40"
+}

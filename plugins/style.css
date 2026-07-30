@@ -143,7 +143,9 @@ ul.features li::before{content:"›"; color:var(--shot-accent,var(--acc)); margi
   .logo-mark .wl-mark{width:34px}
   .logo-mark span{font-size:12px; letter-spacing:.18em}
   nav.site a{margin-left:16px; font-size:11px}
-  nav.site a:last-child{display:none}   /* drop "The Lab ↗", the logo links home */
+  /* The nav is shared with the rest of the site now, so nothing is dropped by position.
+     Let it wrap instead of hiding whichever link happens to be last. */
+  nav.site{display:flex; flex-wrap:wrap; gap:0 4px; justify-content:flex-end}
   .shot .id .br{display:none}
 }
 

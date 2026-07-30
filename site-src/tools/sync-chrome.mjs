@@ -16,7 +16,13 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { NAV, FOOTER_LINKS, FOOTER_META, MARK_PATH, nbsp } from '../src/data/nav.js';
+// Read the canonical JSON directly rather than importing nav.js: this runs in plain Node, which
+// requires an import attribute for JSON, while Vite (which serves nav.js to Astro) does not.
+const nav = JSON.parse(
+  await readFile(join(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'data', 'nav.json'), 'utf8')
+);
+const { nav: NAV, footerLinks: FOOTER_LINKS, footerMeta: FOOTER_META, markPath: MARK_PATH } = nav;
+const nbsp = (s) => s.replace(/ /g, '\u00a0');
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
