@@ -1,0 +1,211 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/Button.astro';
+import { HEADPHONES } from '../../data/headphones.js';
+
+const SITE = 'https://warrenlabs.com';
+const url = `${SITE}/collections/headphones`;
+const description =
+  'Real frequency-response measurements for classic and reference headphones — Sennheiser, AKG, Beyerdynamic, Audeze, Grado and more. Honest curves from the Sonic Temple Archive, with limits named.';
+
+const jsonLd = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Headphones', item: url },
+    ],
+  },
+  {
+    '@type': 'ItemList',
+    itemListElement: HEADPHONES.map((h, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: `${h.brand} ${h.name}`,
+      url: `${SITE}/products/${h.handle}`,
+    })),
+  },
+];
+---
+
+<Layout title="Headphones — measured, honestly · Warren Labs" description={description} jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <main class="wrap coll">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><span aria-current="page">Headphones</span>
+    </nav>
+
+    <span class="eyebrow">The Archive</span>
+    <h1>Measured headphones.</h1>
+    <p class="lede">
+      Real frequency-response measurements for the headphones people actually ask about &mdash; classics and
+      references, measured on one rig and shown with their limits named. Land on one, see how it measures, and
+      tune it to your taste in Attune. More get added as they&rsquo;re measured.
+    </p>
+
+    <div class="grid">
+      {
+        HEADPHONES.map((h) => (
+          <a class="card" href={`/products/${h.handle}`}>
+            <span class="kind">{h.tier}</span>
+            <h2>
+              {h.brand} {h.name}
+            </h2>
+            <p class="sig">{h.signature}</p>
+            <div class="meta">
+              <span>{h.type}</span>
+              <span>{h.impedance}</span>
+            </div>
+            <span class="go">See the measurement &rarr;</span>
+          </a>
+        ))
+      }
+    </div>
+
+    <div class="coll-cta">
+      <div>
+        <h2 class="cta-h">Hear these tuned to your taste.</h2>
+        <p>Every measurement here is a starting point &mdash; Attune lets you audition a tuning on your own music and keep the one you'd pick with your eyes closed.</p>
+      </div>
+      <div class="cta-btns">
+        <Button href="/attune" variant="primary">Get Attune, free</Button>
+      </div>
+    </div>
+  </main>
+
+  <Footer variant="home" />
+</Layout>
+
+<style>
+  .coll {
+    padding: 56px 24px 24px;
+  }
+  .crumb {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted-2);
+    display: flex;
+    gap: 9px;
+    margin-bottom: 26px;
+  }
+  .crumb a:hover {
+    color: var(--text);
+  }
+  .crumb [aria-current] {
+    color: var(--muted);
+  }
+  .coll h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(38px, 6vw, 60px);
+    line-height: 1.02;
+    margin: 12px 0 0;
+  }
+  .lede {
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.6;
+    max-width: 64ch;
+    margin: 18px 0 0;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 44px;
+  }
+  @media (max-width: 820px) {
+    .grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 560px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .card {
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    transition:
+      border-color 0.2s,
+      transform 0.2s;
+  }
+  .card:hover {
+    border-color: var(--accent-line);
+    transform: translateY(-2px);
+  }
+  .kind {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+  }
+  .card h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 23px;
+    margin: 8px 0 6px;
+  }
+  .sig {
+    color: var(--muted);
+    font-size: 13.5px;
+    margin: 0;
+    flex: 1;
+  }
+  .meta {
+    display: flex;
+    gap: 14px;
+    margin-top: 14px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--muted-2);
+  }
+  .go {
+    margin-top: 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .card:hover .go {
+    color: var(--accent-soft);
+  }
+  .coll-cta {
+    margin-top: 52px;
+    background: linear-gradient(120deg, rgba(255, 158, 44, 0.07), var(--surface) 55%);
+    border: 1px solid var(--accent-line);
+    border-radius: 18px;
+    padding: 30px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .cta-h {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 24px;
+    margin: 0;
+    max-width: 24ch;
+  }
+  .coll-cta p {
+    color: var(--muted);
+    font-size: 15px;
+    margin: 8px 0 0;
+    max-width: 48ch;
+  }
+  .cta-btns {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+</style>

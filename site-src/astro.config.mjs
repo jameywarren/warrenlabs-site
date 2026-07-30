@@ -12,7 +12,7 @@ export default defineConfig({
     sitemap({
       // /graphs and /measure are built but NOT published (see tools/sync.mjs), so they must
       // not be advertised.
-      filter: (page) => !page.includes('/graphs') && !page.includes('/measure'),
+      filter: (page) => !page.includes('/graphs'),
       // The hand-written pages live outside this Astro project, so list them explicitly.
       customPages: [
         'https://warrenlabs.com/',
