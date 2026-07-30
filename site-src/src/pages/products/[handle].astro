@@ -1,0 +1,500 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/Button.astro';
+import ProductGraph from '../../components/ProductGraph.astro';
+import { HEADPHONES, BY_HANDLE } from '../../data/headphones.js';
+import { CURVES } from '../../data/curves.js';
+
+export function getStaticPaths() {
+  return HEADPHONES.map((hp) => ({ params: { handle: hp.handle }, props: { hp } }));
+}
+
+const { hp } = Astro.props;
+const SITE = 'https://warrenlabs.com';
+const url = `${SITE}/products/${hp.handle}`;
+const full = `${hp.brand} ${hp.name}`;
+
+const dbs = CURVES[hp.curveId];
+
+const title = `${full} — frequency response & honest take · Warren Labs`;
+const description = `${full} measured frequency response, specs, and a plain-English take: ${hp.signature.toLowerCase()}. ${hp.type}, ${hp.impedance}. See how it measures and tune it to your taste in Attune.`;
+
+const jsonLd = [
+  {
+    '@type': 'Product',
+    name: full,
+    brand: { '@type': 'Brand', name: hp.brand },
+    category: 'Headphones',
+    description: hp.deck,
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Headphones', item: `${SITE}/collections/headphones` },
+      { '@type': 'ListItem', position: 3, name: full, item: url },
+    ],
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: hp.faqs.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+---
+
+<Layout title={title} description={description} jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <main class="wrap pdp">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/collections/headphones">Headphones</a><span>/</span><span aria-current="page">{full}</span>
+    </nav>
+
+    <header class="head">
+      <span class="eyebrow">{hp.type} &middot; {hp.impedance} &middot; {hp.tier} tier</span>
+      <h1>{full}</h1>
+      <p class="deck">{hp.deck}</p>
+    </header>
+
+    <div class="grid">
+      <section class="gcard" aria-label="Frequency response">
+        <div class="gtop">
+          <span class="gtitle">Frequency response</span>
+          <span class="gtag">Raw &middot; L/R averaged</span>
+        </div>
+        <div class="brail">
+          <span class="bn">Head Acoustics HMS II.3<i>2005 to 2014</i></span>
+          <span class="bc">Open backs read bass-light on this fixture.</span>
+        </div>
+        <ProductGraph dbs={dbs} label={full} />
+        <div class="grig">
+          <span>Normalized 0 dB @ 1 kHz</span>
+          <span>One unit, one seating</span>
+        </div>
+      </section>
+
+      <div class="panel">
+        <div class="specs">
+          <div class="spec"><span class="k">Type</span><span class="v">{hp.type}</span></div>
+          <div class="spec"><span class="k">Impedance</span><span class="v">{hp.impedance}<small>{hp.impedanceNote}</small></span></div>
+          <div class="spec"><span class="k">Sensitivity</span><span class="v">{hp.sensitivity}</span></div>
+          <div class="spec"><span class="k">Needs an amp?</span><span class="v">{hp.needsAmp}<small>{hp.needsAmpNote}</small></span></div>
+          <div class="spec"><span class="k">Signature</span><span class="v">{hp.signature}</span></div>
+        </div>
+
+        <div class="take">
+          <h2>Our take</h2>
+          <p>{hp.take}</p>
+        </div>
+
+        <div class="funnel">
+          <Button href="/attune" variant="primary" size="lg">Hear it tuned to your taste in Attune</Button>
+          <span class="hint">Free &middot; macOS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="prov">
+      <span class="dot"></span>
+      <div class="prov-body">
+        <p>
+          Measured on a Head Acoustics HMS II.3 artificial head &mdash; raw response,
+          left/right averaged, normalized to 0&nbsp;dB at 1&nbsp;kHz. From the <b>Sonic Temple Archive</b>
+          (2008&ndash;2014, one unit per model). <b>Honest limits:</b> seating variance runs &plusmn;0.4&nbsp;dB in
+          the mids to &plusmn;3.9&nbsp;dB above 12&nbsp;kHz, and open headphones read bass-light on this fixture
+          &mdash; don&rsquo;t read fine treble detail as settled. <a href="/learn">How we measure &rarr;</a>
+        </p>
+        {hp.caveat && <p class="caveat"><b>On this measurement:</b> {hp.caveat}</p>}
+      </div>
+    </div>
+
+    <div class="learn-row">
+      <span class="learn-row-k">New to this?</span>
+      <a href="/learn/how-to-read-a-frequency-response-graph">How to read this graph</a>
+      <a href="/learn/what-headphone-impedance-means">What impedance means</a>
+      <a href="/learn/do-i-need-a-headphone-amp">Do you need an amp?</a>
+    </div>
+
+    <section class="sec">
+      <h2 class="sec-h">Common questions</h2>
+      <p class="sec-lede">Straight answers &mdash; the same ones our measurements support.</p>
+      <div class="faq">
+        {hp.faqs.map(([q, a]) => (
+          <div class="qa">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2 class="sec-h">If you like the {hp.name}</h2>
+      <p class="sec-lede">Close on the graph, or a deliberate step in one direction.</p>
+      <div class="rel">
+        {hp.related.map(([h, kind, note]) => {
+          const r = BY_HANDLE[h];
+          return (
+            <a class="rcard" href={`/products/${h}`}>
+              <span class="rk">{kind}</span>
+              <h3>{r ? `${r.brand} ${r.name}` : h}</h3>
+              <p>{note}</p>
+            </a>
+          );
+        })}
+      </div>
+    </section>
+  </main>
+
+  <Footer variant="home" />
+</Layout>
+
+<style>
+  /* Bench provenance. The fixture that made a measurement is part of its identity, so it sits
+     on the plot rather than in the caveat paragraph below it. Every archive curve is HMS II.3;
+     when EARS Pro curves land this reads from the curve's own provenance field. */
+  .brail {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 2px 2px 9px;
+  }
+  .brail .bn {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .brail .bn i { font-style: normal; color: var(--muted-2); margin-left: 8px; }
+  .brail .bc { font-size: 10.5px; font-style: italic; color: var(--muted-2); }
+
+  .pdp {
+    padding-bottom: 24px;
+  }
+  .crumb {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted-2);
+    display: flex;
+    gap: 9px;
+    padding: 26px 0 0;
+    flex-wrap: wrap;
+  }
+  .crumb a:hover {
+    color: var(--text);
+  }
+  .crumb [aria-current] {
+    color: var(--muted);
+  }
+  .head {
+    padding: 14px 0 6px;
+  }
+  .head h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(38px, 6vw, 62px);
+    line-height: 1.02;
+    margin: 10px 0 0;
+  }
+  .head .deck {
+    color: var(--muted);
+    font-size: 18px;
+    line-height: 1.6;
+    max-width: 62ch;
+    margin: 14px 0 0;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1.55fr 1fr;
+    gap: 22px;
+    margin-top: 30px;
+    align-items: start;
+  }
+  @media (max-width: 860px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .gcard {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 18px 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .gcard::before {
+    content: '';
+    position: absolute;
+    right: -60px;
+    top: -70px;
+    width: 220px;
+    height: 220px;
+    background: radial-gradient(circle, rgba(255, 158, 44, 0.1), transparent 68%);
+    pointer-events: none;
+  }
+  .gtop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .gtitle {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .gtag {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    border: 1px solid var(--accent-line);
+    border-radius: 5px;
+    padding: 3px 7px;
+  }
+  .grig {
+    margin-top: 8px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--muted-2);
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .panel {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .specs {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 6px 18px;
+  }
+  .spec {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 13px 0;
+    border-top: 1px solid var(--line-soft);
+  }
+  .spec:first-child {
+    border-top: none;
+  }
+  .spec .k {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+  }
+  .spec .v {
+    font-size: 15px;
+    color: var(--text);
+    text-align: right;
+  }
+  .spec .v small {
+    display: block;
+    color: var(--muted-2);
+    font-size: 11.5px;
+    font-family: var(--mono);
+    margin-top: 2px;
+  }
+  .take {
+    background: linear-gradient(120deg, rgba(255, 158, 44, 0.06), var(--surface) 52%);
+    border: 1px solid var(--accent-line);
+    border-radius: var(--radius);
+    padding: 20px;
+  }
+  .take h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 22px;
+    margin: 0 0 8px;
+  }
+  .take p {
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin: 0;
+  }
+  .funnel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  .funnel .hint {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted-2);
+    text-align: center;
+  }
+  .prov {
+    margin-top: 26px;
+    border: 1px solid var(--line-soft);
+    border-radius: var(--radius);
+    background: var(--bg-deep);
+    padding: 16px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+  .prov .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-top: 7px;
+    flex: none;
+    box-shadow: 0 0 9px 1px rgba(255, 158, 44, 0.6);
+  }
+  .prov-body {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .prov p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .prov b {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .prov a {
+    color: var(--accent-soft);
+  }
+  .prov .caveat {
+    color: var(--accent-soft);
+    padding-top: 9px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .prov .caveat b {
+    color: var(--accent-soft);
+  }
+  .sec {
+    padding: 54px 0 0;
+  }
+  .sec-h {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 30px;
+    margin: 0 0 4px;
+  }
+  .sec-lede {
+    color: var(--muted-2);
+    font-size: 14px;
+    margin: 0 0 22px;
+  }
+  .learn-row {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 18px;
+    font-size: 14px;
+    padding: 14px 18px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .learn-row-k {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+  }
+  .learn-row a {
+    color: var(--accent-soft);
+  }
+  .learn-row a:hover {
+    color: var(--accent);
+  }
+  .faq {
+    display: grid;
+    gap: 1px;
+  }
+  .qa {
+    border-top: 1px solid var(--line-soft);
+    padding: 18px 0;
+  }
+  .qa:first-child {
+    border-top: none;
+  }
+  .qa h3 {
+    font-size: 16.5px;
+    font-weight: 600;
+    margin: 0 0 6px;
+    color: var(--text);
+  }
+  .qa p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.6;
+    max-width: 74ch;
+  }
+  .rel {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  @media (max-width: 720px) {
+    .rel {
+      grid-template-columns: 1fr;
+    }
+  }
+  .rcard {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    transition:
+      border-color 0.2s,
+      transform 0.2s;
+  }
+  .rcard:hover {
+    border-color: var(--accent-line);
+    transform: translateY(-2px);
+  }
+  .rcard .rk {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+  }
+  .rcard h3 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 22px;
+    margin: 8px 0 6px;
+  }
+  .rcard p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+</style>
