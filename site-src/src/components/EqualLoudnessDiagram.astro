@@ -5,7 +5,7 @@
 ---
 
 <figure class="fig">
-  <svg viewBox="0 0 760 320" role="img" aria-label="Two equal-loudness curves. The low-volume curve rises steeply at the bass and treble ends; the high-volume curve is flatter, showing that raising volume brings bass and treble forward.">
+  <div class="figscroll"><svg viewBox="0 0 760 320" role="img" aria-label="Two equal-loudness curves. The low-volume curve rises steeply at the bass and treble ends; the high-volume curve is flatter, showing that raising volume brings bass and treble forward.">
     <!-- plot frame -->
     <rect x="70" y="30" width="640" height="238" fill="none" stroke="#34383d" stroke-width="1.2"></rect>
     <!-- freq axis -->
@@ -40,7 +40,7 @@
         <path d="M0 8 L5 0 L10 8 z" fill="#565b60"></path>
       </marker>
     </defs>
-  </svg>
+  </svg></div>
   <figcaption>
     Your ears hear bass and treble relatively more as volume rises &mdash; so the louder of two things sounds
     fuller and &ldquo;better,&rdquo; for reasons that aren&rsquo;t about quality. Match levels, or you&rsquo;re
@@ -60,6 +60,19 @@
     display: block;
     width: 100%;
     height: auto;
+    /* These diagrams are drawn on a fixed 760-unit grid, so scaling the SVG to a narrow column
+       scales the labels with it: at a 342px article column a 10px label lands near 4.5 CSS px.
+       Hold a legible floor and let the figure scroll sideways instead of shrinking the type. */
+    min-width: 600px;
+  }
+  .fig .figscroll {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  @media (min-width: 700px) {
+    .fig svg { min-width: 0; }
+    .fig .figscroll { overflow-x: visible; }
   }
   .fig figcaption {
     margin-top: 12px;

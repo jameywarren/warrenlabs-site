@@ -4,7 +4,7 @@
 ---
 
 <figure class="fig">
-  <svg viewBox="0 0 760 280" role="img" aria-label="Two schematics: an in-ear monitor sealing the ear canal, and an over-ear cup enclosing the whole ear at a distance.">
+  <div class="figscroll"><svg viewBox="0 0 760 280" role="img" aria-label="Two schematics: an in-ear monitor sealing the ear canal, and an over-ear cup enclosing the whole ear at a distance.">
     <defs>
       <marker id="ep-ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#FF9E2C"></path></marker>
     </defs>
@@ -40,7 +40,7 @@
       <text x="565" y="212" text-anchor="middle" font-family="var(--mono)" font-size="13" letter-spacing="0.08em" fill="#e8ebed">OVER-EAR</text>
       <text x="565" y="232" text-anchor="middle" font-family="var(--mono)" font-size="10.5" fill="#565b60">around the ear · roomier</text>
     </g>
-  </svg>
+  </svg></div>
   <figcaption>
     Where the driver sits changes everything. An <em>IEM</em> seals in the ear canal &mdash; tiny, isolating,
     fit-critical. An <em>over-ear</em> plays from a distance around the whole ear &mdash; roomier and comfier, less
@@ -50,7 +50,14 @@
 
 <style>
   .fig { margin: 28px 0 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 18px 14px; }
-  .fig svg { display: block; width: 100%; height: auto; }
+  /* Fixed 760-unit grid: scaling to a narrow column scales the labels with it, so hold a
+     legible floor and let the figure scroll sideways instead of shrinking the type. */
+  .fig svg { display: block; width: 100%; height: auto; min-width: 600px; }
+  .fig .figscroll { overflow-x: auto; overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+  @media (min-width: 700px) {
+    .fig svg { min-width: 0; }
+    .fig .figscroll { overflow-x: visible; }
+  }
   .fig figcaption { margin-top: 12px; font-size: 13px; line-height: 1.5; color: var(--muted-2); font-family: var(--mono); }
   .fig figcaption em { color: var(--muted); font-style: italic; }
 </style>

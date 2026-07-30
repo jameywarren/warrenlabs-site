@@ -4,7 +4,7 @@
 ---
 
 <figure class="fig">
-  <svg viewBox="0 0 760 424" role="img" aria-label="A chart with impedance on the horizontal axis and sensitivity on the vertical axis, divided into four quadrants showing when a headphone is easy or hard to drive, with example headphones plotted.">
+  <div class="figscroll"><svg viewBox="0 0 760 424" role="img" aria-label="A chart with impedance on the horizontal axis and sensitivity on the vertical axis, divided into four quadrants showing when a headphone is easy or hard to drive, with example headphones plotted.">
     <!-- plot box -->
     <rect x="112" y="40" width="600" height="292" fill="none" stroke="#34383d" stroke-width="1.2"></rect>
     <!-- quadrant dividers -->
@@ -40,7 +40,7 @@
       <circle cx="672" cy="238" r="5.5" fill="#FF9E2C"></circle>
       <text x="662" y="242" text-anchor="end">DT 880 (600&#8486;)</text>
     </g>
-  </svg>
+  </svg></div>
   <figcaption>
     &ldquo;Hard to drive&rdquo; is impedance <em>and</em> sensitivity together, not either alone. A 300&nbsp;&#8486;
     HD&nbsp;650 wants voltage; a 62&nbsp;&#8486; K701 wants current; a sensitive IEM wants a quiet source.
@@ -59,6 +59,19 @@
     display: block;
     width: 100%;
     height: auto;
+    /* These diagrams are drawn on a fixed 760-unit grid, so scaling the SVG to a narrow column
+       scales the labels with it: at a 342px article column a 10px label lands near 4.5 CSS px.
+       Hold a legible floor and let the figure scroll sideways instead of shrinking the type. */
+    min-width: 600px;
+  }
+  .fig .figscroll {
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+  }
+  @media (min-width: 700px) {
+    .fig svg { min-width: 0; }
+    .fig .figscroll { overflow-x: visible; }
   }
   .fig figcaption {
     margin-top: 12px;
