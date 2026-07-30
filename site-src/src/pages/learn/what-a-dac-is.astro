@@ -1,0 +1,160 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/Button.astro';
+import SignalChainDiagram from '../../components/SignalChainDiagram.astro';
+
+const SITE = 'https://warrenlabs.com';
+const url = `${SITE}/learn/what-a-dac-is`;
+const title = 'What a DAC is (and when you actually need one)';
+const description =
+  'A DAC converts digital audio to analog — and every phone and laptop already has one. An external DAC helps when the built-in one is audibly flawed or lacks the outputs you need, not because pricier means better. Here is when it matters.';
+
+const faq: [string, string][] = [
+  [
+    'Do I need a DAC?',
+    'Probably not a separate one. Every phone, laptop, and dongle already contains a DAC, and most modern ones are audibly clean. You want an external DAC mainly if your source hisses or picks up interference, or if you need outputs or power it does not provide.',
+  ],
+  [
+    'Does a DAC improve sound quality?',
+    'Only if the one you are replacing was audibly flawed. A competent DAC is essentially transparent — it is not a tone or “detail” upgrade. Past “clean and quiet,” spending more buys features and measurements you will not hear.',
+  ],
+  [
+    'What is the difference between a DAC and an amp?',
+    'A DAC converts the digital signal to analog; an amp provides the power to drive the headphones. Many small devices combine both (a “DAC/amp” or USB-C dongle), which is why one dongle often solves everything at once.',
+  ],
+  [
+    'Is a USB-C dongle a DAC?',
+    'Yes — a USB-C headphone dongle is a small DAC (usually with a built-in amp). For most headphones a good dongle is all the external conversion and power you need.',
+  ],
+  [
+    'Do expensive DACs sound better?',
+    'Rarely in a way you can hear. Beyond a modest, competent unit, DAC differences are mostly on the measurement bench, not in the music. The audible upgrades are the headphone itself and its tuning.',
+  ],
+];
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: title,
+    description,
+    author: { '@type': 'Person', name: 'Jamey Warren' },
+    publisher: { '@id': `${SITE}/#organization` },
+    datePublished: '2026-07-20',
+    dateModified: '2026-07-20',
+    mainEntityOfPage: url,
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn/learn` },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
+    ],
+  },
+];
+---
+
+<Layout title={`${title} · Warren Labs`} description={description} ogType="article" jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <article class="doc">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">DACs</span>
+    </nav>
+
+    <span class="eyebrow">Learn &middot; Understanding the gear</span>
+    <h1>What a DAC is (and when you actually need one)</h1>
+
+    <div class="answer">
+      <div class="answer-k">Short answer</div>
+      <p>
+        A DAC &mdash; digital-to-analog converter &mdash; turns the digital audio in your files and streams into an
+        analog signal your headphones can play. <b>Every phone, laptop, and dongle already has one.</b> A separate DAC
+        earns its place when the built-in one is <b>audibly flawed</b> (hiss, interference) or <b>lacks outputs or
+        power</b> you need &mdash; not because a pricier box adds &ldquo;detail.&rdquo; Here is how to tell.
+      </p>
+    </div>
+
+    <h2>What a DAC actually does</h2>
+    <p>
+      Everything digital &mdash; a stream, a file, a game &mdash; is numbers until something converts it to the analog
+      voltage a driver moves to. That conversion is the DAC&rsquo;s whole job, and it is happening every time you play
+      sound, inside whatever device you are using. There is no such thing as &ldquo;no DAC&rdquo;; the only question is
+      whether the one you already have is good enough.
+    </p>
+    <p>Usually it is. Modern built-in DACs, even in phones and cheap dongles, are clean enough to be inaudible.</p>
+
+    <h2>When a better DAC actually helps</h2>
+    <ul>
+      <li><b>Your source is audibly dirty.</b> Hiss, whine that changes with the screen, or interference from the device — a clean external DAC (or dongle) fixes that. This is the most common real reason.</li>
+      <li><b>You need outputs or power it does not have.</b> A balanced jack, a line-out for powered speakers, more clean volume for a demanding headphone — here a DAC (usually a DAC/amp) solves a practical problem.</li>
+      <li><b>Convenience.</b> One tidy box on the desk that handles conversion, power, and switching. A perfectly good reason — just not a fidelity one.</li>
+    </ul>
+
+    <h2>When it doesn&rsquo;t</h2>
+    <p>
+      If your current source is already clean and loud enough, a fancier DAC will not unlock hidden detail or
+      &ldquo;open up&rdquo; the sound &mdash; competent converters are audibly transparent, and the differences
+      between good ones live on a measurement bench, not in the music. This is where a lot of money gets spent for
+      reasons that do not survive a level-matched, blind comparison.
+    </p>
+
+    <h2>DAC vs amp vs dongle</h2>
+    <p>
+      Keep the two jobs straight: the <b>DAC converts</b>, the <b>amp powers</b> (see
+      <a href="/learn/do-i-need-a-headphone-amp">do you need a headphone amp?</a>). Most small devices &mdash; a USB-C
+      dongle, a desktop &ldquo;DAC/amp&rdquo; &mdash; do both, which is why one inexpensive dongle often covers
+      everything. You rarely need to think about them separately unless you are building a bigger system.
+    </p>
+
+    <SignalChainDiagram />
+
+    <div class="funnel">
+      <p>
+        Here is the honest hierarchy: the audible upgrades in a chain are the <b>headphone</b> and its <b>tuning</b>,
+        far more than the DAC. If your sound is clean but you want it to sound <em>different</em>, that is a tuning
+        question &mdash; and it is free. <b>Attune</b> is how you answer it by ear.
+      </p>
+      <Button href="/attune" variant="primary">Explore Attune</Button>
+    </div>
+
+    <h2>The honest bottom line</h2>
+    <p>
+      You already own a DAC. Add an external one to fix a noisy source, gain an output, or get more clean power &mdash;
+      concrete reasons you can hear or use. Do not buy one hoping to unlock fidelity that a clean converter was never
+      hiding. Spend the money on the headphone, or on tuning the one you have.
+    </p>
+
+    <h2>Common questions</h2>
+    <div class="faq">
+      {
+        faq.map(([q, a]) => (
+          <div class="faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="related">
+      <a href="/learn/do-i-need-a-headphone-amp">Do you need a headphone amp? &rarr;</a>
+      <a href="/learn/what-headphone-impedance-means">What impedance means &rarr;</a>
+      <a href="/measure">Browse the Archive &rarr;</a>
+      <a href="/learn">Back to Learn &rarr;</a>
+    </div>
+  </article>
+
+  <Footer variant="home" />
+</Layout>

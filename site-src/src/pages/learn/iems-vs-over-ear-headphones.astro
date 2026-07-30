@@ -1,0 +1,159 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/Button.astro';
+import EarPlacementDiagram from '../../components/EarPlacementDiagram.astro';
+
+const SITE = 'https://warrenlabs.com';
+const url = `${SITE}/learn/iems-vs-over-ear-headphones`;
+const title = 'IEMs vs over-ear headphones';
+const description =
+  'In-ear monitors seal in your ear canal for maximal isolation and portability; over-ear headphones are bigger, often more spacious and comfortable for long sessions. Neither is “better” — how to choose by isolation, comfort, and fit.';
+
+const faq: [string, string][] = [
+  [
+    'Are IEMs better than over-ear headphones?',
+    'Neither is better — they solve different problems. IEMs win on isolation and portability; over-ears usually win on comfort for long sessions and a more spacious presentation. Choose by where you listen and how the fit works for you, not by a ranking.',
+  ],
+  [
+    'Do IEMs sound as good as over-ear headphones?',
+    'A good IEM can absolutely match or beat a mediocre over-ear for tonal quality. The presentation differs — IEMs tend to sound more “in your head,” over-ears more spacious — but tuning quality is not tied to the format.',
+  ],
+  [
+    'Why do my IEMs have no bass?',
+    'Almost always the seal. IEM bass and isolation both depend on a proper fit in the ear canal; if the tip does not seal, the low end vanishes. Try other tip sizes or materials (foam tips seal well) before blaming the IEM.',
+  ],
+  [
+    'Do IEMs need an amp?',
+    'Rarely. Most IEMs are low-impedance and very sensitive, so a good dongle is ideal — and powerful amps can hiss with them. See our guide on impedance and sensitivity.',
+  ],
+  [
+    'Are IEMs bad for your ears?',
+    'Not the format itself — volume is what damages hearing, at any distance from the driver. IEMs isolate well, which actually lets you listen at lower, safer volumes in noise. Keep the level sensible and take breaks.',
+  ],
+];
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: title,
+    description,
+    author: { '@type': 'Person', name: 'Jamey Warren' },
+    publisher: { '@id': `${SITE}/#organization` },
+    datePublished: '2026-07-20',
+    dateModified: '2026-07-20',
+    mainEntityOfPage: url,
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn/learn` },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
+    ],
+  },
+];
+---
+
+<Layout title={`${title} · Warren Labs`} description={description} ogType="article" jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <article class="doc">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">IEMs vs over-ear</span>
+    </nav>
+
+    <span class="eyebrow">Learn &middot; Understanding the gear</span>
+    <h1>IEMs vs over-ear headphones</h1>
+
+    <div class="answer">
+      <div class="answer-k">Short answer</div>
+      <p>
+        <b>IEMs</b> (in-ear monitors) seal inside your ear canal &mdash; maximal isolation, pocketable, but
+        fit-critical and more &ldquo;in your head.&rdquo; <b>Over-ear</b> headphones sit around the ear &mdash; often
+        more spacious and comfortable for long sessions, less isolating (especially open-back). Neither is better;
+        choose by <b>isolation, comfort, and how the fit works for you</b>.
+      </p>
+    </div>
+
+    <h2>What each one is</h2>
+    <p>
+      An <b>IEM</b> inserts into the ear canal and seals it, playing from a tiny driver millimeters from your eardrum.
+      An <b>over-ear</b> headphone surrounds the ear with a cup and pad, playing from a larger driver a short distance
+      away. That difference in where and how they sit drives almost everything else.
+    </p>
+
+    <EarPlacementDiagram />
+
+    <h2>IEMs: isolation and portability</h2>
+    <ul>
+      <li><b>Best-in-class isolation</b>, passively — great on planes, transit, and stage, and it lets you listen quieter in noise.</li>
+      <li><b>Tiny and pocketable</b>, and easy to drive from a dongle.</li>
+      <li><b>Fit is everything.</b> The seal makes or breaks the bass and the isolation; tip size and material matter as much as the IEM itself.</li>
+      <li>A more <b>intimate, in-head</b> presentation, and for some people long-term comfort takes trial and error.</li>
+    </ul>
+
+    <h2>Over-ear: comfort and space</h2>
+    <ul>
+      <li>Usually <b>more comfortable for hours</b>, with less dependence on a perfect seal.</li>
+      <li>A <b>larger, more out-of-head</b> presentation, especially open-back (see <a href="/learn/open-back-vs-closed-back-headphones">open vs closed</a>).</li>
+      <li>You choose your isolation: <b>closed</b> for quiet-in/quiet-out, <b>open</b> for space at the cost of leakage.</li>
+      <li>More likely to want real <a href="/learn/what-headphone-impedance-means">power</a> than a sensitive IEM.</li>
+    </ul>
+
+    <h2>How to choose — by situation</h2>
+    <ul>
+      <li><b>Commuting, travel, gym, stage?</b> IEMs — isolation and pocketability win.</li>
+      <li><b>Desk, home, long listening sessions?</b> Over-ear — comfort and space win.</li>
+      <li><b>Around other people?</b> IEMs or closed over-ear; skip open-back.</li>
+    </ul>
+    <p>Plenty of people own one of each for exactly these reasons. That is not indulgence &mdash; it is matching the tool to the moment.</p>
+
+    <div class="funnel">
+      <p>
+        One thing both formats share: tonal balance is what you notice first, and it is <em>tunable</em>. Whether
+        you land on an IEM or an over-ear, <b>Attune</b> lets you tune a wired one to your taste &mdash; and the
+        <a href="/measure">Archive</a> shows how they measure before you buy.
+      </p>
+      <Button href="/attune" variant="primary">Explore Attune</Button>
+    </div>
+
+    <h2>The honest bottom line</h2>
+    <p>
+      Pick the format that fits your life: IEMs to disappear into your pocket and seal out the world, over-ears to
+      sink into for hours. Then judge the specific model by its tuning and comfort &mdash; because quality lives in
+      those, not in the format war.
+    </p>
+
+    <h2>Common questions</h2>
+    <div class="faq">
+      {
+        faq.map(([q, a]) => (
+          <div class="faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="related">
+      <a href="/learn/open-back-vs-closed-back-headphones">Open vs closed &rarr;</a>
+      <a href="/learn/what-headphone-impedance-means">What impedance means &rarr;</a>
+      <a href="/measure">Browse the Archive &rarr;</a>
+      <a href="/learn">Back to Learn &rarr;</a>
+    </div>
+  </article>
+
+  <Footer variant="home" />
+</Layout>

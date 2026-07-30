@@ -1,0 +1,163 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/Button.astro';
+
+const SITE = 'https://warrenlabs.com';
+const url = `${SITE}/learn/choosing-your-first-serious-headphone`;
+const title = 'Choosing your first serious headphone';
+const description =
+  'Skip the spec-chasing. Decide three things — where you’ll listen, what you’ll drive it with, and the tonal character you like — and the field narrows itself. A calm framework for your first real headphone, not a ranked list.';
+
+const faq: [string, string][] = [
+  [
+    'How do I choose my first audiophile headphone?',
+    'Answer three questions before you shop: where (and around whom) you’ll listen, what you’ll drive it with, and what tonal character you enjoy. Those three narrow the field far more effectively than chasing specs or review scores.',
+  ],
+  [
+    'How much should I spend on my first good headphone?',
+    'Enough to clear the “real headphone” bar, not enough to be chasing diminishing returns. There is a wide, honest sweet spot where quality is high and price is sane; spending more buys refinement and prestige, not a night-and-day jump.',
+  ],
+  [
+    'Should my first headphone be open or closed?',
+    'It depends on where you listen. Open-back for a quiet room where you’re alone (bigger, more natural sound); closed-back if you need isolation or share a space. Match it to your situation, not to consensus.',
+  ],
+  [
+    'Do I need an amp for my first headphone?',
+    'Usually not, if you pick an easy-to-drive model. If you fall for a high-impedance or insensitive headphone, budget for a modest amp too — but plenty of excellent first headphones run fine off a dongle.',
+  ],
+  [
+    'What’s a good all-rounder for a first headphone?',
+    'A comfortable, easy-to-drive, fairly neutral model you can wear for hours and tune to taste. Neutral-ish is the safe starting point because it works with everything and gives you a reference to learn your own preferences from.',
+  ],
+];
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: title,
+    description,
+    author: { '@type': 'Person', name: 'Jamey Warren' },
+    publisher: { '@id': `${SITE}/#organization` },
+    datePublished: '2026-07-20',
+    dateModified: '2026-07-20',
+    mainEntityOfPage: url,
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn/learn` },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
+    ],
+  },
+];
+---
+
+<Layout title={`${title} · Warren Labs`} description={description} ogType="article" jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <article class="doc">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Your first headphone</span>
+    </nav>
+
+    <span class="eyebrow">Learn &middot; Listening</span>
+    <h1>Choosing your first serious headphone</h1>
+
+    <div class="answer">
+      <div class="answer-k">Short answer</div>
+      <p>
+        Skip the spec-chasing. Decide <b>three things</b> &mdash; <b>where</b> you&rsquo;ll listen, <b>what</b>
+        you&rsquo;ll drive it with, and the <b>tonal character</b> you like &mdash; and most of the field narrows
+        itself. This is a framework, not a ranked list, because the right first headphone is the one that fits
+        <em>your</em> three answers.
+      </p>
+    </div>
+
+    <h2>1. Where (and around whom) will you listen?</h2>
+    <p>
+      This decides <a href="/learn/open-back-vs-closed-back-headphones">open vs closed</a> before anything else. Alone
+      in a quiet room? An open-back gives you the bigger, more natural sound with nothing to lose. Office, commute, or
+      a shared space? You need isolation &mdash; closed-back or IEMs. Pick this first; it eliminates half the catalog
+      instantly and saves you from buying the wrong tool beautifully.
+    </p>
+
+    <h2>2. What will you drive it with?</h2>
+    <p>
+      Be honest about your source &mdash; a phone, a laptop, a little dongle. Most great first headphones are
+      <a href="/learn/what-headphone-impedance-means">easy to drive</a> and sound fully realized off modest gear. If a
+      headphone you love is high-impedance or insensitive, that is fine &mdash; just budget for a modest amp so it
+      isn&rsquo;t starved. Don&rsquo;t buy a headphone your source can&rsquo;t feed.
+    </p>
+
+    <h2>3. What sound do you actually like?</h2>
+    <p>
+      Warm and easy, neutral and honest, or bright and vivid? If you don&rsquo;t know yet, <b>neutral-ish is the safe
+      start</b> &mdash; it works with everything and gives you a reference to learn your own taste against. Use the
+      <a href="/measure">Archive</a> to see how contenders actually measure, and
+      <a href="/learn/target-curves-explained">target curves</a> to read those graphs.
+    </p>
+
+    <h2>What matters more than people admit</h2>
+    <p>
+      <b>Comfort.</b> You will wear this thing for hours; clamp, weight, and pad feel decide whether you reach for it
+      daily or leave it on the shelf. A brilliant-sounding headphone you can&rsquo;t stand to wear is a bad first
+      headphone. Weigh comfort as heavily as sound.
+    </p>
+
+    <h2>What to ignore</h2>
+    <ul>
+      <li><b>&ldquo;Endgame&rdquo; talk and hype.</b> There is no final headphone, and your first one doesn&rsquo;t need to be.</li>
+      <li><b>Spec-sheet wars.</b> Impedance, driver type, and frequency-range numbers rarely predict whether you&rsquo;ll enjoy it.</li>
+      <li><b>Price as a proxy for quality.</b> Past the sweet spot, more money buys refinement and prestige, not a transformation.</li>
+    </ul>
+
+    <div class="funnel">
+      <p>
+        Here is the freeing part: once a headphone fits your situation and comfort, its <em>tone</em> is not fixed. Pick
+        the one that suits your life, then tune it to your taste with <b>Attune</b> &mdash; so &ldquo;close to what I
+        like&rdquo; becomes exactly what you like.
+      </p>
+      <Button href="/attune" variant="primary">Explore Attune</Button>
+    </div>
+
+    <h2>The honest bottom line</h2>
+    <p>
+      Answer the three questions, weigh comfort heavily, ignore the hype, and use the measurements. Your first serious
+      headphone is not a lifetime commitment or a status test &mdash; it is the start of learning what <em>you</em>
+      actually like. Choose the one that fits, and let your ears take it from there.
+    </p>
+
+    <h2>Common questions</h2>
+    <div class="faq">
+      {
+        faq.map(([q, a]) => (
+          <div class="faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="related">
+      <a href="/learn/open-back-vs-closed-back-headphones">Open vs closed &rarr;</a>
+      <a href="/learn/what-headphone-impedance-means">Will it be hard to drive? &rarr;</a>
+      <a href="/measure">Browse the Archive &rarr;</a>
+      <a href="/learn">Back to Learn &rarr;</a>
+    </div>
+  </article>
+
+  <Footer variant="home" />
+</Layout>

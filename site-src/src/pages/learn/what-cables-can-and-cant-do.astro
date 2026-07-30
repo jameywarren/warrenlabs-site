@@ -1,0 +1,154 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/Button.astro';
+
+const SITE = 'https://warrenlabs.com';
+const url = `${SITE}/learn/what-cables-can-and-cant-do`;
+const title = 'What cables can (and can’t) do';
+const description =
+  'A cable’s job is to carry the signal reliably. Build quality, length, connectors, and microphonics are real; “warmth,” “blacker backgrounds,” and “liquid mids” from a pricey cable are not. Here is the honest line, from someone who has measured a lot of them.';
+
+const faq: [string, string][] = [
+  [
+    'Do headphone cables affect sound quality?',
+    'A working cable of reasonable build carries the signal without audibly changing it. What you can hear are practical things — a bad connection, microphonic cable noise, or the difference on very long runs. Tonal “warmth” or “detail” from a normal-length headphone cable is not a real, repeatable effect.',
+  ],
+  [
+    'Are expensive audiophile cables worth it?',
+    'For sound, no. For build, comfort, length, connector type, and durability, a good cable is worth paying for — just not for a tonal upgrade that does not survive a level-matched, blind test.',
+  ],
+  [
+    'Do balanced cables sound better?',
+    'Not inherently. Balanced connections can deliver more power on some amps and reject hum on long runs — real, situational benefits. On a short desktop run into a capable amp, “balanced” is about routing and power, not magic.',
+  ],
+  [
+    'What is microphonics?',
+    'Cable noise: the rustle or thump you hear when a cable rubs your clothing or is tapped, transmitted up to your ears. It is real and annoying, especially with IEMs — and it is one thing a better-designed cable genuinely fixes.',
+  ],
+  [
+    'Should I upgrade my headphone cable?',
+    'Upgrade it for a reason you can name: the right length, a sturdier build, a connector you need, less microphonics, or a balanced plug for your amp. Not to change the tone — that is what EQ is for.',
+  ],
+];
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: title,
+    description,
+    author: { '@type': 'Person', name: 'Jamey Warren' },
+    publisher: { '@id': `${SITE}/#organization` },
+    datePublished: '2026-07-20',
+    dateModified: '2026-07-20',
+    mainEntityOfPage: url,
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn/learn` },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
+    ],
+  },
+];
+---
+
+<Layout title={`${title} · Warren Labs`} description={description} ogType="article" jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <article class="doc">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Cables</span>
+    </nav>
+
+    <span class="eyebrow">Learn &middot; Understanding the gear</span>
+    <h1>What cables can (and can&rsquo;t) do</h1>
+
+    <div class="answer">
+      <div class="answer-k">Short answer</div>
+      <p>
+        A cable&rsquo;s job is to carry the signal reliably. <b>Build quality, length, connectors, and microphonics</b>
+        (cable noise) are real and worth paying attention to. <b>Tonal changes</b> &mdash; &ldquo;warmth,&rdquo;
+        &ldquo;blacker backgrounds,&rdquo; &ldquo;liquid mids&rdquo; &mdash; from a pricey cable on a normal headphone
+        run are not. Buy a cable for what it physically does, not for a sound it doesn&rsquo;t change.
+      </p>
+    </div>
+
+    <h2>What cables genuinely affect</h2>
+    <p>I have spent a career around audio gear, so let me be specific rather than dismissive. Cables really do matter for:</p>
+    <ul>
+      <li><b>Build and durability.</b> Strain relief, connector quality, and jacket materials decide whether a cable lasts a year or ten. This is where money is well spent.</li>
+      <li><b>Length and termination.</b> The right length for your setup, and the right plug (3.5&nbsp;mm, 6.35&nbsp;mm, balanced) for your gear. Getting this wrong is the most common real problem.</li>
+      <li><b>Microphonics.</b> How much rustle the cable transmits when it moves — a genuine comfort issue, especially with IEMs, and one a better cable fixes.</li>
+      <li><b>Shielding, in specific noisy conditions.</b> On long runs near interference, shielding can matter. On a short desktop run, it does not.</li>
+    </ul>
+
+    <h2>What they can&rsquo;t do</h2>
+    <p>
+      Change the tone of a working headphone on a normal run. A signal that arrives intact arrives intact; a competent
+      cable does not add &ldquo;detail,&rdquo; widen the soundstage, or warm up the mids. Those claims do not survive a
+      level-matched, blind comparison &mdash; and level-matched, blind is the only test that means anything here.
+    </p>
+    <p>
+      This is not a knock on anyone who has been sold the idea. The industry is very good at describing effects that
+      feel real once you have paid for them. But the honest position &mdash; the one this whole site is built on
+      &mdash; is that a difference you can only hear when you know which cable is playing is not a difference in the
+      sound.
+    </p>
+
+    <h2>Balanced cables, briefly</h2>
+    <p>
+      &ldquo;Balanced&rdquo; is the one place cables get genuinely technical. A balanced connection can hand some amps
+      more power and reject hum on long runs &mdash; real, situational benefits. What it is not is a guaranteed sound
+      upgrade: on a short run into a capable amp, it is about routing and power, not a better tone.
+    </p>
+
+    <div class="funnel">
+      <p>
+        If a cable can&rsquo;t change the tone but you want a different tone &mdash; more warmth, less brightness
+        &mdash; that is a real, answerable want. The tool for it is <b>EQ</b>, not copper. <b>Attune</b> lets you
+        actually hear the change, level-matched, before you commit to it.
+      </p>
+      <Button href="/attune" variant="primary">Explore Attune</Button>
+    </div>
+
+    <h2>The honest bottom line</h2>
+    <p>
+      Buy the cable that is the right length, well built, comfortable, quiet, and terminated for your gear. That cable
+      is worth real money. A cable bought to change the sound is money spent on a story &mdash; put it toward a better
+      headphone, or toward tuning the one you have.
+    </p>
+
+    <h2>Common questions</h2>
+    <div class="faq">
+      {
+        faq.map(([q, a]) => (
+          <div class="faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="related">
+      <a href="/learn/do-i-need-a-headphone-amp">Do you need a headphone amp? &rarr;</a>
+      <a href="/learn/what-a-dac-is">What a DAC is &rarr;</a>
+      <a href="/learn/how-to-read-a-frequency-response-graph">How to read a graph &rarr;</a>
+      <a href="/learn">Back to Learn &rarr;</a>
+    </div>
+  </article>
+
+  <Footer variant="home" />
+</Layout>

@@ -1,0 +1,106 @@
+---
+// Open-back vs closed-back, face-on schematic: driver in the centre, sound radiating out. Open = vented
+// ring, sound leaks both ways; closed = sealed ring, sound contained. Rays computed at build time.
+const cy = 132;
+const rIn = 36;
+const rOut = 70;
+const rEsc = 98;
+const angles = [0, 45, 90, 135, 180, 225, 270, 315];
+const ray = (cx: number, a: number, r1: number, r2: number) => {
+  const rad = (a * Math.PI) / 180;
+  return {
+    x1: (cx + Math.cos(rad) * r1).toFixed(1),
+    y1: (cy - Math.sin(rad) * r1).toFixed(1),
+    x2: (cx + Math.cos(rad) * r2).toFixed(1),
+    y2: (cy - Math.sin(rad) * r2).toFixed(1),
+  };
+};
+const panels = [
+  { cx: 205, open: true, label: 'OPEN-BACK', sub: 'vented · airy · leaks in & out' },
+  { cx: 555, open: false, label: 'CLOSED-BACK', sub: 'sealed · isolates · more bass' },
+];
+---
+
+<figure class="fig">
+  <svg viewBox="0 0 760 300" role="img" aria-label="Two headphone cups seen face-on: an open-back with a vented ring letting sound pass both ways, and a closed-back with a sealed ring keeping sound contained.">
+    <defs>
+      <marker id="oc-out" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="#FF9E2C"></path>
+      </marker>
+    </defs>
+    {
+      panels.map((p) => (
+        <>
+          {/* driver output rays (both) */}
+          {angles.map((a) => {
+            const r = ray(p.cx, a, rIn, rOut);
+            return <line x1={r.x1} y1={r.y1} x2={r.x2} y2={r.y2} stroke="#FF9E2C" stroke-width="2" opacity="0.85" />;
+          })}
+          {/* escaping rays (open only) */}
+          {p.open &&
+            [0, 90, 270, 315, 45].map((a) => {
+              const r = ray(p.cx, a, rOut + 4, rEsc);
+              return <line x1={r.x1} y1={r.y1} x2={r.x2} y2={r.y2} stroke="#FF9E2C" stroke-width="2" marker-end="url(#oc-out)" />;
+            })}
+          {/* ambient in (open only) */}
+          {p.open &&
+            [135, 225].map((a) => {
+              const r = ray(p.cx, a, rEsc + 4, rOut + 6);
+              return <line x1={r.x1} y1={r.y1} x2={r.x2} y2={r.y2} stroke="#565b60" stroke-width="1.6" marker-end="url(#oc-out)" />;
+            })}
+          {/* cup back ring: vented (dashed) or sealed (solid + seal) */}
+          <circle
+            cx={p.cx}
+            cy={cy}
+            r={rOut}
+            fill="none"
+            stroke={p.open ? '#868d92' : '#e8ebed'}
+            stroke-width={p.open ? 2 : 2.4}
+            stroke-dasharray={p.open ? '5 6' : 'none'}
+          />
+          {!p.open && <circle cx={p.cx} cy={cy} r={rOut + 5} fill="none" stroke="#34383d" stroke-width="1.4" />}
+          {/* driver */}
+          <circle cx={p.cx} cy={cy} r={rIn} fill="#1b1d20" stroke="#FF9E2C" stroke-width="1.6" />
+          <circle cx={p.cx} cy={cy} r="6" fill="#FF9E2C" />
+          {/* labels */}
+          <text x={p.cx} y="252" text-anchor="middle" font-family="var(--mono)" font-size="13" letter-spacing="0.1em" fill="#e8ebed">
+            {p.label}
+          </text>
+          <text x={p.cx} y="272" text-anchor="middle" font-family="var(--mono)" font-size="10.5" fill="#565b60">
+            {p.sub}
+          </text>
+        </>
+      ))
+    }
+  </svg>
+  <figcaption>
+    Same driver, different back. The <em>open</em> cup lets sound pass both ways &mdash; airier and wider, but no
+    isolation. The <em>closed</em> cup seals it in: isolation and more bass, a slightly smaller stage.
+  </figcaption>
+</figure>
+
+<style>
+  .fig {
+    margin: 28px 0 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 18px 14px;
+  }
+  .fig svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .fig figcaption {
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--muted-2);
+    font-family: var(--mono);
+  }
+  .fig figcaption em {
+    color: var(--muted);
+    font-style: italic;
+  }
+</style>

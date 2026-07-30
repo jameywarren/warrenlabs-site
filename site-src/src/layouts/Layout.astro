@@ -1,0 +1,103 @@
+---
+import '../styles/tokens.css';
+import '../styles/global.css';
+import Signup from '../components/Signup.astro';
+import { FORMSPREE } from '../data/config.js';
+
+interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  ogType?: 'website' | 'article';
+  signup?: 'sonicTemple' | 'attune';
+  jsonLd?: object | object[];
+}
+
+const {
+  title,
+  description = 'Headphone measurement, level-matched comparison, and Attune, a Mac app that tunes any headphone to your taste. From Jamey Warren at Warren Labs.',
+  image,
+  ogType = 'website',
+  signup = 'sonicTemple',
+  jsonLd,
+} = Astro.props;
+
+// Migrated from sonictemple.io 2026-07-30. Canonical is warrenlabs.com now; the old domain gets
+// no redirects (it never had traffic and nothing linked to it), so these are the only URLs.
+const SITE = 'https://warrenlabs.com';
+const canonical = new URL(Astro.url.pathname, SITE).href;
+// The per-page /og/<slug>.png cards were generated against the Sonic Temple lockup and did not
+// come across. Everything falls back to the Warren Labs card until they are regenerated.
+const ogImage = new URL(image ?? '/assets/brand/og-card.png', SITE).href;
+const endpoint = FORMSPREE[signup] ?? '';
+
+const organization = {
+  '@type': 'Organization',
+  '@id': `${SITE}/#organization`,
+  name: 'Warren Labs',
+  url: SITE,
+  logo: `${SITE}/assets/brand/png/wl-mark_amber_512.png`,
+  description:
+    'Audio product work by Jamey Warren: headphones, amps, DACs, DSP, and the software around them.',
+  founder: { '@type': 'Person', name: 'Jamey Warren' },
+};
+
+const website = {
+  '@type': 'WebSite',
+  '@id': `${SITE}/#website`,
+  url: SITE,
+  name: 'Warren Labs',
+  inLanguage: 'en',
+  publisher: { '@id': `${SITE}/#organization` },
+};
+
+const extra = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
+const ld = { '@context': 'https://schema.org', '@graph': [organization, website, ...extra] };
+---
+
+<!doctype html>
+<html lang="en" data-palette="graphite" data-type="barlow">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_black_32.svg" />
+    <link
+      rel="icon"
+      type="image/svg+xml"
+      href="/assets/brand/svg/wl-favicon_white_32.svg"
+      media="(prefers-color-scheme: dark)"
+    />
+    <link rel="apple-touch-icon" href="/assets/brand/png/wl-appicon_amber-graphite_180.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="canonical" href={canonical} />
+    <meta name="theme-color" content="#16181B" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Archivo:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content="Warren Labs" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+  </head>
+  <body>
+    <slot />
+    <Signup endpoint={endpoint} />
+  </body>
+</html>

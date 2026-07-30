@@ -1,0 +1,76 @@
+---
+// Source -> DAC -> Amp -> Headphone: where a DAC sits and why one dongle usually covers it. Static
+// teaching diagram for the DAC article.
+---
+
+<figure class="fig">
+  <svg viewBox="0 0 760 216" role="img" aria-label="A signal chain: source to DAC to amplifier to headphone, with a bracket showing a dongle combines the DAC and amp.">
+    <defs>
+      <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="#FF9E2C"></path>
+      </marker>
+    </defs>
+
+    <!-- boxes -->
+    <g>
+      <rect x="30" y="54" width="150" height="78" rx="10" fill="#26292d" stroke="#34383d"></rect>
+      <rect x="216" y="54" width="150" height="78" rx="10" fill="#26292d" stroke="#FF9E2C" stroke-opacity="0.55"></rect>
+      <rect x="402" y="54" width="150" height="78" rx="10" fill="#26292d" stroke="#FF9E2C" stroke-opacity="0.55"></rect>
+      <rect x="588" y="54" width="142" height="78" rx="10" fill="#26292d" stroke="#34383d"></rect>
+    </g>
+
+    <!-- box labels -->
+    <g text-anchor="middle" font-family="var(--mono)">
+      <text x="105" y="88" font-size="15" fill="#e8ebed">SOURCE</text>
+      <text x="105" y="108" font-size="10.5" fill="#565b60">phone · laptop</text>
+      <text x="291" y="88" font-size="15" fill="#e8ebed">DAC</text>
+      <text x="291" y="108" font-size="10.5" fill="#565b60">digital → analog</text>
+      <text x="477" y="88" font-size="15" fill="#e8ebed">AMP</text>
+      <text x="477" y="108" font-size="10.5" fill="#565b60">adds power</text>
+      <text x="659" y="88" font-size="15" fill="#e8ebed">HEADPHONE</text>
+      <text x="659" y="108" font-size="10.5" fill="#565b60">you</text>
+    </g>
+
+    <!-- arrows + wire labels -->
+    <g stroke="#FF9E2C" stroke-width="2" marker-end="url(#ar)">
+      <line x1="182" y1="93" x2="212" y2="93"></line>
+      <line x1="368" y1="93" x2="398" y2="93"></line>
+      <line x1="554" y1="93" x2="584" y2="93"></line>
+    </g>
+    <g font-family="var(--mono)" font-size="9.5" fill="#FF9E2C" text-anchor="middle">
+      <text x="197" y="80">digital</text>
+      <text x="383" y="80">analog</text>
+      <text x="569" y="80">louder</text>
+    </g>
+
+    <!-- bracket: dongle combines DAC + amp -->
+    <path d="M216 150 L216 160 L552 160 L552 150" fill="none" stroke="#565b60" stroke-width="1"></path>
+    <text x="384" y="182" text-anchor="middle" font-family="var(--mono)" font-size="11" fill="#868d92">a USB-C dongle / DAC-amp combines these</text>
+  </svg>
+  <figcaption>
+    The DAC converts, the amp powers, the headphone plays. Every device already has a DAC &mdash; and one small
+    dongle usually does both jobs, which is why you rarely think about them separately.
+  </figcaption>
+</figure>
+
+<style>
+  .fig {
+    margin: 28px 0 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 18px 14px;
+  }
+  .fig svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .fig figcaption {
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--muted-2);
+    font-family: var(--mono);
+  }
+</style>

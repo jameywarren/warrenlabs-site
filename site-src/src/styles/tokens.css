@@ -1,0 +1,47 @@
+/* Warren Labs tokens for the migrated Sonic Temple content.
+   The two palettes were structurally identical (dark ground, amber accent, light text) but only
+   a couple of percent apart, which reads as a rendering bug rather than a distinction. These are
+   the warrenlabs.com values from css/styles.css, so the ported pages sit in one system.
+   Fonts come from the Google Fonts link in Layout.astro, matching the rest of the site. */
+
+:root {
+  /* palette: graphite ground, one amber accent (signal state only) */
+  --bg: #0c0d0f;
+  --surface: #1b1d20;
+  --surface-2: #26292d;
+  --line: #24272b;
+  --line-soft: #1b1d20;
+  --text: #e8ebed;
+  --muted: #868d92;
+  --muted-2: #565b60;
+  --accent: #FF9E2C;
+  --accent-soft: #ffb257;
+  --accent-dim: rgba(255, 158, 44, 0.14);
+  --accent-line: rgba(255, 158, 44, 0.3);
+  --raw: #565b60;
+  --yours: #e8ebed;
+  --raise: #1b1d20;
+  --bg-deep: #0f1012;
+  --on-accent: #0c0d0f;
+  --good: #54e08a;
+
+  --panel-edge: #34383d;
+  --radius: 6px;
+
+  /* type: Barlow display, Archivo body, IBM Plex Mono labels (the warrenlabs.com set) */
+  --serif: 'Barlow', 'Helvetica Neue', Arial, sans-serif;
+  --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --sans: 'Archivo', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Instrument Serif carried its weight at display sizes; Barlow needs to be asked. The ported
+   pages set headings in var(--serif), so give them the site's display weight. Long-form article
+   prose is deliberately NOT uppercased here. That treatment belongs to the rack, not to a
+   2,000-word explainer. */
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}

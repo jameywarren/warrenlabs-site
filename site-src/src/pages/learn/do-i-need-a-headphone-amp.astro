@@ -1,0 +1,333 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/Button.astro';
+
+const SITE = 'https://warrenlabs.com';
+const url = `${SITE}/learn/do-i-need-a-headphone-amp`;
+const title = 'Do you need a headphone amp?';
+const description =
+  'Short answer: usually not. Most headphones and nearly all IEMs run clean off a phone dongle or laptop. You need an amp when a headphone is high-impedance or low-sensitivity — here is how to tell.';
+
+// Visible FAQ and FAQPage schema are built from one source so they can never drift apart.
+const faq: [string, string][] = [
+  [
+    'Does a more expensive amp sound better?',
+    'Past “loud enough and clean,” not in a way you will reliably hear. A competent amp with enough power for your headphones is the goal; price above that buys features and build quality, not audible magic.',
+  ],
+  [
+    'Do I need an amp for IEMs?',
+    'Almost never. In-ears are sensitive and low-impedance, so a good dongle is usually ideal — and some amps will actually hiss with them.',
+  ],
+  [
+    'Is a DAC the same as an amp?',
+    'No. A DAC converts digital audio to analog; an amp provides the power to drive the headphones. Many small devices combine both (a “DAC/amp” or a USB-C dongle), which is why one dongle often covers everything.',
+  ],
+  [
+    'Will an amp make my headphones louder and better?',
+    'Louder and cleaner, if they were power-starved. “Better” only in the sense of removing distortion or weak bass caused by a lack of power — not by adding detail that was never there.',
+  ],
+  [
+    'My headphones are 32 ohms. Do I need an amp?',
+    'Very unlikely. 32Ω is easy to drive; unless they are unusually insensitive, a phone dongle or laptop output is plenty.',
+  ],
+];
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: title,
+    description,
+    author: { '@type': 'Person', name: 'Jamey Warren' },
+    publisher: { '@id': `${SITE}/#organization` },
+    datePublished: '2026-07-17',
+    dateModified: '2026-07-17',
+    mainEntityOfPage: url,
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn/learn` },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
+    ],
+  },
+];
+---
+
+<Layout title={`${title} · Warren Labs`} description={description} ogType="article" jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <article class="doc">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Headphone amps</span>
+    </nav>
+
+    <span class="eyebrow">Learn &middot; Understanding the gear</span>
+    <h1>Do you need a headphone amp?</h1>
+
+    <div class="answer">
+      <div class="answer-k">Short answer</div>
+      <p>
+        Most of the time, <b>no</b>. If your headphones are low-impedance and reasonably sensitive &mdash; which
+        covers the majority of consumer headphones and nearly all IEMs &mdash; a modern phone dongle, laptop, or DAC
+        output already drives them loud and clean. You need a dedicated amp when a specific headphone is <b>hard to
+        drive</b>: high impedance (roughly 150&nbsp;&ohm; and up), low sensitivity, or both. Here is how to tell which
+        one you have.
+      </p>
+    </div>
+
+    <h2>What a headphone amp actually does</h2>
+    <p>
+      An amplifier does one job: it takes a small audio signal and makes it bigger &mdash; enough voltage and current
+      to move the driver in your headphones to the loudness you want, without running out of headroom or distorting.
+      That is it. It is not a tone control, it is not a &ldquo;detail&rdquo; machine, and past the point where your
+      headphones are comfortably loud and clean, a bigger amp does not keep making them better. Most of the mythology
+      around amps comes from blurring that line.
+    </p>
+    <p>Two things decide whether the output you already have is enough: impedance and sensitivity.</p>
+
+    <h2>The two numbers that matter</h2>
+    <p>
+      <b>Impedance</b> (in ohms, &ohm;) is how much the headphone resists the current driving it. Low-impedance
+      headphones (16&ndash;80&nbsp;&ohm;) are easy to drive and happy off almost anything. High-impedance headphones
+      (250&ndash;600&nbsp;&ohm;) need more voltage to reach the same loudness &mdash; that is where a dedicated amp
+      earns its place.
+    </p>
+    <p>
+      <b>Sensitivity</b> (dB per mW, or per volt) is how loud the headphone gets for a given amount of power. A
+      sensitive headphone gets loud off a little; an insensitive one needs more push.
+    </p>
+    <p>
+      You care about the <em>combination</em>. A 300&nbsp;&ohm; Sennheiser HD&nbsp;650 is the classic
+      &ldquo;needs an amp&rdquo; headphone: high impedance, moderate sensitivity, so a phone can technically play it
+      but runs out of clean headroom before it is satisfyingly loud. A 32&nbsp;&ohm;, high-sensitivity portable is the
+      opposite &mdash; loud and clean off a dongle.
+    </p>
+
+    <h2>When you don&rsquo;t need an amp</h2>
+    <p>
+      I will say this plainly, because most of the internet will not: if your headphones get loud enough to be
+      uncomfortable, and they stay clean at that volume, you do not need an amp. Adding one will not unlock hidden
+      detail or &ldquo;open up the soundstage.&rdquo; You can skip the amp if:
+    </p>
+    <ul>
+      <li>You use IEMs. Almost all in-ears are low-impedance and very sensitive; a good dongle is plenty, and many amps will actually hiss with them.</li>
+      <li>Your headphones are 80&nbsp;&ohm; or below and reasonably sensitive.</li>
+      <li>You drive them from a modern USB-C dongle, a recent laptop, or a DAC that already plays cleanly loud.</li>
+    </ul>
+    <p>If it is already loud and clean, the money is better spent elsewhere &mdash; or not spent.</p>
+
+    <h2>When you do need one</h2>
+    <ul>
+      <li>Your headphones are high-impedance (roughly 150&nbsp;&ohm;+). The 250&ndash;600&nbsp;&ohm; classics &mdash; HD&nbsp;600 / 650 / 800, older Beyerdynamics, the AKG K-series &mdash; genuinely benefit.</li>
+      <li>They are low-sensitivity planar magnetics that ask for current, not just voltage.</li>
+      <li>You turn your source most of the way up and it is still not loud enough, or it distorts and goes thin when you push it.</li>
+      <li>You hear hiss, or a weak, flabby bottom end at listening volume &mdash; signs the output cannot control the driver.</li>
+    </ul>
+
+    <h2>How to tell if your headphones are starved</h2>
+    <p>
+      You do not need a meter. Play something with real dynamic range, turn it up to a good listening level, and
+      listen for: a hard ceiling where it just will not get louder; grit or distortion as you approach max; bass that
+      goes soft or vague when the track gets busy; a general sense that the sound is &ldquo;small.&rdquo; If backing
+      off the volume cleans all of that up, you were near the limit and an amp will help. If it is already effortless
+      and loud, you are done.
+    </p>
+
+    <h2>What an amp will <em>not</em> fix</h2>
+    <p>
+      This is the part that saves you the most money. An amp changes how <em>loud</em> and how <em>clean</em>, not how
+      the headphone is <em>voiced</em>. If you do not like the tonal balance &mdash; too bright, not enough bass,
+      shouty mids &mdash; no amp will fix that, because that is tuning, not power.
+    </p>
+    <div class="funnel">
+      <p>
+        That distinction is exactly why we built <b>Attune</b>. If your headphones are loud and clean but you wish
+        they sounded <em>different</em>, the tool you want is not an amp &mdash; it is EQ, done by ear on your own
+        music. Attune lets you audition tunings blind and loudness-matched, and keep the one you would pick with your
+        eyes closed.
+      </p>
+      <Button href="/attune" variant="primary">Explore Attune</Button>
+    </div>
+
+    <h2>The honest bottom line</h2>
+    <p>
+      Buy the amp when a specific, hard-to-drive headphone needs it &mdash; you will know, because it is either not
+      loud or not clean. Do not buy one hoping to unlock something that is not about power. And if what you actually
+      want is a <em>different sound</em>, that is a tuning question, and it is free to answer.
+    </p>
+
+    <h2>Common questions</h2>
+    <div class="faq">
+      {
+        faq.map(([q, a]) => (
+          <div class="faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="related">
+      <a href="/measure">Explore the measurement archive &rarr;</a>
+      <a href="/attune">What Attune does &rarr;</a>
+      <a href="/learn">Back to Learn &rarr;</a>
+    </div>
+  </article>
+
+  <Footer variant="home" />
+</Layout>
+
+<style>
+  .doc {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 56px 24px 20px;
+  }
+  .crumb {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--muted-2);
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+    margin-bottom: 26px;
+  }
+  .crumb a:hover {
+    color: var(--text);
+  }
+  .crumb [aria-current] {
+    color: var(--muted);
+  }
+  .doc h1 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(34px, 5vw, 50px);
+    line-height: 1.05;
+    letter-spacing: -0.005em;
+    margin: 12px 0 0;
+  }
+  .doc h2 {
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: clamp(24px, 3vw, 31px);
+    line-height: 1.15;
+    margin: 44px 0 0;
+  }
+  .doc h2 em {
+    font-style: italic;
+    color: var(--accent-soft);
+  }
+  .doc p {
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.68;
+    margin: 16px 0 0;
+  }
+  .doc p b {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .doc em {
+    color: var(--text);
+    font-style: italic;
+  }
+  .doc ul {
+    margin: 16px 0 0;
+    padding-left: 0;
+    list-style: none;
+  }
+  .doc li {
+    position: relative;
+    color: var(--muted);
+    font-size: 16.5px;
+    line-height: 1.6;
+    padding: 9px 0 9px 26px;
+    border-top: 1px solid var(--line-soft);
+  }
+  .doc li:first-child {
+    border-top: none;
+  }
+  .doc li::before {
+    content: '\25C6';
+    color: var(--accent);
+    position: absolute;
+    left: 4px;
+    top: 9px;
+    font-size: 11px;
+  }
+  .answer {
+    margin-top: 26px;
+    border: 1px solid var(--accent-line);
+    background: var(--accent-dim);
+    border-radius: var(--radius);
+    padding: 22px 24px;
+  }
+  .answer-k {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 6px;
+  }
+  .answer p {
+    margin: 0;
+    color: var(--text);
+    font-size: 17px;
+  }
+  .funnel {
+    margin-top: 22px;
+    background: linear-gradient(120deg, rgba(255, 158, 44, 0.07), var(--surface) 60%);
+    border: 1px solid var(--accent-line);
+    border-radius: var(--radius);
+    padding: 24px 26px;
+  }
+  .funnel p {
+    margin: 0 0 18px;
+  }
+  .faq {
+    margin-top: 12px;
+  }
+  .faq-item {
+    border-top: 1px solid var(--line-soft);
+    padding: 20px 0 4px;
+  }
+  .faq-item h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--text);
+  }
+  .faq-item p {
+    margin-top: 8px;
+    font-size: 16px;
+  }
+  .related {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 28px;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 15px;
+  }
+  .related a {
+    color: var(--accent-soft);
+  }
+  .related a:hover {
+    color: var(--accent);
+  }
+</style>

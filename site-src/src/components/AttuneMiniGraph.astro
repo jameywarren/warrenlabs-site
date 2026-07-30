@@ -1,0 +1,134 @@
+---
+// Small "Stock vs Yours" preview graph used in the home page Attune pillar card.
+//
+// The two paths below are REAL measured response, not draughtsmanship: Sennheiser HD 650
+// (stock) against the same HD 650 voice-matched to an HD 800, taken from the bundled corpus
+// — one artificial head, raw, normalized at 1 kHz, smoothed to 1/6 octave for legibility at
+// this size. Regenerate from src/data/demo-curves.js if the pair ever changes.
+//
+// It used to be hand-drawn béziers labelled "Sennheiser HD 800 S" — a headphone that is not
+// in the archive, wearing a curve nobody measured. Don't go back.
+---
+
+<div class="feat-mini" aria-label="Attune control surface preview">
+  <div class="mtop">
+    <span class="mname">Sennheiser HD 650 &middot; matched to HD 800</span>
+    <span class="ab-pill"><span>Stock</span><span class="on">Yours</span></span>
+  </div>
+  <svg viewBox="0 0 460 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Frequency response: measured curve and your personal EQ result">
+    <defs>
+      <filter id="mglow" x="-20%" y="-40%" width="140%" height="180%">
+        <feGaussianBlur stdDeviation="2.4" result="b"></feGaussianBlur>
+        <feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+      </filter>
+    </defs>
+    <rect x="0" y="0" width="460" height="200" fill="#090a0c"></rect>
+    <g stroke="#24272b" stroke-width="1">
+      <line x1="0" y1="50" x2="460" y2="50"></line>
+      <line x1="0" y1="100" x2="460" y2="100" stroke="#34383d"></line>
+      <line x1="0" y1="150" x2="460" y2="150"></line>
+    </g>
+    <g stroke="#24272b" stroke-width="1">
+      <line x1="92" y1="0" x2="92" y2="200"></line>
+      <line x1="184" y1="0" x2="184" y2="200"></line>
+      <line x1="276" y1="0" x2="276" y2="200"></line>
+      <line x1="368" y1="0" x2="368" y2="200"></line>
+    </g>
+    <!-- stock: HD 650 as measured -->
+    <path
+      fill="none"
+      stroke="#6d7680"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      opacity=".8"
+      d="M0 134 L11 127 L22 119 L33 112 L43 106 L54 102 L65 98 L76 94 L87 96 L98 90 L109 86 L120 85 L130 85 L141 86 L152 86 L163 87 L174 89 L185 91 L196 92 L206 92 L217 92 L228 92 L239 91 L250 90 L261 91 L272 85 L283 81 L293 77 L304 71 L315 61 L326 46 L337 24 L348 26 L359 54 L369 88 L380 108 L391 112 L402 105 L413 94 L424 133 L435 135 L446 164 L456 174 L460 163"
+    ></path>
+    <!-- yours: the same HD 650, voice-matched to the HD 800 -->
+    <path
+      fill="none"
+      stroke="#e8ebed"
+      stroke-width="2.2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      filter="url(#mglow)"
+      d="M0 106 L11 103 L22 99 L33 96 L43 94 L54 94 L65 96 L76 97 L87 90 L98 88 L109 86 L120 85 L130 85 L141 86 L152 85 L163 85 L174 86 L185 86 L196 87 L206 88 L217 89 L228 89 L239 89 L250 91 L261 93 L272 97 L283 99 L293 98 L304 90 L315 73 L326 56 L337 40 L348 32 L359 30 L369 37 L380 37 L391 49 L402 74 L413 90 L424 133 L435 161 L446 159 L456 140 L460 142"
+    ></path>
+  </svg>
+  <div class="mleg">
+    <span><i class="lg-raw"></i>Stock</span>
+    <span><i class="lg-yours"></i>Yours</span>
+  </div>
+</div>
+
+<style>
+  .feat-mini {
+    background: #0a0b0d;
+    border: 1px solid var(--line-soft);
+    border-radius: 12px;
+    padding: 14px 14px 10px;
+    box-shadow: 0 20px 46px -30px rgba(0, 0, 0, 0.9);
+  }
+  .feat-mini .mtop {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px 4px 10px;
+  }
+  .feat-mini .mname {
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .feat-mini .ab-pill {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    background: #0a0b0d;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 3px;
+  }
+  .feat-mini .ab-pill span {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 6px;
+    color: var(--muted);
+  }
+  .feat-mini .ab-pill .on {
+    background: var(--accent);
+    color: #0c0d0f;
+    font-weight: 600;
+  }
+  .feat-mini svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  .feat-mini .mleg {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 10px 4px 2px;
+    font-size: 10.5px;
+    color: var(--muted-2);
+    font-family: var(--mono);
+  }
+  .feat-mini .mleg i {
+    width: 14px;
+    height: 2.5px;
+    border-radius: 2px;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 7px;
+  }
+  .lg-raw {
+    background: var(--raw);
+  }
+  .lg-yours {
+    background: var(--yours);
+    box-shadow: 0 0 8px 1px rgba(240, 237, 230, 0.35);
+  }
+</style>

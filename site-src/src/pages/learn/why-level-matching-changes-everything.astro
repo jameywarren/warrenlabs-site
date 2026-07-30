@@ -1,0 +1,156 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/Button.astro';
+import EqualLoudnessDiagram from '../../components/EqualLoudnessDiagram.astro';
+
+const SITE = 'https://warrenlabs.com';
+const url = `${SITE}/learn/why-level-matching-changes-everything`;
+const title = 'Why level-matching changes everything';
+const description =
+  'Louder almost always sounds “better” — fuller, more detailed — for reasons that have nothing to do with quality. Unless two things are matched to the same loudness, every comparison is rigged. It is the most important discipline in audio, and almost no one does it.';
+
+const faq: [string, string][] = [
+  [
+    'Why does louder sound better?',
+    'Because your ears’ frequency sensitivity changes with volume (the equal-loudness effect). Turn something up and you perceive more bass and treble — a fuller, more exciting sound — regardless of quality. So the louder of two options almost always “wins.”',
+  ],
+  [
+    'What is level-matching?',
+    'Setting two things you are comparing — two headphones, amps, DACs, or EQ settings — to the exact same loudness before you listen, so any difference you hear is from the thing itself and not from one being louder.',
+  ],
+  [
+    'How do you A/B test audio fairly?',
+    'Match the levels (ideally with a meter, to within a fraction of a dB), then compare blind if you can, switching quickly. Without level-matching and ideally blindness, an A/B test mostly measures which option was louder and which one you expected to prefer.',
+  ],
+  [
+    'Does level-matching matter for EQ?',
+    'Especially for EQ. Boosting a frequency also raises overall loudness, so a boosted setting sounds “better” partly because it is louder. Matching levels is the only way to hear what the EQ actually did.',
+  ],
+  [
+    'What is the Fletcher-Munson / equal-loudness curve?',
+    'It describes how human hearing is more or less sensitive to different frequencies at different volumes — we hear bass and treble relatively more as things get louder. It is the reason loudness has to be controlled before any fair listening comparison.',
+  ],
+];
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: title,
+    description,
+    author: { '@type': 'Person', name: 'Jamey Warren' },
+    publisher: { '@id': `${SITE}/#organization` },
+    datePublished: '2026-07-20',
+    dateModified: '2026-07-20',
+    mainEntityOfPage: url,
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn/learn` },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
+    ],
+  },
+];
+---
+
+<Layout title={`${title} · Warren Labs`} description={description} ogType="article" jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <article class="doc">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Level-matching</span>
+    </nav>
+
+    <span class="eyebrow">Learn &middot; Measurement &amp; tuning</span>
+    <h1>Why level-matching changes everything</h1>
+
+    <div class="answer">
+      <div class="answer-k">Short answer</div>
+      <p>
+        <b>Louder almost always sounds better</b> &mdash; fuller, more detailed, more exciting &mdash; for reasons
+        that have nothing to do with quality. So unless two things are matched to the <b>same loudness</b>, every
+        comparison is rigged in favor of whichever is louder. Level-matching is the single most important discipline
+        in audio, and almost no one does it. Once you know, you can&rsquo;t unknow it.
+      </p>
+    </div>
+
+    <h2>Why louder wins</h2>
+    <p>
+      Human hearing is not equally sensitive to every frequency, and that sensitivity shifts with volume: as things
+      get louder, we perceive relatively more bass and treble. That is the <b>equal-loudness effect</b> (the
+      Fletcher-Munson curves). The practical result is blunt &mdash; turn any source up a decibel or two and it sounds
+      fuller, richer, and more &ldquo;detailed,&rdquo; even though nothing about its quality changed.
+    </p>
+
+    <EqualLoudnessDiagram />
+
+    <h2>How it rigs every comparison</h2>
+    <p>
+      Now imagine A/B-ing two headphones, two amps, two DACs, a cable swap, or an EQ setting. If one side is even
+      <b>1&nbsp;dB louder</b> &mdash; trivially easy without noticing &mdash; it will tend to sound better, and you
+      will credit the <em>gear</em> for a difference that was really just <em>volume</em>. A staggering amount of
+      audio belief is built on exactly this: the pricier thing was auditioned a touch louder, or you turned it up
+      because you expected more, and it duly delivered.
+    </p>
+
+    <h2>How to actually do it</h2>
+    <ul>
+      <li><b>Match the levels first.</b> Ideally with a meter, to within a fraction of a dB, using a steady test signal — then play music.</li>
+      <li><b>Switch fast.</b> Auditory memory is short; long gaps let expectation fill in.</li>
+      <li><b>Go blind if you can.</b> Not knowing which is playing removes the expectation bias that even careful listeners can&rsquo;t fully suppress.</li>
+    </ul>
+    <p>
+      Level-matched and blind is the gold standard. It is also where a lot of &ldquo;night and day&rdquo; differences
+      quietly shrink to nothing &mdash; which is the point.
+    </p>
+
+    <div class="funnel">
+      <p>
+        This is not a side note for us &mdash; it is the whole method. <b>Attune</b> matches levels at
+        <b>&plusmn;0.1&nbsp;dB by construction</b>, so when you flip between two tunings and hear a difference, it is a
+        real difference in the <em>sound</em>, not in the volume. Honest comparison, built in.
+      </p>
+      <Button href="/attune" variant="primary">Hear it, level-matched, in Attune</Button>
+    </div>
+
+    <h2>The honest bottom line</h2>
+    <p>
+      Before you trust any comparison &mdash; a review, a demo, your own A/B &mdash; ask whether the levels were
+      matched. If they weren&rsquo;t, you are mostly hearing which one was louder. Control loudness, and for the first
+      time you are actually hearing the gear.
+    </p>
+
+    <h2>Common questions</h2>
+    <div class="faq">
+      {
+        faq.map(([q, a]) => (
+          <div class="faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="related">
+      <a href="/learn/how-to-read-a-frequency-response-graph">How to read a graph &rarr;</a>
+      <a href="/learn/target-curves-explained">Target curves explained &rarr;</a>
+      <a href="/attune">What Attune does &rarr;</a>
+      <a href="/learn">Back to Learn &rarr;</a>
+    </div>
+  </article>
+
+  <Footer variant="home" />
+</Layout>

@@ -1,0 +1,184 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/Button.astro';
+import DriveabilityDiagram from '../../components/DriveabilityDiagram.astro';
+
+const SITE = 'https://warrenlabs.com';
+const url = `${SITE}/learn/what-headphone-impedance-means`;
+const title = 'What headphone impedance means (and when to care)';
+const description =
+  'Impedance (in ohms) and sensitivity together decide whether a headphone is “hard to drive.” Here is what each number means, when a high-impedance headphone actually needs more power, and when the specs do not matter at all.';
+
+const faq: [string, string][] = [
+  [
+    'What impedance is considered hard to drive?',
+    'Roughly 150 Ω and up starts to want more than a phone can cleanly give, and the 250–600 Ω classics genuinely benefit from an amp. Below ~100 Ω, impedance alone is rarely the problem — sensitivity matters more.',
+  ],
+  [
+    'Is higher impedance better?',
+    'No. Higher impedance is not a quality mark; it is just a design choice that changes what kind of source drives the headphone well. A 32 Ω and a 300 Ω headphone can both be excellent — they just want different amplification.',
+  ],
+  [
+    'Do low-impedance headphones need an amp?',
+    'Usually not for loudness — they are easy to drive. But very low-impedance, multi-driver IEMs can be sensitive to a source’s output impedance, which can subtly shift their tone. A clean, low-output-impedance dongle is the fix, not a powerful amp.',
+  ],
+  [
+    'Why do my IEMs hiss?',
+    'Because they are highly sensitive: they amplify the source’s noise floor along with the music. A quieter source (a good dongle) or a small inline attenuator helps far more than a bigger amp — a powerful amp often hisses worse.',
+  ],
+  [
+    'Does impedance affect sound quality?',
+    'Not directly. It affects how much voltage the headphone needs to play loud, and — via the source’s output impedance — can slightly affect frequency response on some headphones. It is a drivability spec, not a fidelity spec.',
+  ],
+];
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: title,
+    description,
+    author: { '@type': 'Person', name: 'Jamey Warren' },
+    publisher: { '@id': `${SITE}/#organization` },
+    datePublished: '2026-07-20',
+    dateModified: '2026-07-20',
+    mainEntityOfPage: url,
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn/learn` },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
+    ],
+  },
+];
+---
+
+<Layout title={`${title} · Warren Labs`} description={description} ogType="article" jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <article class="doc">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Impedance</span>
+    </nav>
+
+    <span class="eyebrow">Learn &middot; Understanding the gear</span>
+    <h1>What headphone impedance means (and when to care)</h1>
+
+    <div class="answer">
+      <div class="answer-k">Short answer</div>
+      <p>
+        Impedance, in ohms (&ohm;), is how much a headphone resists the current driving it &mdash; and it is only
+        half the story. Together with <b>sensitivity</b> (how loud it plays per unit of power), it decides whether a
+        headphone is <b>&ldquo;hard to drive.&rdquo;</b> Most low-impedance, sensitive headphones run great off a
+        phone. You care about the numbers when a headphone is <b>high-impedance or low-sensitivity</b> &mdash; then it
+        wants a real amp. Here is how to read both.
+      </p>
+    </div>
+
+    <h2>Impedance: how much voltage it wants</h2>
+    <p>
+      Impedance is the headphone&rsquo;s resistance to the electrical signal, measured in ohms. Lower impedance is
+      easier to drive to a given loudness; higher impedance needs more <em>voltage</em> to get there. A rough map:
+    </p>
+    <ul>
+      <li><b>16&ndash;80&nbsp;&ohm; — low.</b> Phones, laptops, dongles, and IEMs live here. Easy to drive loud.</li>
+      <li><b>80&ndash;150&nbsp;&ohm; — medium.</b> Fine off good portable sources; a little headroom from an amp does not hurt.</li>
+      <li><b>250&ndash;600&nbsp;&ohm; — high.</b> The classic &ldquo;needs an amp&rdquo; range (HD&nbsp;600/650/800, old Beyerdynamics, the AKG K-series). A phone can technically play them but runs out of clean volume.</li>
+    </ul>
+    <p>
+      Higher impedance is <b>not</b> better or worse &mdash; it is a design choice about what kind of source suits the
+      headphone. It is a drivability spec, not a fidelity spec.
+    </p>
+
+    <h2>Sensitivity: how loud it plays per watt</h2>
+    <p>
+      The number impedance leaves out is <b>sensitivity</b> (or efficiency) &mdash; usually quoted in dB per milliwatt
+      or dB per volt. It is how loud the headphone gets for a given amount of power. High sensitivity means it gets
+      loud off almost nothing; low sensitivity means it needs a real push even at a friendly impedance.
+    </p>
+    <p>
+      You have to read the two together, because they can pull in opposite directions:
+    </p>
+    <ul>
+      <li>The <b>Sennheiser HD&nbsp;650</b> is 300&nbsp;&ohm; but moderately sensitive &mdash; it wants <em>voltage</em>, which is why a good amp helps.</li>
+      <li>The <b>AKG K701</b> is only 62&nbsp;&ohm; but relatively insensitive &mdash; it wants <em>current and clean power</em>, and goes thin and quiet on a weak source despite the low impedance.</li>
+      <li>A typical <b>IEM</b> is 16&nbsp;&ohm; and very sensitive &mdash; loud off a dongle, and more likely to <em>hiss</em> than to want power.</li>
+    </ul>
+    <p>
+      &ldquo;Hard to drive&rdquo; is really the <em>combination</em>: high impedance, low sensitivity, or both.
+    </p>
+
+    <DriveabilityDiagram />
+
+    <h2>The one place source impedance matters back</h2>
+    <p>
+      There is a lesser-known wrinkle worth knowing, because it is real and most write-ups skip it. Every source has
+      its own <b>output impedance</b>, and a rule of thumb says it should be roughly <b>an eighth</b> of the
+      headphone&rsquo;s or lower. When it is not &mdash; a high-output-impedance amp feeding a low-impedance,
+      multi-driver IEM &mdash; the interaction can actually shift the headphone&rsquo;s frequency response and soften
+      its bass control. That is why a clean, low-output-impedance dongle often serves sensitive IEMs better than a big,
+      noisy amp. For normal single-driver headphones it is a non-issue.
+    </p>
+
+    <h2>When it actually matters — and when it doesn&rsquo;t</h2>
+    <p>You do not need a spreadsheet. Ask two questions with the headphone on your real source:</p>
+    <ul>
+      <li><b>Is it loud enough?</b> If you have to run the volume near maximum and it still is not satisfyingly loud, it wants more power.</li>
+      <li><b>Is it clean at that volume?</b> Grit, a thin or flabby bottom end, or a hard ceiling where it just will not get louder are signs the source is running out. Hiss at low volume means the opposite &mdash; too sensitive for a noisy source.</li>
+    </ul>
+    <p>
+      If it is already loud and clean, the impedance and sensitivity numbers are trivia. If it is not, they tell you
+      which way to fix it: high-impedance wants voltage (most amps), low-sensitivity wants power, high-sensitivity
+      wants a <em>quieter</em> source.
+    </p>
+
+    <div class="funnel">
+      <p>
+        And the honest boundary: <b>power changes how loud and how clean, not how a headphone is voiced.</b> If yours
+        is loud and clean but you wish it sounded <em>different</em> &mdash; warmer, brighter, more bass &mdash; that
+        is a tuning question, not a power one. <b>Attune</b> is how you answer it, by ear, on your own music.
+      </p>
+      <Button href="/attune" variant="primary">Explore Attune</Button>
+    </div>
+
+    <h2>The honest bottom line</h2>
+    <p>
+      Read impedance and sensitivity together, not apart. Most headphones are easy to drive and the numbers do not
+      matter; a handful of high-impedance or insensitive ones genuinely want an amp, and a few very sensitive ones
+      want a quiet source instead. Match the source to the load &mdash; then stop worrying about the specs.
+    </p>
+
+    <h2>Common questions</h2>
+    <div class="faq">
+      {
+        faq.map(([q, a]) => (
+          <div class="faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="related">
+      <a href="/learn/do-i-need-a-headphone-amp">Do you need a headphone amp? &rarr;</a>
+      <a href="/learn/how-to-read-a-frequency-response-graph">How to read a graph &rarr;</a>
+      <a href="/measure">Browse the Archive &rarr;</a>
+      <a href="/learn">Back to Learn &rarr;</a>
+    </div>
+  </article>
+
+  <Footer variant="home" />
+</Layout>

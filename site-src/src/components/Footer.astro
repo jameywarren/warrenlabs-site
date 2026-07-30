@@ -1,0 +1,80 @@
+---
+// Warren Labs footer for the migrated pages. Matches the hand-written site's footer by eye;
+// see the note in Nav.astro for why these are not sharing /css/styles.css.
+interface Props {
+  variant?: 'home' | 'attune';
+}
+const { variant = 'home' } = Astro.props;
+---
+
+<footer class="wl-foot" data-variant={variant}>
+  <div class="wl-foot-in">
+    <div class="wl-foot-links">
+      <a href="/">The&nbsp;lab</a>
+      <a href="/attune">Attune</a>
+      <a href="/learn">Learn</a>
+      <a href="/measure">Measure</a>
+      <a href="/design-review/">Design&nbsp;review</a>
+    </div>
+    <div class="wl-foot-meta">
+      <span>WARREN LABS · JAMEY WARREN</span><span>BUILT IN LIVINGSTON, MONTANA</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .wl-foot {
+    border-top: 1px solid var(--line);
+    background: var(--bg);
+    margin-top: 72px;
+  }
+  .wl-foot-in {
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 30px 60px 34px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .wl-foot-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 26px;
+  }
+  .wl-foot-links a {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .wl-foot-links a:hover {
+    color: var(--accent);
+  }
+  .wl-foot-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    border-top: 1px solid var(--line);
+    padding-top: 18px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--muted-2);
+  }
+  @media (max-width: 1080px) {
+    .wl-foot-in {
+      padding: 26px 32px 30px;
+    }
+  }
+  @media (max-width: 720px) {
+    .wl-foot-in {
+      padding: 22px 20px 26px;
+    }
+    .wl-foot-meta {
+      flex-direction: column;
+      gap: 8px;
+    }
+  }
+</style>

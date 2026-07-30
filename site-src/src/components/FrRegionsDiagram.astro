@@ -1,0 +1,86 @@
+---
+// Annotated "anatomy of a frequency-response graph" — a static teaching diagram for the Learn
+// article. Not data-driven: an illustrative curve over the four labeled listening regions.
+---
+
+<figure class="fr-diagram">
+  <svg viewBox="0 0 760 384" role="img" aria-label="A frequency-response graph divided into four regions — bass, mids, presence, and treble — with an example headphone curve running across them.">
+    <!-- region bands (x boundaries at 20, 250 Hz, 2 kHz, 5 kHz, 20 kHz on a log axis) -->
+    <rect x="44" y="16" width="256" height="312" fill="#FF9E2C" opacity="0.05"></rect>
+    <rect x="300" y="16" width="211" height="312" fill="#e8ebed" opacity="0.028"></rect>
+    <rect x="511" y="16" width="92" height="312" fill="#FF9E2C" opacity="0.10"></rect>
+    <rect x="603" y="16" width="141" height="312" fill="#FF9E2C" opacity="0.05"></rect>
+
+    <!-- dB gridlines + labels -->
+    <g font-family="var(--mono)" font-size="10" fill="#565b60">
+      <line x1="44" y1="120" x2="744" y2="120" stroke="#1b1d20" stroke-width="1"></line>
+      <text x="37" y="123" text-anchor="end">+6</text>
+      <line x1="44" y1="172" x2="744" y2="172" stroke="#34383d" stroke-width="1.4"></line>
+      <text x="37" y="175" text-anchor="end">0</text>
+      <line x1="44" y1="224" x2="744" y2="224" stroke="#1b1d20" stroke-width="1"></line>
+      <text x="37" y="227" text-anchor="end">-6</text>
+    </g>
+
+    <!-- region divider ticks -->
+    <g stroke="#34383d" stroke-width="1" stroke-dasharray="3 4">
+      <line x1="300" y1="16" x2="300" y2="328"></line>
+      <line x1="511" y1="16" x2="511" y2="328"></line>
+      <line x1="603" y1="16" x2="603" y2="328"></line>
+    </g>
+
+    <!-- frequency axis labels -->
+    <g font-family="var(--mono)" font-size="10" fill="#565b60" text-anchor="middle">
+      <text x="44" y="343">20</text>
+      <text x="184" y="343">100</text>
+      <text x="300" y="343">250</text>
+      <text x="418" y="343">1k</text>
+      <text x="511" y="343">2k</text>
+      <text x="603" y="343">5k</text>
+      <text x="674" y="343">10k</text>
+      <text x="744" y="343">20k</text>
+    </g>
+
+    <!-- illustrative headphone curve -->
+    <path
+      d="M44 120 C150 128 240 150 300 159 C380 168 430 172 470 172 C510 172 535 135 560 122 C585 132 605 155 622 158 C645 141 660 132 675 134 C695 150 705 180 720 200 C730 216 738 236 744 250"
+      fill="none" stroke="#FF9E2C" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"></path>
+
+    <!-- region names + what each does -->
+    <g text-anchor="middle" font-family="var(--mono)">
+      <text x="172" y="366" font-size="11" letter-spacing="0.12em" fill="#868d92">BASS</text>
+      <text x="172" y="379" font-size="9.5" fill="#565b60">weight</text>
+      <text x="405" y="366" font-size="11" letter-spacing="0.12em" fill="#868d92">MIDS</text>
+      <text x="405" y="379" font-size="9.5" fill="#565b60">body &amp; voices</text>
+      <text x="557" y="366" font-size="11" letter-spacing="0.12em" fill="#ffb257">PRESENCE</text>
+      <text x="557" y="379" font-size="9.5" fill="#565b60">detail &amp; bite</text>
+      <text x="673" y="366" font-size="11" letter-spacing="0.12em" fill="#868d92">TREBLE</text>
+      <text x="673" y="379" font-size="9.5" fill="#565b60">air</text>
+    </g>
+  </svg>
+  <figcaption>
+    The four regions of a frequency-response graph. Where a headphone sits in each &mdash; more here, less there
+    &mdash; is what you hear as its tonal character. The curve is an example, not any one headphone.
+  </figcaption>
+</figure>
+
+<style>
+  .fr-diagram {
+    margin: 28px 0 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 18px 18px 14px;
+  }
+  .fr-diagram svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .fr-diagram figcaption {
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--muted-2);
+    font-family: var(--mono);
+  }
+</style>

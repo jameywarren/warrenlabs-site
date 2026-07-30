@@ -1,0 +1,80 @@
+---
+// Single-headphone frequency-response graph. Rendered to static SVG at build time
+// (no client JS) from the committed, publishable curves in demo-curves.js.
+import { GRID_HZ } from '../data/curves.js';
+
+interface Props {
+  dbs: number[];
+  label?: string;
+}
+const { dbs } = Astro.props;
+
+// light 2x moving-average smoothing so the tips read rounded, not jagged
+function smooth(a: number[]): number[] {
+  const o = a.slice();
+  for (let i = 1; i < a.length - 1; i++) o[i] = a[i - 1] * 0.25 + a[i] * 0.5 + a[i + 1] * 0.25;
+  return o;
+}
+const Y = smooth(smooth(dbs));
+
+const W = 760,
+  H = 336,
+  mL = 42,
+  mR = 14,
+  mT = 16,
+  mB = 30;
+const x0 = Math.log10(20),
+  x1 = Math.log10(20000),
+  yMin = -15,
+  yMax = 15;
+const PX = (hz: number) => mL + ((Math.log10(hz) - x0) / (x1 - x0)) * (W - mL - mR);
+const PY = (db: number) => mT + ((yMax - db) / (yMax - yMin)) * (H - mT - mB);
+
+const yLines = [-12, -6, 0, 6, 12].map((d) => ({ d, y: PY(d) }));
+const xLines = [
+  [20, '20'],
+  [50, '50'],
+  [100, '100'],
+  [200, '200'],
+  [500, '500'],
+  [1000, '1k'],
+  [2000, '2k'],
+  [5000, '5k'],
+  [10000, '10k'],
+  [20000, '20k'],
+].map(([hz, lbl]) => ({ x: PX(hz as number), lbl }));
+
+const pts = GRID_HZ.map((hz: number, i: number) => `${PX(hz).toFixed(1)},${PY(Y[i]).toFixed(1)}`);
+const area = `M${PX(20).toFixed(1)},${H - mB} L${pts.join(' L')} L${PX(20000).toFixed(1)},${H - mB} Z`;
+---
+
+<svg class="fr" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${Astro.props.label ?? 'Headphone'} frequency response`}>
+  <defs>
+    <linearGradient id="fg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FF9E2C" stop-opacity="0.18"></stop>
+      <stop offset="1" stop-color="#FF9E2C" stop-opacity="0"></stop>
+    </linearGradient>
+  </defs>
+  {yLines.map(({ d, y }) => (
+    <>
+      <line x1={mL} y1={y} x2={W - mR} y2={y} stroke={d === 0 ? '#34383d' : '#1b1d20'} stroke-width={d === 0 ? 1.4 : 1}></line>
+      <text x={mL - 7} y={y + 3} fill="#565b60" font-size="10" text-anchor="end" font-family="IBM Plex Mono, monospace">{d > 0 ? `+${d}` : d}</text>
+    </>
+  ))}
+  {xLines.map(({ x, lbl }) => (
+    <>
+      <line x1={x} y1={mT} x2={x} y2={H - mB} stroke="#1b1d20" stroke-width="1"></line>
+      <text x={x} y={H - mB + 15} fill="#565b60" font-size="10" text-anchor="middle" font-family="IBM Plex Mono, monospace">{lbl}</text>
+    </>
+  ))}
+  <path d={area} fill="url(#fg)"></path>
+  <polyline points={pts.join(' ')} fill="none" stroke="#FF9E2C" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"></polyline>
+</svg>
+
+<style>
+  svg.fr {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+</style>

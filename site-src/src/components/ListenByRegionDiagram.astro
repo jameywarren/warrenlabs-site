@@ -1,0 +1,46 @@
+---
+// Listen by region, not for vague "detail": a spectrum strip split into four bands, each with a
+// specific question to ask. Static teaching diagram for the how-to-listen article.
+const regions = [
+  { x: 40, w: 190, name: 'BASS', cue: 'full or lean?' },
+  { x: 230, w: 210, name: 'MIDS', cue: 'voices forward or distant?' },
+  { x: 440, w: 130, name: 'PRESENCE', cue: 'bite, or soft?', hot: true },
+  { x: 570, w: 150, name: 'TREBLE', cue: 'airy, or harsh?' },
+];
+---
+
+<figure class="fig">
+  <svg viewBox="0 0 760 176" role="img" aria-label="A frequency spectrum split into four regions — bass, mids, presence, treble — each with a question to ask when listening.">
+    {
+      regions.map((r) => (
+        <>
+          <rect x={r.x} y="34" width={r.w} height="46" fill="#FF9E2C" opacity={r.hot ? 0.16 : 0.07}></rect>
+          <rect x={r.x} y="34" width={r.w} height="46" fill="none" stroke="#34383d" stroke-width="1"></rect>
+          <text x={r.x + r.w / 2} y="62" text-anchor="middle" font-family="var(--mono)" font-size="12" letter-spacing="0.1em" fill={r.hot ? '#ffb257' : '#868d92'}>
+            {r.name}
+          </text>
+          <text x={r.x + r.w / 2} y="106" text-anchor="middle" font-family="var(--mono)" font-size="11" fill="#565b60">
+            {r.cue}
+          </text>
+        </>
+      ))
+    }
+    <!-- axis -->
+    <g font-family="var(--mono)" font-size="10" fill="#565b60" text-anchor="middle">
+      <text x="40" y="128">20 Hz</text>
+      <text x="380" y="128">low &#8594; high</text>
+      <text x="720" y="128">20 kHz</text>
+    </g>
+    <line x1="40" y1="138" x2="720" y2="138" stroke="#34383d" stroke-width="1"></line>
+  </svg>
+  <figcaption>
+    Don&rsquo;t listen for vague &ldquo;detail&rdquo; &mdash; walk up the spectrum and ask a specific question of each
+    region. Naming what you hear, region by region, is the whole skill.
+  </figcaption>
+</figure>
+
+<style>
+  .fig { margin: 28px 0 0; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 18px 14px; }
+  .fig svg { display: block; width: 100%; height: auto; }
+  .fig figcaption { margin-top: 12px; font-size: 13px; line-height: 1.5; color: var(--muted-2); font-family: var(--mono); }
+</style>

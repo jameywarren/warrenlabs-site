@@ -386,7 +386,8 @@ body.audio-on .plug-note .live { color: var(--acc2); }
 /* NOTE: not .ov here. That class is the fullscreen unit overlay (display:none), and
    reusing it hid these values. */
 .offer-spec .sk { color: var(--faint); } .offer-spec .sv { color: var(--ink); }
-.offer-go { margin-top: 10px; font-size: 11px; letter-spacing: 0.18em; color: var(--acc); }
+.offer-note { margin-top: 10px; font-size: 11px; letter-spacing: 0.04em; color: var(--faint); }
+.offer-go { margin-top: 6px; font-size: 11px; letter-spacing: 0.18em; color: var(--acc); }
 
 /* ---------- patchbay ---------- */
 .pbay { position: relative; width: min(840px, 100%); margin: 44px 0 0; }
