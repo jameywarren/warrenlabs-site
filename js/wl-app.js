@@ -158,8 +158,7 @@
     }
     // dirt trio, same engine, increasing "squareness": soft → clipped → near-square
     if (slug === 'temper') return '<path class="trace" d="M6,32 C16,12 30,12 44,32 C58,52 72,52 86,32 C100,12 114,12 128,32 C142,52 156,52 170,32 C184,12 198,12 212,32"/>';
-    if (slug === 'grind')  return '<path class="trace" d="M6,34 C14,14 22,13 34,13 L54,13 C66,13 74,51 86,51 L106,51 C118,51 126,13 138,13 L158,13 C170,13 178,51 190,51 L210,51"/>';
-    if (slug === 'burr')   return '<path class="trace" d="M6,40 L20,12 L58,12 L74,52 L112,52 L128,12 L166,12 L182,52 L214,52"/>';
+    // 'grind' + 'burr' retired — absorbed into Temper as MODELS. See FINISH.md Part 2.
     if (/saturation|drive|distortion|fuzz/.test(cat))
       return '<path class="trace" d="M6,64 C44,64 60,18 112,16 C164,14 180,60 218,60"/>';  // generic dirt
     // Attune: a personal-EQ A/B, the stock curve read against the one you land on.
@@ -182,10 +181,7 @@
       return '<path class="trace" d="M6,34 C40,34 48,12 78,12 C104,12 108,34 134,34 C158,34 164,54 190,54 C206,54 212,40 218,38"/>';
     if (slug === 'brace')                                      // compressor: peaks held to a plateau
       return '<path class="trace" d="M6,50 L44,50 C56,50 58,18 70,18 L150,18 C164,18 166,50 178,50 L218,50"/>';
-    if (slug === 'seat')                                       // mix translation: overlaid device curves
-      return '<path class="trace" d="M6,40 C56,40 66,24 112,24 C158,24 168,40 218,40"/>'
-           + '<path class="trace-thin" d="M6,30 C56,30 66,42 112,42 C158,42 168,28 218,28"/>'
-           + '<path class="trace-thin" d="M6,46 C56,46 90,32 112,36 C150,40 180,44 218,30"/>';
+    // 'seat' (mix translation) retired — absorbed into Scribe as audition MODES. See FINISH.md Part 2.
     return '<path class="trace" d="M6,30 C40,30 44,46 72,46 C104,46 110,20 140,22 C170,24 186,38 218,34"/>';  // level: correction curve
   }
   function faceplateHTML(p) {
@@ -275,26 +271,23 @@
     {
       name: 'Trueness suite',
       sub: 'Reference + correction modules',
-      note: 'Six more tools on the shared DSP library, built alongside Level.',
+      note: 'Five more tools on the shared DSP library, built alongside Level.',
       accent: '#D8A24E',
       modules: [
         { name: 'Bevel',  slug: 'bevel',  category: 'Parametric EQ' },
         { name: 'Brace',  slug: 'brace',  category: 'Compressor' },
         { name: 'Square', slug: 'square', category: 'Mono compatibility' },
         { name: 'Pare',   slug: 'pare',   category: 'Resonance suppressor + de-esser' },
-        { name: 'Scribe', slug: 'scribe', category: 'Matching EQ' },
-        { name: 'Seat',   slug: 'seat',   category: 'Mix translation' }
+        { name: 'Scribe', slug: 'scribe', category: 'Matching EQ + mix translation' }
       ]
     },
     {
       name: 'Character suite',
       sub: 'Dirt, space, and motion',
-      note: 'Six tools for saturation, echo, modulation, and reverb.',
+      note: 'Four tools for saturation, echo, modulation, and reverb.',
       accent: '#e8b066',
       modules: [
-        { name: 'Temper', slug: 'temper', category: 'Saturation',       accent: '#e8b066' },
-        { name: 'Grind',  slug: 'grind',  category: 'Drive / distortion', accent: '#ff7a33' },
-        { name: 'Burr',   slug: 'burr',   category: 'Fuzz',             accent: '#ff5535' },
+        { name: 'Temper', slug: 'temper', category: 'Saturation / drive / fuzz', accent: '#e8b066' },
         { name: 'Ripple', slug: 'ripple', category: 'Echo / delay',      accent: '#46c7c0' },
         { name: 'Eddy',   slug: 'eddy',   category: 'Modulation',        accent: '#7a86ff' },
         { name: 'Wake',   slug: 'wake',   category: 'Reverb',            accent: '#8f86e6' }
