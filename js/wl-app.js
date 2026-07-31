@@ -150,7 +150,9 @@
       [34, 26, 19, 13, 9, 6].forEach(h => { bars += `<line class="trace" x1="${x}" y1="46" x2="${x}" y2="${46 - h}"/>`; x += 28; });
       return bars;
     }
-    if (/modulation|eddy/.test(cat)) return '<path class="trace" d="M6,40 C30,8 54,8 78,40 S126,72 150,40 S198,8 218,28"/>';  // sine swirl
+    // NOTE: the echo test above runs FIRST, so Ripple (now 'Echo / delay / modulation') keeps
+    // its delay-taps trace rather than falling through to this sine swirl.
+    if (/modulation/.test(cat)) return '<path class="trace" d="M6,40 C30,8 54,8 78,40 S126,72 150,40 S198,8 218,28"/>';  // sine swirl
     if (/reverb/.test(cat) || slug === 'wake') {               // diffuse decaying tail
       let bars = '', x = 12;
       [40, 33, 27, 22, 18, 14, 11, 9, 7, 5, 4, 3].forEach(h => { bars += `<line class="trace" x1="${x}" y1="46" x2="${x}" y2="${46 - h}"/>`; x += 17; });
@@ -284,12 +286,11 @@
     {
       name: 'Character suite',
       sub: 'Dirt, space, and motion',
-      note: 'Four tools for saturation, echo, modulation, and reverb.',
+      note: 'Three tools for saturation, echo, modulation, and reverb.',
       accent: '#e8b066',
       modules: [
         { name: 'Temper', slug: 'temper', category: 'Saturation / drive / fuzz', accent: '#e8b066' },
-        { name: 'Ripple', slug: 'ripple', category: 'Echo / delay',      accent: '#46c7c0' },
-        { name: 'Eddy',   slug: 'eddy',   category: 'Modulation',        accent: '#7a86ff' },
+        { name: 'Ripple', slug: 'ripple', category: 'Echo / delay / modulation', accent: '#46c7c0' },
         { name: 'Wake',   slug: 'wake',   category: 'Reverb',            accent: '#8f86e6' }
       ]
     }
