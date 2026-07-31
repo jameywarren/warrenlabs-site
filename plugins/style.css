@@ -183,3 +183,26 @@ ul.features li::before{content:"›"; color:var(--shot-accent,var(--acc)); margi
 .bundle-h{ font-weight:700; font-size:20px; color:var(--ink) }
 .bundle-tl{ color:var(--dim); font-size:15px; margin:4px 0 0 }
 .bundle .cta{ margin:16px 0 0 }
+
+/* ---- bundle cards (the actual offers: Reference Desk / Character Collection) --------------- */
+.bundle-card { text-align: left; }
+.bundle-card .bundle-h { margin-top: 10px; }
+.bundle-blurb {
+  color: var(--muted); font-size: 14px; line-height: 1.6; margin: 10px 0 16px;
+}
+.bundle-members {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px;
+}
+.bundle-member {
+  display: flex; flex-direction: column; gap: 2px; text-decoration: none;
+  padding: 8px 12px; border-radius: 6px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-left: 2px solid var(--acc, #D8A24E);
+  color: var(--ink); font-size: 13px; font-weight: 600;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+.bundle-member:hover { background: rgba(255,255,255,0.06); border-color: var(--acc, #D8A24E); }
+.bundle-member span {
+  color: var(--muted); font-size: 11px; font-weight: 400; letter-spacing: 0.02em;
+}
