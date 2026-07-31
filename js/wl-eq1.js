@@ -153,7 +153,7 @@
       const ctx = s.ctx;
       ctx.clearRect(0, 0, CW, CH);
       ctx.fillStyle = '#0a0b0c'; ctx.fillRect(0, 0, CW, CH);
-      ctx.font = '20px "IBM Plex Mono", monospace'; ctx.textAlign = 'left';
+      ctx.font = '20px "JetBrains Mono", monospace'; ctx.textAlign = 'left';
       [50, 100, 200, 500, 1000, 2000, 5000, 10000].forEach(f => {
         const x = fToX(f);
         ctx.strokeStyle = 'rgba(255,255,255,0.05)'; ctx.lineWidth = 1;
