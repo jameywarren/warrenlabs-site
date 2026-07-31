@@ -177,8 +177,7 @@
            + '<path class="trace" d="M6,46 C56,46 70,26 112,26 C154,26 168,44 218,40"/>';
     if (slug === 'pare')                                       // dynamic resonance: surgical notches (renamed from reveal)
       return '<path class="trace" d="M6,26 L70,26 L77,26 L83,50 L89,26 L134,26 L141,26 L147,48 L153,26 L218,26"/>';
-    if (slug === 'plane')                                      // de-esser: one HF sibilance notch
-      return '<path class="trace" d="M6,26 L150,26 L160,26 L168,50 L176,26 L218,26"/>';
+    // 'plane' (de-esser) retired — absorbed into Pare as a focus MODE. See FINISH.md Part 2.
     if (slug === 'bevel')                                      // parametric EQ: a boost and a cut
       return '<path class="trace" d="M6,34 C40,34 48,12 78,12 C104,12 108,34 134,34 C158,34 164,54 190,54 C206,54 212,40 218,38"/>';
     if (slug === 'brace')                                      // compressor: peaks held to a plateau
@@ -276,14 +275,13 @@
     {
       name: 'Trueness suite',
       sub: 'Reference + correction modules',
-      note: 'Seven more tools on the shared DSP library, built alongside Level.',
+      note: 'Six more tools on the shared DSP library, built alongside Level.',
       accent: '#D8A24E',
       modules: [
         { name: 'Bevel',  slug: 'bevel',  category: 'Parametric EQ' },
         { name: 'Brace',  slug: 'brace',  category: 'Compressor' },
         { name: 'Square', slug: 'square', category: 'Mono compatibility' },
-        { name: 'Pare',   slug: 'pare',   category: 'Resonance suppressor' },
-        { name: 'Plane',  slug: 'plane',  category: 'De-esser' },
+        { name: 'Pare',   slug: 'pare',   category: 'Resonance suppressor + de-esser' },
         { name: 'Scribe', slug: 'scribe', category: 'Matching EQ' },
         { name: 'Seat',   slug: 'seat',   category: 'Mix translation' }
       ]
