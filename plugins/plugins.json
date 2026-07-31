@@ -50,20 +50,20 @@
       "code": "Scrb",
       "line": "Trueness",
       "accent": "#8BA67E",
-      "category": "Matching EQ",
+      "category": "Matching EQ + mix translation",
       "status": "Beta",
       "nameStatus": "set",
       "tagline": "Scribe a tonal fit to target.",
-      "blurb": "Learns a signal's tonal balance and gently pulls it toward a target curve, broad and musical, not surgical. The corrective half of the reference desk.",
+      "blurb": "Learns a reference's per-band tonal balance and pulls your program toward it — broad and musical, not surgical. Audition modes flip the same plugin into a translation check: hear the mix coloured like a phone, earbuds, a laptop or a car before you commit to the render.",
       "features": [
-        "Learns the source's tonal balance",
-        "Match toward flat + tilt",
-        "Freeze the learned profile",
+        "Learn a reference curve from anything playing",
+        "Tilt + smoothing for a broad tonal fit",
+        "Audition modes: Phone / Earbuds / Laptop / Car",
         "VST3 / AU / Standalone"
       ],
       "price": 0,
       "buyUrl": "",
-      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/scribe-v0.1.0-beta/Scribe-0.1.0-beta.pkg"
+      "download": ""
     },
     {
       "slug": "pare",
@@ -86,27 +86,6 @@
       "price": 0,
       "buyUrl": "",
       "download": ""
-    },
-    {
-      "slug": "seat",
-      "name": "Seat",
-      "code": "Seat",
-      "line": "Trueness",
-      "accent": "#B69A78",
-      "category": "Mix translation",
-      "status": "Beta",
-      "nameStatus": "set",
-      "tagline": "Does it seat across systems?",
-      "blurb": "Auditions your mix through voiced phone / earbuds / laptop / car colorations so you hear how the balance holds up elsewhere. A check tool, bypassed for the render.",
-      "features": [
-        "Phone / earbuds / laptop / car targets",
-        "Blend the coloration in",
-        "Reference A/B",
-        "VST3 / AU / Standalone"
-      ],
-      "price": 0,
-      "buyUrl": "",
-      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/seat-v0.1.0-beta/Seat-0.1.0-beta.pkg"
     },
     {
       "slug": "bevel",
@@ -158,65 +137,20 @@
       "code": "Tmpr",
       "line": "Character",
       "accent": "#e8b066",
-      "category": "Saturation",
+      "category": "Saturation, drive + fuzz",
       "status": "Beta",
       "nameStatus": "set",
-      "tagline": "Controlled heat.",
-      "blurb": "Oversampled tube, tape, and transformer saturation with a bias control for asymmetry and a tone tilt. Warm at a touch, characterful when pushed. The first tool on the Character line.",
+      "tagline": "Controlled heat, all the way up.",
+      "blurb": "One oversampled waveshaper, six models — from tube warmth and tape compression through transformer iron to diode overdrive, crunch and full fuzz. Bias sets the harmonic character, a velcro gate makes the dirt sputter and die with the note.",
       "features": [
-        "Tube / Tape / Transformer models",
-        "Bias for even-harmonic asymmetry",
-        "Oversampled (anti-aliased)",
-        "Tone tilt + dry/wet",
+        "Six models: Tube / Tape / Transformer / Diode / Crunch / Fuzz",
+        "4x oversampled, latency-compensated dry path",
+        "Bias for even-vs-odd harmonics + velcro gate",
         "VST3 / AU / Standalone"
       ],
       "price": 0,
       "buyUrl": "",
-      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/temper-v0.1.0-beta/Temper-0.1.0-beta.pkg"
-    },
-    {
-      "slug": "grind",
-      "name": "Grind",
-      "code": "Grnd",
-      "line": "Character",
-      "accent": "#ff7a33",
-      "category": "Drive / distortion",
-      "status": "Beta",
-      "nameStatus": "set",
-      "tagline": "From bite to roar.",
-      "blurb": "Oversampled drive and distortion on the same engine as Temper, pushed hot: a diode-style overdrive, a crunchy cubic clip, and a compressed fuzz, with bias, tone, and dry/wet.",
-      "features": [
-        "Diode / Crunch / Fuzz models",
-        "Up to 48 dB of drive",
-        "Oversampled (anti-aliased)",
-        "Bias + tone + dry/wet",
-        "VST3 / AU / Standalone"
-      ],
-      "price": 0,
-      "buyUrl": "",
-      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/grind-v0.1.0-beta/Grind-0.1.0-beta.pkg"
-    },
-    {
-      "slug": "burr",
-      "name": "Burr",
-      "code": "Burr",
-      "line": "Character",
-      "accent": "#ff5535",
-      "category": "Fuzz",
-      "status": "Beta",
-      "nameStatus": "set",
-      "tagline": "The rough edge.",
-      "blurb": "Extreme fuzz on the shared Saturator, pushed to the wall: a compressed near-square Fuzz, a hard-clipping Splat, and an asymmetric octave-y Buzz, with up to 60 dB of drive.",
-      "features": [
-        "Fuzz / Splat / Buzz models",
-        "Up to 60 dB of drive",
-        "Oversampled (anti-aliased)",
-        "Tone + dry/wet",
-        "VST3 / AU / Standalone"
-      ],
-      "price": 0,
-      "buyUrl": "",
-      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/burr-v0.1.0-beta/Burr-0.1.0-beta.pkg"
+      "download": ""
     },
     {
       "slug": "ripple",
