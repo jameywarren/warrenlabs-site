@@ -71,41 +71,21 @@
       "code": "Pare",
       "line": "Trueness",
       "accent": "#C4825A",
-      "category": "Dynamic resonance suppressor",
+      "category": "Dynamic resonance suppressor + de-esser",
       "status": "Beta",
       "nameStatus": "set",
       "tagline": "Tame what rings, leave the rest.",
-      "blurb": "A dense dynamic filterbank that cuts resonant bands only where and when they spike. Transparent when nothing's ringing, minimum-phase, no pre-ringing. A delta monitor shows exactly what's removed.",
+      "blurb": "A dense dynamic filterbank that cuts resonant bands only where and when they spike. Transparent when nothing's ringing, minimum-phase, no pre-ringing. A focus mode scopes the same engine to sibilance or low-mid mud, so one tool covers resonance, de-essing and de-mudding. A delta monitor shows exactly what's removed.",
       "features": [
         "Per-band resonance detection",
+        "Focus modes: Full Range / De-ess / De-mud / Custom",
         "Transparent at rest",
         "Delta (listen to what's removed)",
         "VST3 / AU / Standalone"
       ],
       "price": 0,
       "buyUrl": "",
-      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/pare-v0.1.0-beta/Pare-0.1.0-beta.pkg"
-    },
-    {
-      "slug": "plane",
-      "name": "Plane",
-      "code": "Plne",
-      "line": "Trueness",
-      "accent": "#917FA6",
-      "category": "De-esser",
-      "status": "Beta",
-      "nameStatus": "set",
-      "tagline": "Shave the harsh edge smooth.",
-      "blurb": "The resonance engine scoped to the sibilance band. Frequency-conscious de-essing that catches the specific harsh frequencies dynamically instead of ducking one static band.",
-      "features": [
-        "Catches sibilant frequencies dynamically",
-        "Adjustable focus range",
-        "Delta monitor",
-        "VST3 / AU / Standalone"
-      ],
-      "price": 0,
-      "buyUrl": "",
-      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/plane-v0.1.0-beta/Plane-0.1.0-beta.pkg"
+      "download": ""
     },
     {
       "slug": "seat",
@@ -273,7 +253,7 @@
       "blurb": "Chorus, flanger, and phaser on one engine: an LFO-modulated delay for chorus and flanger, a swept all-pass cascade for phaser, with rate, depth, feedback, and stereo width.",
       "features": [
         "Chorus / Flanger / Phaser",
-        "Rate \u00b7 Depth \u00b7 Feedback \u00b7 Width",
+        "Rate · Depth · Feedback · Width",
         "Stereo spread",
         "Dry/wet",
         "VST3 / AU / Standalone"
