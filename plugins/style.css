@@ -1,6 +1,6 @@
 /* Warren Labs plugin site styles. Matches warrenlabs.com: near-black + echo amber,
-   Barlow + IBM Plex Mono, Warren Labs Mark. Generated pages (tools/gen_site.py) link this. */
-@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+   Barlow + JetBrains Mono, Warren Labs Mark. Generated pages (tools/gen_site.py) link this. */
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root{
   /* homepage tokens: black & punchy */
@@ -9,7 +9,7 @@
   --acc:#FF9E2C;            /* echo amber, same as the homepage */
   --character:#e0a3ff;
   --sans:'Barlow',system-ui,-apple-system,sans-serif;
-  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
   --r:12px;
 }
 *{box-sizing:border-box}

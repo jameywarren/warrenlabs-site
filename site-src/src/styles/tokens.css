@@ -28,9 +28,11 @@
   --panel-edge: #34383d;
   --radius: 6px;
 
-  /* type: Barlow display, Archivo body, IBM Plex Mono labels (the warrenlabs.com set) */
+  /* type: Barlow display, Archivo body, JetBrains Mono labels. JetBrains is the line-wide mono:
+     wl-ui embeds it and every native plugin faceplate uses it via WLTheme, so the web matches
+     the apps rather than the other way round. */
   --serif: 'Barlow', 'Helvetica Neue', Arial, sans-serif;
-  --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
   --sans: 'Archivo', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
