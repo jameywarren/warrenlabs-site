@@ -11,13 +11,13 @@
 <link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_white_32.svg" media="(prefers-color-scheme: dark)">
 <link rel="apple-touch-icon" href="/assets/brand/png/wl-appicon_amber-graphite_180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/styles.css">
 <style>
   /* 404 audio-desk "no signal" screen. Reuses the site tokens (--acc, --bg, --line, fonts). */
   .e404 { min-height: calc(100vh - 168px); display: flex; flex-direction: column;
           justify-content: center; gap: 22px; padding: 48px 0 64px; max-width: 780px; }
-  .e404-eyebrow { font-family: "IBM Plex Mono", monospace; font-size: 12px; letter-spacing: 0.26em;
+  .e404-eyebrow { font-family: "JetBrains Mono", monospace; font-size: 12px; letter-spacing: 0.26em;
                   color: var(--dim); display: inline-flex; align-items: center; gap: 11px; }
   .e404-eyebrow .led { width: 8px; height: 8px; border-radius: 50%; background: var(--acc);
                        box-shadow: 0 0 9px var(--acc); animation: e404blink 1.25s steps(1) infinite; }
@@ -28,7 +28,7 @@
   .e404-scope { border: 1px solid var(--line); border-radius: 8px; background: #08090a; padding: 14px;
                 box-shadow: inset 0 0 70px rgba(0,0,0,0.65); }
   .e404-scope canvas { display: block; width: 100%; height: 188px; border-radius: 3px; }
-  .e404-diag { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; letter-spacing: 0.06em;
+  .e404-diag { font-family: "JetBrains Mono", monospace; font-size: 11.5px; letter-spacing: 0.06em;
                color: var(--faint); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .e404-diag .ok { color: var(--acc); }
   .e404-cta { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 6px; align-items: center; }
@@ -140,7 +140,7 @@
     ctx.globalAlpha = 1;    ctx.lineWidth = 2; trace();          // trace
 
     // corner label
-    ctx.fillStyle = FAINT; ctx.font = '10px "IBM Plex Mono", monospace';
+    ctx.fillStyle = FAINT; ctx.font = '10px "JetBrains Mono", monospace';
     ctx.fillText(amp < 0.02 ? 'CH 404 · NO INPUT · −∞ dB' : 'CH 404 · TEST TONE · 1 kHz', 10, 16);
   }
 
