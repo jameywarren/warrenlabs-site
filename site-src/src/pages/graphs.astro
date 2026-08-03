@@ -51,6 +51,14 @@ const PAYLOAD = { grid: GRID_HZ, models };
         <label class="toggle" id="band-t">
           <input type="checkbox" id="band" /><span>Seating variance</span>
         </label>
+        <label class="align" title="What the curves are levelled against. A band is a fairer anchor than a single frequency.">
+          <span>Align</span>
+          <select id="align">
+            <option value="mid">250–4 kHz</option>
+            <option value="1k">1 kHz</option>
+            <option value="bass">20–200 Hz</option>
+          </select>
+        </label>
         <div class="hint" id="hint"></div>
         <div class="share">
           <button class="sbtn" id="copy-link" title="Copy a link to this exact comparison">Copy link</button>
@@ -64,6 +72,7 @@ const PAYLOAD = { grid: GRID_HZ, models };
       </div>
 
       <div class="legend" id="legend"></div>
+      <p class="caption" id="caption"></p>
 
       <details class="method">
         <summary>Method &amp; limits</summary>
@@ -174,6 +183,11 @@ const PAYLOAD = { grid: GRID_HZ, models };
   .toggle.on span { color: var(--text); }
   .hint { margin-left: auto; font-size: 11.5px; color: var(--muted-2); font-style: italic; }
   /* Share: the reason a comparison ends up in a forum thread instead of dying in a tab. */
+  .align { display: flex; align-items: center; gap: 7px; background: var(--surface); border: 1px solid var(--line); border-radius: 9px; padding: 4px 8px 4px 11px; flex: none; }
+  .align span { font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .align select { background: none; border: 0; color: var(--text); font-family: var(--mono); font-size: 10px; cursor: pointer; padding: 3px 2px; }
+  .align select:focus-visible { outline: none; }
+
   .share { display: flex; gap: 6px; flex: none; }
   .sbtn {
     background: var(--surface); border: 1px solid var(--line); color: var(--muted);
@@ -205,6 +219,11 @@ const PAYLOAD = { grid: GRID_HZ, models };
     background: none; padding: 0 2px; font-family: var(--sans); appearance: none;
   }
   .legend :global(.lg .x:hover) { color: var(--text); }
+  /* Auto-generated plain-English statement of what's on screen. Cheap, and it removes the main
+     way a measurement graph gets misread: not knowing what it was referenced to. */
+  .caption { flex: none; padding: 0 2px 12px; font-size: 12px; line-height: 1.55; color: var(--muted); max-width: 78ch; }
+  .caption :global(b) { color: var(--text); font-weight: 500; }
+
   .legend :global(.lg-band) { display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: var(--muted-2); }
   .legend :global(.lg-band i) { width: 13px; height: 9px; border-radius: 2px; background: rgba(232, 235, 237, 0.13); border: 1px solid rgba(232, 235, 237, 0.2); flex: none; }
 
@@ -347,10 +366,49 @@ const PAYLOAD = { grid: GRID_HZ, models };
       if (hd650) toggle(hd650.id);
       if (orph) toggle(orph.id);
     }
-    renderList(); renderLegend(); draw();
+    renderList(); renderLegend(); renderCaption(); draw();
   }
 
-  const curve = (id) => SMOOTH.get(id) ?? DB.get(id);
+  // Alignment. The stored curves are normalized at 1 kHz, but a single-point anchor forces two
+  // curves to agree exactly there and visually exaggerates everything either side of it — which is
+  // why bass comparisons read badly at 1 kHz. Aligning over a BAND (GraphWorks uses 250-4000 Hz) is
+  // the more honest anchor. Implemented as a display-time offset; the stored data never changes.
+  const ALIGN = {
+    '1k':   { label: '1 kHz',        lo: 1000, hi: 1000 },
+    'mid':  { label: '250–4 kHz',    lo: 250,  hi: 4000 },
+    'bass': { label: '20–200 Hz',    lo: 20,   hi: 200  },
+  };
+  let alignMode = 'mid';
+
+  const rawCurve = (id) => SMOOTH.get(id) ?? DB.get(id);
+
+  // Mean level of a curve across the alignment band, in GRID index space.
+  function alignOffset(id) {
+    const d = rawCurve(id);
+    if (!d) return 0;
+    const a = ALIGN[alignMode];
+    if (a.lo === a.hi) {
+      let best = 0, bd = Infinity;
+      for (let i = 0; i < GRID.length; i++) { const q = Math.abs(Math.log(GRID[i] / a.lo)); if (q < bd) { bd = q; best = i; } }
+      return d[best];
+    }
+    let s = 0, n = 0;
+    for (let i = 0; i < GRID.length; i++) if (GRID[i] >= a.lo && GRID[i] <= a.hi) { s += d[i]; n++; }
+    return n ? s / n : 0;
+  }
+
+  // Everything downstream (draw, hover, difference) reads through here, so alignment applies once.
+  const alignCache = new Map();
+  function curve(id) {
+    const k = id + '|' + alignMode;
+    if (alignCache.has(k)) return alignCache.get(k);
+    const d = rawCurve(id);
+    if (!d) return d;
+    const off = alignOffset(id);
+    const out = d.map((v) => v - off);
+    alignCache.set(k, out);
+    return out;
+  }
 
   function dbAt(id, hz) {
     const d = curve(id);
@@ -377,7 +435,7 @@ const PAYLOAD = { grid: GRID_HZ, models };
       usedSlots.add(slot);
       sel.push({ id, slot });
     }
-    renderList(); renderLegend(); draw(); syncUrl();
+    renderList(); renderLegend(); renderCaption(); draw(); syncUrl();
   }
 
   // ---------- shareable state ----------
@@ -395,6 +453,7 @@ const PAYLOAD = { grid: GRID_HZ, models };
     if (sel.length) p.set('h', sel.map((s) => s.id).join(','));
     if (mode !== 'overlay') p.set('m', mode);
     if (showBand) p.set('band', '1');
+    if (alignMode !== 'mid') p.set('a', alignMode);
     const q = p.toString();
     // replaceState, not pushState: dragging through a dozen headphones shouldn't bury the visitor's
     // real history under a dozen back-button steps.
@@ -408,6 +467,8 @@ const PAYLOAD = { grid: GRID_HZ, models };
     restoring = true;
     for (const id of ids.slice(0, MAX)) if (DB.has(id)) toggle(id);
     if (p.get('m') === 'difference') setMode('difference');
+    const am = p.get('a');
+    if (am && ALIGN[am]) { alignMode = am; $('align').value = am; alignCache.clear(); }
     if (p.get('band') === '1') { showBand = true; $('band').checked = true; $('band-t').classList.add('on'); }
     restoring = false;
     return sel.length > 0;
@@ -477,7 +538,7 @@ const PAYLOAD = { grid: GRID_HZ, models };
   function swapPair() {
     if (sel.length < 2) return;
     const t = sel[0]; sel[0] = sel[1]; sel[1] = t;
-    renderLegend(); draw();
+    renderLegend(); renderCaption(); draw();
   }
 
   function renderList() {
@@ -512,6 +573,26 @@ const PAYLOAD = { grid: GRID_HZ, models };
       frag.appendChild(row);
     }
     list.appendChild(frag);
+  }
+
+  // The caption is the cheapest defence against a misread graph: it states the fixture, what the
+  // curves were levelled against, and — in Difference mode — which direction the correction runs.
+  function renderCaption() {
+    const el = $('caption');
+    if (!sel.length) { el.textContent = ''; return; }
+    const a = ALIGN[alignMode];
+    const names = sel.map((s) => '<b>' + label(s.id) + '</b>');
+    let body;
+    if (mode === 'difference' && sel.length >= 2) {
+      body = 'the correction that would make ' + names[0] + ' measure like ' + names[1];
+    } else {
+      body = 'measurements of ' + (names.length === 1 ? names[0]
+        : names.slice(0, -1).join(', ') + ' and ' + names[names.length - 1]);
+    }
+    el.innerHTML =
+      'This shows ' + body +
+      ', raw on one <b>Head Acoustics HMS II.3</b>, L/R averaged, levelled over <b>' + a.label + '</b>' +
+      (showBand && mode !== 'difference' ? ', with the ±1 SD seating band' : '') + '.';
   }
 
   function renderLegend() {
@@ -798,7 +879,7 @@ const PAYLOAD = { grid: GRID_HZ, models };
     $('m-df').classList.toggle('on', m === 'difference');
     $('band-t').style.opacity = m === 'difference' ? '0.4' : '1';
     $('band').disabled = m === 'difference';
-    renderLegend(); draw(); syncUrl();
+    renderLegend(); renderCaption(); draw(); syncUrl();
   }
 
   $('m-ov').addEventListener('click', () => setMode('overlay'));
@@ -806,7 +887,12 @@ const PAYLOAD = { grid: GRID_HZ, models };
   $('band').addEventListener('change', (e) => {
     showBand = e.target.checked;
     $('band-t').classList.toggle('on', showBand);
-    renderLegend(); draw(); syncUrl();
+    renderLegend(); renderCaption(); draw(); syncUrl();
+  });
+  $('align').addEventListener('change', (e) => {
+    alignMode = e.target.value;
+    alignCache.clear();
+    renderLegend(); renderCaption(); draw(); syncUrl();
   });
   $('copy-link').addEventListener('click', (e) => copyLink(e.currentTarget));
   $('save-png').addEventListener('click', exportPng);
@@ -822,7 +908,7 @@ const PAYLOAD = { grid: GRID_HZ, models };
   function onThemeChange() {
     TOK = WLPlot.readTokens();
     SERIES = TOK.series;
-    renderList(); renderLegend(); draw();
+    renderList(); renderLegend(); renderCaption(); draw();
   }
   window.addEventListener('wl-theme-change', onThemeChange);
   // Also follow the OS when the user hasn't pinned a choice — otherwise a system-wide switch to
