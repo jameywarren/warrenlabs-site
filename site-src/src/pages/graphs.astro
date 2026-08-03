@@ -481,9 +481,19 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours, archive: models }, targets: TA
     // A shared link wins over the house default — arriving from a forum post must show the
     // comparison that was linked, not ours. Only fall back when there's nothing in the URL.
     if (!restoreFromUrl()) {
-      // Default view: the two we have most confidence in on the new rig.
-      for (const id of ['sennheiser-hd-800', 'sennheiser-hd-650']) if (DB.has(id)) toggle(id);
-      if (!sel.length && MODELS[0]) toggle(MODELS[0].id);
+      // Default view. `restoring` is held true for the same reason the URL path holds it: toggle()
+      // calls syncUrl(), so without it the house default stamps ?h=... into a visitor's address bar
+      // before they have chosen anything — and each toggle rewrites history mid-loop, which is what
+      // was silently costing the second curve here.
+      restoring = true;
+      try {
+        for (const id of ['sennheiser-hd-800', 'sennheiser-hd-650']) if (DB.has(id)) toggle(id);
+        if (!sel.length && MODELS[0]) toggle(MODELS[0].id);
+      } catch (e) {
+        console.error('default selection', e);
+      } finally {
+        restoring = false;
+      }
     }
     renderList(); renderLegend(); renderCaption(); draw();
   }
