@@ -20,6 +20,7 @@ import Footer from '../components/Footer.astro';
 import Feedback from '../components/Feedback.astro';
 import { CURVES, GRID_HZ } from '../data/curves.js';
 import { TARGETS } from '../data/targets.js';
+import { MEASUREMENTS } from '../data/measurements.js';
 import { HEADPHONES } from '../data/headphones.js';
 import WL_ASSETS from '../data/wl-assets.json';   // content-hashed paths, written by tools/vendor.mjs
 
@@ -28,18 +29,28 @@ const models = Object.entries(CURVES)
   .filter(([id]) => byHandle[id])
   .map(([id, db]) => ({ id, b: byHandle[id].brand, n: byHandle[id].name, db }))
   .sort((a, b) => (a.b + a.n).localeCompare(b.b + b.n));
-const PAYLOAD = { grid: GRID_HZ, models, targets: TARGETS };
+// TWO SOURCES, never merged onto one axis.
+//   ours    — Warren Labs, miniDSP EARS Pro. The product. Default.
+//   archive — the HeadRoom HMS II.3 set. Development reference, opt-in, a DIFFERENT fixture.
+// A switch rather than a merge, so "two fixtures never share an axis" is enforced by the data model
+// instead of by a caption. See MEASUREMENT-PIPELINE.md §4.1 / §5.1.
+const ours = MEASUREMENTS.map((m) => ({ id: m.id, b: m.b, n: m.n, db: m.db }));
+const PAYLOAD = { grid: GRID_HZ, sources: { ours, archive: models }, targets: TARGETS };
 ---
 
 <Layout
-  title="Measurements · The HeadRoom Archive · Warren Labs"
-  description="The HeadRoom Archive: measured frequency response for 40 headphones on one artificial head, raw and level-matched. New Warren Labs measurements on the EARS Pro are being taken now."
+  title="Measurements · Warren Labs"
+  description="Warren Labs headphone measurements, made on our own miniDSP EARS Pro. Raw, level-matched, and published whatever they say."
 >
   <Nav />
 
   <main id="app" class="app">
     <aside>
       <div class="pane">
+        <label class="src" title="The HeadRoom archive is a different fixture, kept as a development reference. Switching source replaces the list — the two are never plotted on one axis.">
+          <input type="checkbox" id="src-archive" />
+          <span>Show HeadRoom archive</span>
+        </label>
         <input class="search" id="q" type="search" placeholder="Search…" autocomplete="off" aria-label="Search headphones" />
         <div class="list" id="list" role="listbox" aria-multiselectable="true"></div>
       </div>
@@ -56,7 +67,7 @@ const PAYLOAD = { grid: GRID_HZ, models, targets: TARGETS };
         </label>
         <label class="align" title="Reference curve drawn behind the selection. Warren Labs is our house voice; Diffuse Field is the neutral measurement standard.">
           <span>Target</span>
-          <select id="target">
+          <select id="target" disabled>
             <option value="">None</option>
             <option value="warren-labs-house">Warren Labs</option>
             <option value="diffuse-field-neutral">Diffuse Field</option>
@@ -108,22 +119,21 @@ const PAYLOAD = { grid: GRID_HZ, models, targets: TARGETS };
         <summary>Method &amp; limits</summary>
         <div class="mgrid">
           <div>
-            <h4>What this is — the Archive</h4>
+            <h4>What this is</h4>
             <p>
-              The <b>HeadRoom Archive</b>: measurements made at HeadRoom on a
-              <b>Head Acoustics HMS&nbsp;II.3</b>, rights retained. Raw — not diffuse-field
-              compensated — L/R averaged, normalized at 1&nbsp;kHz, smoothed 1/12&nbsp;octave for
-              legibility. One unit per model, and no record of who measured it or on what pads.
+              <b>Our own measurements</b>, made here on a <b>miniDSP EARS&nbsp;Pro</b> — rig,
+              operator, unit and pad state recorded for every curve. Raw, not diffuse-field
+              compensated, and published whatever they say. The corpus is small and growing: we
+              are measuring from scratch rather than inheriting somebody else&rsquo;s numbers.
             </p>
           </div>
           <div>
-            <h4>New measurements are replacing it</h4>
+            <h4>The HeadRoom archive</h4>
             <p>
-              Warren Labs now measures on a <b>miniDSP EARS&nbsp;Pro</b>, from scratch, with the
-              rig, operator, unit and pad state recorded for every curve. Those will appear here as
-              they land. <b>The two never share an axis</b> — different fixtures are different
-              coordinate systems, so a count or a comparison covers one rig or the other, never
-              both. Until a model is re-measured, the Archive line is the best we have.
+              A separate set of 40 curves measured years ago on a <b>Head Acoustics HMS&nbsp;II.3</b>,
+              kept as a <b>development reference</b> and switched off by default. A different fixture
+              is a different coordinate system, so the two <b>never share an axis</b> — this page
+              shows one or the other, never a blend, and a count covers one rig or the other.
             </p>
           </div>
           <div>
@@ -186,6 +196,20 @@ const PAYLOAD = { grid: GRID_HZ, models, targets: TARGETS };
   .app { display: grid; grid-template-columns: 250px 1fr; height: calc(100vh - var(--wl-head-h)); min-height: 0; }
   aside { border-right: 1px solid var(--line-soft); background: var(--surface); min-height: 0; display: flex; }
   .pane { flex: 1; display: flex; flex-direction: column; min-height: 0; padding: 16px 18px 0; }
+  /* Source switch. A checkbox rather than a second list, because enabling the archive REPLACES
+     the corpus — it never adds to it. */
+  .src {
+    display: flex; align-items: center; gap: 8px; padding: 8px 10px; margin-bottom: 10px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 9px; cursor: pointer;
+    user-select: none;
+  }
+  .src input { accent-color: var(--accent); margin: 0; cursor: pointer; }
+  .src span {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--muted-2); line-height: 1.3;
+  }
+  .src.on span { color: var(--accent); }
+
   .search {
     width: 100%; background: var(--bg); border: 1px solid var(--line); border-radius: 9px;
     padding: 9px 11px; color: var(--text); font-family: var(--sans); font-size: 13px;
@@ -397,6 +421,7 @@ const PAYLOAD = { grid: GRID_HZ, models, targets: TARGETS };
 
   // ---------- viewer ----------
   let MODELS = [], GRID = [], DB = new Map(), SMOOTH = new Map(), TARGETS = {};
+  let SOURCES = {}, source = 'ours';   // 'ours' = EARS Pro (default) | 'archive' = HeadRoom HMS II.3
   let mode = 'overlay', showBand = false;
   let smoothOct = 12;          // 1/N octave; 0 = off
   let yScale = 30;             // 'auto' or a ±dB span. A LOCKED scale is what makes two exported
@@ -430,22 +455,35 @@ const PAYLOAD = { grid: GRID_HZ, models, targets: TARGETS };
     });
   }
   // Renders from the inlined payload.
-  function boot(a) {
-    GRID = a.grid;
-    TARGETS = a.targets || {};
-    MODELS = a.models.map((m) => ({ id: m.id, brand: m.b, name: m.n }));
-    for (const m of a.models) {
+  // Load ONE source into the viewer. Wipes the previous corpus rather than adding to it: the two
+  // rigs are different coordinate systems, and leaving stale curves selected across a switch is
+  // exactly how a mixed-baseline comparison would get made by accident.
+  function loadSource(which) {
+    source = which;
+    sel.length = 0;
+    usedSlots.clear();
+    DB.clear();
+    SMOOTH.clear();
+    alignCache.clear();
+    const list = SOURCES[which] || [];
+    MODELS = list.map((m) => ({ id: m.id, brand: m.b, name: m.n }));
+    for (const m of list) {
       DB.set(m.id, m.db);
       SMOOTH.set(m.id, smoothCurve(m.db));
     }
+  }
+
+  function boot(a) {
+    GRID = a.grid;
+    TARGETS = a.targets || {};
+    SOURCES = a.sources || {};
+    loadSource('ours');
     // A shared link wins over the house default — arriving from a forum post must show the
     // comparison that was linked, not ours. Only fall back when there's nothing in the URL.
     if (!restoreFromUrl()) {
-      // The Orpheus leads. It's the reason to look.
-      const orph = MODELS.find((m) => /orpheus/i.test(m.name));
-      const hd650 = MODELS.find((m) => m.id === 'sennheiser-hd-650');
-      if (hd650) toggle(hd650.id);
-      if (orph) toggle(orph.id);
+      // Default view: the two we have most confidence in on the new rig.
+      for (const id of ['sennheiser-hd-800', 'sennheiser-hd-650']) if (DB.has(id)) toggle(id);
+      if (!sel.length && MODELS[0]) toggle(MODELS[0].id);
     }
     renderList(); renderLegend(); renderCaption(); draw();
   }
@@ -487,8 +525,14 @@ const PAYLOAD = { grid: GRID_HZ, models, targets: TARGETS };
   // The target goes through the SAME alignment as the headphones. If it didn't, the reference line
   // would sit at a fixed offset while the curves moved under it, which is worse than having no
   // reference at all — it would look authoritative and be wrong.
+  // The shipped targets are DERIVED on the HeadRoom DF baseline (attune tags them kHeadRoomRig).
+  // Drawing one behind EARS Pro curves would be a baseline mix wearing the authority of a
+  // reference line — the worst kind, because it looks deliberate. target-curves.md already flags
+  // that the house target must be re-derived on the EARS Pro DF; until it is, this refuses.
+  const targetUsable = () => source === 'archive';
+
   function targetCurve() {
-    const t = targetId && TARGETS[targetId];
+    const t = targetId && targetUsable() && TARGETS[targetId];
     if (!t) return null;
     const key = '__target__' + targetId;
     if (!DB.has(key)) { DB.set(key, t.db); SMOOTH.set(key, smoothCurve(t.db)); }
@@ -551,6 +595,7 @@ const PAYLOAD = { grid: GRID_HZ, models, targets: TARGETS };
     if (mode !== 'overlay') p.set('m', mode);
     if (showBand) p.set('band', '1');
     if (alignMode !== 'mid') p.set('a', alignMode);
+    if (source !== 'ours') p.set('src', source);
     if (targetId) p.set('t', targetId);
     if (yScale !== 30) p.set('y', String(yScale));
     if (smoothOct !== 12) p.set('s', String(smoothOct));
@@ -575,6 +620,15 @@ const PAYLOAD = { grid: GRID_HZ, models, targets: TARGETS };
     //      degrades to "that one setting was ignored" instead of silently gutting the link.
     const step = (what, fn) => { try { fn(); } catch (e) { console.error('restore: ' + what, e); } };
 
+    // Source first: the ids below only exist in one corpus, and loadSource() wipes the selection.
+    step('source', () => {
+      if (p.get('src') === 'archive') {
+        loadSource('archive');
+        $('src-archive').checked = true;
+        $('src-archive').closest('.src').classList.add('on');
+        $('target').disabled = false;
+      }
+    });
     step('target', () => {
       const tg = p.get('t');
       if (tg && TARGETS[tg]) { targetId = tg; $('target').value = tg; }
@@ -645,7 +699,9 @@ const PAYLOAD = { grid: GRID_HZ, models, targets: TARGETS };
     c.font = '500 13px ' + TOK.mono;
     c.textAlign = 'left'; c.textBaseline = 'middle';
     c.fillStyle = TOK.axis;
-    c.fillText('Head Acoustics HMS II.3  ·  raw, L/R averaged, normalized 1 kHz', PAD, H + FOOT / 2 - 8);
+    c.fillText((source === 'archive'
+        ? 'HeadRoom archive · Head Acoustics HMS II.3 · development reference'
+        : 'Warren Labs · miniDSP EARS Pro') + '  ·  raw, level-matched', PAD, H + FOOT / 2 - 8);
     c.fillStyle = TOK.anno;
     c.font = '400 11px ' + TOK.mono;
     c.fillText(sel.map((s) => label(s.id)).join('   ·   ').slice(0, 120), PAD, H + FOOT / 2 + 11);
@@ -723,7 +779,10 @@ const PAYLOAD = { grid: GRID_HZ, models, targets: TARGETS };
     }
     el.innerHTML =
       'This shows ' + body +
-      ', raw on one <b>Head Acoustics HMS II.3</b>, L/R averaged, levelled over <b>' + a.label + '</b>' +
+      (source === 'archive'
+        ? ', from the HeadRoom archive on a <b>Head Acoustics HMS II.3</b> (development reference), L/R averaged'
+        : ', measured here on a <b>miniDSP EARS Pro</b>') +
+      ', levelled over <b>' + a.label + '</b>' +
       (targetId && TARGETS[targetId] && mode !== 'difference'
         ? ', against the <b>' + TARGETS[targetId].name + '</b> target (dashed)' : '') +
       (smoothOct ? ', smoothed 1/' + smoothOct + ' octave' : ', unsmoothed') +
@@ -1063,6 +1122,14 @@ const PAYLOAD = { grid: GRID_HZ, models, targets: TARGETS };
     showBand = e.target.checked;
     $('band-t').classList.toggle('on', showBand);
     renderLegend(); renderCaption(); draw(); syncUrl();
+  });
+  $('src-archive').addEventListener('change', (e) => {
+    const on = e.target.checked;
+    e.target.closest('.src').classList.toggle('on', on);
+    loadSource(on ? 'archive' : 'ours');
+    if (!on) { $('target').value = ''; targetId = ''; }   // targets are archive-baseline only
+    $('target').disabled = !on;
+    renderList(); renderLegend(); renderCaption(); draw(); syncUrl();
   });
   $('target').addEventListener('change', (e) => {
     targetId = e.target.value;
