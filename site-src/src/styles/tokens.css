@@ -1,45 +1,60 @@
-/* Warren Labs tokens for the migrated Sonic Temple content.
-   The two palettes were structurally identical (dark ground, amber accent, light text) but only
-   a couple of percent apart, which reads as a rendering bug rather than a distinction. These are
-   the warrenlabs.com values from css/styles.css, so the ported pages sit in one system.
-   Fonts come from the Google Fonts link in Layout.astro, matching the rest of the site. */
+/* Site tokens — now a thin ALIAS layer over the shared wl-web tokens.
+ *
+ * This file used to hold the palette literally, in a single dark :root. That is why warrenlabs.com
+ * had no light mode while Attune did, and why the site drifted onto a different amber from the one
+ * every plugin uses. The values now come from wl-web/wl-tokens.css (ported from wl-ui's WLTheme.h),
+ * and this file only maps them onto the variable names the existing site CSS already calls.
+ *
+ * Consequence worth knowing: everything below inherits light/dark automatically. Nothing that reads
+ * var(--bg), var(--text), var(--accent) etc. needs to change to gain a light theme.
+ *
+ * ACCENT CHANGED 2026-08-02: #FF9E2C -> #eeb154. The old value was justified here as matching the
+ * Echo logo, which is a dead placeholder; all 9 plugins and Attune use #eeb154. See wl-web/README.md.
+ *
+ * Add NEW tokens to wl-web/wl-tokens.css, not here. This file is for aliases only.
+ */
+
+@import './wl-tokens.css';
 
 :root {
-  /* palette: graphite ground, one amber accent (signal state only) */
-  --bg: #0c0d0f;
-  --surface: #1b1d20;
-  --surface-2: #26292d;
-  --line: #24272b;
-  --line-soft: #1b1d20;
-  --text: #e8ebed;
-  --muted: #868d92;
-  --muted-2: #565b60;
-  --accent: #FF9E2C;
-  --accent-soft: #ffb257;
-  --accent-dim: rgba(255, 158, 44, 0.14);
-  --accent-line: rgba(255, 158, 44, 0.3);
-  --raw: #565b60;
-  --yours: #e8ebed;
-  --raise: #1b1d20;
-  --bg-deep: #0f1012;
-  --on-accent: #0c0d0f;
-  --good: #54e08a;
+  /* ground / chrome */
+  --bg: var(--wl-bg);
+  --surface: var(--wl-surface);
+  --surface-2: var(--wl-surface-2);
+  --line: var(--wl-line);
+  --line-soft: var(--wl-line-soft);
+  --raise: var(--wl-raise);
+  --bg-deep: var(--wl-graph-bg);
+  --panel-edge: var(--wl-panel-edge);
 
-  --panel-edge: #34383d;
+  /* ink */
+  --text: var(--wl-text);
+  --muted: var(--wl-muted);
+  --muted-2: var(--wl-muted-2);
+
+  /* accent — signal state only */
+  --accent: var(--wl-accent);
+  --accent-soft: var(--wl-accent-soft);
+  --accent-dim: var(--wl-accent-dim);
+  --accent-line: var(--wl-accent-line);
+  --on-accent: var(--wl-on-accent);
+  --good: var(--wl-good);
+
+  /* the Attune pillar card's two traces (AttuneMiniGraph) */
+  --raw: var(--wl-trace-yours);
+  --yours: var(--wl-trace-matched);
+
   --radius: 6px;
 
-  /* type: Barlow display, Archivo body, JetBrains Mono labels. JetBrains is the line-wide mono:
-     wl-ui embeds it and every native plugin faceplate uses it via WLTheme, so the web matches
-     the apps rather than the other way round. */
-  --serif: 'Barlow', 'Helvetica Neue', Arial, sans-serif;
-  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
-  --sans: 'Archivo', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  /* type — --serif is the DISPLAY face (Barlow), not an actual serif. The name predates the type
+     system and is load-bearing across the ported Sonic Temple pages, so it stays. */
+  --serif: var(--wl-display);
+  --mono: var(--wl-mono);
+  --sans: var(--wl-sans);
 }
 
-/* Instrument Serif carried its weight at display sizes; Barlow needs to be asked. The ported
-   pages set headings in var(--serif), so give them the site's display weight. Long-form article
-   prose is deliberately NOT uppercased here. That treatment belongs to the rack, not to a
-   2,000-word explainer. */
+/* Barlow needs to be asked for display weight in a way Instrument Serif did not. Long-form article
+   prose is deliberately NOT uppercased — that treatment belongs to the rack, not to an explainer. */
 h1,
 h2,
 h3,

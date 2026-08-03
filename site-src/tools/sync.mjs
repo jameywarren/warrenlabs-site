@@ -22,7 +22,7 @@ const ROOT = join(here, '..', '..');
 // stays in src/pages/graphs.astro; add 'graphs' back here once there is data to show.
 const ROUTES = ['attune', 'learn', 'graphs', 'products', 'collections', 'measure', 'support', 'privacy'];
 // Astro's hashed asset bundle, plus the audio the Attune demos play.
-const ASSETS = ['_astro', 'audio'];
+const ASSETS = ['_astro', 'audio', 'wl'];   // wl/ = vendored wl-web runtime (wl-plot.js)
 
 const exists = async (p) => {
   try {

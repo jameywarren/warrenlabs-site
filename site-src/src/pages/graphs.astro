@@ -52,6 +52,10 @@ const PAYLOAD = { grid: GRID_HZ, models };
           <input type="checkbox" id="band" /><span>Seating variance</span>
         </label>
         <div class="hint" id="hint"></div>
+        <div class="share">
+          <button class="sbtn" id="copy-link" title="Copy a link to this exact comparison">Copy link</button>
+          <button class="sbtn" id="save-png" title="Download this graph as an image">Save image</button>
+        </div>
       </div>
 
       <div class="canvas-box">
@@ -169,12 +173,23 @@ const PAYLOAD = { grid: GRID_HZ, models };
   .toggle span { font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
   .toggle.on span { color: var(--text); }
   .hint { margin-left: auto; font-size: 11.5px; color: var(--muted-2); font-style: italic; }
+  /* Share: the reason a comparison ends up in a forum thread instead of dying in a tab. */
+  .share { display: flex; gap: 6px; flex: none; }
+  .sbtn {
+    background: var(--surface); border: 1px solid var(--line); color: var(--muted);
+    font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 7px 11px; border-radius: 9px; cursor: pointer; white-space: nowrap;
+    transition: color .14s, border-color .14s;
+  }
+  .sbtn:hover { color: var(--text); border-color: var(--muted-2); }
+  .sbtn:focus-visible { outline: none; border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-dim); }
+  .sbtn[disabled] { opacity: .4; cursor: not-allowed; }
 
-  .canvas-box { position: relative; flex: 1; min-height: 0; background: #0f1012; border: 1px solid var(--line-soft); border-radius: 14px; overflow: hidden; }
+  .canvas-box { position: relative; flex: 1; min-height: 0; background: var(--wl-graph-bg); border: 1px solid var(--line-soft); border-radius: 14px; overflow: hidden; }
   canvas { display: block; width: 100%; height: 100%; }
   .tip {
     position: absolute; pointer-events: none; opacity: 0; transition: opacity 0.09s;
-    background: rgba(20, 10, 24, 0.97); border: 1px solid var(--line); border-radius: 9px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 9px;
     padding: 9px 11px; font-family: var(--mono); font-size: 11px; line-height: 1.65; white-space: nowrap; z-index: 5;
   }
   .tip :global(.th) { color: var(--muted-2); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 5px; }
@@ -258,8 +273,16 @@ const PAYLOAD = { grid: GRID_HZ, models };
   }
 </style>
 
+{/* wl-plot must be parsed before the define:vars block below, which is forced inline and so cannot
+    import. Vendored into public/ from wl-web by tools/vendor.mjs. */}
+<script is:inline src="/wl/wl-plot.js"></script>
+
 <script define:vars={{ PAYLOAD }}>
-  const SERIES = ['#cb7d28', '#4a97e1', '#3daa6d', '#d16c96', '#9f7dd8', '#10a6ad'];
+  // Colours now come from wl-web tokens rather than the hex literals that used to live here, so the
+  // plot follows light/dark like the rest of the page. Re-read on every theme change: CSS variables
+  // update instantly for DOM, but a canvas has to be redrawn to notice.
+  let TOK = WLPlot.readTokens();
+  let SERIES = TOK.series;
   const MAX = SERIES.length;
 
   // Seating variance: two MEASURED anchors, interpolated between, nothing below 200 Hz —
@@ -315,11 +338,15 @@ const PAYLOAD = { grid: GRID_HZ, models };
       DB.set(m.id, m.db);
       SMOOTH.set(m.id, smoothCurve(m.db));
     }
-    // The Orpheus leads. It's the reason to look.
-    const orph = MODELS.find((m) => /orpheus/i.test(m.name));
-    const hd650 = MODELS.find((m) => m.id === 'sennheiser-hd-650');
-    if (hd650) toggle(hd650.id);
-    if (orph) toggle(orph.id);
+    // A shared link wins over the house default — arriving from a forum post must show the
+    // comparison that was linked, not ours. Only fall back when there's nothing in the URL.
+    if (!restoreFromUrl()) {
+      // The Orpheus leads. It's the reason to look.
+      const orph = MODELS.find((m) => /orpheus/i.test(m.name));
+      const hd650 = MODELS.find((m) => m.id === 'sennheiser-hd-650');
+      if (hd650) toggle(hd650.id);
+      if (orph) toggle(orph.id);
+    }
     renderList(); renderLegend(); draw();
   }
 
@@ -350,7 +377,99 @@ const PAYLOAD = { grid: GRID_HZ, models };
       usedSlots.add(slot);
       sel.push({ id, slot });
     }
-    renderList(); renderLegend(); draw();
+    renderList(); renderLegend(); draw(); syncUrl();
+  }
+
+  // ---------- shareable state ----------
+  //
+  // A comparison you can't link to is a comparison nobody quotes. This is how a graph gets posted
+  // into a forum thread, and it is also how a /products/{handle} page can hand off to this tool
+  // with that model already selected. NOT a data export: the URL names which curves are on screen,
+  // it doesn't carry any measured values. Rule 1 in data-provenance.md is untouched.
+  //
+  // Order in `h` is significant — it IS the Difference-mode "yours, then target" pairing.
+  let restoring = false;
+  function syncUrl() {
+    if (restoring) return;
+    const p = new URLSearchParams();
+    if (sel.length) p.set('h', sel.map((s) => s.id).join(','));
+    if (mode !== 'overlay') p.set('m', mode);
+    if (showBand) p.set('band', '1');
+    const q = p.toString();
+    // replaceState, not pushState: dragging through a dozen headphones shouldn't bury the visitor's
+    // real history under a dozen back-button steps.
+    history.replaceState(null, '', q ? '?' + q : location.pathname);
+  }
+
+  function restoreFromUrl() {
+    const p = new URLSearchParams(location.search);
+    const ids = (p.get('h') || '').split(',').map((s) => s.trim()).filter(Boolean);
+    if (!ids.length) return false;
+    restoring = true;
+    for (const id of ids.slice(0, MAX)) if (DB.has(id)) toggle(id);
+    if (p.get('m') === 'difference') setMode('difference');
+    if (p.get('band') === '1') { showBand = true; $('band').checked = true; $('band-t').classList.add('on'); }
+    restoring = false;
+    return sel.length > 0;
+  }
+
+  async function copyLink(btn) {
+    syncUrl();
+    const done = (msg) => { btn.textContent = msg; setTimeout(() => (btn.textContent = 'Copy link'), 1600); };
+    try {
+      await navigator.clipboard.writeText(location.href);
+      done('Copied');
+    } catch (e) {
+      // Clipboard API needs a secure context and can be permission-blocked. Select the URL so the
+      // visitor can still copy it by hand rather than getting a dead button.
+      const t = document.createElement('input');
+      t.value = location.href; document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); done('Copied'); } catch (_) { done('Press ⌘C'); }
+      setTimeout(() => t.remove(), 100);
+    }
+  }
+
+  // ---------- watermarked PNG ----------
+  //
+  // A RENDER, not a data export — the same pixels already on screen, plus attribution baked in so
+  // the image stays sourced when it travels. Drawn at 2x on an offscreen canvas (a screenshot of a
+  // CSS-pixel canvas is soft on a forum's retina display), always on the plot's own background so a
+  // light-theme export doesn't arrive transparent, and always naming the fixture.
+  function exportPng() {
+    const SCALE = 2, W = 1400, H = 800, PAD = 28, FOOT = 54;
+    const off = document.createElement('canvas');
+    off.width = W * SCALE; off.height = (H + FOOT) * SCALE;
+    const c = off.getContext('2d');
+    c.setTransform(SCALE, 0, 0, SCALE, 0, 0);
+    c.fillStyle = TOK.bg || '#0f1012';
+    c.fillRect(0, 0, W, H + FOOT);
+
+    // Re-run the real draw() against the offscreen context by temporarily swapping the module-level
+    // ctx/plot geometry. Cheaper and far less drift-prone than a second rendering path that would
+    // quietly diverge from the on-screen one.
+    drawInto(c, PAD, PAD, W - PAD * 2, H - PAD * 2);
+
+    c.font = '500 13px ' + TOK.mono;
+    c.textAlign = 'left'; c.textBaseline = 'middle';
+    c.fillStyle = TOK.axis;
+    c.fillText('Head Acoustics HMS II.3  ·  raw, L/R averaged, normalized 1 kHz', PAD, H + FOOT / 2 - 8);
+    c.fillStyle = TOK.anno;
+    c.font = '400 11px ' + TOK.mono;
+    c.fillText(sel.map((s) => label(s.id)).join('   ·   ').slice(0, 120), PAD, H + FOOT / 2 + 11);
+    c.textAlign = 'right';
+    c.font = '600 14px ' + TOK.mono;
+    c.fillStyle = TOK.axis;
+    c.fillText('warrenlabs.com/graphs', W - PAD, H + FOOT / 2);
+
+    off.toBlob((blob) => {
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const names = sel.map((s) => label(s.id).replace(/[^a-z0-9]+/gi, '-').toLowerCase()).join('_vs_');
+      a.href = url; a.download = (names || 'warren-labs-measurement').slice(0, 90) + '.png';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+    }, 'image/png');
   }
 
   // Difference mode: flip which pick is "yours" (1) and which is the "target" (2). The correction
@@ -489,7 +608,10 @@ const PAYLOAD = { grid: GRID_HZ, models };
 
   // Catmull-Rom through the points: the smoothing handles the data, this handles the corners
   // so the line reads as a curve rather than a polyline.
-  function strokeSpline(pts) {
+  // Takes ctx explicitly: drawInto() retargets rendering to an offscreen canvas for the PNG export,
+  // and a helper that closed over the module-level ctx would silently keep painting the live one —
+  // which is exactly the bug that shipped an export with grid and watermark but no curve.
+  function strokeSpline(ctx, pts) {
     if (pts.length < 2) return;
     ctx.beginPath();
     ctx.moveTo(pts[0][0], pts[0][1]);
@@ -504,6 +626,9 @@ const PAYLOAD = { grid: GRID_HZ, models };
     ctx.stroke();
   }
 
+  // draw() paints the on-screen canvas; drawInto() is the same rendering, retargetable to any
+  // context and rect so the PNG export reuses it verbatim. One rendering path — a second one would
+  // drift out of sync with this one the first time either changed.
   function draw() {
     const dpr = window.devicePixelRatio || 1;
     const box = cv.parentElement.getBoundingClientRect();
@@ -511,21 +636,26 @@ const PAYLOAD = { grid: GRID_HZ, models };
     cv.width = W * dpr; cv.height = H * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, W, H);
+    const p = drawInto(ctx, 0, 0, W, H, true);
+    plot = p;   // only the live canvas records geometry — hover hit-testing reads it
+  }
+
+  function drawInto(ctx, OX, OY, W, H, live) {
 
     // Fixed PERSPECTIVE: the plot's width:height ratio is held constant, so a curve looks the
     // same at any window size — it scales, it never squishes. Fit the largest fixed-ratio plot
     // inside the available area (minus label gutters) and centre it; the slack becomes even
     // letterbox/pillarbox margins. PLOT_AR is the one knob — the graph's width:height shape.
-    const GUT_L = 50, GUT_R = 14, GUT_T = 14, GUT_B = 32;
+    const GUT_L = 50, GUT_R = 14, GUT_T = 14, GUT_B = 46;   // 46: freq labels + the band strip beneath them
     const PLOT_AR = 1.85;
     const availW = W - GUT_L - GUT_R, availH = H - GUT_T - GUT_B;
-    if (availW < 40 || availH < 40) return;
+    if (availW < 40 || availH < 40) return null;
     let pw, ph;
     if (availW / availH > PLOT_AR) { ph = availH; pw = Math.round(ph * PLOT_AR); }
     else { pw = availW; ph = Math.round(pw / PLOT_AR); }
-    const L = GUT_L + Math.round((availW - pw) / 2);
-    const T = GUT_T + Math.round((availH - ph) / 2);
-    if (pw < 40 || ph < 40) return;
+    const L = OX + GUT_L + Math.round((availW - pw) / 2);
+    const T = OY + GUT_T + Math.round((availH - ph) / 2);
+    if (pw < 40 || ph < 40) return null;
 
     const diff = mode === 'difference' && sel.length >= 2;
     const active = diff ? sel.slice(0, 2) : sel;
@@ -555,33 +685,37 @@ const PAYLOAD = { grid: GRID_HZ, models };
     const Y = (db) => T + (1 - (db - lo) / (hi - lo)) * ph;
 
     ctx.lineWidth = 1;
-    ctx.strokeStyle = '#24272b';
+    ctx.strokeStyle = TOK.grid;
     for (const f of TICKS) { const x = Math.round(X(f)) + 0.5; ctx.beginPath(); ctx.moveTo(x, T); ctx.lineTo(x, T + ph); ctx.stroke(); }
     const step = hi - lo > 60 ? 20 : hi - lo > 30 ? 10 : 5;
     for (let d = Math.ceil(lo / step) * step; d <= hi; d += step) {
       const y = Math.round(Y(d)) + 0.5;
-      ctx.strokeStyle = d === 0 && diff ? '#34383d' : '#24272b';
+      // In Difference mode the 0 dB line means "no correction needed", so it earns extra weight.
+      ctx.strokeStyle = d === 0 && diff ? TOK.grid0 : TOK.grid;
       ctx.beginPath(); ctx.moveTo(L, y); ctx.lineTo(L + pw, y); ctx.stroke();
     }
 
-    ctx.fillStyle = '#565b60';
-    ctx.font = '400 10px var(--mono)';
+    ctx.fillStyle = TOK.axis;
+    ctx.font = '400 10px ' + TOK.mono;
     ctx.textAlign = 'center'; ctx.textBaseline = 'top';
     for (const f of TICKS) ctx.fillText(fmtHz(f), X(f), T + ph + 8);
     ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
     for (let d = Math.ceil(lo / step) * step; d <= hi; d += step) ctx.fillText(d > 0 ? '+' + d : String(d), L - 8, Y(d));
 
+    // Frequency-band strip: the cheapest measurement-literacy feature there is. Tells a first-time
+    // reader which part of the sound each region is, without sending them to /learn to find out.
+    WLPlot.drawBandLabels(ctx, { x: X, f0: F0, f1: F1 }, { L, T, pw, ph }, TOK, T + ph + 22);
+
     const wantMsg = mode === 'difference' ? sel.length < 2 : !active.length;
     if (wantMsg) {
-      ctx.fillStyle = '#565b60';
-      ctx.font = '400 13px Inter, sans-serif';
+      ctx.fillStyle = TOK.axis;
+      ctx.font = '400 13px ' + TOK.mono;
       ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
       const msg = mode === 'difference'
         ? (sel.length === 1 ? 'Now pick a target to compare against.' : 'Pick two headphones — yours, then a target.')
         : 'Pick a headphone.';
       ctx.fillText(msg, L + pw / 2, T + ph / 2);
-      plot = { L, T, pw, ph };
-      return;
+      return { L, T, pw, ph };
     }
 
     ctx.save();
@@ -611,25 +745,25 @@ const PAYLOAD = { grid: GRID_HZ, models };
     if (diff) {
       const a = curve(sel[0].id), b = curve(sel[1].id);
       ctx.strokeStyle = SERIES[0];
-      strokeSpline(GRID.map((f, i) => [X(f), Y(b[i] - a[i])]));
+      strokeSpline(ctx, GRID.map((f, i) => [X(f), Y(b[i] - a[i])]));
     } else {
       for (const s of active) {
         const d = curve(s.id);
         ctx.strokeStyle = colourOf(s);
-        strokeSpline(GRID.map((f, i) => [X(f), Y(d[i])]));
+        strokeSpline(ctx, GRID.map((f, i) => [X(f), Y(d[i])]));
       }
     }
 
-    if (hoverX != null && hoverX >= L && hoverX <= L + pw) {
-      ctx.strokeStyle = 'rgba(232, 235, 237,.26)'; ctx.lineWidth = 1;
-      ctx.beginPath(); ctx.moveTo(hoverX + 0.5, T); ctx.lineTo(hoverX + 0.5, T + ph); ctx.stroke();
+    if (live && hoverX != null && hoverX >= L && hoverX <= L + pw) {
+      ctx.strokeStyle = TOK.axis; ctx.globalAlpha = .45; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(hoverX + 0.5, T); ctx.lineTo(hoverX + 0.5, T + ph); ctx.stroke(); ctx.globalAlpha = 1;
       const hz = F0 * Math.pow(F1 / F0, (hoverX - L) / pw);
-      const dot = (y, c) => { ctx.beginPath(); ctx.arc(hoverX, y, 3.5, 0, 7); ctx.fillStyle = c; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = '#0f1012'; ctx.stroke(); };
+      const dot = (y, c) => { ctx.beginPath(); ctx.arc(hoverX, y, 3.5, 0, 7); ctx.fillStyle = c; ctx.fill(); ctx.lineWidth = 2; ctx.strokeStyle = TOK.bg; ctx.stroke(); };
       if (diff) dot(Y(dbAt(sel[1].id, hz) - dbAt(sel[0].id, hz)), SERIES[0]);
       else for (const s of active) dot(Y(dbAt(s.id, hz)), colourOf(s));
     }
     ctx.restore();
-    plot = { L, T, pw, ph };
+    return { L, T, pw, ph };
   }
 
   function onMove(e) {
@@ -648,7 +782,7 @@ const PAYLOAD = { grid: GRID_HZ, models };
     } else {
       const sd = sdAt(hz);
       for (const s of sel) html += `<div class="tr"><i style="background:${colourOf(s)}"></i>${label(s.id)}<b>${dbAt(s.id, hz).toFixed(1)} dB</b></div>`;
-      html += `<div class="tr" style="color:#565b60;font-size:10px;margin-top:3px">${sd == null ? '± not characterized' : '±' + sd.toFixed(2) + ' dB seating'}</div>`;
+      html += `<div class="tr" style="color:var(--muted-2);font-size:10px;margin-top:3px">${sd == null ? '± not characterized' : '±' + sd.toFixed(2) + ' dB seating'}</div>`;
     }
     tip.innerHTML = html;
     tip.style.opacity = '1';
@@ -664,7 +798,7 @@ const PAYLOAD = { grid: GRID_HZ, models };
     $('m-df').classList.toggle('on', m === 'difference');
     $('band-t').style.opacity = m === 'difference' ? '0.4' : '1';
     $('band').disabled = m === 'difference';
-    renderLegend(); draw();
+    renderLegend(); draw(); syncUrl();
   }
 
   $('m-ov').addEventListener('click', () => setMode('overlay'));
@@ -672,13 +806,30 @@ const PAYLOAD = { grid: GRID_HZ, models };
   $('band').addEventListener('change', (e) => {
     showBand = e.target.checked;
     $('band-t').classList.toggle('on', showBand);
-    renderLegend(); draw();
+    renderLegend(); draw(); syncUrl();
   });
+  $('copy-link').addEventListener('click', (e) => copyLink(e.currentTarget));
+  $('save-png').addEventListener('click', exportPng);
   $('q').addEventListener('input', renderList);
   cv.addEventListener('mousemove', onMove);
   cv.addEventListener('mouseleave', () => { hoverX = null; tip.style.opacity = '0'; draw(); });
   new ResizeObserver(() => draw()).observe(cv.parentElement);
   document.querySelector('.method').addEventListener('toggle', () => requestAnimationFrame(draw));
+
+  // A canvas doesn't notice a CSS variable change, so the theme toggle has to tell it. Re-read the
+  // tokens (the series palette differs between light and dark for contrast) and repaint everything
+  // that carries colour — swatches and legend included, not just the plot.
+  function onThemeChange() {
+    TOK = WLPlot.readTokens();
+    SERIES = TOK.series;
+    renderList(); renderLegend(); draw();
+  }
+  window.addEventListener('wl-theme-change', onThemeChange);
+  // Also follow the OS when the user hasn't pinned a choice — otherwise a system-wide switch to
+  // dark leaves the plot in its light palette until the next reload.
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+    if (!document.documentElement.getAttribute('data-theme')) onThemeChange();
+  });
 
   boot(PAYLOAD);
 </script>

@@ -63,6 +63,23 @@ const ld = { '@context': 'https://schema.org', '@graph': [organization, website,
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {
+      /* Theme, resolved BEFORE first paint. This has to be inline and first in <head>: if the
+         stored choice were applied after stylesheets load, a light-mode visitor would get a
+         full-frame flash of the dark palette on every navigation. Only an explicit toggle is
+         stored — with nothing stored we leave data-theme unset so wl-tokens' prefers-color-scheme
+         block follows the OS, which is the behaviour Attune already has. */
+    }
+    <script is:inline>
+      (function () {
+        try {
+          var t = localStorage.getItem('wl-theme');
+          if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {
+          /* Safari private mode throws on localStorage. Fall through to the OS preference. */
+        }
+      })();
+    </script>
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_black_32.svg" />
     <link
