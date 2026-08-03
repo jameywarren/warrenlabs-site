@@ -271,17 +271,43 @@
     const ids = (p.get('h') || '').split(',').map((s) => s.trim()).filter(Boolean);
     if (!ids.length) return false;
     restoring = true;
-    for (const id of ids.slice(0, MAX)) if (DB.has(id)) toggle(id);
-    if (p.get('m') === 'difference') setMode('difference');
-    const tg = p.get('t');
-    if (tg && TARGETS[tg]) { targetId = tg; $('target').value = tg; }
-    const ys = p.get('y');
-    if (ys) { yScale = ys === 'auto' ? 'auto' : Number(ys); $('yscale').value = ys; }
-    const sm = p.get('s');
-    if (sm !== null && sm !== '') { smoothOct = Number(sm); $('smooth').value = sm; resmoothAll(); }
-    const am = p.get('a');
-    if (am && ALIGN[am]) { alignMode = am; $('align').value = am; alignCache.clear(); }
-    if (p.get('band') === '1') { showBand = true; $('band').checked = true; $('band-t').classList.add('on'); }
+
+    // VIEW SETTINGS FIRST, then the curves. Two reasons, and the second is a bug I shipped:
+    //   1. Correctness — toggling a curve draws it, so applying smoothing/scale afterwards means
+    //      the first paints happen at the wrong settings and have to be redone.
+    //   2. Robustness — these used to run AFTER the toggle loop, so anything that threw part-way
+    //      through took the whole restore with it: a shared link came back with one headphone and
+    //      none of its settings. Each step is now independently guarded, so a single bad parameter
+    //      degrades to "that one setting was ignored" instead of silently gutting the link.
+    const step = (what, fn) => { try { fn(); } catch (e) { console.error('restore: ' + what, e); } };
+
+    step('target', () => {
+      const tg = p.get('t');
+      if (tg && TARGETS[tg]) { targetId = tg; $('target').value = tg; }
+    });
+    step('scale', () => {
+      const ys = p.get('y');
+      if (ys) { yScale = ys === 'auto' ? 'auto' : Number(ys); $('yscale').value = ys; }
+    });
+    step('smoothing', () => {
+      const sm = p.get('s');
+      if (sm !== null && sm !== '' && !Number.isNaN(Number(sm))) {
+        smoothOct = Number(sm); $('smooth').value = sm; resmoothAll();
+      }
+    });
+    step('align', () => {
+      const am = p.get('a');
+      if (am && ALIGN[am]) { alignMode = am; $('align').value = am; alignCache.clear(); }
+    });
+    step('band', () => {
+      if (p.get('band') === '1') { showBand = true; $('band').checked = true; $('band-t').classList.add('on'); }
+    });
+
+    // Now the selection. Guarded per id for the same reason — one unknown handle in a pasted link
+    // must not cost the reader the rest of the comparison.
+    for (const id of ids.slice(0, MAX)) step('headphone ' + id, () => { if (DB.has(id)) toggle(id); });
+    step('mode', () => { if (p.get('m') === 'difference') setMode('difference'); });
+
     restoring = false;
     return sel.length > 0;
   }
