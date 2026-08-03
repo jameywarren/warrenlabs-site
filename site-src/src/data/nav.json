@@ -14,6 +14,10 @@
       "label": "MEASUREMENTS"
     },
     {
+      "href": "/measure",
+      "label": "SEND ONE IN"
+    },
+    {
       "href": "/learn",
       "label": "LEARN"
     },
@@ -39,10 +43,6 @@
     {
       "href": "/graphs",
       "label": "Measurements"
-    },
-    {
-      "href": "/measure",
-      "label": "Send yours in"
     },
     {
       "href": "/learn",

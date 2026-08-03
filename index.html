@@ -43,7 +43,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <span>WARREN&nbsp;LABS</span>
     </div>
     <nav id="primary-nav">
-      <a href="/attune">ATTUNE</a><a href="/collections/headphones">HEADPHONES</a><a href="/graphs">MEASUREMENTS</a><a href="/learn">LEARN</a><a class="cta" href="/#patch">PATCH IN</a>
+      <a href="/attune">ATTUNE</a><a href="/collections/headphones">HEADPHONES</a><a href="/graphs">MEASUREMENTS</a><a href="/measure">SEND ONE IN</a><a href="/learn">LEARN</a><a class="cta" href="/#patch">PATCH IN</a>
     </nav>
     <button class="wl-theme" id="wl-theme" aria-label="Switch between light and dark" title="Light / dark">◐</button>
     <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="primary-nav">
@@ -64,10 +64,10 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
   <canvas id="scope" height="230"></canvas>
   <div class="hero-sub">
     <div class="hero-lede-col">
-      <p class="lede">I'm Jamey. Twenty-five years in audio: soldering benches at Grace Design, running HeadRoom as CEO, and lately building a line of plugins solo from a desk in Montana: headphones, amps, converters, and the software that drives them. I take on a few projects and partnerships a year, when the product is worth building and the people are worth building with.</p>
+      <p class="lede">Measurement, correction, and a line of audio tools, built solo from a desk in Montana. I'm Jamey: twenty-five years in audio, soldering benches at Grace Design, then HeadRoom as CEO. Now I measure headphones on my own bench, publish what the rig says, and build the software that puts it to work.</p>
       <div class="hero-cta">
-        <a class="btn primary" href="#patch">Let's talk <span aria-hidden="true">→</span></a>
-        <a class="btn ghost" href="#work">See the work</a>
+        <a class="btn primary" href="/attune">Try Attune, free <span aria-hidden="true">→</span></a>
+        <a class="btn ghost" href="/measure">Send a headphone in</a>
       </div>
       <div class="now-chip"><span class="now-dot"></span>Open to projects &amp; partnerships</div>
     </div>
@@ -78,6 +78,54 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <div class="cred"><span class="k">AUTHOR</span><span class="v">THE ART AND SCIENCE OF HEADPHONE DESIGN</span></div>
     </div>
   </div>
+</section>
+
+
+
+<section class="rack-zone" id="work">
+  <div class="rack-head wrap">
+    <div class="k">THE WORK <span class="sig">·</span> BUILT SOLO</div>
+    <h2 class="display">Built in the open.</h2>
+    <p class="sub">Products I took from idea to working software myself: the DSP, the interface, and the calls about what ships. Level is shipping; Attune and Tone Farm are in free beta.</p>
+    <div class="rack-instr mono"><span class="dot"></span>CLICK A UNIT FOR THE DETAIL</div>
+  </div>
+
+  <div class="rack-scene">
+    <div class="rack" id="rack3d">
+      <div class="rack-side"></div>
+      <div class="rail left"><div class="holes"></div></div>
+      <div class="rail right"><div class="holes"></div></div>
+
+      <div id="rackUnits"></div>
+
+      <div class="unit vent static"><div class="slots"></div></div>
+
+      <div class="rack-shadow"></div>
+    </div>
+  </div>
+</section>
+<section class="offer-zone" id="bench">
+<div class="wrap">
+<div class="offer-head">
+<div class="k mono">THE BENCH <span class="sig">·</span> MEASURED HERE</div>
+<h2 class="display">We measure headphones.</h2>
+<p class="sub">Every correction you can buy is built from somebody else&rsquo;s sample of your model. Send yours and get the curve of the pair actually in your hands &mdash; published either way, flattering or not.</p>
+</div>
+<a class="offer" href="/measure">
+<div class="offer-main">
+<div class="offer-k mono">SEND ONE IN</div>
+<h3 class="display">Your unit, on our rig</h3>
+<p>Measured on a miniDSP EARS&nbsp;Pro, labelled by rig, back to you in about a week &mdash; and it gets a page in the Archive, credited however you like. Unit variation is real, and your pair&rsquo;s exact curve is what Attune turns into a personal tuning.</p>
+</div>
+<div class="offer-side mono">
+<div class="offer-spec"><span class="sk">ON OUR LIST</span><span class="sv">Free, shipping both ways</span></div>
+<div class="offer-spec"><span class="sk">ANYTHING ELSE</span><span class="sv">$89</span></div>
+<div class="offer-spec"><span class="sk">TURNAROUND</span><span class="sv">About a week</span></div>
+<span class="offer-note">Every result published, flattering or not.</span>
+<span class="offer-go">SEND ONE IN &#8599;</span>
+</div>
+</a>
+</div>
 </section>
 
 <section class="approach wrap" id="approach">
@@ -110,30 +158,6 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <svg class="chain-icon" viewBox="0 0 48 32" aria-hidden="true"><line x1="6" y1="23" x2="6" y2="15"/><line x1="12" y1="23" x2="12" y2="9"/><line x1="18" y1="23" x2="18" y2="18"/><line x1="26" y1="16" x2="42" y2="16"/><path d="M38 11 l5 5 -5 5"/></svg>
       <h3>Get it shipped</h3>
       <p>Prototype to production. Hardware and software, sketch to shelf, including the places it tends to go sideways.</p>
-    </div>
-  </div>
-</section>
-
-
-<section class="rack-zone" id="work">
-  <div class="rack-head wrap">
-    <div class="k">THE WORK <span class="sig">·</span> BUILT SOLO</div>
-    <h2 class="display">Built in the open.</h2>
-    <p class="sub">Products I took from idea to working software myself: the DSP, the interface, and the calls about what ships. Level is out; Attune and Tone Farm are being finished now.</p>
-    <div class="rack-instr mono"><span class="dot"></span>CLICK A UNIT FOR THE DETAIL</div>
-  </div>
-
-  <div class="rack-scene">
-    <div class="rack" id="rack3d">
-      <div class="rack-side"></div>
-      <div class="rail left"><div class="holes"></div></div>
-      <div class="rail right"><div class="holes"></div></div>
-
-      <div id="rackUnits"></div>
-
-      <div class="unit vent static"><div class="slots"></div></div>
-
-      <div class="rack-shadow"></div>
     </div>
   </div>
 </section>
@@ -198,9 +222,9 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <section class="offer-zone" id="offer">
   <div class="wrap">
     <div class="offer-head">
-      <div class="k mono">WORK WITH ME <span class="sig">·</span> FIXED FEE</div>
-      <h2 class="display">Start with a design review.</h2>
-      <p class="sub">One product, read from the outside. The cleanest way to find out whether we should work together on anything bigger.</p>
+      <div class="k mono">ALSO AVAILABLE <span class="sig">·</span> FIXED FEE</div>
+      <h2 class="display">Need a second pair of ears?</h2>
+      <p class="sub">If you&rsquo;re building a headphone, I&rsquo;ll read one from the outside &mdash; measured, listened to, and written up. Occasional work, taken a few times a year.</p>
     </div>
     <a class="offer" href="/design-review/">
       <div class="offer-main">
@@ -242,7 +266,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <!-- wl:footer:start -->
 <footer>
   <div class="foot-in">
-    <div class="foot-links"><a href="/">The lab</a><a href="/attune">Attune</a><a href="/collections/headphones">Headphones</a><a href="/graphs">Measurements</a><a href="/measure">Send yours in</a><a href="/learn">Learn</a><a href="/plugins/">Plugins</a><a href="/design-review/">Design review</a><a href="/#patch">Contact</a></div>
+    <div class="foot-links"><a href="/">The lab</a><a href="/attune">Attune</a><a href="/collections/headphones">Headphones</a><a href="/graphs">Measurements</a><a href="/learn">Learn</a><a href="/plugins/">Plugins</a><a href="/design-review/">Design review</a><a href="/#patch">Contact</a></div>
     <div class="foot-meta"><span>WARREN LABS · JAMEY WARREN</span><span>BUILT IN LIVINGSTON, MONTANA</span></div>
   </div>
 </footer>
