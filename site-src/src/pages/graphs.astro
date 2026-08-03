@@ -117,6 +117,7 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
 
       <div class="legend" id="legend"></div>
       <p class="caption" id="caption"></p>
+      <p class="unresolved" id="unresolved" style="display:none"></p>
 
       <details class="method">
         <summary>Method &amp; limits</summary>
@@ -298,6 +299,13 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
   }
   .legend :global(.hear:hover) { background: var(--accent-soft); }
 
+  .unresolved {
+    flex: none; margin: -4px 2px 12px; padding: 9px 12px; max-width: 78ch;
+    border-left: 2px solid var(--accent); background: var(--accent-dim);
+    border-radius: 0 8px 8px 0; font-size: 12.5px; line-height: 1.5; color: var(--text);
+  }
+  .unresolved :global(.mono) { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+
   .caption { flex: none; padding: 0 2px 12px; font-size: 12px; line-height: 1.55; color: var(--muted); max-width: 78ch; }
   .caption :global(b) { color: var(--text); font-weight: 500; }
 
@@ -431,6 +439,7 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
                                // images of the same headphone comparable — auto-scaling silently
                                // rescales the plot to whatever else happens to be selected.
   let targetId = '';           // reference curve drawn behind the selection
+  let unresolved = [];         // ids in a shared link that this corpus doesn't contain
   let sel = [];
   const usedSlots = new Set();
   let hoverX = null, plot = null;
@@ -687,7 +696,16 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
 
     // Now the selection. Guarded per id for the same reason — one unknown handle in a pasted link
     // must not cost the reader the rest of the comparison.
-    for (const id of ids.slice(0, MAX)) step('headphone ' + id, () => { if (DB.has(id)) toggle(id); });
+    // Unknown ids are REPORTED, never silently dropped. A link naming six headphones that quietly
+    // renders two is the failure MEASUREMENT-PIPELINE.md §5.1 exists to prevent — the reader gets no
+    // signal that anything is missing and reads a partial comparison as a complete one. Ids are
+    // per-headphone and NOT namespaced by rig (the same headphone measured on two fixtures
+    // legitimately shares an id); the FIXTURE is carried by ?src=, and the page never mixes them.
+    const missing = [];
+    for (const id of ids.slice(0, MAX)) {
+      step('headphone ' + id, () => { if (DB.has(id)) toggle(id); else missing.push(id); });
+    }
+    if (missing.length) unresolved = missing;
     step('mode', () => { if (p.get('m') === 'difference') setMode('difference'); });
     } finally {
       // MUST reset even if a step escapes: a stuck `restoring` silently disables syncUrl for the
@@ -804,6 +822,20 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
   // curves were levelled against, and — in Difference mode — which direction the correction runs.
   function renderCaption() {
     const el = $('caption');
+    const warn = $('unresolved');
+    if (unresolved.length) {
+      warn.style.display = '';
+      warn.innerHTML =
+        '<b>' + unresolved.length + ' headphone' + (unresolved.length > 1 ? 's' : '') +
+        '</b> in this link ' + (unresolved.length > 1 ? "aren't" : "isn't") +
+        ' in the ' + (source === 'archive' ? 'HeadRoom archive' : 'Warren Labs set') +
+        ': <span class="mono">' + unresolved.join(', ') + '</span>. ' +
+        (source === 'archive'
+          ? 'Switch the archive off to see our own measurements.'
+          : 'They may be in the HeadRoom archive — switch it on above.');
+    } else {
+      warn.style.display = 'none';
+    }
     if (!sel.length) { el.textContent = ''; return; }
     const a = ALIGN[alignMode];
     const names = sel.map((s) => '<b>' + label(s.id) + '</b>');
@@ -1186,6 +1218,7 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
       }
     }
     e.target.closest('.src').classList.toggle('on', on);
+    unresolved = [];
     loadSource(on ? 'archive' : 'ours');
     renderList(); renderLegend(); renderCaption(); draw(); syncUrl();
   });

@@ -7,8 +7,8 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "node tools/vendor.mjs && node tools/gen-archive.mjs && astro dev",
-    "build": "node tools/vendor.mjs && node tools/gen-archive.mjs && astro build && node tools/sync.mjs && node tools/sync-chrome.mjs",
+    "dev": "node tools/vendor.mjs && node tools/gen-measurements.mjs && node tools/gen-archive.mjs && astro dev",
+    "build": "node tools/vendor.mjs && node tools/gen-measurements.mjs && node tools/gen-archive.mjs && astro build && node tools/sync.mjs && node tools/sync-chrome.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "vendor": "node tools/vendor.mjs"
