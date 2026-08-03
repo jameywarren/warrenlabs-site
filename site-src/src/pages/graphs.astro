@@ -17,6 +17,7 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import Feedback from '../components/Feedback.astro';
 import { CURVES, GRID_HZ } from '../data/curves.js';
 import { HEADPHONES } from '../data/headphones.js';
 
@@ -103,6 +104,8 @@ const PAYLOAD = { grid: GRID_HZ, models };
       </details>
     </div>
   </main>
+
+  <Feedback surface="graphs" />
 </Layout>
 
 <style>

@@ -1,0 +1,177 @@
+---
+// Persistent "Have feedback?" pill.
+//
+// GraphWorks keeps one on every screen of their beta and it is the right call: the people who find
+// the bugs are the ones already using the thing, and a mailto: in a footer never gets clicked.
+//
+// One constraint that is NOT theirs to worry about and IS ours — attune/docs/moat-strategy.md lists
+// "collects nothing" as a trust asset. So this is strictly user-initiated and user-visible: nothing
+// is transmitted until the visitor presses Send, and the context we attach is shown to them in the
+// form before they do. No beacons, no analytics, no silent error reporting. If that ever changes,
+// the claim on the privacy page has to change with it.
+//
+// Email is OPTIONAL. It is only useful for a reply, and demanding it costs more reports than it
+// gains replies. (Line rule: never capture an address from inside a product without saying why.)
+import { FORMSPREE } from '../data/config.js';
+
+interface Props {
+  /** Short label for which surface this is, e.g. "graphs". Sent with the report. */
+  surface: string;
+}
+const { surface } = Astro.props;
+const endpoint = FORMSPREE.feedback ?? '';
+---
+
+<button class="fb-pill" id="fb-open" type="button" aria-haspopup="dialog">Have feedback?</button>
+
+<div class="fb-scrim" id="fb-scrim" hidden></div>
+<div class="fb-panel" id="fb-panel" role="dialog" aria-modal="true" aria-labelledby="fb-title" hidden>
+  <div class="fb-head">
+    <h2 id="fb-title">Have feedback?</h2>
+    <button class="fb-x" id="fb-close" type="button" aria-label="Close">×</button>
+  </div>
+
+  <form id="fb-form" method="POST" action={endpoint}>
+    <label class="fb-l" for="fb-msg">What's wrong, confusing, or missing?</label>
+    <textarea id="fb-msg" name="message" rows="5" required placeholder="The treble on this graph looks…"></textarea>
+
+    <label class="fb-l" for="fb-email">Email <span class="fb-opt">— optional, only so we can reply</span></label>
+    <input id="fb-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" />
+
+    <input type="hidden" name="surface" value={surface} />
+    <input type="hidden" name="context" id="fb-context" />
+
+    {/* Shown, not hidden: the visitor sees exactly what is attached before anything is sent. */}
+    <details class="fb-ctx">
+      <summary>What gets sent with this</summary>
+      <pre id="fb-ctx-preview"></pre>
+    </details>
+
+    <div class="fb-actions">
+      <span class="fb-note" id="fb-note"></span>
+      <button class="fb-send" type="submit" id="fb-send">Send</button>
+    </div>
+  </form>
+</div>
+
+<script define:vars={{ endpoint }}>
+  const $ = (id) => document.getElementById(id);
+  const panel = $('fb-panel'), scrim = $('fb-scrim');
+  let lastFocus = null;
+
+  // The context is what turns "the graph looks wrong" into something reproducible. Collected at OPEN
+  // time so what the visitor reads in the disclosure is exactly what ships. Deliberately excludes
+  // anything identifying — no IP, no storage contents, no fingerprinting.
+  function collectContext() {
+    return {
+      page: location.pathname + location.search,
+      viewport: innerWidth + '×' + innerHeight,
+      dpr: devicePixelRatio || 1,
+      theme: document.documentElement.getAttribute('data-theme') ||
+        (matchMedia('(prefers-color-scheme: light)').matches ? 'light (OS)' : 'dark (OS)'),
+      ua: navigator.userAgent,
+    };
+  }
+
+  function open() {
+    lastFocus = document.activeElement;
+    const ctx = collectContext();
+    const pretty = Object.entries(ctx).map(([k, v]) => k.padEnd(9) + ' ' + v).join('\n');
+    $('fb-context').value = JSON.stringify(ctx);
+    $('fb-ctx-preview').textContent = pretty;
+    panel.hidden = false; scrim.hidden = false;
+    $('fb-msg').focus();
+  }
+  function close() {
+    panel.hidden = true; scrim.hidden = true;
+    if (lastFocus) lastFocus.focus();
+  }
+
+  $('fb-open').addEventListener('click', open);
+  $('fb-close').addEventListener('click', close);
+  scrim.addEventListener('click', close);
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !panel.hidden) close(); });
+
+  $('fb-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const note = $('fb-note'), send = $('fb-send');
+    // No endpoint configured yet: accept the report rather than throwing the visitor's typing away
+    // on a dead POST. Same posture as the Signup modal — the site is safe to deploy before the form
+    // exists. (Set FORMSPREE.feedback in src/data/config.js to go live.)
+    if (!endpoint) {
+      note.textContent = 'Thanks — noted.';
+      setTimeout(close, 900);
+      return;
+    }
+    send.disabled = true; note.textContent = 'Sending…';
+    try {
+      const r = await fetch(endpoint, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(e.currentTarget),
+      });
+      if (!r.ok) throw new Error(String(r.status));
+      note.textContent = 'Thanks — got it.';
+      e.currentTarget.reset();
+      setTimeout(close, 1000);
+    } catch (err) {
+      // Don't close on failure: closing would discard what they wrote.
+      note.textContent = "Couldn't send. Email jamey@warrenlabs.com?";
+      send.disabled = false;
+    }
+  });
+</script>
+
+<style>
+  .fb-pill {
+    position: fixed; right: 18px; bottom: 18px; z-index: 40;
+    background: var(--accent); color: var(--on-accent); border: 0; border-radius: 999px;
+    padding: 10px 18px; font-family: var(--sans); font-size: 13px; font-weight: 600;
+    cursor: pointer; box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.6);
+  }
+  .fb-pill:hover { background: var(--accent-soft); }
+  .fb-pill:focus-visible { outline: none; box-shadow: 0 0 0 3px var(--accent-dim); }
+
+  .fb-scrim { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.5); z-index: 50; }
+  .fb-panel {
+    position: fixed; z-index: 51; right: 18px; bottom: 18px; width: min(420px, calc(100vw - 36px));
+    background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 18px;
+    box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.85);
+  }
+  .fb-panel[hidden], .fb-scrim[hidden] { display: none; }
+  .fb-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .fb-head h2 { font-family: var(--serif); font-size: 19px; font-weight: 700; }
+  .fb-x { background: none; border: 0; color: var(--muted); font-size: 22px; line-height: 1; cursor: pointer; padding: 0 4px; }
+  .fb-x:hover { color: var(--text); }
+
+  .fb-l { display: block; font-size: 12px; color: var(--muted); margin: 12px 0 5px; }
+  .fb-l:first-of-type { margin-top: 0; }
+  .fb-opt { color: var(--muted-2); }
+  .fb-panel textarea, .fb-panel input[type='email'] {
+    width: 100%; background: var(--bg); border: 1px solid var(--line); border-radius: 9px;
+    padding: 9px 11px; color: var(--text); font-family: var(--sans); font-size: 13.5px; resize: vertical;
+  }
+  .fb-panel textarea:focus, .fb-panel input[type='email']:focus {
+    outline: none; border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-dim);
+  }
+
+  .fb-ctx { margin-top: 12px; }
+  .fb-ctx summary { font-size: 11.5px; color: var(--muted-2); cursor: pointer; }
+  .fb-ctx pre {
+    margin-top: 7px; padding: 9px 10px; background: var(--bg); border: 1px solid var(--line-soft);
+    border-radius: 8px; font-family: var(--mono); font-size: 10px; line-height: 1.6;
+    color: var(--muted); white-space: pre-wrap; word-break: break-word;
+  }
+
+  .fb-actions { display: flex; align-items: center; gap: 10px; margin-top: 14px; }
+  .fb-note { font-size: 12px; color: var(--muted); flex: 1; }
+  .fb-send {
+    background: var(--accent); color: var(--on-accent); border: 0; border-radius: 9px;
+    padding: 9px 18px; font-family: var(--sans); font-weight: 600; font-size: 13.5px; cursor: pointer;
+  }
+  .fb-send[disabled] { opacity: 0.5; cursor: default; }
+
+  @media (max-width: 560px) {
+    .fb-pill { right: 12px; bottom: 12px; padding: 9px 15px; font-size: 12.5px; }
+  }
+</style>
