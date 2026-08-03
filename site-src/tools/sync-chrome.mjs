@@ -22,6 +22,12 @@ import { fileURLToPath } from 'node:url';
 const nav = JSON.parse(
   await readFile(join(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'data', 'nav.json'), 'utf8')
 );
+// Content-hashed asset names, written by tools/vendor.mjs. The hand-written pages have no bundler,
+// so without this they'd <link> a stable filename and a warm browser cache could pin them to an old
+// stylesheet forever — see the specificity note in vendor.mjs for why shipping a fix isn't enough.
+const wlAssets = JSON.parse(
+  await readFile(join(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'data', 'wl-assets.json'), 'utf8')
+);
 const { nav: NAV, footerLinks: FOOTER_LINKS, footerMeta: FOOTER_META, markPath: MARK_PATH } = nav;
 const nbsp = (s) => s.replace(/ /g, '\u00a0');
 
@@ -77,9 +83,9 @@ function header(logoHref, darkOnly) {
 // navigation. Must be emitted before css/styles.css, which aliases these variables.
 function head(darkOnly) {
   if (darkOnly)
-    return `<link rel="stylesheet" href="/wl/wl-tokens.css">
+    return `<link rel="stylesheet" href="${wlAssets.tokens}">
 <script>document.documentElement.setAttribute('data-theme','dark');<\/script>`;
-  return `<link rel="stylesheet" href="/wl/wl-tokens.css">
+  return `<link rel="stylesheet" href="${wlAssets.tokens}">
 <script>
 (function(){try{var t=localStorage.getItem('wl-theme');
 if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
