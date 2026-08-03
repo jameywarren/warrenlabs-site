@@ -29,8 +29,14 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
 // Which static pages carry the shared chrome, and whether their logo is a link.
 // The homepage's logo is not a link, because it is already home.
+// darkOnly: the page is PINNED to dark and shows no theme toggle.
+//
+// The homepage is dark-only because its centrepiece is a photorealistic 3U rack — rails with screw
+// holes, knobs, jacks, a cassette, VU meters — drawn with 38 hardcoded dark hex literals. That is a
+// rendering of black anodized hardware, and black hardware is black in any theme. Inverting it
+// doesn't produce a light homepage, it produces grey plastic. The rack appears on no other page.
 const PAGES = [
-  { file: 'index.html', logoHref: null },
+  { file: 'index.html', logoHref: null, darkOnly: true },
   { file: 'design-review/index.html', logoHref: '/' },
   { file: '404.html', logoHref: '/' },
 ];
@@ -39,7 +45,7 @@ const mark = `<svg class="wl-mark" viewBox="0 0 120 80" aria-hidden="true">
         <path d="${MARK_PATH}" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"></path>
       </svg>`;
 
-function header(logoHref) {
+function header(logoHref, darkOnly) {
   const logo = logoHref
     ? `<a class="logo-mark" href="${logoHref}" style="text-decoration:none;">`
     : '<div class="logo-mark">';
@@ -56,7 +62,7 @@ function header(logoHref) {
     <nav id="primary-nav">
       ${links}
     </nav>
-    <button class="wl-theme" id="wl-theme" aria-label="Switch between light and dark" title="Light / dark">◐</button>
+    ${darkOnly ? '' : '<button class="wl-theme" id="wl-theme" aria-label="Switch between light and dark" title="Light / dark">◐</button>'}
     <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="primary-nav">
       <span></span><span></span><span></span>
     </button>
@@ -68,7 +74,10 @@ function header(logoHref) {
 // plain <link> to the vendored copy at /wl/wl-tokens.css, and the theme is resolved inline BEFORE
 // first paint — applying a stored choice after stylesheets load flashes the wrong palette on every
 // navigation. Must be emitted before css/styles.css, which aliases these variables.
-function head() {
+function head(darkOnly) {
+  if (darkOnly)
+    return `<link rel="stylesheet" href="/wl/wl-tokens.css">
+<script>document.documentElement.setAttribute('data-theme','dark');<\/script>`;
   return `<link rel="stylesheet" href="/wl/wl-tokens.css">
 <script>
 (function(){try{var t=localStorage.getItem('wl-theme');
@@ -121,7 +130,7 @@ function replaceBlock(html, name, body, file) {
 }
 
 let touched = 0;
-for (const { file, logoHref } of PAGES) {
+for (const { file, logoHref, darkOnly } of PAGES) {
   const path = join(ROOT, file);
   let html;
   try {
@@ -131,9 +140,9 @@ for (const { file, logoHref } of PAGES) {
     continue;
   }
   const before = html;
-  html = replaceBlock(html, 'head', head(), file);
-  html = replaceBlock(html, 'header', header(logoHref), file);
-  html = replaceBlock(html, 'footer', footer() + '\n' + themeScript(), file);
+  html = replaceBlock(html, 'head', head(darkOnly), file);
+  html = replaceBlock(html, 'header', header(logoHref, darkOnly), file);
+  html = replaceBlock(html, 'footer', footer() + (darkOnly ? '' : '\n' + themeScript()), file);
   if (html !== before) {
     await writeFile(path, html);
     console.log(`sync-chrome: ${file}`);
