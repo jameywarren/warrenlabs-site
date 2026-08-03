@@ -480,23 +480,19 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours, archive: models }, targets: TA
     loadSource('ours');
     // A shared link wins over the house default — arriving from a forum post must show the
     // comparison that was linked, not ours. Only fall back when there's nothing in the URL.
-    if (!restoreFromUrl()) {
+    restoreFromUrl();
+    // Fall back on the OUTCOME, not on what restore claimed. If any part of the restore misbehaves
+    // the visitor must still land on a usable page rather than an empty or half-drawn one.
+    if (!sel.length) {
       // Default view. `restoring` is held true for the same reason the URL path holds it: toggle()
       // calls syncUrl(), so without it the house default stamps ?h=... into a visitor's address bar
       // before they have chosen anything — and each toggle rewrites history mid-loop, which is what
       // was silently costing the second curve here.
       restoring = true;
       try {
-        const dbg = []; window.__WLDBG = dbg;
-        dbg.push('dbSize=' + DB.size + ' MAX=' + MAX + ' keys=' + [...DB.keys()].join(','));
-        for (const id of ['sennheiser-hd-800', 'sennheiser-hd-650']) {
-          dbg.push('try ' + id + ' has=' + DB.has(id) + ' selBefore=' + sel.length);
-          if (DB.has(id)) toggle(id);
-          dbg.push('after ' + id + ' selAfter=' + sel.length);
-        }
+        for (const id of ['sennheiser-hd-800', 'sennheiser-hd-650']) if (DB.has(id)) toggle(id);
         if (!sel.length && MODELS[0]) toggle(MODELS[0].id);
       } catch (e) {
-        (window.__WLDBG || []).push('THREW ' + e.message);
         console.error('default selection', e);
       } finally {
         restoring = false;
@@ -625,8 +621,9 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours, archive: models }, targets: TA
   function restoreFromUrl() {
     const p = new URLSearchParams(location.search);
     const ids = (p.get('h') || '').split(',').map((s) => s.trim()).filter(Boolean);
-    if (!ids.length) return false;
+    if (!ids.length) return;
     restoring = true;
+    try {
 
     // VIEW SETTINGS FIRST, then the curves. Two reasons, and the second is a bug I shipped:
     //   1. Correctness — toggling a curve draws it, so applying smoothing/scale afterwards means
@@ -672,9 +669,12 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours, archive: models }, targets: TA
     // must not cost the reader the rest of the comparison.
     for (const id of ids.slice(0, MAX)) step('headphone ' + id, () => { if (DB.has(id)) toggle(id); });
     step('mode', () => { if (p.get('m') === 'difference') setMode('difference'); });
-
-    restoring = false;
-    return sel.length > 0;
+    } finally {
+      // MUST reset even if a step escapes: a stuck `restoring` silently disables syncUrl for the
+      // rest of the session, so every later change stops appearing in the URL and Copy link starts
+      // handing out a stale address. That failure is invisible until someone shares a wrong link.
+      restoring = false;
+    }
   }
 
   async function copyLink(btn) {
