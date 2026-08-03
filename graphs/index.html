@@ -172,26 +172,18 @@
       // before they have chosen anything — and each toggle rewrites history mid-loop, which is what
       // was silently costing the second curve here.
       // TWO curves by default: this is a comparison tool, and one line doesn't demonstrate that.
-      //
-      // Applied AFTER the first paint, not inline. Selecting twice during boot reliably produced
-      // one curve — the same two toggles triggered by clicking the rows always worked, so it is a
-      // boot-order effect and not the selection logic. Rather than keep guessing at it, the
-      // defaults now run once the page has rendered and behave exactly like a user's first two
-      // clicks, which is the path that was already proven.
-      const wanted = ['sennheiser-hd-800', 'sennheiser-hd-650'];
-      requestAnimationFrame(() => {
-        restoring = true;
-        try {
-          const picks = wanted.map((id) => MODELS.find((m) => m.id === id)).filter(Boolean);
-          for (const m of (picks.length ? picks : MODELS.slice(0, 2))) {
-            if (!sel.some((x) => x.id === m.id)) toggle(m.id);
-          }
-        } catch (e) {
-          console.error('default selection', e);
-        } finally {
-          restoring = false;
-        }
-      });
+      // Back to running inline now the TDZ in drawInto is fixed — that throw was the actual cause
+      // of the "second curve doesn't load" symptom, so the deferral that worked around it is gone.
+      restoring = true;
+      try {
+        const wanted = ['sennheiser-hd-800', 'sennheiser-hd-650'];
+        const picks = wanted.map((id) => MODELS.find((m) => m.id === id)).filter(Boolean);
+        for (const m of (picks.length ? picks : MODELS.slice(0, 2))) toggle(m.id);
+      } catch (e) {
+        console.error('default selection', e);
+      } finally {
+        restoring = false;
+      }
     }
     renderList(); renderLegend(); renderCaption(); draw();
   }
@@ -683,10 +675,17 @@
     // inside the available area (minus label gutters) and centre it; the slack becomes even
     // letterbox/pillarbox margins. PLOT_AR is the one knob — the graph's width:height shape.
     const GUT_L = 50, GUT_R = 14, GUT_T = 14, GUT_B = 46;   // 46: freq labels + the band strip beneath them
+    const availW = W - GUT_L - GUT_R, availH = H - GUT_T - GUT_B;
     // Fixed aspect keeps a curve comparable between screenshots, but forcing 1.85 into a phone's
     // width letterboxes it down to a sliver. Relax toward the available box below 620 px.
+    //
+    // MUST come after availW/availH. It used to sit above them and referenced them — a temporal
+    // dead zone that only threw when W < 620, because short-circuit evaluation skips the branch on
+    // a wide screen. During boot the canvas has no layout yet, so W is small and this DID throw,
+    // aborting the default-selection loop after the first curve. That is the "second curve doesn't
+    // load" bug: not selection logic, not boot order, a TDZ in the draw path that a narrow viewport
+    // exposed and a wide one hid.
     const PLOT_AR = W < 620 ? Math.max(1.15, Math.min(1.85, availW / Math.max(1, availH))) : 1.85;
-    const availW = W - GUT_L - GUT_R, availH = H - GUT_T - GUT_B;
     if (availW < 40 || availH < 40) return null;
     let pw, ph;
     if (availW / availH > PLOT_AR) { ph = availH; pw = Math.round(ph * PLOT_AR); }
