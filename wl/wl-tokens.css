@@ -10,14 +10,14 @@
  *   - warrenlabs-site  (Astro)                — imported by src/layouts/Layout.astro
  *   - attune           (JUCE WebBrowserComponent) — vendored into web/ at configure time
  *
- * DARK IS THE DEFAULT and always has been. Light is a real, first-class palette (Attune shipped one
- * first; the site had none until 2026-08-02).
+ * DARK IS THE DEFAULT, unconditionally — not inferred from the OS. Light is a real, first-class
+ * palette, but it is opt-in via the toggle only (Attune shipped light first; the site had none
+ * until 2026-08-02, then briefly followed the OS until 2026-08-03).
  *
- * Theming contract — three layers, in this order, matching what Attune already does:
- *   1. :root                                  → dark values (the default)
- *   2. @media (prefers-color-scheme: light)   → follow the OS, unless the user pinned dark
- *   3. :root[data-theme="light"|"dark"]       → an explicit toggle wins over both, and persists
- * A surface that only implements layer 1 still looks correct; it just won't follow the OS.
+ * Theming contract — TWO layers (the OS layer was removed 2026-08-03):
+ *   1. :root                             → dark values. The default, unconditionally.
+ *   2. :root[data-theme="light"]         → light, and ONLY via the toggle, which persists.
+ * The site does not read prefers-color-scheme at all. No data-theme means dark.
  *
  * ACCENT: #FF9E2C = oklch(0.78 0.16 64) = Colour(255,158,44).
  * ONE accent, signal-state only — never decoration. Settled 2026-08-03 ON THE BRIGHTER VALUE: the
@@ -104,52 +104,19 @@
   --wl-head-h: 64px;
 }
 
-/* ---- light: clear anodize ----
-   Values ported from Attune, which worked them out first. The graph screen goes light too: a
-   near-black plot floating in a light page reads as a bug, not as an instrument. */
-@media (prefers-color-scheme: light) {
-  :root:not([data-theme='dark']) {
-    --wl-bg: #f7f8f9;
-    --wl-bg-2: #eef0f1;
-    --wl-ground: #f7f8f9;
-    --wl-surface: #ffffff;
-    --wl-surface-2: #f2f3f4;
-    --wl-raise: #e9ebec;
-    --wl-line: #d9dcde;
-    --wl-line-soft: #e6e8ea;
-    --wl-hairline: #d9dcde;
-    --wl-panel-edge: #c9cdd0;
+/* ---- DARK IS THE DEFAULT, and it is NOT the OS's decision (2026-08-03) ----
+   A `@media (prefers-color-scheme: light)` block used to live here, so a visitor whose OS was set
+   to light got a light site whether they asked for it or not. Warren Labs is a dark-ground brand —
+   the rack, the faceplates, the plot glass — so dark is the identity, not something we infer.
+   Light is now reachable ONLY through the ◐ toggle, which stamps data-theme and persists.
 
-    --wl-text: #16181b;
-    --wl-muted: #55595e;
-    --wl-muted-2: #868b90;
+   Consequence for anything reading the theme: with no data-theme attribute the answer is "dark",
+   full stop. Do NOT fall back to matchMedia. That was correct while the OS drove the default and
+   is now a bug — it makes the first toggle click appear to do nothing on a light-preferring
+   machine, because it computes "currently light" for a page that is actually dark.
 
-    --wl-accent: #a85c04;
-    --wl-accent-soft: #8f4d03;
-    --wl-accent-dim: rgba(168, 92, 4, 0.12);
-    --wl-accent-line: rgba(168, 92, 4, 0.32);
-    --wl-on-accent: #ffffff;
-    --wl-good: #1f7a55;
-
-    --wl-graph-bg: #f2f4f5;
-    --wl-graph-grid: rgba(22, 24, 27, 0.11);
-    --wl-graph-grid0: rgba(22, 24, 27, 0.22);
-    --wl-graph-axis: #55595e;
-    --wl-graph-anno: #55595e;
-    --wl-graph-band: rgba(168, 92, 4, 0.13);
-
-    --wl-series-1: #a35f14;
-    --wl-series-2: #1f6bb5;
-    --wl-series-3: #23794a;
-    --wl-series-4: #a8406c;
-    --wl-series-5: #6f4faa;
-    --wl-series-6: #0a767c;
-
-    --wl-trace-yours: #8f9499;
-    --wl-trace-target: #a85c04;
-    --wl-trace-matched: #16181b;
-  }
-}
+   Attune is unaffected: the app carries its own tokens inline in web/index.html and still follows
+   the OS, which is right for an app but not for a brand site. */
 
 /* ---- explicit toggle: wins over the OS in BOTH directions, and persists ---- */
 :root[data-theme='light'] {
@@ -194,6 +161,6 @@
   --wl-trace-matched: #16181b;
 }
 
-/* data-theme="dark" needs no block: :root already holds the dark values, and the
-   prefers-color-scheme block above excludes [data-theme="dark"] so pinning dark on a
-   light-preferring OS correctly falls through to the defaults. */
+/* data-theme="dark" needs no block: :root already holds the dark values, and with the OS layer
+   gone there is nothing for it to override. It is still written by the toggle so that "I chose
+   dark" is distinguishable from "I never chose", which keeps the stored preference honest. */

@@ -64,9 +64,10 @@ const { variant = 'home' } = Astro.props;
   const themeBtn = document.getElementById('wl-theme');
   if (themeBtn) {
     const root = document.documentElement;
-    const current = () =>
-      root.getAttribute('data-theme') ||
-      (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    // No data-theme means DARK — the site no longer reads prefers-color-scheme. Falling back to
+    // matchMedia here would make the first click a no-op on a light-preferring machine: it would
+    // compute "currently light" for a page that is actually dark, then "switch" to dark.
+    const current = () => root.getAttribute('data-theme') || 'dark';
     themeBtn.addEventListener('click', () => {
       const next = current() === 'dark' ? 'light' : 'dark';
       root.setAttribute('data-theme', next);
@@ -113,7 +114,12 @@ const { variant = 'home' } = Astro.props;
     color: var(--text);
     text-decoration: none;
   }
+  /* The sine-W carries the accent; the WARREN LABS wordmark stays ink. This matches the plugins —
+     wl-ui/WLBrand.h has drawWarrenLabsMarkAccent for exactly this, so the mark is amber on a
+     faceplate and was the only place it wasn't on the web. Identity, not decoration, so it doesn't
+     break the signal-state-only rule for the accent. */
   .wl-mark {
+    color: var(--accent);
     width: 34px;
     height: auto;
     display: block;
