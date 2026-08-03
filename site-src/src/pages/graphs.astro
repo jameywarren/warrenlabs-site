@@ -487,14 +487,16 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours, archive: models }, targets: TA
       // was silently costing the second curve here.
       restoring = true;
       try {
-        console.log('WLDBG dbSize', DB.size, 'MAX', MAX, 'keys', [...DB.keys()].join('|'));
+        const dbg = []; window.__WLDBG = dbg;
+        dbg.push('dbSize=' + DB.size + ' MAX=' + MAX + ' keys=' + [...DB.keys()].join(','));
         for (const id of ['sennheiser-hd-800', 'sennheiser-hd-650']) {
-          console.log('WLDBG try', id, 'has', DB.has(id), 'selBefore', sel.length);
+          dbg.push('try ' + id + ' has=' + DB.has(id) + ' selBefore=' + sel.length);
           if (DB.has(id)) toggle(id);
-          console.log('WLDBG after', id, 'selAfter', sel.length);
+          dbg.push('after ' + id + ' selAfter=' + sel.length);
         }
         if (!sel.length && MODELS[0]) toggle(MODELS[0].id);
       } catch (e) {
+        (window.__WLDBG || []).push('THREW ' + e.message);
         console.error('default selection', e);
       } finally {
         restoring = false;
