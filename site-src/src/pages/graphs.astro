@@ -910,7 +910,7 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours, archive: models }, targets: RE
       const t = document.createElement('div');
       t.className = 'lg-band';
       t.innerHTML = '<i style="background:none;border-top:2px dashed ' + TOK.axis + ';height:0"></i><span>' +
-                    TARGETS[targetId].name + ' (target)</span>';
+                    TARGETS[targetId].name + ' (reference)</span>';
       lg.appendChild(t);
     }
     if (showBand && sel.length) {
