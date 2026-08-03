@@ -3,12 +3,12 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 
-const updated = 'July 2026';
+const updated = 'August 2026';
 ---
 
 <Layout
   title="Privacy · Warren Labs"
-  description="How Warren Labs and the Attune macOS app handle your data. Short version: the app collects nothing, and this website only stores an email if you choose to give us one."
+  description="How Warren Labs and the Attune macOS app handle your data. We never collect anything without asking, and we never collect who you are or what you listen to."
 >
   <Nav variant="home" />
   <section class="sec">
@@ -16,24 +16,69 @@ const updated = 'July 2026';
       <span class="eyebrow">Privacy</span>
       <h2>Privacy Policy</h2>
       <p class="sec-lede">
-        Short version: the Attune app collects nothing at all, and this website only stores an
-        email address if you choose to give us one.
+        <b>We never collect anything without asking, and we never collect who you are or what you
+        listen to.</b> Right now the Attune app collects nothing at all, and this website stores an
+        email address only if you choose to give us one.
+      </p>
+
+      <h3>What we will never collect</h3>
+      <p>
+        These are not settings you can turn on. We do not collect them and do not intend to build the
+        ability to: your identity, your contact details, your listening history, the contents of your
+        music library, your file paths, or anything else that could be tied back to you as a person.
+        A tuning you make is yours; what you play through it is not our business.
       </p>
 
       <h3>Attune (the macOS app)</h3>
       <p>
-        <strong>Attune collects, stores, transmits, and shares no personal data.</strong> It runs
+        <b>Attune currently collects, stores, transmits, and shares nothing.</b> It runs
         entirely on your Mac, has no network access, and contains no analytics, telemetry, or
         tracking of any kind. Audio files you choose are read locally only to play them — nothing
         about your music library, your listening, or your tunings ever leaves your device.
       </p>
 
+      <h3>The one thing that can leave</h3>
+      <p>
+        Something you send yourself. If you use <b>Have feedback?</b>, the app writes a message and
+        opens it in <em>your</em> mail client, with the technical context it attaches — app version,
+        macOS version, output device, which headphone pair is loaded — shown to you in the window
+        before you send it. You send it; we don't.
+      </p>
+
+      <h3>If that ever changes</h3>
+      <p>
+        We may one day want crash reports, so bugs get fixed without someone having to write in, or
+        anonymous results from the listening exam, so the house target improves for everyone. If we
+        build either, all of the following are binding: it is <b>off by default</b>; we ask once, in
+        plain language, and say what it's for; <b>you can see the exact payload</b> before you agree
+        and any time after; one click turns it off permanently; and <b>this page is updated first</b>,
+        before the feature ships, never after. Still nothing from the list above, and still nothing
+        tied to you. A pre-ticked box, a consent bundled into something else, or a friendly dialog
+        that defaults to yes would all break that promise, so we won't use them.
+      </p>
+
       <h3>This website (warrenlabs.com)</h3>
       <p>
-        If you enter your email address in a signup or waitlist form, we use it only to contact you
-        about Warren Labs and Attune. It is stored by our form provider (Formspree) and by us, and
-        is never sold or shared with advertisers. Ask us to delete it at any time. The site sets no
-        advertising or cross-site tracking cookies.
+        If you enter your email address in a signup, waitlist, measurement-request or feedback form,
+        we use it only to reply and to contact you about Warren Labs. It is stored by our form
+        provider (Formspree) and by us, and is never sold or shared with advertisers. Ask us to
+        delete it at any time. The site sets no advertising or cross-site tracking cookies. The
+        feedback form attaches the page you were on, your window size and your browser version —
+        shown to you before you send — and email is optional there.
+      </p>
+
+      <h3>The measurement service</h3>
+      <p>
+        If you send a headphone in, we need your name and address to ship it back, and we keep them
+        for that. Published measurements carry a credit line only in the form you choose: your name,
+        a handle, or nothing at all.
+      </p>
+
+      <h3>Why it's written this way</h3>
+      <p>
+        We don't sell headphones and we take no commission on any you buy, so unlike a shop we have
+        no reason to want a profile of you. Not collecting it isn't a sacrifice on our side; it's
+        just what the business doesn't need.
       </p>
 
       <h3>Contact</h3>
