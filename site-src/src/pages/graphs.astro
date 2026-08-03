@@ -50,10 +50,6 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
   <main id="app" class="app">
     <aside>
       <div class="pane">
-        <label class="src" title="The HeadRoom archive is a different fixture, kept as a development reference. Switching source replaces the list — the two are never plotted on one axis.">
-          <input type="checkbox" id="src-archive" />
-          <span>Show HeadRoom archive</span>
-        </label>
         <input class="search" id="q" type="search" placeholder="Search…" autocomplete="off" aria-label="Search headphones" />
         <div class="list" id="list" role="listbox" aria-multiselectable="true"></div>
       </div>
@@ -65,15 +61,25 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
           <button id="m-ov" class="on" role="tab" aria-selected="true">Overlay</button>
           <button id="m-df" role="tab" aria-selected="false">Difference</button>
         </div>
-        <label class="toggle" id="band-t">
-          <input type="checkbox" id="band" /><span>Seating variance</span>
-        </label>
         <label class="align" title="A smooth reference SHAPE drawn behind the selection — not the app\u2019s voice-match target, which deliberately carries the rig\u2019s own artifacts and would read as a spike here.">
           <span>Reference</span>
           <select id="target">
             <option value="">None</option>
             <option value="kemar-diffuse-field">Diffuse field</option>
             <option value="in-room-preference">In-room preference</option>
+          </select>
+        </label>
+        <div class="hint" id="hint"></div>
+        <div class="gearwrap">
+          <button class="gear-btn" id="gset" aria-label="Graph settings" aria-expanded="false" title="Graph settings">⚙</button>
+          <div class="gear-pop" id="gset-pop">
+            <div class="gs-h">Display</div>
+        <label class="align" title="What the curves are levelled against. A band is a fairer anchor than a single frequency.">
+          <span>Align</span>
+          <select id="align">
+            <option value="mid">250–4 kHz</option>
+            <option value="1k">1 kHz</option>
+            <option value="bass">20–200 Hz</option>
           </select>
         </label>
         <label class="align" title="Vertical span. LOCK a scale so the same headphone renders identically between sessions and between exported images — Auto rescales to whatever is selected.">
@@ -95,15 +101,17 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
             <option value="0">None</option>
           </select>
         </label>
-        <label class="align" title="What the curves are levelled against. A band is a fairer anchor than a single frequency.">
-          <span>Align</span>
-          <select id="align">
-            <option value="mid">250–4 kHz</option>
-            <option value="1k">1 kHz</option>
-            <option value="bass">20–200 Hz</option>
-          </select>
+        <label class="toggle" id="band-t">
+          <input type="checkbox" id="band" /><span>Seating variance</span>
         </label>
-        <div class="hint" id="hint"></div>
+            <div class="gs-h gs-h2">Data</div>
+            <label class="src" title="A different fixture (Head Acoustics HMS II.3), kept as a development reference. Switching REPLACES the list — the two are never plotted on one axis.">
+              <input type="checkbox" id="src-archive" />
+              <span>Show HeadRoom archive</span>
+            </label>
+            <p class="gs-note">Our own EARS Pro measurements are the default. The archive is older, on a different rig, and shown only if you ask.</p>
+          </div>
+        </div>
         <div class="share">
           <button class="sbtn" id="copy-link" title="Copy a link to this exact comparison">Copy link</button>
           <button class="sbtn" id="save-png" title="Download this graph as an image">Save image</button>
@@ -258,6 +266,43 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
   .align span { font-family: var(--mono); font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
   .align select { background: none; border: 0; color: var(--text); font-family: var(--mono); font-size: 10px; cursor: pointer; padding: 3px 2px; }
   .align select:focus-visible { outline: none; }
+
+  /* Settings. Same round icon-button treatment Attune uses beside its theme toggle, so the two
+     surfaces read as one product. Everything in here is set-once — scale, smoothing, alignment,
+     the variance band, and the archive — while the toolbar keeps only what you actually reach for
+     mid-comparison. The toolbar had grown to five dropdowns, which is a wall, not a tool. */
+  .gearwrap { position: relative; flex: none; }
+  .gear-btn {
+    width: 32px; height: 32px; display: grid; place-items: center;
+    background: none; border: 1px solid var(--line); border-radius: 50%;
+    color: var(--muted); font-size: 13px; line-height: 1; cursor: pointer;
+    transition: color .14s, border-color .14s;
+  }
+  .gear-btn:hover { color: var(--text); border-color: var(--muted-2); }
+  .gear-btn.on { color: var(--accent); border-color: var(--accent-line); }
+  .gear-btn:focus-visible { outline: none; border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-dim); }
+
+  .gear-pop {
+    display: none; position: absolute; right: 0; top: calc(100% + 8px); z-index: 30;
+    width: 250px; padding: 14px; background: var(--surface);
+    border: 1px solid var(--line); border-radius: 12px;
+    box-shadow: 0 24px 50px -24px rgba(0,0,0,.7);
+  }
+  .gear-pop.on { display: block; }
+  .gear-pop .gs-h {
+    font-family: var(--mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase;
+    color: var(--muted-2); margin-bottom: 9px;
+  }
+  .gear-pop .gs-h2 { margin-top: 15px; padding-top: 13px; border-top: 1px solid var(--line-soft); }
+  .gear-pop .align, .gear-pop .toggle { display: flex; width: 100%; margin: 0 0 7px; justify-content: space-between; }
+  .gear-pop .align select { flex: none; }
+  .gear-pop .src { display: flex; align-items: center; gap: 8px; padding: 7px 9px; margin: 0;
+    background: var(--bg); border: 1px solid var(--line); border-radius: 9px; cursor: pointer; }
+  .gear-pop .src input { accent-color: var(--accent); margin: 0; cursor: pointer; }
+  .gear-pop .src span { font-family: var(--mono); font-size: 9px; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted-2); line-height: 1.3; }
+  .gear-pop .src.on span { color: var(--accent); }
+  .gear-pop .gs-note { margin-top: 9px; font-size: 11.5px; line-height: 1.5; color: var(--muted-2); }
 
   .share { display: flex; gap: 6px; flex: none; }
   .sbtn {
@@ -1205,6 +1250,19 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
     }
     return archiveFetch;
   }
+
+  // Gear popover. Closes on outside click and Escape — a settings panel that traps you is worse
+  // than one more toolbar row.
+  const gset = $('gset'), gpop = $('gset-pop');
+  const setGear = (on) => {
+    gpop.classList.toggle('on', on);
+    gset.classList.toggle('on', on);
+    gset.setAttribute('aria-expanded', on ? 'true' : 'false');
+  };
+  gset.addEventListener('click', (e) => { e.stopPropagation(); setGear(!gpop.classList.contains('on')); });
+  gpop.addEventListener('click', (e) => e.stopPropagation());
+  document.addEventListener('click', () => setGear(false));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setGear(false); });
 
   $('src-archive').addEventListener('change', async (e) => {
     const on = e.target.checked;
