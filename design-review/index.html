@@ -192,7 +192,7 @@ var cur=function(){return r.getAttribute('data-theme')||
 b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';
   r.setAttribute('data-theme',n);try{localStorage.setItem('wl-theme',n);}catch(e){}
   var m=document.querySelector('meta[name="theme-color"]');
-  if(m)m.setAttribute('content',n==='dark'?'#0c0d0f':'#dcdfe1');
+  if(m)m.setAttribute('content',n==='dark'?'#0c0d0f':'#f7f8f9');
   dispatchEvent(new CustomEvent('wl-theme-change',{detail:{theme:n}}));});})();
 </script>
 <!-- wl:footer:end -->

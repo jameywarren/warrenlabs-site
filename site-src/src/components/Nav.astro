@@ -77,7 +77,7 @@ const { variant = 'home' } = Astro.props;
       }
       // Keep the mobile browser chrome in step with the page.
       const meta = document.querySelector('meta[name="theme-color"]');
-      if (meta) meta.setAttribute('content', next === 'dark' ? '#0c0d0f' : '#dcdfe1');
+      if (meta) meta.setAttribute('content', next === 'dark' ? '#0c0d0f' : '#f7f8f9');
       // Canvas plots don't reflow on a CSS variable change — they have to be told.
       window.dispatchEvent(new CustomEvent('wl-theme-change', { detail: { theme: next } }));
     });

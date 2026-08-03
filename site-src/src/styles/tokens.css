@@ -24,7 +24,7 @@
   --line: var(--wl-line);
   --line-soft: var(--wl-line-soft);
   --raise: var(--wl-raise);
-  --bg-deep: var(--wl-graph-bg);
+  --bg-deep: var(--wl-bg-2);
   --panel-edge: var(--wl-panel-edge);
 
   /* ink */
