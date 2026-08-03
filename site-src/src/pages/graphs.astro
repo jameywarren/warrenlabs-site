@@ -20,6 +20,7 @@ import Footer from '../components/Footer.astro';
 import Feedback from '../components/Feedback.astro';
 import { CURVES, GRID_HZ } from '../data/curves.js';
 import { HEADPHONES } from '../data/headphones.js';
+import WL_ASSETS from '../data/wl-assets.json';   // content-hashed paths, written by tools/vendor.mjs
 
 const byHandle = Object.fromEntries(HEADPHONES.map((h) => [h.curveId ?? h.handle, h]));
 const models = Object.entries(CURVES)
@@ -338,7 +339,7 @@ const PAYLOAD = { grid: GRID_HZ, models };
 
 {/* wl-plot must be parsed before the define:vars block below, which is forced inline and so cannot
     import. Vendored into public/ from wl-web by tools/vendor.mjs. */}
-<script is:inline src="/wl/wl-plot.js"></script>
+<script is:inline src={WL_ASSETS.plot}></script>
 
 <script define:vars={{ PAYLOAD }}>
   // Colours now come from wl-web tokens rather than the hex literals that used to live here, so the
