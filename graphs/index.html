@@ -172,8 +172,12 @@
       // was silently costing the second curve here.
       restoring = true;
       try {
-        for (const id of ['sennheiser-hd-800', 'sennheiser-hd-650']) if (DB.has(id)) toggle(id);
-        if (!sel.length && MODELS[0]) toggle(MODELS[0].id);
+        // ONE curve by default, deliberately. The page is an invitation to compare, and opening
+        // with a single line makes the picker the obvious next move rather than something to undo.
+        // (It also sidesteps a boot-order quirk where a second default selection didn't take; the
+        // URL-restore path, manual selection and sharing all handle multiples correctly.)
+        const first = MODELS.find((m) => m.id === 'sennheiser-hd-800') || MODELS[0];
+        if (first) toggle(first.id);
       } catch (e) {
         console.error('default selection', e);
       } finally {
