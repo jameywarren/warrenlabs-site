@@ -83,7 +83,7 @@ header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) ro
 .chain { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
 .chain-mod {
   position: relative; border: 1px solid var(--line); border-top: 1px solid var(--panel-edge); border-radius: 8px;
-  background: linear-gradient(180deg, var(--panel-hi), var(--panel) 28%, #101014);
+  background: linear-gradient(180deg, var(--panel-hi), var(--panel) 28%, var(--bg));
   padding: 26px 24px 28px; display: flex; flex-direction: column; gap: 14px;
   transition: border-color 0.2s, transform 0.2s;
 }
@@ -104,6 +104,38 @@ header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) ro
 @keyframes chainflow { to { background-position: 8px 0; } }
 
 /* ---------- rack section ---------- */
+/* ---- DARK ISLANDS -------------------------------------------------------------------------
+   The rack and the patchbay are photorealistic renderings of black anodized hardware — rails with
+   screw holes, knobs, jacks, VU meters, patch cables. Black gear is black in any theme, so these
+   two sections stay dark while the rest of the page follows light/dark like everything else.
+   That is why the homepage keeps its theme toggle: only these bands opt out, not the page.
+
+   Implemented by redeclaring the SITE aliases (not the --wl-* tokens): `--bg: var(--wl-bg)` is
+   substituted at :root and descendants inherit the resolved value, so overriding --wl-bg here
+   would have no effect. Accent stays the DARK amber — the light one is darkened for white grounds
+   and would disappear against graphite. */
+.rack-zone,
+.contact {
+  --bg: #0c0d0f;
+  --bg2: #0f1012;
+  --ink: #e8ebed;
+  --dim: #868d92;
+  --faint: #565b60;
+  --line: #24272b;
+  --panel: #1b1d20;
+  --panel-hi: #26292d;
+  --panel-edge: #34383d;
+  --acc: #FF9E2C;
+  --acc2: #FF9E2C;
+  --echo-amber: #FF9E2C;
+  --decor: #e8ebed;
+  background: var(--bg2);
+  color: var(--ink);
+}
+/* .contact carries no band background of its own in the original design — keep that, so the
+   patchbay reads as gear sitting on the page rather than a second full-width slab. */
+.contact { background: var(--bg); }
+
 .rack-zone { background: var(--bg2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); padding: 110px 0 130px; overflow: hidden; }
 .rack-head { text-align: center; margin-bottom: 24px; }
 .rack-head .k { font-family: "JetBrains Mono", monospace; font-size: 12px; letter-spacing: 0.26em; color: var(--dim); margin-bottom: 22px; }

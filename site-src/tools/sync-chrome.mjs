@@ -29,14 +29,15 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
 // Which static pages carry the shared chrome, and whether their logo is a link.
 // The homepage's logo is not a link, because it is already home.
-// darkOnly: the page is PINNED to dark and shows no theme toggle.
+// darkOnly: pin the page to dark and hide the theme toggle. Currently unused — kept because the
+// need is real and will recur.
 //
-// The homepage is dark-only because its centrepiece is a photorealistic 3U rack — rails with screw
-// holes, knobs, jacks, a cassette, VU meters — drawn with 38 hardcoded dark hex literals. That is a
-// rendering of black anodized hardware, and black hardware is black in any theme. Inverting it
-// doesn't produce a light homepage, it produces grey plastic. The rack appears on no other page.
+// The homepage briefly used it: its rack and patchbay are photorealistic renderings of black
+// anodized hardware drawn with 38 hardcoded dark hex literals, and black gear is black in any
+// theme. But pinning the whole PAGE was the wrong granularity — those are two sections, so they
+// are now DARK ISLANDS (see .rack-zone/.contact in css/styles.css) and the page keeps its toggle.
 const PAGES = [
-  { file: 'index.html', logoHref: null, darkOnly: true },
+  { file: 'index.html', logoHref: null },
   { file: 'design-review/index.html', logoHref: '/' },
   { file: '404.html', logoHref: '/' },
 ];

@@ -18,10 +18,6 @@
       "label": "LEARN"
     },
     {
-      "href": "/design-review/",
-      "label": "DESIGN REVIEW"
-    },
-    {
       "href": "/#patch",
       "label": "PATCH IN",
       "cta": true
