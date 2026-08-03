@@ -278,8 +278,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 </style>
 <script>
 (function(){var b=document.getElementById('wl-theme');if(!b)return;var r=document.documentElement;
-var cur=function(){return r.getAttribute('data-theme')||
-  (matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');};
+var cur=function(){return r.getAttribute('data-theme')||'dark';};
 b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';
   r.setAttribute('data-theme',n);try{localStorage.setItem('wl-theme',n);}catch(e){}
   var m=document.querySelector('meta[name="theme-color"]');

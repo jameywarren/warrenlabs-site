@@ -995,11 +995,6 @@ const PAYLOAD = { grid: GRID_HZ, models };
     renderList(); renderLegend(); renderCaption(); draw();
   }
   window.addEventListener('wl-theme-change', onThemeChange);
-  // Also follow the OS when the user hasn't pinned a choice — otherwise a system-wide switch to
-  // dark leaves the plot in its light palette until the next reload.
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-    if (!document.documentElement.getAttribute('data-theme')) onThemeChange();
-  });
 
   boot(PAYLOAD);
 </script>
