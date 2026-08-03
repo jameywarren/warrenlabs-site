@@ -491,19 +491,27 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
       // calls syncUrl(), so without it the house default stamps ?h=... into a visitor's address bar
       // before they have chosen anything — and each toggle rewrites history mid-loop, which is what
       // was silently costing the second curve here.
-      restoring = true;
-      try {
-        // TWO curves by default: this is a comparison tool, and one line doesn't demonstrate that.
-        // Select from MODELS rather than probing DB — MODELS is what the picker renders, so if a
-        // row is visible its curve is selectable, and the two can't disagree.
-        const wanted = ['sennheiser-hd-800', 'sennheiser-hd-650'];
-        const picks = wanted.map((id) => MODELS.find((m) => m.id === id)).filter(Boolean);
-        for (const m of (picks.length ? picks : MODELS.slice(0, 2))) toggle(m.id);
-      } catch (e) {
-        console.error('default selection', e);
-      } finally {
-        restoring = false;
-      }
+      // TWO curves by default: this is a comparison tool, and one line doesn't demonstrate that.
+      //
+      // Applied AFTER the first paint, not inline. Selecting twice during boot reliably produced
+      // one curve — the same two toggles triggered by clicking the rows always worked, so it is a
+      // boot-order effect and not the selection logic. Rather than keep guessing at it, the
+      // defaults now run once the page has rendered and behave exactly like a user's first two
+      // clicks, which is the path that was already proven.
+      const wanted = ['sennheiser-hd-800', 'sennheiser-hd-650'];
+      requestAnimationFrame(() => {
+        restoring = true;
+        try {
+          const picks = wanted.map((id) => MODELS.find((m) => m.id === id)).filter(Boolean);
+          for (const m of (picks.length ? picks : MODELS.slice(0, 2))) {
+            if (!sel.some((x) => x.id === m.id)) toggle(m.id);
+          }
+        } catch (e) {
+          console.error('default selection', e);
+        } finally {
+          restoring = false;
+        }
+      });
     }
     renderList(); renderLegend(); renderCaption(); draw();
   }
