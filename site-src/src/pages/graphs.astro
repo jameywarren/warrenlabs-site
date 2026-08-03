@@ -45,7 +45,50 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
   title="Measurements · Warren Labs"
   description="Warren Labs headphone measurements, made on our own miniDSP EARS Pro. Raw, level-matched, and published whatever they say."
 >
-  <Nav />
+  <Nav>
+    <div class="gearwrap" slot="actions">
+            <button class="gear-btn" id="gset" aria-label="Graph settings" aria-expanded="false" title="Graph settings">⚙</button>
+            <div class="gear-pop" id="gset-pop">
+              <div class="gs-h">Display</div>
+          <label class="align" title="What the curves are levelled against. A band is a fairer anchor than a single frequency.">
+            <span>Align</span>
+            <select id="align">
+              <option value="mid">250–4 kHz</option>
+              <option value="1k">1 kHz</option>
+              <option value="bass">20–200 Hz</option>
+            </select>
+          </label>
+          <label class="align" title="Vertical span. LOCK a scale so the same headphone renders identically between sessions and between exported images — Auto rescales to whatever is selected.">
+            <span>Scale</span>
+            <select id="yscale">
+              <option value="auto">Auto</option>
+              <option value="20">±20 dB</option>
+              <option value="30" selected>±30 dB</option>
+              <option value="40">±40 dB</option>
+            </select>
+          </label>
+          <label class="align" title="Display smoothing. The stored data is never changed.">
+            <span>Smooth</span>
+            <select id="smooth">
+              <option value="3">1/3 oct</option>
+              <option value="6">1/6 oct</option>
+              <option value="12" selected>1/12 oct</option>
+              <option value="24">1/24 oct</option>
+              <option value="0">None</option>
+            </select>
+          </label>
+          <label class="toggle" id="band-t">
+            <input type="checkbox" id="band" /><span>Seating variance</span>
+          </label>
+              <div class="gs-h gs-h2">Data</div>
+              <label class="src" title="A different fixture (Head Acoustics HMS II.3), kept as a development reference. Switching REPLACES the list — the two are never plotted on one axis.">
+                <input type="checkbox" id="src-archive" />
+                <span>Show HeadRoom archive</span>
+              </label>
+              <p class="gs-note">Our own EARS Pro measurements are the default. The archive is older, on a different rig, and shown only if you ask.</p>
+            </div>
+          </div>
+  </Nav>
 
   <main id="app" class="app">
     <aside>
@@ -70,48 +113,6 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
           </select>
         </label>
         <div class="hint" id="hint"></div>
-        <div class="gearwrap">
-          <button class="gear-btn" id="gset" aria-label="Graph settings" aria-expanded="false" title="Graph settings">⚙</button>
-          <div class="gear-pop" id="gset-pop">
-            <div class="gs-h">Display</div>
-        <label class="align" title="What the curves are levelled against. A band is a fairer anchor than a single frequency.">
-          <span>Align</span>
-          <select id="align">
-            <option value="mid">250–4 kHz</option>
-            <option value="1k">1 kHz</option>
-            <option value="bass">20–200 Hz</option>
-          </select>
-        </label>
-        <label class="align" title="Vertical span. LOCK a scale so the same headphone renders identically between sessions and between exported images — Auto rescales to whatever is selected.">
-          <span>Scale</span>
-          <select id="yscale">
-            <option value="auto">Auto</option>
-            <option value="20">±20 dB</option>
-            <option value="30" selected>±30 dB</option>
-            <option value="40">±40 dB</option>
-          </select>
-        </label>
-        <label class="align" title="Display smoothing. The stored data is never changed.">
-          <span>Smooth</span>
-          <select id="smooth">
-            <option value="3">1/3 oct</option>
-            <option value="6">1/6 oct</option>
-            <option value="12" selected>1/12 oct</option>
-            <option value="24">1/24 oct</option>
-            <option value="0">None</option>
-          </select>
-        </label>
-        <label class="toggle" id="band-t">
-          <input type="checkbox" id="band" /><span>Seating variance</span>
-        </label>
-            <div class="gs-h gs-h2">Data</div>
-            <label class="src" title="A different fixture (Head Acoustics HMS II.3), kept as a development reference. Switching REPLACES the list — the two are never plotted on one axis.">
-              <input type="checkbox" id="src-archive" />
-              <span>Show HeadRoom archive</span>
-            </label>
-            <p class="gs-note">Our own EARS Pro measurements are the default. The archive is older, on a different rig, and shown only if you ask.</p>
-          </div>
-        </div>
         <div class="share">
           <button class="sbtn" id="copy-link" title="Copy a link to this exact comparison">Copy link</button>
           <button class="sbtn" id="save-png" title="Download this graph as an image">Save image</button>
@@ -254,7 +255,7 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
   .list :global(.empty) { padding: 20px 4px; color: var(--muted-2); font-size: 12.5px; line-height: 1.5; }
 
   .gwrap { display: flex; flex-direction: column; min-height: 0; padding: 16px 20px 0; }
-  .bar { display: flex; align-items: center; gap: 8px; flex: none; padding-bottom: 12px; }
+  .bar { display: flex; align-items: center; gap: 8px; flex: none; padding-bottom: 12px; flex-wrap: wrap; }
   .seg { display: flex; background: var(--surface); border: 1px solid var(--line); border-radius: 9px; padding: 2px; gap: 2px; }
   .seg button {
     background: none; border: 0; color: var(--muted); font-family: var(--mono); font-size: 9.5px;
@@ -280,7 +281,9 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
      surfaces read as one product. Everything in here is set-once — scale, smoothing, alignment,
      the variance band, and the archive — while the toolbar keeps only what you actually reach for
      mid-comparison. The toolbar had grown to five dropdowns, which is a wall, not a tool. */
-  .gearwrap { position: relative; flex: none; }
+  /* Now lives in the site header, immediately left of the theme toggle, matching where Attune puts
+     its gear. Margin mirrors .wl-theme's so the pair reads as one cluster. */
+  .gearwrap { position: relative; flex: none; margin-left: 14px; }
   .gear-btn {
     width: 32px; height: 32px; display: grid; place-items: center;
     background: none; border: 1px solid var(--line); border-radius: 50%;
@@ -292,7 +295,8 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
   .gear-btn:focus-visible { outline: none; border-color: var(--accent-line); box-shadow: 0 0 0 3px var(--accent-dim); }
 
   .gear-pop {
-    display: none; position: absolute; right: 0; top: calc(100% + 8px); z-index: 30;
+    /* z-index above the mobile nav drawer (60), which shares this header's stacking context. */
+    display: none; position: absolute; right: 0; top: calc(100% + 10px); z-index: 70;
     width: 250px; padding: 14px; background: var(--surface);
     border: 1px solid var(--line); border-radius: 12px;
     box-shadow: 0 24px 50px -24px rgba(0,0,0,.7);

@@ -34,6 +34,11 @@ const { variant = 'home' } = Astro.props;
       {NAV.map((l) => <a href={l.href} class={l.cta ? 'cta' : undefined} set:html={nbsp(l.label)} />)}
     </nav>
 
+    {/* Page-specific header actions (e.g. /graphs' settings gear) sit immediately before the theme
+        toggle. A slot rather than a prop: Nav is shared by every page and shouldn't grow knowledge
+        of any one of them. Pages that pass nothing render nothing. */}
+    <slot name="actions" />
+
     <button class="wl-theme" id="wl-theme" aria-label="Switch between light and dark" title="Light / dark">◐</button>
 
     <button class="wl-toggle" aria-label="Menu" aria-expanded="false" aria-controls="wl-nav">
