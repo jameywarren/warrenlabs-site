@@ -1,19 +1,22 @@
 /* Warren Labs: graphite + amber (plugin palette) · Condensed display type · 12° rack */
+/* Aliases over the shared wl-web tokens (linked as /wl/wl-tokens.css in each page's <head>).
+   This block used to hold the palette literally, which is why the hand-written pages had no light
+   mode while the Astro pages did. Everything below inherits light/dark with no further change.
+   Add NEW tokens to wl-web/wl-tokens.css, never here. */
 :root {
-  /* Surfaces: graphite anodize (from the Level plugin tokens) */
-  --bg: #0c0d0f; --bg2: #0f1012;
-  /* Text: neutral off-white / greys */
-  --ink: #e8ebed; --dim: #868d92; --faint: #565b60;
-  --line: #24272b;
-  /* Accent: amber signal accent, unified with the Echo logo color (#FF9E2C, usage spec v1.0).
-     ONE accent, signal-state only. */
-  --acc: #FF9E2C; --acc2: #FF9E2C;
-  /* Echo logo: locked identity color, same amber as the signal accent. */
-  --echo-amber: #FF9E2C;
-  /* Decorative graphics that used to be blue now read as neutral graphite/white trace */
+  /* Surfaces */
+  --bg: var(--wl-bg); --bg2: var(--wl-graph-bg);
+  /* Text */
+  --ink: var(--wl-text); --dim: var(--wl-muted); --faint: var(--wl-muted-2);
+  --line: var(--wl-line);
+  /* Accent: ONE accent, signal-state only. Was #FF9E2C, "unified with the Echo logo colour" — the
+     Echo mark is a dead placeholder and all 9 plugins use #eeb154, so the site was the outlier. */
+  --acc: var(--wl-accent); --acc2: var(--wl-accent);
+  --echo-amber: var(--wl-accent);
+  /* Decorative graphics read as neutral trace, not accent */
   --decor: var(--ink);
-  --panel: #1b1d20; --panel-hi: #26292d; --panel-edge: #34383d;
-  --led-green: #54e08a; --led-amber: #FF9E2C; --led-cyan: #FF9E2C;
+  --panel: var(--wl-surface); --panel-hi: var(--wl-surface-2); --panel-edge: var(--wl-panel-edge);
+  --led-green: var(--wl-good); --led-amber: var(--wl-accent); --led-cyan: var(--wl-accent);
   --font-display: "Barlow", sans-serif; --disp-weight: 700; --disp-ls: 0.01em; --disp-tt: uppercase;
   --h1: clamp(110px, 13.5vw, 196px); --h1-lh: 0.95;
 }
@@ -30,10 +33,10 @@ body {
 .wrap { max-width: 1320px; margin: 0 auto; padding: 0 60px; }
 
 /* ---------- header ---------- */
-header { border-bottom: 1px solid var(--line); position: relative; }
-.head-in { display: flex; justify-content: space-between; align-items: center; padding: 26px 60px; max-width: 1320px; margin: 0 auto; }
+header { box-sizing: border-box; height: var(--wl-head-h);  border-bottom: 1px solid var(--line); position: relative; }
+.head-in { display: flex; justify-content: space-between; align-items: center; height: 100%; padding: 0 60px; max-width: 1320px; margin: 0 auto; }
 .logo-mark { display: flex; align-items: center; gap: 11px; color: var(--ink); }
-.wl-mark { width: 44px; height: auto; display: block; overflow: visible; flex: none; }
+.wl-mark { width: 34px; height: auto; display: block; overflow: visible; flex: none; }
 .logo-mark span { font-family: "Barlow", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.22em; color: var(--ink); }
 nav { display: flex; gap: 36px; align-items: center; }
 nav a { font-family: "JetBrains Mono", monospace; font-size: 12px; letter-spacing: 0.14em; color: var(--dim); text-decoration: none; }
@@ -443,7 +446,7 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
 /* ---------- responsive ---------- */
 @media (max-width: 1080px) {
   .wrap { padding: 0 32px; }
-  .head-in { padding: 22px 32px; }
+  .head-in { padding: 0 32px; }
   .hero-sub { grid-template-columns: 1fr; gap: 36px; padding-bottom: 64px; }
   .creds { border-left: none; border-top: 1px solid var(--line); padding: 24px 0 0; }
   .chain { grid-template-columns: repeat(2, 1fr); gap: 14px; }
@@ -462,7 +465,7 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
 @media (max-width: 720px) {
   :root { --h1: clamp(60px, 18vw, 104px); }
   .wrap { padding: 0 20px; }
-  .head-in { padding: 16px 20px; }
+  .head-in { padding: 0 20px; }
   .logo-mark { gap: 8px; }
   .wl-mark { width: 34px; }
   .logo-mark span { font-size: 12px; letter-spacing: 0.16em; }

@@ -116,7 +116,7 @@ const PAYLOAD = { grid: GRID_HZ, models };
   [hidden] { display: none !important; }
 
   /* ---------- gate ---------- */
-  .gate { min-height: calc(100vh - 68px); display: grid; place-items: center; padding: 40px 20px; }
+  .gate { min-height: calc(100vh - var(--wl-head-h)); display: grid; place-items: center; padding: 40px 20px; }
   .gate-card { max-width: 460px; text-align: center; }
   .gate-card .eyebrow {
     font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
@@ -143,7 +143,7 @@ const PAYLOAD = { grid: GRID_HZ, models };
   .gate-fine { color: var(--muted-2); font-size: 12px; margin-top: 12px; }
 
   /* ---------- viewer ---------- */
-  .app { display: grid; grid-template-columns: 250px 1fr; height: calc(100vh - 68px); min-height: 0; }
+  .app { display: grid; grid-template-columns: 250px 1fr; height: calc(100vh - var(--wl-head-h)); min-height: 0; }
   aside { border-right: 1px solid var(--line-soft); background: var(--surface); min-height: 0; display: flex; }
   .pane { flex: 1; display: flex; flex-direction: column; min-height: 0; padding: 16px 18px 0; }
   .search {
@@ -294,11 +294,34 @@ const PAYLOAD = { grid: GRID_HZ, models };
   }
   .legend :global(.ex-chip .x:hover) { color: var(--text); }
 
+  /* Mobile. A forum link opened on a phone is the single most common way someone arrives here, so
+     this is the layout that matters most, not a fallback. PLOT FIRST: the graph is the thing they
+     followed the link for; the picker sits under it rather than pushing it off-screen. */
   @media (max-width: 760px) {
-    .app { grid-template-columns: 1fr; height: auto; }
-    aside { border-right: 0; border-bottom: 1px solid var(--line-soft); }
-    .list { max-height: 34vh; }
-    .canvas-box { height: 52vh; }
+    .app { grid-template-columns: 1fr; height: auto; display: flex; flex-direction: column; }
+    .gwrap { order: 1; padding: 12px 14px 0; }
+    aside { order: 2; border-right: 0; border-top: 1px solid var(--line-soft); }
+    .pane { padding: 12px 14px 0; }
+    .list { max-height: 46vh; }
+    /* Taller than it is wide would waste a phone screen; this is a readable landscape-ish window
+       that still leaves the picker reachable with a thumb. */
+    .canvas-box { height: 46vh; min-height: 240px; }
+
+    /* The toolbar has four control groups now. Let it wrap instead of overflowing, and drop the
+       hint — on a phone the legend underneath already says how many are selected. */
+    .bar { flex-wrap: wrap; gap: 6px; }
+    .hint { display: none; }
+    .align { margin-left: auto; }
+    .share { width: 100%; }
+    .sbtn { flex: 1; }
+    .caption { font-size: 12.5px; padding-bottom: 16px; }
+    .legend :global(.hear) { margin-left: 0; width: 100%; text-align: center; }
+  }
+  /* Landscape phone: give the plot the whole viewport — this is how you actually read a graph on a
+     phone, and it's the gesture people already know. */
+  @media (max-width: 900px) and (orientation: landscape) {
+    aside { display: none; }
+    .canvas-box { height: calc(100vh - var(--wl-head-h) - 92px); }
   }
 </style>
 
@@ -752,7 +775,9 @@ const PAYLOAD = { grid: GRID_HZ, models };
     // inside the available area (minus label gutters) and centre it; the slack becomes even
     // letterbox/pillarbox margins. PLOT_AR is the one knob — the graph's width:height shape.
     const GUT_L = 50, GUT_R = 14, GUT_T = 14, GUT_B = 46;   // 46: freq labels + the band strip beneath them
-    const PLOT_AR = 1.85;
+    // Fixed aspect keeps a curve comparable between screenshots, but forcing 1.85 into a phone's
+    // width letterboxes it down to a sliver. Relax toward the available box below 620 px.
+    const PLOT_AR = W < 620 ? Math.max(1.15, Math.min(1.85, availW / Math.max(1, availH))) : 1.85;
     const availW = W - GUT_L - GUT_R, availH = H - GUT_T - GUT_B;
     if (availW < 40 || availH < 40) return null;
     let pw, ph;
@@ -923,6 +948,30 @@ const PAYLOAD = { grid: GRID_HZ, models };
   $('q').addEventListener('input', renderList);
   cv.addEventListener('mousemove', onMove);
   cv.addEventListener('mouseleave', () => { hoverX = null; tip.style.opacity = '0'; draw(); });
+
+  // Touch: a phone has no hover, so without this the readout — the whole reason to point at a
+  // curve — is simply unavailable on the device most likely to open a shared link. Drag along the
+  // plot scrubs the crosshair. preventDefault only while the touch is inside the plot, so the page
+  // still scrolls normally when the gesture starts anywhere else.
+  const touchAt = (e) => {
+    const t = e.touches[0];
+    if (!t) return;
+    onMove({ clientX: t.clientX, clientY: t.clientY });
+  };
+  cv.addEventListener('touchstart', (e) => {
+    if (!plot || !sel.length) return;
+    const r = cv.getBoundingClientRect(), t = e.touches[0];
+    const x = t.clientX - r.left, y = t.clientY - r.top;
+    if (x < plot.L || x > plot.L + plot.pw || y < plot.T || y > plot.T + plot.ph) return;
+    e.preventDefault();
+    touchAt(e);
+  }, { passive: false });
+  cv.addEventListener('touchmove', (e) => {
+    if (hoverX == null) return;   // only scrub if the gesture began on the plot
+    e.preventDefault();
+    touchAt(e);
+  }, { passive: false });
+  cv.addEventListener('touchend', () => { hoverX = null; tip.style.opacity = '0'; draw(); });
   new ResizeObserver(() => draw()).observe(cv.parentElement);
   document.querySelector('.method').addEventListener('toggle', () => requestAnimationFrame(draw));
 

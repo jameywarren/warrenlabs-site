@@ -21,6 +21,9 @@ const BANNER =
 const jobs = [
   { from: 'wl-tokens.css', to: resolve(here, '../src/styles/wl-tokens.css'), banner: true },
   { from: 'wl-plot.js', to: resolve(here, '../public/wl/wl-plot.js'), banner: false },
+  // Second copy of the tokens, served at /wl/wl-tokens.css. The hand-written pages (index.html,
+  // /design-review, /404) have no build step and cannot import — they <link> to this.
+  { from: 'wl-tokens.css', to: resolve(here, '../public/wl/wl-tokens.css'), banner: true },
 ];
 
 if (!existsSync(WL_WEB)) {
