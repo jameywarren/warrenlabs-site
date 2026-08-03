@@ -5,7 +5,7 @@
    Add NEW tokens to wl-web/wl-tokens.css, never here. */
 :root {
   /* Surfaces */
-  --bg: var(--wl-bg); --bg2: var(--wl-graph-bg);
+  --bg: var(--wl-bg); --bg2: var(--wl-bg-2);
   /* Text */
   --ink: var(--wl-text); --dim: var(--wl-muted); --faint: var(--wl-muted-2);
   --line: var(--wl-line);

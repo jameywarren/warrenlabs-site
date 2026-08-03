@@ -17,5 +17,5 @@ export const FORMSPREE = {
   // Beta feedback pill (src/components/Feedback.astro). EMPTY until the form exists: the pill still
   // opens and accepts a report rather than POSTing nowhere, so this is safe to ship today. Create a
   // Formspree form and paste its endpoint here to start receiving them.
-  feedback: '',
+  feedback: 'https://formspree.io/f/xkoddkko',
 };

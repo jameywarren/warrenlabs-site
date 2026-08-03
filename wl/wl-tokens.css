@@ -19,16 +19,23 @@
  *   3. :root[data-theme="light"|"dark"]       → an explicit toggle wins over both, and persists
  * A surface that only implements layer 1 still looks correct; it just won't follow the OS.
  *
- * ACCENT: #eeb154 = oklch(0.80 0.13 75) = Colour(238,177,84).
- * ONE accent, signal-state only — never decoration. Before 2026-08-02 warrenlabs.com used #FF9E2C,
- * justified in css/styles.css as "unified with the Echo logo colour." The Echo mark is a DEAD
- * placeholder (the mark is the wave sine-W), and all 9 plugins plus Attune use #eeb154, so the site
- * was the one surface out of step. Don't reintroduce #FF9E2C.
+ * ACCENT: #FF9E2C = oklch(0.78 0.16 64) = Colour(255,158,44).
+ * ONE accent, signal-state only — never decoration. Settled 2026-08-03 ON THE BRIGHTER VALUE: the
+ * plugins' #eeb154 (chroma 0.13) read visibly duller on a page than the site's #FF9E2C (chroma
+ * 0.16), and the site is where most people meet the brand. wl-ui's WLTheme.h, Level's LevelTheme.h
+ * and three plugin screens moved to match, so this is genuinely one accent now — it had been
+ * defined independently in NINE places. Don't reintroduce #eeb154.
+ *
+ * LIGHT IS NOT AN INVERSION OF DARK. The first light palette (2026-08-02) reused Attune's values
+ * wholesale, which was wrong: a mid-grey #dcdfe1 ground suits a dense instrument UI and looks
+ * washed-out under warrenlabs.com's 196px display type — grey type on a grey field. Light now has
+ * its own near-white ground and near-black ink so the homepage keeps its drama.
  */
 
 :root {
   /* ---- ground / chrome (graphite anodize) ---- */
   --wl-bg: #0c0d0f;
+  --wl-bg-2: #0f1012;   /* alternating section tint — NOT the plot glass, which is --wl-graph-bg */
   --wl-ground: #1b1d20;
   --wl-surface: #1b1d20;
   --wl-surface-2: #26292d;
@@ -44,10 +51,10 @@
   --wl-muted-2: #565b60;
 
   /* ---- accent (signal state only) ---- */
-  --wl-accent: #eeb154;
-  --wl-accent-soft: #f3c47a;
-  --wl-accent-dim: rgba(238, 177, 84, 0.14);
-  --wl-accent-line: rgba(238, 177, 84, 0.3);
+  --wl-accent: #FF9E2C;
+  --wl-accent-soft: #ffb257;
+  --wl-accent-dim: rgba(255, 158, 44, 0.14);
+  --wl-accent-line: rgba(255, 158, 44, 0.3);
   --wl-on-accent: #1b1d20;
   --wl-good: #5dcaa5;
 
@@ -59,7 +66,7 @@
   --wl-graph-grid0: rgba(220, 228, 232, 0.2); /* the 0 dB / zero-reference line, deliberately stronger */
   --wl-graph-axis: #6e747a;
   --wl-graph-anno: #6e747a;
-  --wl-graph-band: rgba(238, 177, 84, 0.11);
+  --wl-graph-band: rgba(255, 158, 44, 0.11);
 
   /* Multi-series palette for overlay plots (/graphs allows six at once).
      Series 1 is NOT the accent: on a plot every series is equally "signal", so leading with the
@@ -74,7 +81,7 @@
   /* Attune's three fixed roles (yours / target / voice-matched). Distinguished by DASH as well as
      hue — see wl-plot.js strokeCurve — so the plot survives colour-blindness and greyscale print. */
   --wl-trace-yours: #565c61;
-  --wl-trace-target: #eeb154;
+  --wl-trace-target: #FF9E2C;
   --wl-trace-matched: #e8ebed;
 
   /* ---- type ----
@@ -102,38 +109,35 @@
    near-black plot floating in a light page reads as a bug, not as an instrument. */
 @media (prefers-color-scheme: light) {
   :root:not([data-theme='dark']) {
-    --wl-bg: #dcdfe1;
-    --wl-ground: #dcdfe1;
-    --wl-surface: #f3f4f5;
-    --wl-surface-2: #eaecee;
-    --wl-raise: #e4e6e8;
-    --wl-line: #c6cacd;
-    --wl-line-soft: #d3d7da;
-    --wl-hairline: #c6cacd;
-    --wl-panel-edge: #b9bec2;
+    --wl-bg: #f7f8f9;
+    --wl-bg-2: #eef0f1;
+    --wl-ground: #f7f8f9;
+    --wl-surface: #ffffff;
+    --wl-surface-2: #f2f3f4;
+    --wl-raise: #e9ebec;
+    --wl-line: #d9dcde;
+    --wl-line-soft: #e6e8ea;
+    --wl-hairline: #d9dcde;
+    --wl-panel-edge: #c9cdd0;
 
-    --wl-text: #2e3236;
-    --wl-muted: #5e6368;
-    --wl-muted-2: #7c8287;
+    --wl-text: #16181b;
+    --wl-muted: #55595e;
+    --wl-muted-2: #868b90;
 
-    /* The dark amber fails contrast on a light ground, so light gets a darkened amber. Same hue
-       family, ~4.6:1 on --wl-surface. Do not reuse #eeb154 here. */
-    --wl-accent: #9a6410;
-    --wl-accent-soft: #8a5610;
-    --wl-accent-dim: rgba(154, 100, 16, 0.14);
-    --wl-accent-line: rgba(154, 100, 16, 0.32);
+    --wl-accent: #a85c04;
+    --wl-accent-soft: #8f4d03;
+    --wl-accent-dim: rgba(168, 92, 4, 0.12);
+    --wl-accent-line: rgba(168, 92, 4, 0.32);
     --wl-on-accent: #ffffff;
-    --wl-good: #2f8a63;
+    --wl-good: #1f7a55;
 
-    --wl-graph-bg: #eceef0;
-    --wl-graph-grid: rgba(46, 50, 54, 0.12);
-    --wl-graph-grid0: rgba(46, 50, 54, 0.22);
-    --wl-graph-axis: #5e6368;
-    --wl-graph-anno: #5e6368;
-    --wl-graph-band: rgba(154, 100, 16, 0.14);
+    --wl-graph-bg: #f2f4f5;
+    --wl-graph-grid: rgba(22, 24, 27, 0.11);
+    --wl-graph-grid0: rgba(22, 24, 27, 0.22);
+    --wl-graph-axis: #55595e;
+    --wl-graph-anno: #55595e;
+    --wl-graph-band: rgba(168, 92, 4, 0.13);
 
-    /* Series darkened for contrast against a light plot. Same hue order, so a curve keeps its
-       identity when a reader switches theme mid-comparison. */
     --wl-series-1: #a35f14;
     --wl-series-2: #1f6bb5;
     --wl-series-3: #23794a;
@@ -142,40 +146,41 @@
     --wl-series-6: #0a767c;
 
     --wl-trace-yours: #8f9499;
-    --wl-trace-target: #9a6410;
-    --wl-trace-matched: #2e3236;
+    --wl-trace-target: #a85c04;
+    --wl-trace-matched: #16181b;
   }
 }
 
 /* ---- explicit toggle: wins over the OS in BOTH directions, and persists ---- */
 :root[data-theme='light'] {
-  --wl-bg: #dcdfe1;
-  --wl-ground: #dcdfe1;
-  --wl-surface: #f3f4f5;
-  --wl-surface-2: #eaecee;
-  --wl-raise: #e4e6e8;
-  --wl-line: #c6cacd;
-  --wl-line-soft: #d3d7da;
-  --wl-hairline: #c6cacd;
-  --wl-panel-edge: #b9bec2;
+  --wl-bg: #f7f8f9;
+  --wl-bg-2: #eef0f1;
+  --wl-ground: #f7f8f9;
+  --wl-surface: #ffffff;
+  --wl-surface-2: #f2f3f4;
+  --wl-raise: #e9ebec;
+  --wl-line: #d9dcde;
+  --wl-line-soft: #e6e8ea;
+  --wl-hairline: #d9dcde;
+  --wl-panel-edge: #c9cdd0;
 
-  --wl-text: #2e3236;
-  --wl-muted: #5e6368;
-  --wl-muted-2: #7c8287;
+  --wl-text: #16181b;
+  --wl-muted: #55595e;
+  --wl-muted-2: #868b90;
 
-  --wl-accent: #9a6410;
-  --wl-accent-soft: #8a5610;
-  --wl-accent-dim: rgba(154, 100, 16, 0.14);
-  --wl-accent-line: rgba(154, 100, 16, 0.32);
+  --wl-accent: #a85c04;
+  --wl-accent-soft: #8f4d03;
+  --wl-accent-dim: rgba(168, 92, 4, 0.12);
+  --wl-accent-line: rgba(168, 92, 4, 0.32);
   --wl-on-accent: #ffffff;
-  --wl-good: #2f8a63;
+  --wl-good: #1f7a55;
 
-  --wl-graph-bg: #eceef0;
-  --wl-graph-grid: rgba(46, 50, 54, 0.12);
-  --wl-graph-grid0: rgba(46, 50, 54, 0.22);
-  --wl-graph-axis: #5e6368;
-  --wl-graph-anno: #5e6368;
-  --wl-graph-band: rgba(154, 100, 16, 0.14);
+  --wl-graph-bg: #f2f4f5;
+  --wl-graph-grid: rgba(22, 24, 27, 0.11);
+  --wl-graph-grid0: rgba(22, 24, 27, 0.22);
+  --wl-graph-axis: #55595e;
+  --wl-graph-anno: #55595e;
+  --wl-graph-band: rgba(168, 92, 4, 0.13);
 
   --wl-series-1: #a35f14;
   --wl-series-2: #1f6bb5;
@@ -185,8 +190,8 @@
   --wl-series-6: #0a767c;
 
   --wl-trace-yours: #8f9499;
-  --wl-trace-target: #9a6410;
-  --wl-trace-matched: #2e3236;
+  --wl-trace-target: #a85c04;
+  --wl-trace-matched: #16181b;
 }
 
 /* data-theme="dark" needs no block: :root already holds the dark values, and the
