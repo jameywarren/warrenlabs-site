@@ -19,6 +19,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Feedback from '../components/Feedback.astro';
 import { CURVES, GRID_HZ } from '../data/curves.js';
+import { TARGETS } from '../data/targets.js';
 import { HEADPHONES } from '../data/headphones.js';
 import WL_ASSETS from '../data/wl-assets.json';   // content-hashed paths, written by tools/vendor.mjs
 
@@ -27,7 +28,7 @@ const models = Object.entries(CURVES)
   .filter(([id]) => byHandle[id])
   .map(([id, db]) => ({ id, b: byHandle[id].brand, n: byHandle[id].name, db }))
   .sort((a, b) => (a.b + a.n).localeCompare(b.b + b.n));
-const PAYLOAD = { grid: GRID_HZ, models };
+const PAYLOAD = { grid: GRID_HZ, models, targets: TARGETS };
 ---
 
 <Layout
@@ -52,6 +53,33 @@ const PAYLOAD = { grid: GRID_HZ, models };
         </div>
         <label class="toggle" id="band-t">
           <input type="checkbox" id="band" /><span>Seating variance</span>
+        </label>
+        <label class="align" title="Reference curve drawn behind the selection. Warren Labs is our house voice; Diffuse Field is the neutral measurement standard.">
+          <span>Target</span>
+          <select id="target">
+            <option value="">None</option>
+            <option value="warren-labs-house">Warren Labs</option>
+            <option value="diffuse-field-neutral">Diffuse Field</option>
+          </select>
+        </label>
+        <label class="align" title="Vertical span. LOCK a scale so the same headphone renders identically between sessions and between exported images — Auto rescales to whatever is selected.">
+          <span>Scale</span>
+          <select id="yscale">
+            <option value="auto">Auto</option>
+            <option value="20">±20 dB</option>
+            <option value="30" selected>±30 dB</option>
+            <option value="40">±40 dB</option>
+          </select>
+        </label>
+        <label class="align" title="Display smoothing. The stored data is never changed.">
+          <span>Smooth</span>
+          <select id="smooth">
+            <option value="3">1/3 oct</option>
+            <option value="6">1/6 oct</option>
+            <option value="12" selected>1/12 oct</option>
+            <option value="24">1/24 oct</option>
+            <option value="0">None</option>
+          </select>
         </label>
         <label class="align" title="What the curves are levelled against. A band is a fairer anchor than a single frequency.">
           <span>Align</span>
@@ -368,8 +396,13 @@ const PAYLOAD = { grid: GRID_HZ, models };
   // and nothing to unlock. Boot straight into the viewer at the end of this script.
 
   // ---------- viewer ----------
-  let MODELS = [], GRID = [], DB = new Map(), SMOOTH = new Map();
+  let MODELS = [], GRID = [], DB = new Map(), SMOOTH = new Map(), TARGETS = {};
   let mode = 'overlay', showBand = false;
+  let smoothOct = 12;          // 1/N octave; 0 = off
+  let yScale = 30;             // 'auto' or a ±dB span. A LOCKED scale is what makes two exported
+                               // images of the same headphone comparable — auto-scaling silently
+                               // rescales the plot to whatever else happens to be selected.
+  let targetId = '';           // reference curve drawn behind the selection
   let sel = [];
   const usedSlots = new Set();
   let hoverX = null, plot = null;
@@ -379,9 +412,11 @@ const PAYLOAD = { grid: GRID_HZ, models };
   // 1/12-octave gaussian smoothing, for DISPLAY only. The stored data is untouched, and the
   // smoothing window is far finer than the 0.37 dB seating floor, so this removes rendering
   // jaggedness without inventing or hiding anything real.
-  function smoothCurve(db) {
+  function smoothCurve(db, oct) {
+    oct = oct === undefined ? smoothOct : oct;
+    if (!oct) return db.slice();                 // "None" — the stored points, unsmoothed
     const ln = GRID.map(Math.log);
-    const sig = Math.log(Math.pow(2, 1 / 12)) / 2;
+    const sig = Math.log(Math.pow(2, 1 / oct)) / 2;
     return db.map((_, i) => {
       let num = 0, den = 0;
       for (let j = 0; j < db.length; j++) {
@@ -397,6 +432,7 @@ const PAYLOAD = { grid: GRID_HZ, models };
   // Renders from the inlined payload.
   function boot(a) {
     GRID = a.grid;
+    TARGETS = a.targets || {};
     MODELS = a.models.map((m) => ({ id: m.id, brand: m.b, name: m.n }));
     for (const m of a.models) {
       DB.set(m.id, m.db);
@@ -425,6 +461,11 @@ const PAYLOAD = { grid: GRID_HZ, models };
   };
   let alignMode = 'mid';
 
+  function resmoothAll() {
+    for (const [id, db] of DB) SMOOTH.set(id, smoothCurve(db));
+    alignCache.clear();
+  }
+
   const rawCurve = (id) => SMOOTH.get(id) ?? DB.get(id);
 
   // Mean level of a curve across the alignment band, in GRID index space.
@@ -443,6 +484,17 @@ const PAYLOAD = { grid: GRID_HZ, models };
   }
 
   // Everything downstream (draw, hover, difference) reads through here, so alignment applies once.
+  // The target goes through the SAME alignment as the headphones. If it didn't, the reference line
+  // would sit at a fixed offset while the curves moved under it, which is worse than having no
+  // reference at all — it would look authoritative and be wrong.
+  function targetCurve() {
+    const t = targetId && TARGETS[targetId];
+    if (!t) return null;
+    const key = '__target__' + targetId;
+    if (!DB.has(key)) { DB.set(key, t.db); SMOOTH.set(key, smoothCurve(t.db)); }
+    return curve(key);
+  }
+
   const alignCache = new Map();
   function curve(id) {
     const k = id + '|' + alignMode;
@@ -499,6 +551,9 @@ const PAYLOAD = { grid: GRID_HZ, models };
     if (mode !== 'overlay') p.set('m', mode);
     if (showBand) p.set('band', '1');
     if (alignMode !== 'mid') p.set('a', alignMode);
+    if (targetId) p.set('t', targetId);
+    if (yScale !== 30) p.set('y', String(yScale));
+    if (smoothOct !== 12) p.set('s', String(smoothOct));
     const q = p.toString();
     // replaceState, not pushState: dragging through a dozen headphones shouldn't bury the visitor's
     // real history under a dozen back-button steps.
@@ -512,6 +567,12 @@ const PAYLOAD = { grid: GRID_HZ, models };
     restoring = true;
     for (const id of ids.slice(0, MAX)) if (DB.has(id)) toggle(id);
     if (p.get('m') === 'difference') setMode('difference');
+    const tg = p.get('t');
+    if (tg && TARGETS[tg]) { targetId = tg; $('target').value = tg; }
+    const ys = p.get('y');
+    if (ys) { yScale = ys === 'auto' ? 'auto' : Number(ys); $('yscale').value = ys; }
+    const sm = p.get('s');
+    if (sm !== null && sm !== '') { smoothOct = Number(sm); $('smooth').value = sm; resmoothAll(); }
     const am = p.get('a');
     if (am && ALIGN[am]) { alignMode = am; $('align').value = am; alignCache.clear(); }
     if (p.get('band') === '1') { showBand = true; $('band').checked = true; $('band-t').classList.add('on'); }
@@ -637,6 +698,9 @@ const PAYLOAD = { grid: GRID_HZ, models };
     el.innerHTML =
       'This shows ' + body +
       ', raw on one <b>Head Acoustics HMS II.3</b>, L/R averaged, levelled over <b>' + a.label + '</b>' +
+      (targetId && TARGETS[targetId] && mode !== 'difference'
+        ? ', against the <b>' + TARGETS[targetId].name + '</b> target (dashed)' : '') +
+      (smoothOct ? ', smoothed 1/' + smoothOct + ' octave' : ', unsmoothed') +
       (showBand && mode !== 'difference' ? ', with the ±1 SD seating band' : '') + '.';
   }
 
@@ -738,6 +802,13 @@ const PAYLOAD = { grid: GRID_HZ, models };
       el.append(i, t, x);
       lg.appendChild(el);
     }
+    if (targetId && TARGETS[targetId] && mode !== 'difference') {
+      const t = document.createElement('div');
+      t.className = 'lg-band';
+      t.innerHTML = '<i style="background:none;border-top:2px dashed ' + TOK.axis + ';height:0"></i><span>' +
+                    TARGETS[targetId].name + ' (target)</span>';
+      lg.appendChild(t);
+    }
     if (showBand && sel.length) {
       const b = document.createElement('div');
       b.className = 'lg-band';
@@ -803,7 +874,11 @@ const PAYLOAD = { grid: GRID_HZ, models };
     const active = diff ? sel.slice(0, 2) : sel;
 
     let lo = -12, hi = 12;
-    if (active.length) {
+    if (yScale !== 'auto') {
+      // Locked: a fixed, symmetric span. Deliberately ignores the data so the plot's vertical
+      // meaning is constant across sessions, selections and exported images.
+      lo = -Number(yScale); hi = Number(yScale);
+    } else if (active.length) {
       let mn = Infinity, mx = -Infinity;
       const scan = (v) => { if (v < mn) mn = v; if (v > mx) mx = v; };
       if (diff) {
@@ -883,6 +958,19 @@ const PAYLOAD = { grid: GRID_HZ, models };
       }
     }
 
+    // Reference first, so measured curves sit ON it. Dashed + dimmed: a target is a design
+    // opinion, not a measurement, and it should never read as another headphone.
+    const tgt = !diff && targetCurve();
+    if (tgt) {
+      ctx.save();
+      ctx.setLineDash([6, 5]);
+      ctx.globalAlpha = 0.75;
+      ctx.lineWidth = 1.8; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+      ctx.strokeStyle = TOK.axis;
+      strokeSpline(ctx, GRID.map((f, i) => [X(f), Y(tgt[i])]));
+      ctx.restore();
+    }
+
     ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
     if (diff) {
       const a = curve(sel[0].id), b = curve(sel[1].id);
@@ -948,6 +1036,21 @@ const PAYLOAD = { grid: GRID_HZ, models };
   $('band').addEventListener('change', (e) => {
     showBand = e.target.checked;
     $('band-t').classList.toggle('on', showBand);
+    renderLegend(); renderCaption(); draw(); syncUrl();
+  });
+  $('target').addEventListener('change', (e) => {
+    targetId = e.target.value;
+    renderLegend(); renderCaption(); draw(); syncUrl();
+  });
+  $('yscale').addEventListener('change', (e) => {
+    yScale = e.target.value === 'auto' ? 'auto' : Number(e.target.value);
+    draw(); syncUrl();
+  });
+  $('smooth').addEventListener('change', (e) => {
+    smoothOct = Number(e.target.value);
+    resmoothAll();
+    // the target is cached under its own key and must be rebuilt at the new smoothing too
+    for (const k of [...DB.keys()].filter((k) => k.startsWith('__target__'))) { DB.delete(k); SMOOTH.delete(k); }
     renderLegend(); renderCaption(); draw(); syncUrl();
   });
   $('align').addEventListener('change', (e) => {
