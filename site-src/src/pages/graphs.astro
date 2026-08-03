@@ -19,7 +19,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Feedback from '../components/Feedback.astro';
 import { CURVES, GRID_HZ } from '../data/curves.js';
-import { TARGETS } from '../data/targets.js';
+import { REFERENCES } from '../data/targets.js';
 import { MEASUREMENTS } from '../data/measurements.js';
 import { HEADPHONES } from '../data/headphones.js';
 import WL_ASSETS from '../data/wl-assets.json';   // content-hashed paths, written by tools/vendor.mjs
@@ -35,7 +35,7 @@ const models = Object.entries(CURVES)
 // A switch rather than a merge, so "two fixtures never share an axis" is enforced by the data model
 // instead of by a caption. See MEASUREMENT-PIPELINE.md §4.1 / §5.1.
 const ours = MEASUREMENTS.map((m) => ({ id: m.id, b: m.b, n: m.n, db: m.db }));
-const PAYLOAD = { grid: GRID_HZ, sources: { ours, archive: models }, targets: TARGETS };
+const PAYLOAD = { grid: GRID_HZ, sources: { ours, archive: models }, targets: REFERENCES };
 ---
 
 <Layout
@@ -65,12 +65,12 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours, archive: models }, targets: TA
         <label class="toggle" id="band-t">
           <input type="checkbox" id="band" /><span>Seating variance</span>
         </label>
-        <label class="align" title="Reference curve drawn behind the selection. Warren Labs is our house voice; Diffuse Field is the neutral measurement standard.">
-          <span>Target</span>
-          <select id="target" disabled>
+        <label class="align" title="A smooth reference SHAPE drawn behind the selection — not the app\u2019s voice-match target, which deliberately carries the rig\u2019s own artifacts and would read as a spike here.">
+          <span>Reference</span>
+          <select id="target">
             <option value="">None</option>
-            <option value="warren-labs-house">Warren Labs</option>
-            <option value="diffuse-field-neutral">Diffuse Field</option>
+            <option value="kemar-diffuse-field">Diffuse field</option>
+            <option value="in-room-preference">In-room preference</option>
           </select>
         </label>
         <label class="align" title="Vertical span. LOCK a scale so the same headphone renders identically between sessions and between exported images — Auto rescales to whatever is selected.">
@@ -542,11 +542,10 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours, archive: models }, targets: TA
   // The target goes through the SAME alignment as the headphones. If it didn't, the reference line
   // would sit at a fixed offset while the curves moved under it, which is worse than having no
   // reference at all — it would look authoritative and be wrong.
-  // The shipped targets are DERIVED on the HeadRoom DF baseline (attune tags them kHeadRoomRig).
-  // Drawing one behind EARS Pro curves would be a baseline mix wearing the authority of a
-  // reference line — the worst kind, because it looks deliberate. target-curves.md already flags
-  // that the house target must be re-derived on the EARS Pro DF; until it is, this refuses.
-  const targetUsable = () => source === 'archive';
+  // These are rig-agnostic reference SHAPES (references.dat), not measured on either fixture, so
+  // unlike the app's voice-match targets they are legitimate over both corpora. Normalised the same
+  // way as the curves they sit behind, and always drawn dashed + dimmed.
+  const targetUsable = () => true;
 
   function targetCurve() {
     const t = targetId && targetUsable() && TARGETS[targetId];
@@ -644,7 +643,6 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours, archive: models }, targets: TA
         loadSource('archive');
         $('src-archive').checked = true;
         $('src-archive').closest('.src').classList.add('on');
-        $('target').disabled = false;
       }
     });
     step('target', () => {
@@ -805,7 +803,7 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours, archive: models }, targets: TA
         : ', measured here on a <b>miniDSP EARS Pro</b>') +
       ', levelled over <b>' + a.label + '</b>' +
       (targetId && TARGETS[targetId] && mode !== 'difference'
-        ? ', against the <b>' + TARGETS[targetId].name + '</b> target (dashed)' : '') +
+        ? ', against the <b>' + TARGETS[targetId].name + '</b> reference shape (dashed)' : '') +
       (smoothOct ? ', smoothed 1/' + smoothOct + ' octave' : ', unsmoothed') +
       (showBand && mode !== 'difference' ? ', with the ±1 SD seating band' : '') + '.';
   }
@@ -1148,8 +1146,6 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours, archive: models }, targets: TA
     const on = e.target.checked;
     e.target.closest('.src').classList.toggle('on', on);
     loadSource(on ? 'archive' : 'ours');
-    if (!on) { $('target').value = ''; targetId = ''; }   // targets are archive-baseline only
-    $('target').disabled = !on;
     renderList(); renderLegend(); renderCaption(); draw(); syncUrl();
   });
   $('target').addEventListener('change', (e) => {
