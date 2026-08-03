@@ -30,8 +30,8 @@ const PAYLOAD = { grid: GRID_HZ, models };
 ---
 
 <Layout
-  title="Measurements · Warren Labs"
-  description="Compare measured frequency response across headphones, on one artificial head, level-matched and raw."
+  title="Measurements · The HeadRoom Archive · Warren Labs"
+  description="The HeadRoom Archive: measured frequency response for 40 headphones on one artificial head, raw and level-matched. New Warren Labs measurements on the EARS Pro are being taken now."
 >
   <Nav />
 
@@ -79,11 +79,22 @@ const PAYLOAD = { grid: GRID_HZ, models };
         <summary>Method &amp; limits</summary>
         <div class="mgrid">
           <div>
-            <h4>What this is</h4>
+            <h4>What this is — the Archive</h4>
             <p>
-              Raw measured response on one <b>Head Acoustics HMS&nbsp;II.3</b> — not
-              diffuse-field compensated, L/R averaged, normalized at 1&nbsp;kHz, smoothed
-              1/12&nbsp;octave for legibility. One unit per model.
+              The <b>HeadRoom Archive</b>: measurements made at HeadRoom on a
+              <b>Head Acoustics HMS&nbsp;II.3</b>, rights retained. Raw — not diffuse-field
+              compensated — L/R averaged, normalized at 1&nbsp;kHz, smoothed 1/12&nbsp;octave for
+              legibility. One unit per model, and no record of who measured it or on what pads.
+            </p>
+          </div>
+          <div>
+            <h4>New measurements are replacing it</h4>
+            <p>
+              Warren Labs now measures on a <b>miniDSP EARS&nbsp;Pro</b>, from scratch, with the
+              rig, operator, unit and pad state recorded for every curve. Those will appear here as
+              they land. <b>The two never share an axis</b> — different fixtures are different
+              coordinate systems, so a count or a comparison covers one rig or the other, never
+              both. Until a model is re-measured, the Archive line is the best we have.
             </p>
           </div>
           <div>

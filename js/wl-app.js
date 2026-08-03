@@ -228,24 +228,25 @@
     },
     {
       slug: 'attune', name: 'Attune', code: 'Attn', accent: '#E9A24A',
-      category: 'Headphone compensation', status: 'In development',
-      blurb: 'Correction usually means somebody else\'s idea of flat. Attune finds yours instead: pick your headphone, then let a blind, loudness-matched A/B on your own music narrow in on the curve you actually prefer. It takes about a minute, and stock against yours stays on one toggle. Same correction engine as Level, wrapped in something a listener can use.',
+      category: 'Headphone auditioning + personal EQ', status: 'Beta',
+      blurb: 'Correction usually means somebody else\'s idea of flat. Attune finds yours instead: pick your headphone, then let a blind, loudness-matched A/B on your own music narrow in on the curve you actually prefer. It takes about a minute, and stock against yours stays on one toggle. You can also voice one headphone toward another and hear the difference, loudness-matched. Same correction engine as Level, wrapped in something a listener can use.',
       features: [
         'Blind, loudness-matched A/B on your own music',
         'Lands on a personal curve in about a minute',
         'Stock against yours on one toggle',
+        'Voice one headphone toward another',
         'macOS app on the shared Level engine'
       ],
       meta: [
         ['ROLE', 'Solo. Product, DSP, and build'],
         ['TYPE', 'macOS app'],
         ['ENGINE', 'Shared with Level'],
-        ['STATUS', 'In development']
+        ['STATUS', 'Free beta, macOS']
       ]
     },
     {
       slug: 'tonefarm', name: 'Tone Farm', code: 'Tnfm', accent: '#F0A644',
-      category: 'Guitar amp + FX', status: 'In development',
+      category: 'Guitar amp + FX', status: 'Beta',
       blurb: 'Most amp sims ask you to assemble a rig. Tone Farm ships three amps that never switch off, captured from real hardware with a neural model, and builds the pedals, cab, room, and console around them. One plugin, one signal path, no blank canvas. Being finished in the open at tone.farm.',
       features: [
         'Three amps, neural-captured off real hardware',
