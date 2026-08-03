@@ -283,13 +283,43 @@
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.globalAlpha = 0.75;
-    for (var i = 0; i < BANDS.length; i++) {
-      var b = BANDS[i];
-      var mid = Math.sqrt(b.from * b.to); // geometric centre — the visual centre on a log axis
-      var x = sc.x(mid);
-      if (x < box.L + 12 || x > box.L + box.pw - 12) continue;
-      ctx.fillText(b.label.toUpperCase(), x, y);
+
+    // Drop labels that would COLLIDE, measured, rather than thinning by a width heuristic.
+    //
+    // The first attempt compared plot width against the widest label and dropped every other band
+    // below a threshold. That measured the wrong thing: the bands are geometric, so their centres
+    // bunch up at the low end while spreading out at the top, and a plot can be "wide enough" on
+    // average while SUB BASS / MID BASS / LOWER MID still overlap. Uneven spacing needs per-label
+    // positions, not an average.
+    //
+    // So: lay them all out, then walk left to right keeping a label only when its left edge clears
+    // the last kept label's right edge. AIR is reserved first — the strip's job is to teach that
+    // bass is left and air is right, and losing the right anchor costs more than losing a middle
+    // band.
+    const PAD = 6;
+    const laid = [];
+    for (let i = 0; i < BANDS.length; i++) {
+      const b = BANDS[i];
+      const mid = Math.sqrt(b.from * b.to); // geometric centre = the visual centre on a log axis
+      const x = sc.x(mid);
+      const half = ctx.measureText(b.label.toUpperCase()).width / 2;
+      if (x - half < box.L || x + half > box.L + box.pw) continue; // would run off the plot
+      laid.push({ x, half, text: b.label.toUpperCase() });
     }
+
+    const last = laid.length ? laid[laid.length - 1] : null;
+    const kept = [];
+    for (let i = 0; i < laid.length; i++) {
+      const it = laid[i];
+      const prev = kept.length ? kept[kept.length - 1] : null;
+      if (prev && it.x - it.half < prev.x + prev.half + PAD) continue;
+      // Don't place something that would in turn crowd out the right-hand anchor.
+      if (last && it !== last && last.x - last.half < it.x + it.half + PAD) continue;
+      kept.push(it);
+    }
+    if (last && kept[kept.length - 1] !== last) kept.push(last);
+
+    for (const it of kept) ctx.fillText(it.text, it.x, y);
     ctx.globalAlpha = 1;
   }
 
