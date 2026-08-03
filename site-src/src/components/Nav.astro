@@ -34,6 +34,8 @@ const { variant = 'home' } = Astro.props;
       {NAV.map((l) => <a href={l.href} class={l.cta ? 'cta' : undefined} set:html={nbsp(l.label)} />)}
     </nav>
 
+    <button class="wl-theme" id="wl-theme" aria-label="Switch between light and dark" title="Light / dark">◐</button>
+
     <button class="wl-toggle" aria-label="Menu" aria-expanded="false" aria-controls="wl-nav">
       <span></span><span></span><span></span>
     </button>
@@ -52,6 +54,32 @@ const { variant = 'home' } = Astro.props;
     head.querySelectorAll('nav a').forEach((a) => a.addEventListener('click', () => set(false)));
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') set(false);
+    });
+  }
+
+  // Light/dark toggle. Layout.astro has already stamped any STORED choice before first paint; this
+  // only handles clicks. First click resolves the current *computed* theme (which may have come from
+  // the OS) and flips it, so the button always does the visible thing rather than jumping to a
+  // default. Writing data-theme pins the choice in both directions — see wl-web/README.md.
+  const themeBtn = document.getElementById('wl-theme');
+  if (themeBtn) {
+    const root = document.documentElement;
+    const current = () =>
+      root.getAttribute('data-theme') ||
+      (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+    themeBtn.addEventListener('click', () => {
+      const next = current() === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try {
+        localStorage.setItem('wl-theme', next);
+      } catch (e) {
+        /* private mode — the choice just won't persist across navigations */
+      }
+      // Keep the mobile browser chrome in step with the page.
+      const meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.setAttribute('content', next === 'dark' ? '#0c0d0f' : '#dcdfe1');
+      // Canvas plots don't reflow on a CSS variable change — they have to be told.
+      window.dispatchEvent(new CustomEvent('wl-theme-change', { detail: { theme: next } }));
     });
   }
 </script>
@@ -119,6 +147,37 @@ const { variant = 'home' } = Astro.props;
     background: var(--accent);
     color: var(--on-accent);
   }
+  /* Light/dark. Same ◐ glyph and same round-button treatment Attune uses in its header, so the two
+     surfaces read as one product. Stays visible at mobile widths — it's one of the few controls
+     worth keeping outside the hamburger, since it's how a light-mode user fixes a dark page. */
+  .wl-theme {
+    width: 32px;
+    height: 32px;
+    flex: none;
+    display: grid;
+    place-items: center;
+    margin-left: 14px;
+    background: none;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    transition:
+      color 0.14s,
+      border-color 0.14s;
+  }
+  .wl-theme:hover {
+    color: var(--text);
+    border-color: var(--muted-2);
+  }
+  .wl-theme:focus-visible {
+    outline: none;
+    border-color: var(--accent-line);
+    box-shadow: 0 0 0 3px var(--accent-dim);
+  }
+
   .wl-toggle {
     display: none;
     flex-direction: column;

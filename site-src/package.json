@@ -7,10 +7,11 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build && node tools/sync.mjs && node tools/sync-chrome.mjs",
+    "dev": "node tools/vendor.mjs && astro dev",
+    "build": "node tools/vendor.mjs && astro build && node tools/sync.mjs && node tools/sync-chrome.mjs",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "vendor": "node tools/vendor.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
