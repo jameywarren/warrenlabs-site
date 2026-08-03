@@ -60,6 +60,12 @@ const attuneApp = {
           <Button href="#get" variant="ghost" size="lg" data-signup data-intent="notify">Get launch news</Button>
         </div>
         <div class="hero-note"><span class="dot"></span> macOS &middot; Apple&nbsp;Silicon only</div>
+
+        {/* Handoff from /graphs Difference mode. Someone who arrives here has already picked a pair
+            and been told what the correction looks like — landing them on a generic hero throws that
+            away. Filled client-side from ?yours=&target= and left hidden otherwise; the names are
+            resolved against the corpus, never echoed from the URL (that would be an injection). */}
+        <p class="handoff" id="handoff" hidden></p>
       </div>
 
       <AttuneCockpitDemo />
@@ -323,7 +329,28 @@ const attuneApp = {
   <Footer variant="attune" />
 </Layout>
 
+<script>
+  // Resolve the ids against the published corpus rather than trusting the query string. An unknown
+  // id simply leaves the banner hidden, which is also what makes this safe to link to from anywhere.
+  import { HEADPHONES } from '../data/headphones.js';
+  const byId = Object.fromEntries(HEADPHONES.map((h) => [h.curveId ?? h.handle, h]));
+  const p = new URLSearchParams(location.search);
+  const y = byId[p.get('yours') || ''], t = byId[p.get('target') || ''];
+  if (y && t) {
+    const el = document.getElementById('handoff');
+    el.textContent = `Came from the graph: Attune can voice your ${y.brand} ${y.name} toward the ${t.brand} ${t.name} — and let you A/B it, loudness-matched.`;
+    el.hidden = false;
+  }
+</script>
+
 <style>
+  .handoff {
+    margin-top: 16px; padding: 11px 14px; border-left: 2px solid var(--accent);
+    background: var(--accent-dim); border-radius: 0 8px 8px 0;
+    font-size: 13.5px; line-height: 1.55; color: var(--text); max-width: 54ch;
+  }
+  .handoff[hidden] { display: none; }
+
   /* ---------- hero ---------- */
   .hero {
     position: relative;
