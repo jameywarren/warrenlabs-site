@@ -224,6 +224,13 @@ const PAYLOAD = { grid: GRID_HZ, models };
   .legend :global(.lg .x:hover) { color: var(--text); }
   /* Auto-generated plain-English statement of what's on screen. Cheap, and it removes the main
      way a measurement graph gets misread: not knowing what it was referenced to. */
+  .legend :global(.hear) {
+    margin-left: auto; flex: none; background: var(--accent); color: var(--on-accent);
+    text-decoration: none; font-family: var(--sans); font-weight: 600; font-size: 12.5px;
+    padding: 6px 13px; border-radius: 8px; white-space: nowrap;
+  }
+  .legend :global(.hear:hover) { background: var(--accent-soft); }
+
   .caption { flex: none; padding: 0 2px 12px; font-size: 12px; line-height: 1.55; color: var(--muted); max-width: 78ch; }
   .caption :global(b) { color: var(--text); font-weight: 500; }
 
@@ -640,7 +647,21 @@ const PAYLOAD = { grid: GRID_HZ, models };
       if (sel.length >= 2) {
         const note = document.createElement('div');
         note.className = 'diff-note';
-        note.innerHTML = `<i style="background:${SERIES[0]}"></i><span>Correction to make <b>${label(sel[0].id)}</b> measure like <b>${label(sel[1].id)}</b></span>`;
+        const i = document.createElement('i'); i.style.background = SERIES[0];
+        const txt = document.createElement('span');
+        txt.innerHTML = `Correction to make <b>${label(sel[0].id)}</b> measure like <b>${label(sel[1].id)}</b>`;
+        note.append(i, txt);
+
+        // The bridge. This view already computes exactly what voice-match applies — the delta
+        // between two measured curves — so the honest next step isn't another graph, it's hearing
+        // it. Until now /graphs and Attune didn't touch at all, which was the biggest missed
+        // connection in the line. Carries the pair so the landing page can name it.
+        const hear = document.createElement('a');
+        hear.className = 'hear';
+        hear.href = `/attune?yours=${encodeURIComponent(sel[0].id)}&target=${encodeURIComponent(sel[1].id)}`;
+        hear.textContent = 'Hear this →';
+        hear.title = `Voice-match ${label(sel[0].id)} to ${label(sel[1].id)} in Attune`;
+        note.appendChild(hear);
         wrap.appendChild(note);
       }
 
