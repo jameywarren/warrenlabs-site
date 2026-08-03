@@ -86,6 +86,11 @@ const { variant = 'home' } = Astro.props;
 
 <style>
   .wl-head {
+    /* border-box + a fixed height puts the 1px border INSIDE the token, so --wl-head-h is the
+       header's true total height. Without this, calc(100vh - var(--wl-head-h)) on /graphs is off
+       by exactly the border and the page scrolls 1px — which is how the original 68px drifted. */
+    box-sizing: border-box;
+    height: var(--wl-head-h);
     border-bottom: 1px solid var(--line);
     position: relative;
     background: var(--bg);
@@ -94,7 +99,10 @@ const { variant = 'home' } = Astro.props;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 26px 60px;
+    /* Fixed height from the token, not vertical padding: /graphs sizes itself against
+       var(--wl-head-h), and a padding-derived height silently drifts out of step with it. */
+    height: 100%;
+    padding: 0 60px;
     max-width: 1320px;
     margin: 0 auto;
   }
@@ -106,7 +114,7 @@ const { variant = 'home' } = Astro.props;
     text-decoration: none;
   }
   .wl-mark {
-    width: 44px;
+    width: 34px;
     height: auto;
     display: block;
     overflow: visible;
@@ -216,7 +224,7 @@ const { variant = 'home' } = Astro.props;
 
   @media (max-width: 1080px) {
     .wl-head-in {
-      padding: 22px 32px;
+      padding: 0 32px;
     }
     nav {
       gap: 22px;
@@ -224,10 +232,10 @@ const { variant = 'home' } = Astro.props;
   }
   @media (max-width: 900px) {
     .wl-head-in {
-      padding: 16px 20px;
+      padding: 0 20px;
     }
     .wl-mark {
-      width: 34px;
+      width: 30px;
     }
     .wl-logo span {
       font-size: 12px;

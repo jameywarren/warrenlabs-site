@@ -3,6 +3,7 @@
 // The homepage, /design-review and /404 are static HTML with no build step of their own, so they
 // cannot import a component. Instead each one marks the region it delegates:
 //
+//   <!-- wl:head:start   -->  ...generated...  <!-- wl:head:end   -->   (tokens + no-flash theme)
 //   <!-- wl:header:start -->  ...generated...  <!-- wl:header:end -->
 //   <!-- wl:footer:start -->  ...generated...  <!-- wl:footer:end -->
 //
@@ -55,11 +56,45 @@ function header(logoHref) {
     <nav id="primary-nav">
       ${links}
     </nav>
+    <button class="wl-theme" id="wl-theme" aria-label="Switch between light and dark" title="Light / dark">◐</button>
     <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="primary-nav">
       <span></span><span></span><span></span>
     </button>
   </div>
 </header>`;
+}
+
+// The <head> block the static pages delegate. They have no build step, so the tokens arrive as a
+// plain <link> to the vendored copy at /wl/wl-tokens.css, and the theme is resolved inline BEFORE
+// first paint — applying a stored choice after stylesheets load flashes the wrong palette on every
+// navigation. Must be emitted before css/styles.css, which aliases these variables.
+function head() {
+  return `<link rel="stylesheet" href="/wl/wl-tokens.css">
+<script>
+(function(){try{var t=localStorage.getItem('wl-theme');
+if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+<\/script>`;
+}
+
+// Light/dark behaviour + the button's styling, injected once per static page. Kept here rather than
+// in css/styles.css so the toggle contract lives in exactly one place for both renderers.
+function themeScript() {
+  return `<style>
+.wl-theme{width:32px;height:32px;flex:none;display:grid;place-items:center;margin-left:14px;
+  background:none;border:1px solid var(--line);border-radius:50%;color:var(--dim);font-size:14px;
+  line-height:1;cursor:pointer;transition:color .14s,border-color .14s}
+.wl-theme:hover{color:var(--ink);border-color:var(--faint)}
+</style>
+<script>
+(function(){var b=document.getElementById('wl-theme');if(!b)return;var r=document.documentElement;
+var cur=function(){return r.getAttribute('data-theme')||
+  (matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');};
+b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';
+  r.setAttribute('data-theme',n);try{localStorage.setItem('wl-theme',n);}catch(e){}
+  var m=document.querySelector('meta[name="theme-color"]');
+  if(m)m.setAttribute('content',n==='dark'?'#0c0d0f':'#dcdfe1');
+  dispatchEvent(new CustomEvent('wl-theme-change',{detail:{theme:n}}));});})();
+<\/script>`;
 }
 
 function footer() {
@@ -96,8 +131,9 @@ for (const { file, logoHref } of PAGES) {
     continue;
   }
   const before = html;
+  html = replaceBlock(html, 'head', head(), file);
   html = replaceBlock(html, 'header', header(logoHref), file);
-  html = replaceBlock(html, 'footer', footer(), file);
+  html = replaceBlock(html, 'footer', footer() + '\n' + themeScript(), file);
   if (html !== before) {
     await writeFile(path, html);
     console.log(`sync-chrome: ${file}`);

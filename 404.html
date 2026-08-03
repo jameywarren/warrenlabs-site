@@ -12,6 +12,13 @@
 <link rel="apple-touch-icon" href="/assets/brand/png/wl-appicon_amber-graphite_180.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Archivo:wght@400;500;600&display=swap" rel="stylesheet">
+<!-- wl:head:start -->
+<link rel="stylesheet" href="/wl/wl-tokens.css">
+<script>
+(function(){try{var t=localStorage.getItem('wl-theme');
+if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<!-- wl:head:end -->
 <link rel="stylesheet" href="/css/styles.css">
 <style>
   /* 404 audio-desk "no signal" screen. Reuses the site tokens (--acc, --bg, --line, fonts). */
@@ -51,6 +58,7 @@
     <nav id="primary-nav">
       <a href="/attune">ATTUNE</a><a href="/collections/headphones">HEADPHONES</a><a href="/graphs">MEASUREMENTS</a><a href="/learn">LEARN</a><a href="/design-review/">DESIGN REVIEW</a><a class="cta" href="/#patch">PATCH IN</a>
     </nav>
+    <button class="wl-theme" id="wl-theme" aria-label="Switch between light and dark" title="Light / dark">◐</button>
     <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="primary-nav">
       <span></span><span></span><span></span>
     </button>
@@ -178,6 +186,22 @@
     <div class="foot-meta"><span>WARREN LABS · JAMEY WARREN</span><span>BUILT IN LIVINGSTON, MONTANA</span></div>
   </div>
 </footer>
+<style>
+.wl-theme{width:32px;height:32px;flex:none;display:grid;place-items:center;margin-left:14px;
+  background:none;border:1px solid var(--line);border-radius:50%;color:var(--dim);font-size:14px;
+  line-height:1;cursor:pointer;transition:color .14s,border-color .14s}
+.wl-theme:hover{color:var(--ink);border-color:var(--faint)}
+</style>
+<script>
+(function(){var b=document.getElementById('wl-theme');if(!b)return;var r=document.documentElement;
+var cur=function(){return r.getAttribute('data-theme')||
+  (matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');};
+b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';
+  r.setAttribute('data-theme',n);try{localStorage.setItem('wl-theme',n);}catch(e){}
+  var m=document.querySelector('meta[name="theme-color"]');
+  if(m)m.setAttribute('content',n==='dark'?'#0c0d0f':'#dcdfe1');
+  dispatchEvent(new CustomEvent('wl-theme-change',{detail:{theme:n}}));});})();
+</script>
 <!-- wl:footer:end -->
 </body>
 </html>
