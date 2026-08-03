@@ -6,6 +6,7 @@ import Button from '../../components/Button.astro';
 import ProductGraph from '../../components/ProductGraph.astro';
 import { HEADPHONES, BY_HANDLE } from '../../data/headphones.js';
 import { CURVES } from '../../data/curves.js';
+import { MEASUREMENTS } from '../../data/measurements.js';
 import { fixtureOf } from '../../data/fixtures.js';
 
 export function getStaticPaths() {
@@ -17,9 +18,13 @@ const SITE = 'https://warrenlabs.com';
 const url = `${SITE}/products/${hp.handle}`;
 const full = `${hp.brand} ${hp.name}`;
 
-const dbs = CURVES[hp.curveId];
-// Which bench made this curve. Everything published today is the archive rig; the registry
-// keeps that a data fact rather than a hardcoded string, so EARS Pro curves need no page edits.
+// OUR measurement wins when we have one. The HeadRoom archive is a development reference and a
+// stand-in until this model reaches our bench — useful, licensing-clean, and genuinely ours to
+// publish, but a different fixture, so the page has to say which one the reader is looking at.
+// Never merged: one curve, one rig, named.
+const ourMeasurement = MEASUREMENTS.find((m) => m.id === hp.curveId);
+const isArchive = !ourMeasurement;
+const dbs = ourMeasurement ? ourMeasurement.db : CURVES[hp.curveId];
 const fx = fixtureOf(hp.curveId);
 
 const title = `${full} — frequency response & honest take · Warren Labs`;
@@ -78,9 +83,23 @@ const jsonLd = [
         </div>
         <ProductGraph dbs={dbs} label={full} />
         <div class="grig">
+          <span class={isArchive ? 'src-archive' : 'src-ours'}>
+            {isArchive
+              ? 'HeadRoom archive · Head Acoustics HMS II.3'
+              : 'Measured here · miniDSP EARS Pro'}
+          </span>
           <span>Normalized 0 dB @ 1 kHz</span>
           <span>One unit, one seating</span>
         </div>
+        {isArchive && (
+          <p class="archive-note">
+            <b>Not yet measured on our rig.</b> This curve comes from the HeadRoom archive — a
+            different fixture, measured years ago, kept as a development reference. It is the best
+            we have for this model and we would rather show it, labelled, than show nothing. When
+            this headphone reaches our bench the page gets our own measurement.
+            {' '}<a href="/measure">Send yours in</a> and it will be this one.
+          </p>
+        )}
       </section>
 
       <div class="panel">
@@ -267,6 +286,16 @@ const jsonLd = [
     border-radius: 5px;
     padding: 3px 7px;
   }
+  .grig .src-ours { color: var(--accent); }
+  .grig .src-archive { color: var(--muted-2); }
+  .archive-note {
+    margin-top: 12px; padding: 11px 14px; border-left: 2px solid var(--line);
+    background: var(--surface); border-radius: 0 8px 8px 0;
+    font-size: 13px; line-height: 1.55; color: var(--muted); max-width: 62ch;
+  }
+  .archive-note b { color: var(--text); }
+  .archive-note a { color: var(--accent); }
+
   .grig {
     margin-top: 8px;
     font-family: var(--mono);
