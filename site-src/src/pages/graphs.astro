@@ -35,7 +35,10 @@ const models = Object.entries(CURVES)
 // A switch rather than a merge, so "two fixtures never share an axis" is enforced by the data model
 // instead of by a caption. See MEASUREMENT-PIPELINE.md §4.1 / §5.1.
 const ours = MEASUREMENTS.map((m) => ({ id: m.id, b: m.b, n: m.n, db: m.db }));
-const PAYLOAD = { grid: GRID_HZ, sources: { ours, archive: models }, targets: REFERENCES };
+// The archive is NOT inlined: all 319 curves is ~197 KB, and it is off by default. It ships as
+// WL_ASSETS.archive and is fetched the first time someone enables it. `models` (the curated 40 with
+// editorial metadata) still drives /products, which is why curves.js stays imported.
+const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archiveUrl: WL_ASSETS.archive };
 ---
 
 <Layout
@@ -638,13 +641,20 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours, archive: models }, targets: RE
     const step = (what, fn) => { try { fn(); } catch (e) { console.error('restore: ' + what, e); } };
 
     // Source first: the ids below only exist in one corpus, and loadSource() wipes the selection.
-    step('source', () => {
-      if (p.get('src') === 'archive') {
+    // A shared archive link has to wait for the fetch, so the ids below have a corpus to land in.
+    // restoreFromUrl stays synchronous for everything else; only this branch defers.
+    if (p.get('src') === 'archive') {
+      $('src-archive').checked = true;
+      $('src-archive').closest('.src').classList.add('on');
+      ensureArchive().then((ok) => {
+        if (!ok) { $('src-archive').checked = false; return; }
         loadSource('archive');
-        $('src-archive').checked = true;
-        $('src-archive').closest('.src').classList.add('on');
-      }
-    });
+        for (const id of ids.slice(0, MAX)) if (DB.has(id)) toggle(id);
+        renderList(); renderLegend(); renderCaption(); draw();
+      });
+      restoring = false;
+      return;
+    }
     step('target', () => {
       const tg = p.get('t');
       if (tg && TARGETS[tg]) { targetId = tg; $('target').value = tg; }
@@ -1142,8 +1152,31 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours, archive: models }, targets: RE
     $('band-t').classList.toggle('on', showBand);
     renderLegend(); renderCaption(); draw(); syncUrl();
   });
-  $('src-archive').addEventListener('change', (e) => {
+  // Fetched once, then cached for the session. Failure leaves the toggle off rather than showing an
+  // empty picker, so a network blip can't look like "we have no archive".
+  let archiveFetch = null;
+  function ensureArchive() {
+    if (SOURCES.archive) return Promise.resolve(true);
+    if (!archiveFetch) {
+      archiveFetch = fetch(PAYLOAD.archiveUrl)
+        .then((r) => { if (!r.ok) throw new Error(String(r.status)); return r.json(); })
+        .then((d) => { SOURCES.archive = d.models; return true; })
+        .catch((e) => { console.error('archive fetch', e); archiveFetch = null; return false; });
+    }
+    return archiveFetch;
+  }
+
+  $('src-archive').addEventListener('change', async (e) => {
     const on = e.target.checked;
+    if (on) {
+      $('hint').textContent = 'Loading archive…';
+      const ok = await ensureArchive();
+      if (!ok) {
+        e.target.checked = false;
+        $('hint').textContent = "Couldn't load the archive.";
+        return;
+      }
+    }
     e.target.closest('.src').classList.toggle('on', on);
     loadSource(on ? 'archive' : 'ours');
     renderList(); renderLegend(); renderCaption(); draw(); syncUrl();
