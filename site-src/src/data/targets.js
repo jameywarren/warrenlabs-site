@@ -1,19 +1,20 @@
-// GENERATED from attune/Assets/Curves/targets.dat — do not hand-edit.
+// GENERATED from attune/Assets/Curves/references.dat — do not hand-edit.
 //
-// The two Warren Labs reference curves, on the SAME 128-point log grid (20 Hz–20 kHz) as curves.js.
+// DISPLAY reference shapes for /graphs. NOT the shipped voice-match targets, and the distinction
+// matters more than it looks:
 //
-// BASELINE — the load-bearing fact. These are DERIVED, not measured headphones, and they sit on the
-// HeadRoom HMS II.3 diffuse-field baseline (attune tags them kHeadRoomRig). That is the same
-// baseline as the 40 Archive curves they are drawn against, so overlaying them is legal. It will
-// NOT be legal for EARS Pro measurements: attune/docs/target-curves.md flags that the house target
-// must be re-derived on the EARS Pro DF before those curves land here. Two fixtures never share an
-// axis, and that applies to targets exactly as it does to headphones.
+//   targets.dat (in the app) is re-anchored to the EARS Pro rig and DELIBERATELY carries the rig's
+//   own artifacts — notably a ~13 kHz coupler resonance the GRAS RA0402 damps — because a
+//   voice-match target must carry them so that (target - yours) cancels them. Drawn as a reference
+//   LINE on a published graph, that same correctness would read as a bizarre 13 kHz spike.
 //
-// The house curve is "a Dan Clark version of Harman" (target-curves.md v0.3, 2026-08-02):
-// DF + low-shelf +7.0 dB @110 Hz Q0.70, presence trim -1.0 dB @1900 Hz Q1.40, and a FIXED in-room
-// downtilt -3.0 dB high-shelf @4000 Hz Q0.85. A STARTING GOAL to be proven against our own rig,
-// not a settled answer.
-export const TARGETS = {
-  "warren-labs-house": { name: "Warren Labs", db: [3.16, 3.15, 3.15, 3.15, 3.14, 3.14, 3.13, 3.12, 3.11, 3.1, 3.18, 3.16, 3.14, 3.11, 3.08, 3.03, 2.98, 2.92, 2.84, 2.75, 2.65, 2.52, 2.37, 2.19, 1.99, 1.76, 1.5, 1.22, 0.91, 0.59, 0.24, -0.11, -0.46, -0.81, -1.15, -1.47, -1.77, -1.95, -2.2, -2.42, -2.61, -2.78, -2.82, -2.95, -3.05, -3.03, -3.11, -3.07, -3.11, -3.06, -2.99, -2.92, -2.84, -2.76, -2.68, -2.49, -2.4, -2.21, -2.02, -1.83, -1.54, -1.34, -1.15, -0.86, -0.67, -0.48, -0.39, -0.2, -0.21, -0.13, -0.05, -0.07, 0.01, 0.07, 0.23, 0.49, 0.83, 1.26, 1.78, 2.29, 2.69, 2.79, 2.91, 3.25, 3.83, 4.55, 5.29, 6.15, 7.21, 8.34, 9.05, 9.92, 11.17, 11.47, 11.64, 11.88, 11.4, 10.9, 9.39, 8.28, 7.88, 8.1, 8.24, 8, 7.29, 5.3, 3.33, 1.88, 0.14, -0.69, -1.7, -3.32, -4.02, -1.33, 1.57, 1.88, 0.88, 2.99, 5.79, 6.3, 2.6, -2.69, -1.89, 1.02, 0.72, 2.23, 2.63, -4.27] },
-  "diffuse-field-neutral": { name: "Diffuse Field (neutral)", db: [-4, -4, -4, -4, -4, -4, -4, -4, -4, -4, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.9, -3.8, -3.8, -3.8, -3.8, -3.8, -3.7, -3.7, -3.7, -3.6, -3.6, -3.5, -3.5, -3.4, -3.3, -3.2, -3.1, -3, -2.9, -2.7, -2.6, -2.4, -2.2, -2, -1.7, -1.5, -1.3, -1, -0.8, -0.6, -0.5, -0.3, -0.3, -0.2, -0.1, -0.1, 0, 0.1, 0.3, 0.6, 1, 1.5, 2.1, 2.7, 3.2, 3.4, 3.6, 4, 4.6, 5.3, 6, 6.8, 7.8, 8.9, 9.6, 10.5, 11.8, 12.2, 12.5, 12.9, 12.6, 12.3, 11, 10.1, 9.9, 10.3, 10.6, 10.5, 9.9, 8, 6.1, 4.7, 3, 2.2, 1.2, -0.4, -1.1, 1.6, 4.5, 4.8, 3.8, 5.9, 8.7, 9.2, 5.5, 0.2, 1, 3.9, 3.6, 5.1, 5.5, -1.4] },
+//   These are smooth, rig-agnostic SHAPES. Right for display, wrong for voice-match. The measurement
+//   session set this split deliberately: KB5000/KB5010-class smoothed shapes for published graphs,
+//   never targets.dat.
+//
+// They are reference shapes, not measurements, so they carry no same-rig baseline and are drawn
+// dashed and dimmed — a design opinion, never another headphone.
+export const REFERENCES = {
+  "kemar-diffuse-field": { name: "KEMAR Diffuse Field", db: [0, 0, 0, 0, 0, 0, 0.01, 0.01, 0.01, 0.01, 0.02, 0.02, 0.02, 0.02, 0.03, 0.03, 0.04, 0.04, 0.04, 0.05, 0.05, 0.06, 0.06, 0.07, 0.07, 0.08, 0.09, 0.1, 0.11, 0.12, 0.13, 0.15, 0.16, 0.17, 0.19, 0.21, 0.24, 0.27, 0.3, 0.33, 0.37, 0.41, 0.45, 0.5, 0.56, 0.62, 0.68, 0.75, 0.83, 0.92, 1.01, 1.12, 1.23, 1.35, 1.47, 1.61, 1.75, 1.91, 2.07, 2.23, 2.4, 2.57, 2.74, 2.91, 3.08, 3.23, 3.37, 3.51, 3.66, 3.81, 3.96, 4.11, 4.3, 4.51, 4.75, 5.03, 5.33, 5.68, 6.08, 6.57, 7.14, 7.78, 8.49, 9.29, 10.16, 11.06, 11.96, 12.83, 13.67, 14.46, 15.16, 15.71, 16.08, 16.29, 16.31, 16.16, 15.85, 15.35, 14.74, 14.05, 13.34, 12.68, 12.13, 11.64, 11.11, 10.43, 9.33, 7.86, 6.3, 5.74, 6.1, 5.63, 3.57, 0.94, 0.59, 1.01, 0.63, 1.17, 2.4, 2.65, 2.74, 2.48, 1.53, 0.08, -0.72, -0.54, -1.04, -4.48] },
+  "in-room-preference": { name: "In-Room Preference", db: [-0.58, 1, 4.08, 6.72, 6.34, 5.81, 5.39, 5.06, 5.18, 5.99, 6.34, 6.13, 5.98, 5.38, 5.14, 5.55, 5.37, 6.38, 5.52, 3.74, 5.94, 5.52, 5.19, 7.96, 0.51, 3.54, 7.4, 1.21, 3.91, 4.31, 1.33, 2.69, 4.51, 2.68, 1.66, 4.27, 3.11, 1, 0.74, 0.18, -0.6, 0.19, -0.18, 0.79, -2.41, 1.32, 1.99, 0.48, -2.4, -0.92, 1.48, 0.29, -0.61, 0.98, -1.29, 1.41, -1.83, 1.97, -1.07, -0.36, 0.91, 1.25, 0.06, -2.51, 0.93, 0.15, -0.58, -0.62, 1.34, -0.61, -1.12, 0.15, 0, -0.87, 1.36, 0.3, -1.38, -0.09, -1.67, 0.75, -0.65, -0.65, 0.3, -1.48, -1.39, 0.38, -2.08, -2.83, -2.25, -0.86, -0.53, -1.07, -0.97, -1.01, -0.26, -0.76, -1.96, -1.81, -1.93, -1.92, -2.67, -2.6, -2.01, -2.13, -1.57, -1.95, -1.82, -1.83, -2.71, -2.39, -3.52, -3.86, -3.32, -3.2, -2.14, -1.92, -1.59, -1.55, -1.75, -2.32, -3.28, -3.26, -3, -3.29, -3.39, -3.94, -4.14, -5.03] },
 };
