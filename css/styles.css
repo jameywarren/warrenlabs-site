@@ -40,8 +40,11 @@ header { box-sizing: border-box; height: var(--wl-head-h);  border-bottom: 1px s
    drawWarrenLabsMarkAccent, so the mark reads the same on a faceplate and on the web. */
 .wl-mark { color: var(--acc); width: 34px; height: auto; display: block; overflow: visible; flex: none; }
 .logo-mark span { font-family: "Barlow", sans-serif; font-weight: 600; font-size: 15px; letter-spacing: 0.22em; color: var(--ink); }
-nav { display: flex; gap: 36px; align-items: center; }
-nav a { font-family: "JetBrains Mono", monospace; font-size: 12px; letter-spacing: 0.14em; color: var(--dim); text-decoration: none; }
+/* gap MUST match Nav.astro's 32px. This is the hand-written half of the same header, and the two
+   had drifted — 36 here vs 32 there made the homepage nav ~10px wider than every other page,
+   which is visible when you navigate between them. Two renderers, one header: keep them equal. */
+nav { display: flex; gap: 32px; align-items: center; }
+nav a { font-family: "JetBrains Mono", monospace; font-size: 12px; letter-spacing: 0.14em; color: var(--dim); text-decoration: none; white-space: nowrap; }
 nav a:hover { color: var(--acc); }
 nav a.cta { color: var(--acc); border: 1px solid color-mix(in oklab, var(--acc) 45%, var(--line)); padding: 9px 16px; border-radius: 4px; transition: background 0.2s, color 0.2s; }
 nav a.cta:hover { background: var(--acc); color: var(--bg); }
