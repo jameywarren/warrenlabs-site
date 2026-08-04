@@ -15,6 +15,7 @@
 // new static page and forgetting to mark it is visible rather than silent.
 
 import { readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 // Read the canonical JSON directly rather than importing nav.js: this runs in plain Node, which
@@ -25,6 +26,14 @@ const nav = JSON.parse(
 // Content-hashed asset names, written by tools/vendor.mjs. The hand-written pages have no bundler,
 // so without this they'd <link> a stable filename and a warm browser cache could pin them to an old
 // stylesheet forever — see the specificity note in vendor.mjs for why shipping a fix isn't enough.
+// Content-hash the site's OWN stylesheet too. css/styles.css is linked by the hand-written pages
+// with a stable filename, so a warm browser cache pins them to old CSS indefinitely — the same
+// failure wl-tokens had, and it bit again on a nav-gap fix that was live on the server while
+// browsers kept rendering the previous value. Hash is of the file's contents, so it only changes
+// when the CSS does.
+const stylesPath = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'css', 'styles.css');
+const stylesHash = createHash('sha256').update(await readFile(stylesPath, 'utf8')).digest('hex').slice(0, 8);
+
 const wlAssets = JSON.parse(
   await readFile(join(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'data', 'wl-assets.json'), 'utf8')
 );
@@ -81,6 +90,13 @@ function header(logoHref, darkOnly) {
 // plain <link> to the vendored copy at /wl/wl-tokens.css, and the theme is resolved inline BEFORE
 // first paint — applying a stored choice after stylesheets load flashes the wrong palette on every
 // navigation. Must be emitted before css/styles.css, which aliases these variables.
+// Rewrites any styles.css link to carry the content hash. Query-string rather than a renamed file:
+// these pages are hand-written and reference the sheet by a path a human typed, so silently moving
+// it would break the next hand edit. GitHub Pages honours the query, which is what matters here.
+function stampStyles(html) {
+  return html.replace(/(href="[^"]*styles\.css)(\?v=[a-f0-9]+)?(")/g, `$1?v=${stylesHash}$3`);
+}
+
 function head(darkOnly) {
   if (darkOnly)
     return `<link rel="stylesheet" href="${wlAssets.tokens}">
@@ -146,6 +162,7 @@ for (const { file, logoHref, darkOnly } of PAGES) {
     continue;
   }
   const before = html;
+  html = stampStyles(html);
   html = replaceBlock(html, 'head', head(darkOnly), file);
   html = replaceBlock(html, 'header', header(logoHref, darkOnly), file);
   html = replaceBlock(html, 'footer', footer() + (darkOnly ? '' : '\n' + themeScript()), file);
