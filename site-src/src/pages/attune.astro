@@ -30,7 +30,7 @@ const attuneApp = {
 
 <Layout
   title="Attune · Find your sound"
-  description="Attune is a Warren Labs product: personal-EQ and real-time A/B auditioning for macOS. Tune any headphone to your taste — blind, loudness-matched, on your own music. Free — coming to the Mac App Store."
+  description="Attune is a Warren Labs product: personal-EQ and real-time A/B auditioning for macOS. Tune any headphone to your taste — blind, loudness-matched, on your own music. Coming soon to the Mac App Store."
   signup="attune"
   jsonLd={attuneApp}
   wordmark
@@ -251,6 +251,28 @@ const attuneApp = {
   </section>
 
   <!-- ===================== PRICING (FREE + ONE-TIME PRO) ===================== -->
+
+  {/* Real screenshots from the shipping build, not mockups. The interactive demos above explain the
+      idea better than a still can — you move a target and watch the graph follow — but only a
+      screenshot proves the app exists and looks like this. Both jobs, neither compromised.
+      Lazy-loaded: 5 images below the fold shouldn't cost the hero anything. */}
+  <section id="shots" class="band">
+    <div class="wrap">
+      <span class="eyebrow">The actual app</span>
+      <h2>Five screens, shot from the build.</h2>
+      <p class="band-sub">
+        Not renders. This is what installs.
+      </p>
+      <div class="shot-strip">
+        <figure><img src="/assets/attune/01-cockpit.png" alt="Attune's main screen: frequency-response graph with yours, target and voice-matched curves" width="1440" height="900" loading="lazy" decoding="async" /><figcaption>The graph is the instrument.</figcaption></figure>
+        <figure><img src="/assets/attune/02-another-headphone.png" alt="Voice-matching one headphone toward another" width="1440" height="900" loading="lazy" decoding="async" /><figcaption>Hear another headphone&rsquo;s voice on yours.</figcaption></figure>
+        <figure><img src="/assets/attune/03-make-it-yours.png" alt="Warmth and vibrancy controls tuning the house target" width="1440" height="900" loading="lazy" decoding="async" /><figcaption>Tune the house voice to taste.</figcaption></figure>
+        <figure><img src="/assets/attune/04-find-your-sound.png" alt="The blind, loudness-matched A/B listening exam" width="1440" height="900" loading="lazy" decoding="async" /><figcaption>Blind A/B, loudness-matched.</figcaption></figure>
+        <figure><img src="/assets/attune/05-pro-unlock.png" alt="Saved sounds panel with the Attune Pro unlock" width="1440" height="900" loading="lazy" decoding="async" /><figcaption>Your sounds, saved.</figcaption></figure>
+      </div>
+    </div>
+  </section>
+
   <section id="pricing" class="band">
     <div class="wrap sec">
       <div class="mem-head">
@@ -773,4 +795,21 @@ const attuneApp = {
       grid-template-columns: 1fr;
     }
   }
+
+  /* Horizontal strip: scrolls on narrow screens rather than stacking five tall shots, which would
+     push the pricing section off the bottom of the page on a phone. */
+  .shot-strip {
+    display: grid; grid-auto-flow: column; grid-auto-columns: minmax(280px, 460px);
+    gap: 18px; margin-top: 26px; padding-bottom: 10px;
+    overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+  }
+  .shot-strip figure { margin: 0; scroll-snap-align: start; }
+  .shot-strip img {
+    display: block; width: 100%; height: auto; border-radius: 10px;
+    border: 1px solid var(--line); background: var(--wl-graph-bg);
+  }
+  .shot-strip figcaption {
+    margin-top: 9px; font-size: 12.5px; color: var(--muted); line-height: 1.45;
+  }
+  @media (max-width: 700px) { .shot-strip { grid-auto-columns: 82vw; } }
 </style>
