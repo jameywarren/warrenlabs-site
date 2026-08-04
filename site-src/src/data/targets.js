@@ -1,4 +1,4 @@
-// GENERATED from attune/Assets/Curves/references.dat by tools/gen-measurements.mjs.
+// GENERATED from warren-labs/measurements/corpus/rig-agnostic/references.dat by tools/gen-measurements.mjs.
 // DO NOT HAND-EDIT — it is rewritten on every build.
 //
 // DISPLAY reference shapes. NOT the app's voice-match targets — see gen-measurements.mjs for why

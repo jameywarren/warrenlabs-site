@@ -17,16 +17,21 @@
 // the app; drawn as a reference LINE on a published graph it reads as a spike. Published graphs use
 // references.dat — smooth, rig-agnostic shapes. Never publish targets.dat.
 //
-// CROSS-REPO READ, temporary: warren-labs/REPO-BOUNDARY.md says the corpus is a LAB asset that
-// attune should consume rather than own. When it moves to warren-labs/measurements/corpus/, change
-// SRC below and nothing else here changes.
+// SAME-REPO READ since 2026-08-04. This used to reach across into ../../../attune, which
+// REPO-BOUNDARY.md names as the wrong direction: the corpus is a LAB asset that attune consumes
+// rather than owns. It now lives in the lab repo this site is checked out inside.
+//
+// The source paths carry their FIXTURE, because the corpus is split by baseline and the directory
+// name IS the baseline identifier (MEASUREMENT-PIPELINE.md §5.1). warren-labs.dat is earspro/;
+// references.dat is rig-agnostic/ because it is not on any rig's axis at all. If a path here ever
+// needs a `../` to reach across those directories, something has gone wrong.
 import { readFile, writeFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const SRC = resolve(here, '../../../../attune/Assets/Curves');
+const SRC = resolve(here, '../../../measurements/corpus');
 const OUT = resolve(here, '../src/data');
 
 function parse(file) {
@@ -40,24 +45,24 @@ function parse(file) {
   return rows;
 }
 
-for (const [srcName, outName, exportName, blurb] of [
-  ['warren-labs.dat', 'measurements.js', 'MEASUREMENTS',
+for (const [srcRel, outName, exportName, blurb] of [
+  ['earspro/warren-labs.dat', 'measurements.js', 'MEASUREMENTS',
    `// WARREN LABS FIRST-PARTY MEASUREMENTS, on our own miniDSP EARS Pro. The PRIMARY corpus for
 // /graphs, and the same rows the app ships — regenerated every build so the two cannot drift.
 //
 // Raw, same-rig, NOT diffuse-field compensated. 128-point log grid, 20 Hz - 20 kHz.
 // The HeadRoom archive is a DIFFERENT fixture and never shares an axis with these.`],
-  ['references.dat', 'targets.js', 'REFERENCES',
+  ['rig-agnostic/references.dat', 'targets.js', 'REFERENCES',
    `// DISPLAY reference shapes. NOT the app's voice-match targets — see gen-measurements.mjs for why
 // targets.dat must never be published as a reference line.`],
 ]) {
-  const path = resolve(SRC, srcName);
+  const path = resolve(SRC, srcRel);
   if (!existsSync(path)) {
-    console.error(`  gen-measurements: missing ${srcName}`);
+    console.error(`  gen-measurements: missing ${srcRel} under ${SRC}`);
     process.exit(1);
   }
   const rows = parse(await readFile(path, 'utf8'));
-  const head = `// GENERATED from attune/Assets/Curves/${srcName} by tools/gen-measurements.mjs.\n// DO NOT HAND-EDIT — it is rewritten on every build.\n//\n${blurb}\n`;
+  const head = `// GENERATED from warren-labs/measurements/corpus/${srcRel} by tools/gen-measurements.mjs.\n// DO NOT HAND-EDIT — it is rewritten on every build.\n//\n${blurb}\n`;
 
   let body;
   if (exportName === 'MEASUREMENTS') {
@@ -72,5 +77,5 @@ for (const [srcName, outName, exportName, blurb] of [
       '\n};\n';
   }
   await writeFile(resolve(OUT, outName), head + '\n' + body);
-  console.log(`  measured  ${srcName} -> ${outName} (${rows.length})`);
+  console.log(`  measured  ${srcRel} -> ${outName} (${rows.length})`);
 }
