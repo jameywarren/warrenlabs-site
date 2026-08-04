@@ -1,4 +1,4 @@
-// GENERATED from attune/Assets/Curves/warren-labs.dat by tools/gen-measurements.mjs.
+// GENERATED from warren-labs/measurements/corpus/earspro/warren-labs.dat by tools/gen-measurements.mjs.
 // DO NOT HAND-EDIT — it is rewritten on every build.
 //
 // WARREN LABS FIRST-PARTY MEASUREMENTS, on our own miniDSP EARS Pro. The PRIMARY corpus for

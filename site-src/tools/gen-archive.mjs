@@ -10,10 +10,13 @@
 // a plain fetch with no bundler in the path, so a stable filename means a warm cache can pin a
 // visitor to stale data indefinitely.
 //
-// CROSS-REPO READ, and it is temporary. This reaches into ../../../attune for measurement data,
-// which warren-labs/REPO-BOUNDARY.md names as exactly the wrong direction — the corpus is a LAB
-// asset that attune should consume, not own. When the corpus moves to
-// warren-labs/measurements/corpus/, change ARCHIVE_SRC below and nothing else here needs to move.
+// SAME-REPO READ since 2026-08-04. This used to reach across into ../../../attune, which
+// REPO-BOUNDARY.md names as exactly the wrong direction. The corpus now lives in the lab repo this
+// site is checked out inside, and both the site and the app consume it from there.
+//
+// FIXTURE IS PART OF THE PATH: hms-ii-3/ is the Head Acoustics HMS II.3 baseline, never the same
+// axis as corpus/earspro/ (MEASUREMENT-PIPELINE.md §4.1). /graphs enforces this by REPLACING the
+// source rather than merging it — see graphs.astro.
 //
 // RIGHTS: the HeadRoom archive is licensing-clean, retained from the 2018 headphone.com sale
 // (attune/docs/data-provenance.md §2.0). Publishing the full set beyond the curated 40 was
@@ -26,7 +29,7 @@ import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const here = dirname(fileURLToPath(import.meta.url));
-const ARCHIVE_SRC = resolve(here, '../../../../attune/Assets/Curves/headroom.dat');
+const ARCHIVE_SRC = resolve(here, '../../../measurements/corpus/hms-ii-3/headroom.dat');
 const PUBLIC_WL = resolve(here, '../public/wl');
 const MANIFEST = resolve(here, '../src/data/wl-assets.json');
 
