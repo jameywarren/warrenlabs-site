@@ -1,0 +1,222 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import Button from '../../components/Button.astro';
+
+const SITE = 'https://warrenlabs.com';
+const url = `${SITE}/learn/why-two-rigs-cant-share-an-axis`;
+const title = 'Why you can’t compare measurements from two different rigs';
+const description =
+  'A frequency-response curve describes a headphone and the fixture it was measured on. Two rigs give different numbers for the same headphone — so a curve without a rig label tells you less than you think, and curves from different rigs must never go on one axis.';
+
+const faq: [string, string][] = [
+  [
+    'Why do two measurement rigs give different curves for the same headphone?',
+    'Because the rig is part of the measurement. The artificial ear, the pinna, the coupler volume and the microphone calibration all shape the response before it reaches the graph. Change the fixture and you change the numbers, even though the headphone never changed.',
+  ],
+  [
+    'Where do rigs disagree the most?',
+    'In the bass, where the seal against the artificial ear decides how much low end survives, and above roughly 8–10 kHz, where the ear-canal resonances of different couplers diverge sharply. The midband is where rigs agree best, which is why it is the honest place to compare.',
+  ],
+  [
+    'Does compensating to a target make measurements comparable?',
+    'No, and this is the trap. Compensation makes two curves look like they belong on the same axis by flattening them toward a common shape. The underlying fixture differences are still in there — they are now just harder to see.',
+  ],
+  [
+    'What can you compare across rigs?',
+    'Broad shape and direction: whether a headphone is bass-forward, where a big peak sits, how two headphones rank against each other when both were measured on the same rig. What you cannot do is subtract, average, or EQ one rig’s curve toward another rig’s target.',
+  ],
+  [
+    'Which rig does Warren Labs measure on?',
+    'A miniDSP EARS Pro, commissioned 3 August 2026, is the current bench and the baseline for everything we measure now. We also publish the HeadRoom Corporation archive measured on a Head Acoustics HMS II.3 around 2010–2013. Both are labelled by rig, and they are never plotted on one axis or counted in one number.',
+  ],
+];
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: title,
+    description,
+    author: { '@type': 'Person', name: 'Jamey Warren' },
+    publisher: { '@id': `${SITE}/#organization` },
+    datePublished: '2026-08-04',
+    dateModified: '2026-08-04',
+    mainEntityOfPage: url,
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn/learn` },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
+    ],
+  },
+];
+---
+
+<Layout title={`${title} · Warren Labs`} description={description} ogType="article" jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <article class="doc">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Two rigs, one axis</span>
+    </nav>
+
+    <span class="eyebrow">Learn &middot; Measurement &amp; tuning</span>
+    <h1>Why you can&rsquo;t compare measurements from two different rigs</h1>
+
+    <div class="answer">
+      <div class="answer-k">Short answer</div>
+      <p>
+        A frequency-response curve is not a property of the headphone alone. It is a property of
+        <b>the headphone and the fixture it was measured on</b>. Two rigs will hand you two different curves for the
+        same pair, and neither is wrong. So a curve with no rig label tells you less than it appears to &mdash; and
+        curves from two rigs must <b>never</b> be put on one axis, subtracted, averaged, or counted in a single
+        &ldquo;N headphones measured&rdquo; number.
+      </p>
+    </div>
+
+    <h2>The rig is part of the measurement</h2>
+    <p>
+      To measure a headphone you put it on an artificial ear: a fixture with a pinna, an ear canal of some length, a
+      sealed volume behind it, and a calibrated microphone at the end. Every one of those is an acoustic component,
+      and every one of them shapes the sound before it ever reaches the graph. A different pinna material flexes
+      differently under clamp. A different canal length resonates at a different frequency. A different coupler volume
+      loads the driver differently in the bass.
+    </p>
+    <p>
+      None of that is error. It is the rig doing exactly what it was built to do &mdash; it just means the number you
+      read off the graph describes a <em>system</em>, and the headphone is only half of it. This is the same reason a
+      curve never looks like a flat line even when a headphone sounds neutral, which is the starting point for
+      <a href="/learn/target-curves-explained">target curves</a>.
+    </p>
+
+    <h2>Where rigs disagree &mdash; and where they mostly don&rsquo;t</h2>
+    <p>
+      The disagreement is not spread evenly across the spectrum, and knowing where it lives is most of the skill.
+    </p>
+    <p>
+      <b>In the bass</b>, everything depends on the seal between the earpad and the fixture. A slightly different pinna
+      compliance, a slightly different clamp, and low end that was there a moment ago leaks away. This is why the same
+      open-back headphone can look bass-shy on one rig and fine on another.
+    </p>
+    <p>
+      <b>Above roughly 8&ndash;10 kHz</b> it is worse. Ear-canal resonances dominate, and different couplers put them in
+      different places. Two rigs can disagree by many decibels up there on an identical headphone. That top octave is
+      the region we already tell people not to over-read on any single graph, and cross-rig comparison is precisely
+      where it bites.
+    </p>
+    <p>
+      <b>The midband is the honest ground.</b> Roughly 200 Hz to a couple of kHz is where fixtures agree best and where
+      a comparison is least likely to be an artifact of the bench. If someone is going to quote one number at you, that
+      is the range where it means something.
+    </p>
+    <p>
+      It goes finer than rig-to-rig, too. On our own bench the two microphone capsules are individually calibrated and
+      genuinely differ &mdash; at 20 kHz one reads +0.37 dB and the other +0.75 dB. Load the wrong calibration file for
+      a channel and you get a curve that looks completely plausible and is wrong in exactly the octave nobody checks.
+    </p>
+
+    <h2>The trap: compensation makes incomparable curves look comparable</h2>
+    <p>
+      Here is the failure that actually happens. Two curves from two rigs, each compensated toward a target, land on
+      top of each other looking like a matched set. They are not. Compensation subtracts a shape; it does not remove
+      the fixture from the physics. What it does remove is your ability to <em>see</em> that the two measurements come
+      from different worlds.
+    </p>
+    <p>
+      A raw curve labelled with its rig is honest and slightly ugly. A compensated curve with the rig label dropped is
+      tidy and quietly misleading. If you are collecting graphs from around the internet, the label matters more than
+      the smoothing.
+    </p>
+
+    <h2>Our own two baselines, and the rule between them</h2>
+    <p>
+      We publish measurements on two fixtures, which makes this rule ours to live by rather than just recommend.
+    </p>
+    <p>
+      The <b>HeadRoom archive</b> is 319 headphones measured at HeadRoom Corporation on a Head Acoustics HMS II.3,
+      roughly 2010&ndash;2013. It is a real historical record with real limits: one unit per model, left and right
+      averaged together, and no per-curve measurer &mdash; that provenance genuinely does not exist, and we would rather
+      say so than invent it. Its seating repeatability was 0.37 dB through the midband, rising to 3.87 dB in the top
+      octave, which is a fair illustration of everything above. That head is gone. Nothing can ever be added to it.
+    </p>
+    <p>
+      The <b>current bench</b> is a miniDSP EARS Pro, commissioned 3 August 2026, with per-capsule calibration and a
+      fixed gain setting that is itself part of the calibration. Its corpus starts at six headphones and grows one
+      session at a time. Small, and honestly labelled as small.
+    </p>
+    <p>
+      Between them there is exactly one rule: <b>two fixtures never share an axis.</b> Not summed, not averaged, not
+      added into one headline count. Every record we keep carries a mandatory rig identifier, because a curve without
+      its coordinate system is not a measurement &mdash; it is a picture of one. The archive gets published as the
+      archive, on its own rig, flattering or not; the new corpus gets published as the new corpus. The temptation to
+      merge them into one impressive number is exactly the temptation the rule exists to defeat.
+    </p>
+
+    <h2>What you can and can&rsquo;t do across rigs</h2>
+    <p>
+      <b>Reasonable:</b> reading broad shape and direction &mdash; bass-forward or bass-light, roughly where a large
+      peak sits, whether a headphone is warm or bright. Comparing two headphones to each other <em>when both were
+      measured on the same rig</em>. Using a graph from any rig as a rough sanity check on what you are hearing.
+    </p>
+    <p>
+      <b>Not reasonable:</b> subtracting one rig&rsquo;s curve from another&rsquo;s. Averaging curves from different
+      fixtures into a &ldquo;consensus.&rdquo; Building an EQ that corrects a curve measured on rig A toward a target
+      built on rig B. Quoting a decibel difference between two graphs from different sources as if it were a fact about
+      the headphones.
+    </p>
+    <p>
+      That last one is the common one, and it is worth being blunt about: a 3 dB difference between two graphs from two
+      sites may be entirely the benches talking to each other.
+    </p>
+
+    <div class="funnel">
+      <p>
+        This is also why <b>Attune</b> voice-matches only within a single baseline. When the curve you have and the
+        curve you want were measured on the same rig, the fixture appears in both and cancels exactly in the difference
+        &mdash; the rig stops mattering the moment you stop crossing it. Cross baselines and that cancellation quietly
+        stops being true, so we don&rsquo;t.
+      </p>
+      <Button href="/attune" variant="primary">See how Attune matches a curve</Button>
+    </div>
+
+    <h2>The honest bottom line</h2>
+    <p>
+      Ask which rig before you ask what the curve says. Compare within a rig, trust the midband most, treat the top
+      octave as indicative rather than exact, and be suspicious of any tidy comparison that does not name its fixtures.
+      A measurement without its coordinate system is not more objective than listening &mdash; it just looks like it is.
+    </p>
+
+    <h2>Common questions</h2>
+    <div class="faq">
+      {
+        faq.map(([q, a]) => (
+          <div class="faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="related">
+      <a href="/learn/how-to-read-a-frequency-response-graph">How to read a graph &rarr;</a>
+      <a href="/learn/target-curves-explained">Target curves explained &rarr;</a>
+      <a href="/measure">Send a headphone in &rarr;</a>
+      <a href="/learn">Back to Learn &rarr;</a>
+    </div>
+  </article>
+
+  <Footer variant="home" />
+</Layout>
