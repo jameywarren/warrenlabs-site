@@ -1,6 +1,14 @@
 // The requested list: models Warren Labs most wants on the bench.
 // Derived 2026-07-30 from the gaps in the 40-curve archive, which stops around 2014.
 // P1 = get first. P2 = strong second wave. P3 = fills a real gap when convenient.
+//
+// NO IEMs (2026-08-05). The whole IEM group was removed, not deprioritised. An IEM's response is
+// dominated by insertion depth and tip seal, and this bench is a pinna fixture with nothing to
+// control either. Removing the pinna does not help: what is behind it is miniDSP's own chamber, not
+// a standardized IEC 60318-4 coupler, so it would be a third baseline comparable to nothing --
+// including our own headphone data, which a coupler could never share an axis with anyway (it has no
+// pinna, so no ear gain through 2-8 kHz). If IEMs are ever wanted it is a real 711 coupler and a
+// separate, separately-labelled corpus. See warren-labs/measurements/ACQUISITION.md §0.
 export const WANTED = [
   {
     "name": "Modern reference / most-compared open backs",
@@ -107,67 +115,7 @@ export const WANTED = [
       }
     ]
   },
-  {
-    "name": "IEMs",
-    "items": [
-      {
-        "name": "Moondrop Chu 2 (~$20)",
-        "pri": "P1",
-        "why": "The floor of the hobby and a genuine mass-market product."
-      },
-      {
-        "name": "7Hz Salnotes Zero 2 / Truthear Gate (~$25)",
-        "pri": "P1",
-        "why": "The other two sub-$30 defaults."
-      },
-      {
-        "name": "Simgot EA500 LM (and EW200)",
-        "pri": "P1",
-        "why": "The technical benchmark under $100 and the most-cited punches above price single-DD of the current era."
-      },
-      {
-        "name": "Truthear Nova (~$150)",
-        "pri": "P1",
-        "why": "The clearest current expression of Harman-style IEM tuning at a price that made older reference IEMs redundant."
-      },
-      {
-        "name": "CrinEar Daybreak ($179)",
-        "pri": "P1",
-        "why": "Explicitly tuned to a published 2025 target curve."
-      },
-      {
-        "name": "Etymotic ER2XR / ER4XR",
-        "pri": "P1",
-        "why": "The archive has the ER-4S, which is discontinued."
-      },
-      {
-        "name": "Apple AirPods Pro 3",
-        "pri": "P1",
-        "why": "The best-selling in-ear on earth by an enormous margin."
-      },
-      {
-        "name": "Moondrop x Crinacle Dusk (DSP)",
-        "pri": "P2",
-        "why": "A DSP IEM with switchable presets, the frequency response is software, not acoustics."
-      },
-      {
-        "name": "7Hz Timeless (and 7Hz x Crinacle Divine)",
-        "pri": "P2",
-        "why": "The planar IEM lineage, of which the archive has literally nothing."
-      },
-      {
-        "name": "ThieAudio Monarch MkIII",
-        "pri": "P2",
-        "why": "The default ~$1,000 tribrid recommendation for several years running, and the flagship most people upgrade toward."
-      },
-      {
-        "name": "Shure SE846 (Gen 2) or 64 Audio U12t",
-        "pri": "P3",
-        "why": "The professional stage/CIEM reference tier, and the natural continuation of the archive's SE215/SE535."
-      }
-    ]
-  },
-  {
+    {
     "name": "Closed backs and studio staples of the current era",
     "items": [
       {

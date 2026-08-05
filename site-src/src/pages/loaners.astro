@@ -1,0 +1,223 @@
+---
+// /loaners — the standing invitation to headphone manufacturers.
+//
+// WHO THIS PAGE IS FOR, because it changes every word on it: not a customer. A product manager or a
+// marketing coordinator who has been handed a request and needs to decide, usually without talking to
+// anyone. So it answers the whole decision in one screen — what we need, what it costs them, what
+// comes back, what we will and won't publish — and it is written to survive being forwarded.
+//
+// It deliberately does NOT lead with Attune, and never mentions voice-match. "Make your $200
+// headphone sound like the $2,000 one" is a fine consumer pitch and a hostile one to the company
+// selling the $2,000 headphone. See warren-labs/docs/loaner-program.md §5.
+//
+// It also never claims we sell no gear (moat-strategy.md Pillar 4 — a retail store is still live).
+// Every claim here is about the DATA: we publish what the rig says.
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+
+const SITE = 'https://warrenlabs.com';
+const description =
+  'Warren Labs measures headphones on a documented bench and returns the raw data to the manufacturer. ' +
+  'Loan us a unit for two weeks: you cover shipping out, we insure and pay the return, and you get the ' +
+  'measurement file for your own use.';
+
+const TERMS = [
+  ['What we need', 'One retail unit, on loan, for two weeks.'],
+  ['What it costs you', 'Shipping out. We insure and pay the return.'],
+  ['How it comes back', 'In its box, unmodified, nothing disassembled, firmware untouched.'],
+  ['What you get', 'The published page — and the raw measurement file, for your own use, no conditions.'],
+  ['Turnaround', 'Measured within a week of arrival. The page goes up when it is.'],
+  ['Multiple pad sets', 'We measure each and publish the difference.'],
+];
+
+const jsonLd = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'For manufacturers', item: `${SITE}/loaners` },
+    ],
+  },
+];
+---
+
+<Layout title="For manufacturers — loan us a headphone · Warren Labs" description={description} jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <main class="wrap ln">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><span aria-current="page">For manufacturers</span>
+    </nav>
+
+    <span class="eyebrow">For manufacturers</span>
+    <h1>Send us the headphone.<br />We&rsquo;ll send you back the data.</h1>
+    <p class="lede">
+      Warren Labs is a measurement bench in Livingston, Montana. Loan us a unit for two weeks and we
+      measure it on a documented rig, publish the result, and <b>give you the raw measurement file for
+      your own use</b> &mdash; free, and with no conditions attached to it.
+    </p>
+
+    <div class="terms">
+      {TERMS.map(([k, v]) => (
+        <div class="term">
+          <span class="tk">{k}</span>
+          <span class="tv" set:html={v} />
+        </div>
+      ))}
+    </div>
+
+    <div class="cta-row">
+      <Button href="mailto:jamey@warrenlabs.com?subject=Headphone%20loan" variant="primary">Email us about a loan</Button>
+      <Button href="/graphs" variant="ghost">See a measurement first</Button>
+    </div>
+
+    <section class="sec">
+      <h2>What we will and won&rsquo;t publish</h2>
+      <p>
+        The honest part first, because it is the whole point: <b>we publish what the rig says,
+        flattering or not.</b> If that is not a deal you want, this is the right moment to say no, and
+        no hard feelings &mdash; a measurement that came with conditions would not be worth anything to
+        your customers or to us.
+      </p>
+      <p>
+        What we will publish is a frequency response, the fixture it was measured on, the seating
+        procedure, how repeatable that seating was, and where the measurement stops being trustworthy.
+        <b>What we won&rsquo;t publish is a rank, a score, or a subjective verdict.</b> We are not a
+        review outlet and we don&rsquo;t audition products against each other for sport.
+      </p>
+      <p>
+        We also say the obvious thing on every page, before anyone else has to: <b>one unit is one
+        unit, not the model.</b> A single measurement of a single sample is exactly that, and pretending
+        otherwise is how measurement gets a bad name.
+      </p>
+    </section>
+
+    <section class="sec">
+      <h2>You can read the method before you decide</h2>
+      <p>
+        This is the part we think is genuinely different. Our measurement method is written down and
+        published <em>before</em> anything gets measured, so you can read exactly how your headphone
+        will be treated and decide with the facts in front of you rather than hoping.
+      </p>
+      <p>
+        The short version: we seat the headphone <b>deliberately, for the best fit</b> &mdash; adjusted
+        for seal and for sound, the way a listener adjusts a headphone before settling in &mdash; rather
+        than dropping it on at random. The common convention averages several careless placements
+        together; we think that answers the wrong question, because nobody listens at a random seating.
+        What we publish is <b>one real seating, never a blend</b>, chosen by a stated rule, with the
+        repeatability reported alongside it.
+      </p>
+      <p>
+        Both channels are measured and kept. Nothing is smoothed into looking better than it is.
+      </p>
+      <div class="cta-row tight">
+        <Button href="/learn/why-two-rigs-cant-share-an-axis" variant="ghost">How we think about rigs</Button>
+        <Button href="/learn/how-to-read-a-frequency-response-graph" variant="ghost">How to read the graph</Button>
+      </div>
+    </section>
+
+    <section class="sec">
+      <h2>If your headphone ships with more than one pad set</h2>
+      <p>
+        Then that is the interesting measurement, and almost nobody publishes it properly. Pads move a
+        response more than most people expect, and comparisons across the internet are usually made
+        between different rigs, different units, and different seatings all at once &mdash; which tells
+        you nothing about the pads.
+      </p>
+      <p>
+        Send the pad sets and we measure each one on the same rig, the same unit, the same seating
+        procedure, and publish the difference. If you have a pad revision you want checked against the
+        outgoing one, that works too.
+      </p>
+    </section>
+
+    <section class="sec">
+      <h2>Who runs this</h2>
+      <p>
+        Jamey Warren. I was employee #1 at Grace Design, where one of my jobs was building the
+        automated measurement system the gear was tested against, and I later ran HeadRoom as
+        president and CEO. I do the measuring myself, on my own bench, and the method above is the one
+        I actually follow.
+      </p>
+    </section>
+
+    <div class="ln-cta">
+      <div>
+        <h2 class="cta-h">Happy to answer anything first.</h2>
+        <p>
+          Everything on this page is written to be forwarded internally. If it&rsquo;s easier to talk it
+          through, that works too.
+        </p>
+      </div>
+      <div class="cta-btns">
+        <Button href="mailto:jamey@warrenlabs.com?subject=Headphone%20loan" variant="primary">Get in touch</Button>
+      </div>
+    </div>
+  </main>
+
+  <Footer variant="home" />
+</Layout>
+
+<style>
+  .ln { padding: 56px 24px 24px; }
+  .crumb {
+    font-family: var(--mono); font-size: 11.5px; color: var(--muted-2);
+    display: flex; gap: 9px; margin-bottom: 26px;
+  }
+  .crumb a:hover { color: var(--text); }
+  .crumb [aria-current] { color: var(--muted); }
+  .ln h1 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(34px, 5.2vw, 54px); line-height: 1.05; margin: 12px 0 0;
+  }
+  .lede {
+    color: var(--muted); font-size: 18px; line-height: 1.6;
+    max-width: 64ch; margin: 20px 0 0; text-wrap: pretty;
+  }
+
+  /* The terms table is the load-bearing element: it answers the whole decision without a call. */
+  .terms {
+    margin-top: 40px; border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--surface); overflow: hidden;
+  }
+  .term {
+    display: grid; grid-template-columns: 220px 1fr; gap: 20px;
+    padding: 16px 22px; border-bottom: 1px solid var(--line); align-items: baseline;
+  }
+  .term:last-child { border-bottom: 0; }
+  .tk {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent-soft);
+  }
+  .tv { font-size: 15.5px; line-height: 1.55; color: var(--text); }
+  @media (max-width: 640px) {
+    .term { grid-template-columns: 1fr; gap: 6px; }
+  }
+
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+  .cta-row.tight { margin-top: 20px; }
+
+  .sec { margin-top: 52px; max-width: 68ch; }
+  .sec h2 {
+    font-family: var(--serif); font-weight: 400; font-size: 26px; margin: 0 0 14px;
+  }
+  .sec p {
+    color: var(--muted); font-size: 16px; line-height: 1.65; margin: 0 0 14px; text-wrap: pretty;
+  }
+  .sec p b { color: var(--text); font-weight: 500; }
+
+  .ln-cta {
+    margin-top: 60px;
+    background: linear-gradient(120deg, rgba(255, 158, 44, 0.07), var(--surface) 55%);
+    border: 1px solid var(--accent-line); border-radius: 18px; padding: 30px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; flex-wrap: wrap;
+  }
+  .cta-h {
+    font-family: var(--serif); font-weight: 400; font-size: 24px; margin: 0; max-width: 24ch;
+  }
+  .ln-cta p { color: var(--muted); font-size: 15px; margin: 8px 0 0; max-width: 52ch; }
+  .cta-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+</style>
