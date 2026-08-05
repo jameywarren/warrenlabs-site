@@ -16,11 +16,19 @@ const DIST = join(here, '..', 'dist');
 const ROOT = join(here, '..', '..');
 
 // Built route -> path at the repo root. Anything not listed here stays out of the published site.
-// NOTE: 'graphs' is deliberately absent. That page is purely the gated 319-curve archive
-// viewer: it fetches /api/archive from the DigitalOcean gate service and has no static
-// fallback, so on GitHub Pages it renders a permanent "not on this server" state. The source
-// stays in src/pages/graphs.astro; add 'graphs' back here once there is data to show.
-const ROUTES = ['attune', 'learn', 'graphs', 'products', 'collections', 'measure', 'support', 'privacy'];
+//
+// **THIS IS AN ALLOWLIST, AND FORGETTING IT IS SILENT.** A new page builds into dist/, the build
+// prints it as a success, and it simply never reaches the site — no error, no warning, nothing at
+// the published URL. /loaners was authored, built, committed and pushed on 2026-08-05 and was not
+// live, because of exactly this. **Adding a page means adding it here.**
+//
+// (The old note here explained why 'graphs' was excluded — it used to be a viewer for the gated
+// 319-curve archive with no static fallback. Both halves of that are now wrong: the archive is not
+// published at all, and /graphs serves our own EARS Pro measurements inlined at build time.)
+const ROUTES = [
+  'attune', 'learn', 'graphs', 'products', 'collections', 'measure', 'support', 'privacy',
+  'loaners',   // + /loaners/print, the one-page leave-behind
+];
 // Astro's hashed asset bundle, plus the audio the Attune demos play.
 const ASSETS = ['_astro', 'audio', 'wl'];   // wl/ = vendored wl-web runtime (wl-plot.js)
 
