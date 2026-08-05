@@ -4,11 +4,17 @@ import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import Button from '../../components/Button.astro';
 import { HEADPHONES } from '../../data/headphones.js';
+import { MEASUREMENTS } from '../../data/measurements.js';
+
+// Only headphones we have actually measured. Same gate as products/[handle].astro — this list must
+// never contain a link to a page that gate declines to build.
+const MEASURED = new Set(MEASUREMENTS.map((m) => m.id));
+const LIVE = HEADPHONES.filter((h) => MEASURED.has(h.curveId));
 
 const SITE = 'https://warrenlabs.com';
 const url = `${SITE}/collections/headphones`;
 const description =
-  'Real frequency-response measurements for classic and reference headphones — Sennheiser, AKG, Beyerdynamic, Audeze, Grado and more. Honest curves from the HeadRoom Archive, with limits named.';
+  'Frequency-response measurements for reference headphones, made on our own bench: seated for best fit, one real seating, limits named. More get added as they are measured.';
 
 const jsonLd = [
   {
@@ -20,7 +26,7 @@ const jsonLd = [
   },
   {
     '@type': 'ItemList',
-    itemListElement: HEADPHONES.map((h, i) => ({
+    itemListElement: LIVE.map((h, i) => ({
       '@type': 'ListItem',
       position: i + 1,
       name: `${h.brand} ${h.name}`,
@@ -38,17 +44,18 @@ const jsonLd = [
       <a href="/">Home</a><span>/</span><span aria-current="page">Headphones</span>
     </nav>
 
-    <span class="eyebrow">The Archive</span>
+    <span class="eyebrow">Measured here</span>
     <h1>Measured headphones.</h1>
     <p class="lede">
-      Real frequency-response measurements for the headphones people actually ask about &mdash; classics and
-      references, measured on one rig and shown with their limits named. Land on one, see how it measures, and
-      tune it to your taste in Attune. More get added as they&rsquo;re measured.
+      Every headphone on this page was measured on our own bench &mdash; seated deliberately for the best fit,
+      published as one real seating rather than a blend, with its limits named. The list is short on purpose:
+      it only holds what we have actually measured, and it grows one headphone at a time.
+      {' '}<a href="/measure">Send one in</a> and it joins them.
     </p>
 
     <div class="grid">
       {
-        HEADPHONES.map((h) => (
+        LIVE.map((h) => (
           <a class="card" href={`/products/${h.handle}`}>
             <span class="kind">{h.tier}</span>
             <h2>

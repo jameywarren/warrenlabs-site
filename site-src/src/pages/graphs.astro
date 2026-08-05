@@ -1,10 +1,15 @@
 ---
 // /graphs, the compare tool.
 //
-// Runs entirely on the 40 curated public curves in src/data/curves.js, which Jamey approved for
-// publication. The payload is assembled at build time and inlined below, so this page needs no
-// server and no gate. The full 319-curve archive is NOT here: it stays out of the published site
-// and is used for development only.
+// ONE CORPUS: our own EARS Pro measurements. The payload is assembled at build time and inlined
+// below, so this page needs no server and no gate.
+//
+// The HeadRoom archive was removed from this page on 2026-08-05. It had been an opt-in second
+// source, correctly split so the two fixtures never shared an axis — but "correctly labelled" was
+// answering the wrong question. The archive is ~2010-13, one unit per model, a fixture that no
+// longer exists, and no seating protocol on record, and Attune ships EARS Pro data only. Publishing
+// a curve the product cannot load is a promise we break the moment a reader acts on it. See
+// warren-labs/docs/moat-strategy.md §1.2.
 //
 // Three rules from attune/docs/data-provenance.md are load-bearing and carry over:
 //   1. RENDER-ONLY, no export or download control anywhere.
@@ -18,27 +23,16 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Feedback from '../components/Feedback.astro';
-import { CURVES, GRID_HZ } from '../data/curves.js';
+import { GRID_HZ } from '../data/curves.js';   // GRID_HZ only — the archive curves are no longer plotted
 import { REFERENCES } from '../data/targets.js';
 import { MEASUREMENTS } from '../data/measurements.js';
-import { HEADPHONES } from '../data/headphones.js';
 import WL_ASSETS from '../data/wl-assets.json';   // content-hashed paths, written by tools/vendor.mjs
 
-const byHandle = Object.fromEntries(HEADPHONES.map((h) => [h.curveId ?? h.handle, h]));
-const models = Object.entries(CURVES)
-  .filter(([id]) => byHandle[id])
-  .map(([id, db]) => ({ id, b: byHandle[id].brand, n: byHandle[id].name, db }))
-  .sort((a, b) => (a.b + a.n).localeCompare(b.b + b.n));
-// TWO SOURCES, never merged onto one axis.
-//   ours    — Warren Labs, miniDSP EARS Pro. The product. Default.
-//   archive — the HeadRoom HMS II.3 set. Development reference, opt-in, a DIFFERENT fixture.
-// A switch rather than a merge, so "two fixtures never share an axis" is enforced by the data model
-// instead of by a caption. See MEASUREMENT-PIPELINE.md §4.1 / §5.1.
+// ONE SOURCE. The multi-source shape is kept deliberately: MEASUREMENT-PIPELINE.md §4.1 says two
+// fixtures never share an axis, and enforcing that in the DATA MODEL rather than in a caption is
+// what makes it hard to violate by accident. If a second bench is ever added it slots in here.
 const ours = MEASUREMENTS.map((m) => ({ id: m.id, b: m.b, n: m.n, db: m.db }));
-// The archive is NOT inlined: all 319 curves is ~197 KB, and it is off by default. It ships as
-// WL_ASSETS.archive and is fetched the first time someone enables it. `models` (the curated 40 with
-// editorial metadata) still drives /products, which is why curves.js stays imported.
-const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archiveUrl: WL_ASSETS.archive };
+const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES };
 ---
 
 <Layout
@@ -104,15 +98,10 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
                   <option value="0">None</option>
                 </select>
               </label>
-              <label class="toggle" id="band-t">
-                <input type="checkbox" id="band" /><span>Seating variance</span>
-              </label>
-                  <div class="gs-h gs-h2">Data</div>
-                  <label class="src" title="A different fixture (Head Acoustics HMS II.3), kept as a development reference. Switching REPLACES the list — the two are never plotted on one axis.">
-                    <input type="checkbox" id="src-archive" />
-                    <span>Show HeadRoom archive</span>
-                  </label>
-                  <p class="gs-note">Our own EARS Pro measurements are the default. The archive is older, on a different rig, and shown only if you ask.</p>
+              {/* Seating-variance toggle removed 2026-08-05: the band was drawn from the HeadRoom
+                  archive's SD, and this page now plots only our own EARS Pro curves, whose reseat
+                  repeatability is not characterised yet. Restore this control together with
+                  SEATING_SD_KNOWN once RIG.md's day-one table is filled in. */}
                 </div>
               </div>
 
@@ -141,28 +130,30 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
             </p>
           </div>
           <div>
-            <h4>The HeadRoom archive</h4>
+            <h4>How the headphone is seated</h4>
             <p>
-              A separate set of 40 curves measured years ago on a <b>Head Acoustics HMS&nbsp;II.3</b>,
-              kept as a <b>development reference</b> and switched off by default. A different fixture
-              is a different coordinate system, so the two <b>never share an axis</b> — this page
-              shows one or the other, never a blend, and a count covers one rig or the other.
+              Deliberately, for the <b>best fit</b> — adjusted for seal and for sound, the way you
+              adjust a headphone before you settle in to listen. Not dropped on at random. The
+              common convention averages several careless placements together; we think that answers
+              the wrong question, because you don&rsquo;t listen at a random seating. What gets
+              published is <b>one real seating, never a blend</b>, chosen by a stated rule.
             </p>
           </div>
           <div>
             <h4>How repeatable this rig is</h4>
             <p>
-              The instrument's own noise floor is <b>~0.1&nbsp;dB</b>, measured from repeat sweeps
-              at nine placements without reseating. So when a curve moves between seatings, that is
-              the <b>headphone moving on the head</b> — not the measurement wobbling. Placement is
-              the real variable, and it is one we can show you rather than average away.
+              <b>We haven&rsquo;t published that number yet.</b> Reseat repeatability on this bench
+              is being characterised now, and it goes here — whatever it says — rather than being
+              borrowed from another rig. Until then, treat a line as directional in the treble and
+              don&rsquo;t read fine detail above about 10&nbsp;kHz.
             </p>
           </div>
           <div>
             <h4>How much to trust a line</h4>
             <p>
-              Re-seating moves it: <b>±0.37&nbsp;dB</b> from 200&nbsp;Hz–1&nbsp;kHz, <b>±3.87&nbsp;dB</b>
-              by 12–20&nbsp;kHz. Turn the band on. Don't read fine treble detail here.
+              A measurement is one headphone, one unit, on one fixture, seated once. It tells you
+              the shape, not the last half-dB. Where this rig stops being trustworthy will be stated
+              here as a number as soon as we have measured it on this rig.
             </p>
           </div>
           <div>
@@ -478,8 +469,20 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
 
   // Seating variance: two MEASURED anchors, interpolated between, nothing below 200 Hz —
   // absence, not zero.
+  //
+  // DISABLED 2026-08-05. These two numbers are the HEADROOM ARCHIVE's seating SD, on a Head
+  // Acoustics HMS II.3 that no longer exists. Every curve this page now plots is ours, on the EARS
+  // Pro, whose reseat repeatability has not been characterised yet — the day-one experiment in
+  // measurements/RIG.md still reads "(pending)". Drawing this band over our curves would be
+  // asserting another rig's repeatability as our own, which is the precise thing we just spent a
+  // day removing from this site.
+  //
+  // Re-enable by filling the RIG.md day-one table and putting OUR numbers here. The plotting code
+  // is left intact and working so that is a one-line change.
+  const SEATING_SD_KNOWN = false;
   const SD_LO_HZ = 200, SD_LO = 0.37, SD_HI_HZ = 12000, SD_HI = 3.87;
   const sdAt = (hz) => {
+    if (!SEATING_SD_KNOWN) return null;
     if (hz < SD_LO_HZ) return null;
     if (hz <= 1000) return SD_LO;
     if (hz >= SD_HI_HZ) return SD_HI;
@@ -496,7 +499,7 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
 
   // ---------- viewer ----------
   let MODELS = [], GRID = [], DB = new Map(), SMOOTH = new Map(), TARGETS = {};
-  let SOURCES = {}, source = 'ours';   // 'ours' = EARS Pro (default) | 'archive' = HeadRoom HMS II.3
+  let SOURCES = {}, source = 'ours';   // 'ours' = Warren Labs, miniDSP EARS Pro. The only one.
   let mode = 'overlay', showBand = false;
   let smoothOct = 12;          // 1/N octave; 0 = off
   let yScale = 30;             // 'auto' or a ±dB span. A LOCKED scale is what makes two exported
@@ -687,7 +690,8 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
     if (mode !== 'overlay') p.set('m', mode);
     if (showBand) p.set('band', '1');
     if (alignMode !== 'mid') p.set('a', alignMode);
-    if (source !== 'ours') p.set('src', source);
+    // 'src' is deliberately never written now — there is one source, and a link that pins a source
+    // we do not serve is a link that breaks later.
     if (targetId) p.set('t', targetId);
     if (yScale !== 30) p.set('y', String(yScale));
     if (smoothOct !== 12) p.set('s', String(smoothOct));
@@ -713,21 +717,8 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
     //      degrades to "that one setting was ignored" instead of silently gutting the link.
     const step = (what, fn) => { try { fn(); } catch (e) { console.error('restore: ' + what, e); } };
 
-    // Source first: the ids below only exist in one corpus, and loadSource() wipes the selection.
-    // A shared archive link has to wait for the fetch, so the ids below have a corpus to land in.
-    // restoreFromUrl stays synchronous for everything else; only this branch defers.
-    if (p.get('src') === 'archive') {
-      $('src-archive').checked = true;
-      $('src-archive').closest('.src').classList.add('on');
-      ensureArchive().then((ok) => {
-        if (!ok) { $('src-archive').checked = false; return; }
-        loadSource('archive');
-        for (const id of ids.slice(0, MAX)) if (DB.has(id)) toggle(id);
-        renderList(); renderLegend(); renderCaption(); draw();
-      });
-      restoring = false;
-      return;
-    }
+    // There is one corpus now: ours. An old shared link carrying src=archive just falls through to
+    // it and reports whatever it cannot find, rather than reviving a source we no longer serve.
     step('target', () => {
       const tg = p.get('t');
       if (tg && TARGETS[tg]) { targetId = tg; $('target').value = tg; }
@@ -746,9 +737,9 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
       const am = p.get('a');
       if (am && ALIGN[am]) { alignMode = am; $('align').value = am; alignCache.clear(); }
     });
-    step('band', () => {
-      if (p.get('band') === '1') { showBand = true; $('band').checked = true; $('band-t').classList.add('on'); }
-    });
+    // 'band' in a shared URL is ignored while the control is retired — an old link must not be
+    // able to switch a band back on that we no longer stand behind.
+    step('band', () => {});
 
     // Now the selection. Guarded per id for the same reason — one unknown handle in a pasted link
     // must not cost the reader the rest of the comparison.
@@ -810,9 +801,7 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
     c.font = '500 13px ' + TOK.mono;
     c.textAlign = 'left'; c.textBaseline = 'middle';
     c.fillStyle = TOK.axis;
-    c.fillText((source === 'archive'
-        ? 'HeadRoom archive · Head Acoustics HMS II.3 · development reference'
-        : 'Warren Labs · miniDSP EARS Pro') + '  ·  raw, level-matched', PAD, H + FOOT / 2 - 8);
+    c.fillText('Warren Labs · miniDSP EARS Pro  ·  raw, level-matched', PAD, H + FOOT / 2 - 8);
     c.fillStyle = TOK.anno;
     c.font = '400 11px ' + TOK.mono;
     c.fillText(sel.map((s) => label(s.id)).join('   ·   ').slice(0, 120), PAD, H + FOOT / 2 + 11);
@@ -884,11 +873,9 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
       warn.innerHTML =
         '<b>' + unresolved.length + ' headphone' + (unresolved.length > 1 ? 's' : '') +
         '</b> in this link ' + (unresolved.length > 1 ? "aren't" : "isn't") +
-        ' in the ' + (source === 'archive' ? 'HeadRoom archive' : 'Warren Labs set') +
-        ': <span class="mono">' + unresolved.join(', ') + '</span>. ' +
-        (source === 'archive'
-          ? 'Switch the archive off to see our own measurements.'
-          : 'They may be in the HeadRoom archive — switch it on above.');
+        ' in the Warren Labs set: <span class="mono">' + unresolved.join(', ') + '</span>. ' +
+        'We publish a headphone here once we have measured it ourselves. ' +
+        '<a href="/measure">Send one in</a> and it gets added.';
     } else {
       warn.style.display = 'none';
     }
@@ -904,9 +891,7 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
     }
     el.innerHTML =
       'This shows ' + body +
-      (source === 'archive'
-        ? ', from the HeadRoom archive on a <b>Head Acoustics HMS II.3</b> (development reference), L/R averaged'
-        : ', measured here on a <b>miniDSP EARS Pro</b>') +
+      ', measured here on a <b>miniDSP EARS Pro</b>' +
       ', levelled over <b>' + a.label + '</b>' +
       (targetId && TARGETS[targetId] && mode !== 'difference'
         ? ', against the <b>' + TARGETS[targetId].name + '</b> reference shape (dashed)' : '') +
@@ -1243,32 +1228,18 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
     mode = m;
     $('m-ov').classList.toggle('on', m === 'overlay');
     $('m-df').classList.toggle('on', m === 'difference');
-    $('band-t').style.opacity = m === 'difference' ? '0.4' : '1';
-    $('band').disabled = m === 'difference';
+    if ($('band-t')) $('band-t').style.opacity = m === 'difference' ? '0.4' : '1';
+    if ($('band')) $('band').disabled = m === 'difference';
     renderLegend(); renderCaption(); draw(); syncUrl();
   }
 
   $('m-ov').addEventListener('click', () => setMode('overlay'));
   $('m-df').addEventListener('click', () => setMode('difference'));
-  $('band').addEventListener('change', (e) => {
+  if ($('band')) $('band').addEventListener('change', (e) => {
     showBand = e.target.checked;
-    $('band-t').classList.toggle('on', showBand);
+    if ($('band-t')) $('band-t').classList.toggle('on', showBand);
     renderLegend(); renderCaption(); draw(); syncUrl();
   });
-  // Fetched once, then cached for the session. Failure leaves the toggle off rather than showing an
-  // empty picker, so a network blip can't look like "we have no archive".
-  let archiveFetch = null;
-  function ensureArchive() {
-    if (SOURCES.archive) return Promise.resolve(true);
-    if (!archiveFetch) {
-      archiveFetch = fetch(PAYLOAD.archiveUrl)
-        .then((r) => { if (!r.ok) throw new Error(String(r.status)); return r.json(); })
-        .then((d) => { SOURCES.archive = d.models; return true; })
-        .catch((e) => { console.error('archive fetch', e); archiveFetch = null; return false; });
-    }
-    return archiveFetch;
-  }
-
   // Gear popover. Closes on outside click and Escape — a settings panel that traps you is worse
   // than one more toolbar row.
   const gset = $('gset'), gpop = $('gset-pop');
@@ -1282,22 +1253,6 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES, archive
   document.addEventListener('click', () => setGear(false));
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setGear(false); });
 
-  $('src-archive').addEventListener('change', async (e) => {
-    const on = e.target.checked;
-    if (on) {
-      $('hint').textContent = 'Loading archive…';
-      const ok = await ensureArchive();
-      if (!ok) {
-        e.target.checked = false;
-        $('hint').textContent = "Couldn't load the archive.";
-        return;
-      }
-    }
-    e.target.closest('.src').classList.toggle('on', on);
-    unresolved = [];
-    loadSource(on ? 'archive' : 'ours');
-    renderList(); renderLegend(); renderCaption(); draw(); syncUrl();
-  });
   $('target').addEventListener('change', (e) => {
     targetId = e.target.value;
     renderLegend(); renderCaption(); draw(); syncUrl();

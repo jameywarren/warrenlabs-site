@@ -1,8 +1,14 @@
 // Shared engine for the interactive Attune demo widgets embedded on /attune.
 //
-// THE CURVES ARE REAL. Every response drawn here is a real measurement of that exact
-// headphone, from Attune's bundled corpus (see src/data/demo-curves.js) — one artificial
-// head, raw, L/R averaged, normalized at 1 kHz.
+// THE CURVES ARE REAL, AND THEY ARE OURS. Every response drawn here is a real measurement of that
+// exact headphone, made on our own miniDSP EARS Pro (see src/data/demo-curves.js, regenerated from
+// the shipping corpus on every build) — raw, normalized at 1 kHz, seated for best fit.
+//
+// The demo used to draw HeadRoom archive curves. Removed 2026-08-05 with the rest of the archive:
+// a graph labelled "Sennheiser HD 650" reads as our measurement of an HD 650 no matter how clearly
+// the surrounding page says "demo", and the app cannot load archive data at all. Same rule as the
+// synthetic-curve removal below — if a headphone has no measurement of ours, it is not in the
+// picker.
 //
 // This replaces a synthetic `curveFor(seed)` that invented shelves-and-bumps and labelled
 // them "Sennheiser HD 800 S", "Focal Utopia", "Audeze LCD-3". A code comment admitted it;

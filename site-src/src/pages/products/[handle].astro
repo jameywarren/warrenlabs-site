@@ -5,12 +5,30 @@ import Footer from '../../components/Footer.astro';
 import Button from '../../components/Button.astro';
 import ProductGraph from '../../components/ProductGraph.astro';
 import { HEADPHONES, BY_HANDLE } from '../../data/headphones.js';
-import { CURVES } from '../../data/curves.js';
 import { MEASUREMENTS } from '../../data/measurements.js';
 import { fixtureOf } from '../../data/fixtures.js';
 
+// A PRODUCT PAGE REQUIRES ONE OF OUR OWN MEASUREMENTS. No exceptions, no archive fallback.
+//
+// Until 2026-08-05 this generated a page for every entry in headphones.js and fell back to the
+// HeadRoom archive whenever our bench hadn't reached the model. Two things were wrong with that,
+// and the second is the one that decided it:
+//
+//   1. The archive is ~2010-13, one unit, a fixture that no longer exists, and no seating protocol
+//      on record. It is a research reference now, not something to publish as a measurement.
+//   2. The page promised a curve the PRODUCT cannot deliver. Attune ships EARS Pro data only
+//      (ATTUNE_BUNDLE_HEADROOM is OFF), so a reader who found the HD 598 here, liked the graph, and
+//      opened the app to tune it would find nothing. A page that sells a capability we don't have
+//      is worse than no page.
+//
+// The editorial in headphones.js is deliberately KEPT for every model, measured or not. It is real
+// work, it is independent of the curves, and each entry lights up on its own the moment that
+// headphone reaches the bench. This gate is the only thing standing between the two states.
 export function getStaticPaths() {
-  return HEADPHONES.map((hp) => ({ params: { handle: hp.handle }, props: { hp } }));
+  const measured = new Set(MEASUREMENTS.map((m) => m.id));
+  return HEADPHONES
+    .filter((hp) => measured.has(hp.curveId))
+    .map((hp) => ({ params: { handle: hp.handle }, props: { hp } }));
 }
 
 const { hp } = Astro.props;
@@ -18,14 +36,17 @@ const SITE = 'https://warrenlabs.com';
 const url = `${SITE}/products/${hp.handle}`;
 const full = `${hp.brand} ${hp.name}`;
 
-// OUR measurement wins when we have one. The HeadRoom archive is a development reference and a
-// stand-in until this model reaches our bench — useful, licensing-clean, and genuinely ours to
-// publish, but a different fixture, so the page has to say which one the reader is looking at.
-// Never merged: one curve, one rig, named.
 const ourMeasurement = MEASUREMENTS.find((m) => m.id === hp.curveId);
-const isArchive = !ourMeasurement;
-const dbs = ourMeasurement ? ourMeasurement.db : CURVES[hp.curveId];
+const dbs = ourMeasurement.db;
 const fx = fixtureOf(hp.curveId);
+
+// "If you like the X" can only point at pages that exist. Most related models are written up in
+// headphones.js but not yet measured, so an unfiltered list would be a wall of 404s.
+const MEASURED = new Set(MEASUREMENTS.map((m) => m.id));
+const relatedLive = hp.related.filter(([h]) => {
+  const r = BY_HANDLE[h];
+  return r && MEASURED.has(r.curveId ?? h);
+});
 
 const title = `${full} — frequency response & honest take · Warren Labs`;
 const description = `${full} measured frequency response, specs, and a plain-English take: ${hp.signature.toLowerCase()}. ${hp.type}, ${hp.impedance}. See how it measures and tune it to your taste in Attune.`;
@@ -75,7 +96,7 @@ const jsonLd = [
       <section class="gcard" aria-label="Frequency response">
         <div class="gtop">
           <span class="gtitle">Frequency response</span>
-          <span class="gtag">Raw &middot; L/R averaged</span>
+          <span class="gtag">Raw &middot; best-fit seating</span>
         </div>
         <div class="brail">
           <span class="bn">{fx.name}<i>{fx.years}</i></span>
@@ -83,23 +104,10 @@ const jsonLd = [
         </div>
         <ProductGraph dbs={dbs} label={full} />
         <div class="grig">
-          <span class={isArchive ? 'src-archive' : 'src-ours'}>
-            {isArchive
-              ? 'HeadRoom archive · Head Acoustics HMS II.3'
-              : 'Measured here · miniDSP EARS Pro'}
-          </span>
+          <span class="src-ours">Measured here · miniDSP EARS Pro</span>
           <span>Normalized 0 dB @ 1 kHz</span>
           <span>One unit, one seating</span>
         </div>
-        {isArchive && (
-          <p class="archive-note">
-            <b>Not yet measured on our rig.</b> This curve comes from the HeadRoom archive — a
-            different fixture, measured years ago, kept as a development reference. It is the best
-            we have for this model and we would rather show it, labelled, than show nothing. When
-            this headphone reaches our bench the page gets our own measurement.
-            {' '}<a href="/measure">Send yours in</a> and it will be this one.
-          </p>
-        )}
       </section>
 
       <div class="panel">
@@ -154,22 +162,24 @@ const jsonLd = [
       </div>
     </section>
 
-    <section class="sec">
-      <h2 class="sec-h">If you like the {hp.name}</h2>
-      <p class="sec-lede">Close on the graph, or a deliberate step in one direction.</p>
-      <div class="rel">
-        {hp.related.map(([h, kind, note]) => {
-          const r = BY_HANDLE[h];
-          return (
-            <a class="rcard" href={`/products/${h}`}>
-              <span class="rk">{kind}</span>
-              <h3>{r ? `${r.brand} ${r.name}` : h}</h3>
-              <p>{note}</p>
-            </a>
-          );
-        })}
-      </div>
-    </section>
+    {relatedLive.length > 0 && (
+      <section class="sec">
+        <h2 class="sec-h">If you like the {hp.name}</h2>
+        <p class="sec-lede">Close on the graph, or a deliberate step in one direction.</p>
+        <div class="rel">
+          {relatedLive.map(([h, kind, note]) => {
+            const r = BY_HANDLE[h];
+            return (
+              <a class="rcard" href={`/products/${h}`}>
+                <span class="rk">{kind}</span>
+                <h3>{r ? `${r.brand} ${r.name}` : h}</h3>
+                <p>{note}</p>
+              </a>
+            );
+          })}
+        </div>
+      </section>
+    )}
   </main>
 
   <Footer variant="home" />
