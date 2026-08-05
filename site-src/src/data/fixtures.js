@@ -54,17 +54,26 @@ export const FIXTURES = {
   },
 };
 
-// Default for anything that predates the field. Every published curve today is archive.
-export const DEFAULT_FIXTURE = 'hms2';
+// Default fixture for a curve with no explicit entry.
+//
+// FLIPPED FROM 'hms2' TO 'earspro' ON 2026-08-05, and it was live-wrong until then. Once the site
+// stopped publishing archive curves, every curve it draws is ours — but this default still resolved
+// to the HMS II.3, so /products/sennheiser-hd-650 plotted OUR EARS Pro measurement under the
+// archive's name, years, caveat and limits text. That is the worst failure mode this registry has:
+// not an unlabelled curve, but a correctly-drawn curve wearing another rig's provenance.
+//
+// The default must always name the bench that everything unlabelled actually came off.
+export const DEFAULT_FIXTURE = 'earspro';
 
-/** Fixture record for a curve id, falling back to the archive rig. */
+/** Fixture record for a curve id. */
 export function fixtureOf(curveId, map = CURVE_FIXTURES) {
   return FIXTURES[map[curveId] || DEFAULT_FIXTURE];
 }
 
-// curveId -> fixture id. Everything currently published came off the HMS II.3, so this map is
-// intentionally empty and fixtureOf() falls through to DEFAULT_FIXTURE. Add an entry per curve
-// as EARS Pro measurements land, e.g. 'hifiman-sundara': 'earspro'.
+// curveId -> fixture id. Every published curve is now an EARS Pro measurement, so this map is
+// intentionally empty and fixtureOf() falls through to DEFAULT_FIXTURE. It exists for the day a
+// second bench appears: add an entry per curve then, and never let a curve default into a rig it
+// was not measured on.
 export const CURVE_FIXTURES = {};
 
 /** True when a set of curve ids spans more than one fixture, which forces the split view. */

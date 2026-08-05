@@ -10,7 +10,7 @@ const SITE = 'https://warrenlabs.com';
 const url = `${SITE}/measure`;
 const title = 'Send us your headphones to measure';
 const description =
-  'Mail in your headphones and we measure them on our rig. You get your unit’s exact curve back, and the model gets a credited page in the Archive. Insured both ways, back in about a week.';
+  'Mail in your headphones and we measure them on our rig — seated for best fit, published as one real seating. You get your unit’s exact curve back, and the model gets a credited page here. Insured both ways, back in about a week.';
 
 // Dedicated intake endpoint (see src/data/config.js). Empty is safe: the form validates and shows a
 // friendly confirmation instead of POSTing nowhere, so the page ships before the Formspree form exists.
@@ -47,8 +47,8 @@ const faq: [string, string][] = [
     'Over-ear and on-ear headphones, and IEMs where the rig takes a proper seal. If you’re not sure yours qualifies, tell us in the form and we’ll say.',
   ],
   [
-    'How is this different from the historical Archive?',
-    'The Archive’s older curves were measured on a Head Acoustics HMS II.3. Your headphone is measured here on our own rig (a miniDSP EARS Pro) and labeled as such. We don’t silently mix the two — they’re different measurement systems, especially up in the treble.',
+    'Do you have old measurements from HeadRoom?',
+    'We hold them — 319 headphones measured on a Head Acoustics HMS II.3 around 2010–2013 — but we no longer publish them as measurements, and we don’t mix them with anything measured here. They are one unit per model, on a head that no longer exists, with no record of how the headphone was seated. We keep them as a research reference and measure from scratch instead. Your headphone gets measured on our own bench and labeled as such.',
   ],
 ];
 
@@ -74,7 +74,7 @@ const steps: [string, string][] = [
   ['Tell us what you’ve got', 'Fill in the form below — make, model, and how to reach you. Takes a minute.'],
   ['We send a label', 'You get a prepaid, insured return label, our address, and simple packing notes by email.'],
   ['You ship it', 'Box it up and send it. It’s insured to the value you declare, door to door.'],
-  ['We measure & publish', 'It goes on the rig, gets an honest page in the Archive, and heads back to you in about a week.'],
+  ['We measure & publish', 'It goes on the rig, gets an honest page of its own, and heads back to you in about a week.'],
   ['You get your curve', 'Your unit’s exact measurement lands in your inbox, credited however you asked.'],
 ];
 ---
@@ -85,12 +85,12 @@ const steps: [string, string][] = [
   <!-- ---------- hero ---------- -->
   <section class="sec hero">
     <div class="wrap">
-      <span class="eyebrow">The Archive &middot; Send one in</span>
+      <span class="eyebrow">The bench &middot; Send one in</span>
       <h1>Send us your headphones.<br />We&rsquo;ll measure them.</h1>
       <p class="lede">
         Every correction you can buy is built from somebody else&rsquo;s sample of your model. This is the
         one way to get the curve of the pair actually in your hands. Your unit&rsquo;s
-        <em>exact</em> measurement comes back by email, and if that model has no page in the Archive yet,
+        <em>exact</em> measurement comes back by email, and if that model has no page here yet,
         it gets one. Two ways in: if it is a model we are asking for, it is free and we cover shipping
         both ways. Any other headphone you own is $89, and you cover the postage.
       </p>
@@ -196,10 +196,10 @@ const steps: [string, string][] = [
         </div>
       </div>
       <p class="rig-note">
-        <b>A word on the rig.</b> Your headphone is measured on our own bench (a miniDSP&nbsp;EARS&nbsp;Pro)
-        and labeled that way. The Archive&rsquo;s older curves came off a Head Acoustics HMS&nbsp;II.3 &mdash;
-        a different system &mdash; so we keep the two clearly separated rather than pretending a single
-        measurement is the last word. One unit is one unit, not the whole model.
+        <b>A word on the rig.</b> Your headphone is measured on our own bench (a miniDSP&nbsp;EARS&nbsp;Pro),
+        seated deliberately for the best fit and labeled that way. What we publish is one real seating,
+        never a blend of several. One unit is one unit, not the whole model &mdash; which is exactly why
+        measuring <em>your</em> pair is worth doing.
         <a href="/learn/how-to-read-a-frequency-response-graph">How to read the graph &rarr;</a>
       </p>
     </div>
@@ -214,9 +214,9 @@ const steps: [string, string][] = [
         <span class="eyebrow">The list</span>
         <h2>What we&rsquo;re asking for.</h2>
         <p class="sec-lede">
-          The Archive is strong through about 2014 and thin after it. These are the models we most want
-          on the bench, and the reason each one earns a slot. Send one of these and the measurement is
-          free, with shipping covered both ways. Anything else you own is $89.
+          We are building this corpus from scratch, one headphone at a time. These are the models we most
+          want on the bench first, and the reason each one earns a slot. Send one of these and the
+          measurement is free, with shipping covered both ways. Anything else you own is $89.
         </p>
       </div>
       <div class="wantgrid">
@@ -354,7 +354,7 @@ const steps: [string, string][] = [
       </div>
 
       <div class="related">
-        <a href="/attune">Browse the Archive &rarr;</a>
+        <a href="/collections/headphones">Browse the measurements &rarr;</a>
         <a href="/attune">What Attune does &rarr;</a>
         <a href="/learn">Learn the basics &rarr;</a>
       </div>
