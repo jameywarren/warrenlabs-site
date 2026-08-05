@@ -433,6 +433,28 @@ body.audio-on .plug-note .live { color: var(--acc2); }
 .offer-note { margin-top: 10px; font-size: 11px; letter-spacing: 0.04em; color: var(--faint); }
 .offer-go { margin-top: 6px; font-size: 11px; letter-spacing: 0.18em; color: var(--acc); }
 
+/* Manufacturer door. Sits under the main offer as a quieter sibling — same width, no gradient,
+   no accent rule on top. It should read as "there is also this" rather than competing with the
+   mail-in card, which is the one a visitor is actually here for. */
+.offer-alt {
+  display: grid; grid-template-columns: 168px 1fr auto; gap: 28px; align-items: center;
+  max-width: 980px; margin-top: 14px; text-decoration: none; color: inherit;
+  border: 1px solid var(--panel-edge); border-radius: 6px; padding: 20px 36px;
+  background: var(--panel);
+  transition: border-color 0.2s, transform 0.2s;
+}
+.offer-alt:hover {
+  border-color: color-mix(in oklab, var(--acc) 40%, var(--panel-edge));
+  transform: translateY(-2px);
+}
+.oa-k { font-size: 11px; letter-spacing: 0.22em; color: var(--faint); }
+.oa-main { font-size: 14.5px; line-height: 1.6; color: var(--dim); text-wrap: pretty; }
+.oa-main b { color: var(--ink); font-weight: 500; }
+.oa-go { font-size: 11px; letter-spacing: 0.18em; color: var(--acc); white-space: nowrap; }
+@media (max-width: 860px) {
+  .offer-alt { grid-template-columns: 1fr; gap: 12px; padding: 22px 24px; }
+}
+
 /* ---------- patchbay ---------- */
 .pbay { position: relative; width: min(840px, 100%); margin: 44px 0 0; }
 .pbay-panel {

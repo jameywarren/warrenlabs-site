@@ -1,0 +1,255 @@
+---
+// /loaners/print — the one-page leave-behind, print-optimised.
+//
+// THE JOB: Jamey hands this to someone at a show. That person is usually NOT the person who decides.
+// So this sheet has to survive being handed on to a marketing coordinator who never met him, read
+// once, and either acted on or binned. Everything needed to say yes is on it, and nothing else is.
+//
+// WHY IT IS NOT THE /loaners PAGE PRINTED. Three different constraints:
+//   1. ONE SHEET. Hard limit. A two-page leave-behind loses page two immediately.
+//   2. LIGHT, ALWAYS. The site is dark; printing it wastes a cartridge and looks like a mistake.
+//      This page forces a white document regardless of the visitor's theme.
+//   3. IT WILL BE PHOTOCOPIED AND SCANNED. So: no gradients, no reversed-out type, no colour
+//      carrying meaning. The one accent rule is decoration and the sheet reads identically without it.
+//
+// It is also a real URL, so it doubles as the PDF to email to whoever the contact turns out to be.
+// noindex — this is a document, not a page we want in search results competing with /loaners.
+const SITE = 'https://warrenlabs.com';
+
+const TERMS = [
+  ['What we need', 'One retail unit, on loan, for two weeks.'],
+  ['What it costs you', 'Shipping out. We insure and pay the return.'],
+  ['How it comes back', 'In its box, unmodified. Nothing disassembled, firmware untouched.'],
+  ['What you get', 'The published page — and the raw measurement file, for your own use, no conditions.'],
+  ['Turnaround', 'Measured within a week of arrival.'],
+  ['Multiple pad sets', 'We measure each and publish the difference.'],
+  ['What we won’t do', 'Rank it, score it, or write a subjective verdict.'],
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Warren Labs — headphone loan request</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="screen-note">
+      <b>One-page leave-behind.</b> Print at Letter, or ⌘P → Save as PDF to email it.
+    </div>
+
+    <article class="sheet">
+      <header class="head">
+        <div class="brand">
+          <svg class="mark" viewBox="0 0 120 80" aria-hidden="true">
+            <path
+              d="M16 16 C20 38 28 62 39 62 C48 62 53 46 58 38 C63 30 70 30 76 38 C81 44 84 54 92 54 C99 54 103 46 106 40"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="6.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+          <span class="bn">WARREN LABS</span>
+        </div>
+        <div class="meta">Headphone measurement bench<br />Livingston, Montana</div>
+      </header>
+
+      <h1>Send us the headphone.<br />We&rsquo;ll send you back the data.</h1>
+
+      <p class="lede">
+        Loan us a unit for two weeks. We measure it on a documented rig, publish the result, and{' '}
+        <b>give you the raw measurement file for your own use</b> &mdash; free, with no conditions
+        attached to it. A page for your customers, and a dataset you can keep.
+      </p>
+
+      <table class="terms">
+        <tbody>
+          {TERMS.map(([k, v]) => (
+            <tr>
+              <th scope="row">{k}</th>
+              <td>{v}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div class="cols">
+        <section>
+          <h2>You can read the method first</h2>
+          <p>
+            Our measurement method is published <em>before</em> anything is measured, so you can see
+            exactly how your headphone will be treated and decide with the facts in front of you.
+          </p>
+          <p>
+            We seat the headphone <b>deliberately, for the best fit</b> &mdash; adjusted for seal and
+            for sound, the way a listener adjusts a headphone before settling in &mdash; rather than
+            dropping it on at random and averaging the results. What we publish is <b>one real
+            seating, never a blend</b>, chosen by a stated rule, with its repeatability alongside it.
+            Both channels are measured and kept.
+          </p>
+        </section>
+
+        <section>
+          <h2>What we publish</h2>
+          <p>
+            A frequency response, the fixture, the seating procedure, how repeatable it was, and where
+            the measurement stops being trustworthy. We say <b>one unit is one unit, not the
+            model</b>, on every page.
+          </p>
+          <p>
+            And the part worth being blunt about: <b>we publish what the rig says, flattering or
+            not.</b> If that isn&rsquo;t a deal you want, this is the right moment to say no. A
+            measurement that came with conditions wouldn&rsquo;t be worth anything to your customers
+            or to us.
+          </p>
+        </section>
+      </div>
+
+      <section class="who">
+        <h2>Who runs it</h2>
+        <p>
+          <b>Jamey Warren.</b> Employee #1 at Grace Design, where one of my jobs was building the
+          automated measurement system the gear was tested against. Later president and CEO of
+          HeadRoom. I do the measuring myself, on my own bench, and the method above is the one I
+          actually follow.
+        </p>
+      </section>
+
+      <footer class="foot">
+        <div class="ask">
+          <span class="fk">EVERYTHING ABOVE, IN A FORM YOU CAN FORWARD</span>
+          <span class="url">{SITE.replace('https://', '')}/loaners</span>
+        </div>
+        <div class="contact">
+          <span class="fk">TO ARRANGE A LOAN</span>
+          <span class="em">jamey@warrenlabs.com</span>
+        </div>
+      </footer>
+    </article>
+  </body>
+</html>
+
+<style is:global>
+  /* A print document, not a web page. Forced light, no theme tokens — this file has to render the
+     same for anyone who opens it, including from an emailed PDF, and has to photocopy cleanly. */
+  :root { color-scheme: light; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #f2f2f0; }
+  body {
+    font-family: 'Barlow', system-ui, sans-serif;
+    color: #16181b;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .screen-note {
+    max-width: 8.5in; margin: 18px auto 0; padding: 10px 14px;
+    font-family: 'JetBrains Mono', monospace; font-size: 11.5px; letter-spacing: 0.04em;
+    color: #55595e; background: #fff; border: 1px solid #d9d9d6; border-radius: 4px;
+  }
+  .screen-note b { color: #16181b; }
+
+  .sheet {
+    width: 8.5in; min-height: 11in; margin: 18px auto 40px; padding: 0.62in 0.7in;
+    background: #fff; border: 1px solid #d9d9d6;
+  }
+
+  .head {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    padding-bottom: 13px; border-bottom: 1.5px solid #16181b;
+  }
+  .brand { display: flex; align-items: center; gap: 9px; }
+  .mark { width: 34px; height: 23px; color: #16181b; }
+  .bn {
+    font-family: 'Barlow', sans-serif; font-weight: 700;
+    font-size: 15px; letter-spacing: 0.15em;
+  }
+  .meta {
+    font-family: 'JetBrains Mono', monospace; font-size: 9.5px; line-height: 1.5;
+    letter-spacing: 0.06em; color: #55595e; text-align: right; text-transform: uppercase;
+  }
+
+  h1 {
+    font-weight: 600; font-size: 33px; line-height: 1.08;
+    margin: 26px 0 0; letter-spacing: -0.015em;
+  }
+
+  .lede {
+    font-size: 13.6px; line-height: 1.55; color: #33373b;
+    margin: 14px 0 0; max-width: 52em;
+  }
+  .lede b { color: #16181b; font-weight: 600; }
+
+  /* The terms table is the reason the sheet exists: it answers the whole decision without a call. */
+  .terms {
+    width: 100%; border-collapse: collapse; margin-top: 22px;
+    border-top: 1px solid #c9c9c5; border-bottom: 1px solid #c9c9c5;
+  }
+  .terms tr { border-bottom: 1px solid #e4e4e0; }
+  .terms tr:last-child { border-bottom: 0; }
+  .terms th {
+    text-align: left; vertical-align: baseline; width: 1.85in; padding: 7px 14px 7px 0;
+    font-family: 'JetBrains Mono', monospace; font-size: 9.5px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: #55595e;
+  }
+  .terms td { padding: 7px 0; font-size: 12.6px; line-height: 1.45; }
+
+  .cols {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 24px;
+  }
+  .cols h2, .who h2 {
+    font-size: 13.5px; font-weight: 600; margin: 0 0 7px; letter-spacing: -0.005em;
+  }
+  .cols p, .who p {
+    font-size: 11.6px; line-height: 1.52; color: #33373b; margin: 0 0 8px;
+  }
+  .cols p b, .who p b { color: #16181b; font-weight: 600; }
+  .cols p:last-child, .who p:last-child { margin-bottom: 0; }
+
+  .who {
+    margin-top: 22px; padding-top: 16px; border-top: 1px solid #e4e4e0;
+  }
+
+  .foot {
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 24px;
+    margin-top: 26px; padding-top: 15px; border-top: 1.5px solid #16181b;
+  }
+  .fk {
+    display: block; font-family: 'JetBrains Mono', monospace; font-size: 8.5px;
+    letter-spacing: 0.13em; color: #55595e; margin-bottom: 5px;
+  }
+  .url { font-weight: 700; font-size: 19px; letter-spacing: -0.01em; }
+  .contact { text-align: right; }
+  .em { font-weight: 500; font-size: 14.5px; }
+
+  @page { size: letter; margin: 0.45in; }
+
+  @media print {
+    html, body { background: #fff; }
+    .screen-note { display: none; }
+    .sheet {
+      width: auto; min-height: 0; margin: 0; padding: 0; border: 0;
+    }
+    /* Nothing here should ever break across a page — if it would, the sheet is too long and the
+       content needs cutting, not reflowing onto a second page nobody will read. */
+    .terms, .cols, .who, .foot { page-break-inside: avoid; }
+  }
+
+  @media (max-width: 8.9in) {
+    .sheet { width: auto; max-width: 8.5in; }
+    .screen-note { margin-left: 12px; margin-right: 12px; }
+  }
+  @media (max-width: 620px) {
+    .cols { grid-template-columns: 1fr; gap: 18px; }
+    .foot { flex-direction: column; align-items: flex-start; }
+    .contact { text-align: left; }
+    h1 { font-size: 27px; }
+  }
+</style>
