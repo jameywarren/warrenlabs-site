@@ -23,13 +23,15 @@ export const FIXTURES = {
     years: '2005 to 2014',
     operator: 'HeadRoom',
     // Shown on any page that plots a curve from this rig.
-    caveat: 'Open backs read bass-light on this fixture.',
+    caveat: 'Historical archive. Open backs read bass-light on this fixture.',
     limits:
-      'Measured on a Head Acoustics HMS II.3 artificial head. Raw response, left and right ' +
-      'averaged, normalized to 0 dB at 1 kHz, one unit per model. Re-seating the headphone moves ' +
-      'this line by about ±0.4 dB from 200 Hz to 1 kHz, rising to about ±3.9 dB from 12 to 20 kHz. ' +
-      'Below 200 Hz the seating variance is not characterized. Open-back headphones read ' +
-      'bass-light on this fixture: that is the fixture, not the headphone.',
+      'Measured on a Head Acoustics HMS II.3 artificial head between roughly 2010 and 2013, on a ' +
+      'fixture that no longer exists. Raw response, the two measured channels averaged for display, ' +
+      'normalized to 0 dB at 1 kHz, one unit per model, and the seating procedure was not recorded. ' +
+      'Re-seating moves this line by about ±0.4 dB from 200 Hz to 1 kHz, rising to about ±3.9 dB ' +
+      'from 12 to 20 kHz; below 200 Hz the seating variance is not characterized. Open-back ' +
+      'headphones read bass-light on this fixture: that is the fixture, not the headphone. ' +
+      'Treat this as a historical reference, not as a Warren Labs measurement.',
   },
   earspro: {
     id: 'earspro',
@@ -40,11 +42,15 @@ export const FIXTURES = {
     operator: 'Warren Labs',
     caveat: 'Our own bench. Not an industry reference.',
     limits:
-      'Measured by Warren Labs on a miniDSP EARS Pro. Raw response, left and right averaged, ' +
-      'normalized to 0 dB at 1 kHz. An EARS Pro is not an industry reference coupler such as a ' +
-      'GRAS 45CA, so read this as a house reference: repeatable against our other EARS Pro ' +
-      'measurements, not directly comparable to another lab. Seating repeatability on this ' +
-      'bench is not characterized yet, so there is no variance figure to give.',
+      'Measured by Warren Labs on a miniDSP EARS Pro. The headphone is seated deliberately for the ' +
+      'best fit — the way someone who cares about sound adjusts a headphone before they settle in ' +
+      'to listen — rather than placed at random, and the published curve is a single real seating ' +
+      'chosen by an objective rule, never a blend. Both channels are measured and stored ' +
+      'separately; the line drawn here is their average. Raw response, normalized to 0 dB at 1 kHz. ' +
+      'An EARS Pro is not an industry reference coupler such as a GRAS 45CA, so read this as a ' +
+      'house reference: repeatable against our other EARS Pro measurements, not directly comparable ' +
+      'to another lab. Seating repeatability on this bench is not characterized yet, so there is no ' +
+      'variance figure to give.',
   },
 };
 

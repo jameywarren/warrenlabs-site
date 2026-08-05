@@ -350,6 +350,10 @@ body.audio-on .plug-note .live { color: var(--acc2); }
 .about-col p { font-size: 17px; line-height: 1.7; color: var(--dim); margin-bottom: 20px; max-width: 600px; text-wrap: pretty; }
 .about-col p:last-child { margin-bottom: 0; }
 .about-col p strong { color: var(--ink); font-weight: 500; }
+/* The résumé paragraph is deliberately subordinate to the method above it: the method is the
+   reason to trust a measurement, the biography is context. Styled as an aside so the page reads
+   that way even at a glance. */
+.about-col p.about-bio { font-size: 15px; line-height: 1.65; opacity: .72; border-left: 2px solid var(--line); padding-left: 16px; margin-top: 28px; }
 .era-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 52px; }
 .era {
   border: 1px solid var(--line); border-radius: 6px; padding: 28px 30px 26px;
