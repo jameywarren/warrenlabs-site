@@ -7,7 +7,9 @@ import AttuneCockpitDemo from '../components/AttuneCockpitDemo.astro';
 import AttuneEarExamDemo from '../components/AttuneEarExamDemo.astro';
 import AttuneVoiceMatchDemo from '../components/AttuneVoiceMatchDemo.astro';
 
-const BETA_DMG = 'https://github.com/jameywarren/attune-beta/releases/latest/download/Attune-beta.dmg';
+// Attune shipped on the Mac App Store 2026-08-12. The beta DMG is retired: a side-loaded copy gets no
+// updates and cannot buy Pro, so every download path now points at the store listing.
+const APP_STORE = 'https://apps.apple.com/app/attune-headphone-eq/id6792873303';
 
 const attuneApp = {
   '@type': 'SoftwareApplication',
@@ -30,7 +32,7 @@ const attuneApp = {
 
 <Layout
   title="Attune · Find your sound"
-  description="Attune is a Warren Labs product: personal-EQ and real-time A/B auditioning for macOS. Tune any headphone to your taste — blind, loudness-matched, on your own music. Coming soon to the Mac App Store."
+  description="Attune is a Warren Labs product: personal-EQ and real-time A/B auditioning for macOS. Tune any headphone to your taste — blind, loudness-matched, on your own music. Free on the Mac App Store."
   signup="attune"
   jsonLd={attuneApp}
   wordmark
@@ -48,7 +50,7 @@ const attuneApp = {
             <span class="by-name">Warren Labs</span>
           </span>
         </span>
-        <span class="eyebrow">Free &middot; coming to the Mac App Store</span>
+        <span class="eyebrow">Free &middot; on the Mac App Store</span>
         <h1>Find <em>your</em> sound.</h1>
         <p class="lede">
           Hear your headphones the way <b style="color:var(--text)">you</b> want, or voiced like another headphone
@@ -56,10 +58,10 @@ const attuneApp = {
             style="color:var(--text)">free</b>, no subscription.
         </p>
         <div class="hero-cta">
-          <Button href={BETA_DMG} variant="primary" size="lg">Download the free beta</Button>
-          <Button href="#get" variant="ghost" size="lg" data-signup data-intent="notify">Get launch news</Button>
+          <Button href={APP_STORE} variant="primary" size="lg">Download on the Mac App Store</Button>
+          <Button href="#how" variant="ghost" size="lg">See how it works</Button>
         </div>
-        <div class="hero-note"><span class="dot"></span> macOS &middot; Apple&nbsp;Silicon only</div>
+        <div class="hero-note"><span class="dot"></span> Free &middot; macOS 12 or later &middot; Apple&nbsp;Silicon</div>
 
         {/* Handoff from /graphs Difference mode. Someone who arrives here has already picked a pair
             and been told what the correction looks like — landing them on a generic hero throws that
@@ -309,8 +311,8 @@ const attuneApp = {
             <li><span class="chk">&#9670;</span> Import your own measurements (CSV, AutoEQ, squig) — free, always</li>
             <li><span class="chk">&#9670;</span> The same correction engine that ships in Level</li>
           </ul>
-          <Button href={BETA_DMG} variant="primary">Download the free beta</Button>
-          <p class="beta-req">Requires macOS on Apple&nbsp;Silicon (M1 or later)</p>
+          <Button href={APP_STORE} variant="primary">Download on the Mac App Store</Button>
+          <p class="beta-req">Requires macOS 12 or later, Apple&nbsp;Silicon (M1 or later)</p>
         </div>
         <!-- Pro (one-time unlock) -->
         <div class="tier feat">
@@ -322,7 +324,7 @@ const attuneApp = {
             <li><span class="chk">&#9670;</span> Unlimited saved profiles, across as many headphones as you own</li>
             <li><span class="chk">&#9670;</span> Export your curve and use it outside Attune — phone, DAP or dongle</li>
           </ul>
-          <Button href="#get" variant="ghost" data-signup data-intent="notify">Coming with the App Store release</Button>
+          <Button href={APP_STORE} variant="ghost">Unlock inside the app</Button>
         </div>
       </div>
 
@@ -339,12 +341,11 @@ const attuneApp = {
     <div class="wrap">
       <span class="eyebrow" style="justify-content:center">Get started</span>
       <h2>Find your sound.</h2>
-      <p>Bring your own headphones and the music you know. In under a minute you'll hear the difference. It's free, and it's coming to the Mac App Store.</p>
+      <p>Bring your own headphones and the music you know. In under a minute you'll hear the difference. It's free on the Mac App Store.</p>
       <div class="hero-cta">
-        <Button href={BETA_DMG} variant="primary" size="lg">Download the free beta</Button>
-        <Button href="#get" variant="ghost" size="lg" data-signup data-intent="notify">Get launch news</Button>
+        <Button href={APP_STORE} variant="primary" size="lg">Download on the Mac App Store</Button>
       </div>
-      <p class="beta-req">Requires macOS on Apple&nbsp;Silicon (M1 or later)</p>
+      <p class="beta-req">Requires macOS 12 or later, Apple&nbsp;Silicon (M1 or later)</p>
     </div>
   </section>
 
