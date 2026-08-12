@@ -1,0 +1,195 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+
+const SITE = 'https://warrenlabs.com';
+const url = `${SITE}/learn/importing-your-own-measurement`;
+const title = 'How to import your own headphone measurement';
+const description =
+  'Attune ships measurements for a handful of headphones. If yours is not one of them, you can import a measurement you find online — free. Here is where to get one, which file to pick, and the one mistake that quietly ruins the result.';
+
+// Visible FAQ and FAQPage schema are built from one source so they can never drift apart.
+const faq: [string, string][] = [
+  [
+    'Where do I find a measurement file for my headphones?',
+    'The two big free sources are the squig.link network of measurement databases and the AutoEQ project on GitHub. Both cover thousands of models. Search for your exact model, then download the raw frequency-response file — usually a .txt or .csv of frequency and decibel pairs.',
+  ],
+  [
+    'What file format does Attune accept?',
+    'A plain text or CSV file of frequency and level pairs — one pair per line, frequency in hertz and level in decibels, separated by a comma, tab, or spaces. That is the format AutoEQ and the squig sites export, so in practice you download and import without editing anything.',
+  ],
+  [
+    'What is the difference between raw and compensated?',
+    'A raw curve is what the rig measured. A compensated curve already has a target subtracted from it, so it shows the difference from that target rather than the response itself. Attune wants raw. Importing a compensated curve double-counts the target and produces a tuning that looks plausible and is wrong.',
+  ],
+  [
+    'Will an imported measurement be as accurate as a built-in one?',
+    'No, and Attune says so on screen. A built-in measurement came off our own fixture, so it cancels cleanly against our targets. An imported one came off someone else’s rig, so the difference between the two rigs stays in the result. Trust it for bass and midrange tonal balance; do not trust fine treble detail.',
+  ],
+  [
+    'Is importing a paid feature?',
+    'No. Importing your own measurement is free and always will be. Attune Pro covers unlimited saved sounds and EQ export.',
+  ],
+];
+
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: title,
+    description,
+    author: { '@type': 'Person', name: 'Jamey Warren' },
+    publisher: { '@id': `${SITE}/#organization` },
+    datePublished: '2026-08-12',
+    dateModified: '2026-08-12',
+    mainEntityOfPage: url,
+    inLanguage: 'en',
+  },
+  {
+    '@type': 'FAQPage',
+    mainEntity: faq.map(([q, a]) => ({
+      '@type': 'Question',
+      name: q,
+      acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn` },
+      { '@type': 'ListItem', position: 3, name: title, item: url },
+    ],
+  },
+];
+---
+
+<Layout title={`${title} · Warren Labs`} description={description} ogType="article" jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <article class="doc">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Importing a measurement</span>
+    </nav>
+
+    <span class="eyebrow">Learn &middot; Measurement &amp; tuning</span>
+    <h1>How to import your own headphone measurement</h1>
+
+    <div class="answer">
+      <div class="answer-k">Short answer</div>
+      <p>
+        Download the <b>raw</b> frequency-response file for your headphone from
+        <a href="https://squig.link" rel="nofollow noopener" target="_blank">squig.link</a> or
+        <a href="https://github.com/jaakkopasanen/AutoEq" rel="nofollow noopener" target="_blank">AutoEQ</a>, then use
+        <b>Import your own measurement</b> in Attune. It is free. The one thing to get right: pick the
+        <b>raw</b> file, never a compensated one.
+      </p>
+    </div>
+
+    <h2>Why you would import anything</h2>
+    <p>
+      Attune ships with measurements we made ourselves, on our own fixture. That list is deliberately short and grows
+      one headphone at a time, because every entry is a real measurement rather than a number copied from someone
+      else. If you own something we have not measured yet, importing is how you use the app today &mdash; and it is
+      free, permanently. It is not a Pro feature and never was.
+    </p>
+
+    <h2>Where to get a file</h2>
+    <p>Two free sources cover most of what exists:</p>
+    <ul>
+      <li>
+        <b>squig.link</b> &mdash; a network of independent measurement databases. Find the site that covers your
+        brand, search the model, and download its raw data.
+      </li>
+      <li>
+        <b>AutoEQ</b> &mdash; a large open repository on GitHub with thousands of models, each in a folder containing
+        a raw response file.
+      </li>
+    </ul>
+    <p>
+      Some manufacturers publish their own measurements too. Those are fine to use, with the same caveat as everything
+      else here: it came off their rig, not ours.
+    </p>
+
+    <h2>Which file to pick &mdash; the mistake worth avoiding</h2>
+    <p>
+      Most databases offer the same headphone two ways: a <b>raw</b> curve and a <b>compensated</b> one. Compensated
+      means a target curve has already been subtracted, so the graph shows how far the headphone sits from that target
+      rather than what it actually measured.
+    </p>
+    <p>
+      <b>Attune wants raw.</b> It applies your target itself. Give it a curve that already has a target baked in and
+      the target gets counted twice &mdash; and the result of that is the genuinely dangerous part: it does not look
+      broken. You get a tuning that seems reasonable, sounds off in a way you cannot name, and gives you no hint why.
+    </p>
+    <p>How to tell them apart:</p>
+    <ul>
+      <li>
+        A <b>raw</b> curve wanders. It has a rising region in the upper mids, real peaks and dips, and it does not sit
+        near a straight line.
+      </li>
+      <li>
+        A <b>compensated</b> curve hugs zero. If the whole thing hovers around a flat line with small wiggles, or the
+        file or download button says <em>compensated</em>, <em>Harman</em>, <em>diffuse field</em>, <em>DF</em>, or
+        <em>delta</em>, it is not the one you want.
+      </li>
+    </ul>
+
+    <h2>What accuracy to expect</h2>
+    <p>
+      Attune flags imported curves on screen as approximate, and that warning is doing real work. Voice-matching works
+      by subtracting one measurement from another; the fixture&rsquo;s own signature cancels out
+      <em>only when both curves came off the same fixture</em>. An imported curve came off someone else&rsquo;s, so
+      the difference between the two rigs stays in the answer.
+    </p>
+    <p>In practice that means:</p>
+    <ul>
+      <li><b>Bass and midrange tonal balance</b> &mdash; trust it. Rigs mostly agree here.</li>
+      <li><b>Fine treble detail</b> &mdash; do not. Above roughly 8&nbsp;kHz, rigs disagree by several decibels, and
+        no amount of careful listening will fix data that started out different.</li>
+      <li><b>Coupler family matters.</b> Curves from 711-style couplers transfer to our fixture better than curves
+        from a 5128, because ours shares the same coupler standard.</li>
+    </ul>
+
+    <h2>And it is not your unit</h2>
+    <p>
+      Even a perfect measurement of <em>a</em> headphone is not a measurement of <em>your</em> headphone. Sample
+      variation between two units of the same model is real, and pad wear moves the response further. An import is a
+      good approximation of the model, not a portrait of the one on your head.
+    </p>
+    <p>
+      That is the honest ceiling on imported data, and it is why we offer a
+      <a href="/measure">mail-in measurement service</a> &mdash; your actual unit, on our fixture, cancelling cleanly
+      against our targets. Most people will never need it. If you are chasing the last decibel, it is the only way to
+      get there.
+    </p>
+
+    <h2>The honest bottom line</h2>
+    <p>
+      Grab the raw file, import it, and enjoy a good tuning in the bass and mids. Ignore fine treble differences,
+      remember it is the model rather than your unit, and do not let a compensated file in the door. Those three
+      habits are the difference between an import that helps and one that quietly misleads you.
+    </p>
+
+    <h2>Common questions</h2>
+    <div class="faq">
+      {
+        faq.map(([q, a]) => (
+          <div class="faq-item">
+            <h3>{q}</h3>
+            <p>{a}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <div class="related">
+      <a href="/learn/why-two-rigs-cant-share-an-axis">Why two rigs can&rsquo;t share an axis &rarr;</a>
+      <a href="/learn/target-curves-explained">Target curves explained &rarr;</a>
+      <a href="/attune">Get Attune &rarr;</a>
+      <a href="/learn">Back to Learn &rarr;</a>
+    </div>
+  </article>
+
+  <Footer variant="home" />
+</Layout>
