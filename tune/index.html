@@ -147,10 +147,17 @@ $('connect').addEventListener('click', async () => {
     //   0x0A12 Qualcomm/CSR — Qudelix-5K (confirmed on hardware: pid 0x4003)
     //   0x1FC9 NXP          — Qudelix newer hardware revision
     //   0x2972 FiiO · 0x0A12 also covers some Walkplay units
-    const [dev] = await navigator.hid.requestDevice({ filters: [
+    const devs = await navigator.hid.requestDevice({ filters: [
       { vendorId: 0x0A12 }, { vendorId: 0x1FC9 }, { vendorId: 0x2972 },
     ] });
-    if (!dev) { setStatus($('dev-status'), 'No device selected.'); return; }
+    if (!devs.length) { setStatus($('dev-status'), 'No device selected.'); return; }
+    const dev = pickWritable(devs);
+    if (!dev) {
+      setStatus($('dev-status'), 'That device exposes no writable control interface.', 'err');
+      log(`no writable interface among ${devs.length}: ` +
+          devs.map(d => (d.collections||[]).map(c => '0x'+c.usagePage.toString(16)).join('+')).join(', '));
+      return;
+    }
     if (!dev.opened) await dev.open();
     hidDevice = dev;
     deviceKey = identifyDevice(dev);
@@ -257,6 +264,8 @@ Filter 5: ON PK Fc 9000 Hz Gain -2.0 dB Q 2.00`;
 // packet per band rather than four, which halves the window in which the device holds a
 // half-updated band.
 // ---------------------------------------------------------------------------------------------
+// >>> qudelix-protocol (tools/js/qudelix_packet_test.mjs lifts everything between these
+// markers and diffs it byte-for-byte against devicePEQ's real-device capture — keep them intact)
 const QX = {
   REPORT_HOST_TO_DEVICE: 8, REPORT_OUT_FALLBACK: 7,
   SetEqEnable: 0x0700, SetEqType: 0x0701, SetEqPreGain: 0x0703,
@@ -278,7 +287,28 @@ function qxReportId(dev) {
       if (r.reportId === QX.REPORT_HOST_TO_DEVICE && bytes > 0) { id = r.reportId; size = bytes; }
       else if (!size && r.reportId === QX.REPORT_OUT_FALLBACK && bytes > 0) { id = r.reportId; size = bytes; }
     }
-  return { id, size: size || 64 };
+  // Do NOT silently fall back to a guessed size. If we get here with size 0 the caller handed us
+  // an interface that cannot be written at all (see pickWritable), and guessing 64 would send a
+  // packet into the void and report success. Fail loudly instead.
+  if (!size) throw new Error('this HID interface has no writable output report');
+  return { id, size };
+}
+
+// requestDevice() returns ONE HIDDevice PER INTERFACE of the selected device, and the first one is
+// not necessarily the one you can talk to. Confirmed on real hardware 2026-08-14: a Qudelix-5K
+// enumerates two interfaces, and dev[0] is the consumer-control one (usage page 0x0c, media
+// keys) with NO output reports whatsoever. Taking [0] meant writing an EQ into an interface
+// physically incapable of receiving it.
+//
+// The real-device capture could never have caught this — a capture records the interface someone
+// already picked correctly, not the choosing.
+function pickWritable(devices) {
+  const usable = devices.filter(d =>
+    (d.collections || []).some(c => (c.outputReports || []).some(r =>
+      r.reportId === QX.REPORT_HOST_TO_DEVICE || r.reportId === QX.REPORT_OUT_FALLBACK)));
+  // Prefer a vendor-defined collection (0xFF00) when more than one qualifies — that is where
+  // these dongles put their control protocol.
+  return usable.find(d => (d.collections || []).some(c => c.usagePage === 0xFF00)) || usable[0];
 }
 
 async function qxSend(dev, rpt, cmdId, data) {
@@ -326,6 +356,8 @@ async function writeQudelix(dev, bands, preamp, saveSlot) {
     log(`saved to preset slot ${saveSlot}`);
   }
 }
+
+// <<< qudelix-protocol
 
 async function writeToDevice(dev, key, bands, preamp) {
   if (key === 'qudelix') return writeQudelix(dev, bands, preamp, 0);
