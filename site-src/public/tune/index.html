@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Attune · Send to Device</title>
+<!--
+  Attune "Send to Device" — WebHID companion page (SKELETON / starting point).
+
+  WHAT THIS IS
+  A standalone web page that pushes an Attune tuning to a programmable DSP dongle (Qudelix, FiiO,
+  Walkplay/KTMicro, Moondrop…). The dongle applies the curve in its own DSP, so the tuning survives
+  DRM'd streaming — a USB DAC only ever sees decoded PCM, downstream of DRM. This is hardware Path 1
+  from docs/hardware-output-stage.md and roadmap-1.1.md (Workstream A), delivered at ~$0.
+
+  WHY A SEPARATE PAGE (not native in the Mac app) — SETTLED, A0, 2026-08-06
+  This is now a decision of record (roadmap-1.1.md A0), not a preference:
+
+    1. WebKit has NO WebHID. Chromium desktop only. That means Attune's own WebBrowserComponent
+       (WKWebView) CANNOT run this page — `navigator.hid` is simply absent. So the page must be
+       EXTERNAL (the user's Chrome/Edge), not merely a separate file we load in-app. If someone
+       later asks for an in-app "Send to Device" button that does the transfer itself: the engine
+       can't. Attune's job is to export the PEQ and open this URL (NSWorkspace openURL, no
+       entitlement needed).
+    2. Going native instead would require com.apple.security.device.usb (it gates
+       IOHIDLibUserClient under the sandbox) — banned by the roadmap Guardrails. Vendor-specific
+       HID interfaces are also reported to fail kIOReturnNotPermitted even WITH the entitlement,
+       plus Input Monitoring (TCC) consent on some usage pages. Not worth it for a free browser API.
+    3. Cross-platform for free: same page from a Mac, a Windows laptop, or a Chromebook.
+
+  ⚠️ NO MOBILE. iOS Safari and Chrome-for-Android both lack WebHID, so this page cannot run from a
+  phone — a laptop is required equipment at CanJam (see canjam-socal-plan.md).
+  ⚠️ HTTPS or localhost ONLY, plus a user gesture. A file:// copy will NOT work — so the offline
+  booth fallback needs a local server or a cached PWA, not a saved .html. Solve this in A1.
+
+  Host statically (e.g. warrenlabs.com/tune).
+
+  WHAT'S REAL vs STUBBED HERE
+  REAL:    WebHID connect, AutoEq `ParametricEq.txt` parsing, per-device constraint clamp, the UI.
+  STUBBED: the per-device HID write (`writeToDevice`). Those report formats are the reverse-engineered
+           protocols in jeromeof/devicePEQ (0BSD) — PORT them, don't reinvent. Marked below.
+
+  NEXT STEPS (roadmap-1.1 A2): vendor devicePEQ's qudelix/fiio/walkplay HID handlers +
+  peqConstraintsConfig.json, wire them into writeToDevice(), and confirm on a real Qudelix-5K.
+-->
+<style>
+  :root{ --ground:#1b1d20; --surface:#202327; --hairline:#32363c; --text:#c9cdd0; --muted:#83888d;
+         --accent:#eeb154; --accent-dim:rgba(238,177,84,.14); --accent-line:rgba(238,177,84,.30);
+         --good:#5dcaa5; --bad:#e88; --mono:'JetBrains Mono',ui-monospace,monospace; --sans:'Inter',system-ui,sans-serif; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--ground);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.5;
+       max-width:760px;margin:0 auto;padding:32px 20px}
+  h1{font-size:22px;font-weight:600;margin-bottom:4px}
+  .sub{color:var(--muted);margin-bottom:24px}
+  .card{background:var(--surface);border:1px solid var(--hairline);border-radius:12px;padding:18px;margin-bottom:16px}
+  .card h2{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+  button{font-family:var(--sans);font-weight:600;font-size:14px;border:1px solid var(--accent);background:var(--accent);
+         color:var(--ground);padding:10px 18px;border-radius:9px;cursor:pointer}
+  button.ghost{background:transparent;color:var(--text);border-color:var(--hairline)}
+  button:disabled{opacity:.4;cursor:not-allowed}
+  textarea{width:100%;min-height:120px;background:var(--ground);border:1px solid var(--hairline);border-radius:9px;
+           color:var(--text);font-family:var(--mono);font-size:12px;padding:10px;resize:vertical}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .status{font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .status.ok{color:var(--good)} .status.err{color:var(--bad)}
+  table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12px;margin-top:10px}
+  th,td{text-align:right;padding:4px 8px;border-bottom:1px solid var(--hairline)}
+  th:first-child,td:first-child{text-align:left}
+  .note{font-size:12px;color:var(--accent);margin-top:8px}
+  #log{font-family:var(--mono);font-size:11.5px;color:var(--muted);white-space:pre-wrap;max-height:160px;overflow:auto}
+</style>
+</head>
+<body>
+  <h1>Attune · Send to Device</h1>
+  <p class="sub">Load your Attune tuning onto a compatible DSP dongle. It applies to everything your phone or
+    Mac plays — including streaming — because the dongle EQs the decoded audio at the output.</p>
+
+  <div class="card">
+    <h2>1 · Connect your dongle</h2>
+    <div class="row">
+      <button id="connect">Connect device…</button>
+      <span id="dev-status" class="status">No device connected.</span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>2 · Your Attune tuning</h2>
+    <p class="status">Paste the <code>ParametricEq.txt</code> you exported from Attune (or load the file).</p>
+    <div class="row" style="margin:10px 0">
+      <input type="file" id="file" accept=".txt" />
+      <button class="ghost" id="sample">Load a sample</button>
+    </div>
+    <textarea id="peq" placeholder="Preamp: -6.0 dB&#10;Filter 1: ON PK Fc 105 Hz Gain -3.2 dB Q 0.70&#10;…"></textarea>
+    <div id="bands"></div>
+    <div id="clamp-note" class="note"></div>
+  </div>
+
+  <div class="card">
+    <h2>3 · Send</h2>
+    <div class="row">
+      <button id="send" disabled>Send to device</button>
+      <span id="send-status" class="status"></span>
+    </div>
+    <div id="log" style="margin-top:12px"></div>
+  </div>
+
+<script>
+'use strict';
+
+// ---------------------------------------------------------------------------------------------
+// Per-device constraints. Seed values from the research (docs/hardware-output-stage.md); the real
+// source of truth is devicePEQ's peqConstraintsConfig.json — vendor it and replace this map.
+// ---------------------------------------------------------------------------------------------
+const DEVICES = {
+  // 10, NOT 20 — settled against the protocol, after I got it wrong twice.
+  //   The marketing "20-band" is 10 bands PER CHANNEL. devicePEQ's handler writes with
+  //   CH_MASK_BOTH (0x03), i.e. the same value to L and R, so the usable count for one curve is 10.
+  //   Its own default is `maxFilters || 10`, and the protocol's USR_EQ_BAND is 10.
+  //   The genuine 20-band group (`b20`, group 2) is 5K Plus / V2 firmware — a different device.
+  //   Attune wants stereo-linked anyway: voice-match produces ONE curve for both ears, so the
+  //   L/R-independent capability buys us nothing and 10 is the real budget.
+  // Getting this wrong is silent: fit 20, push 10, lose half with nothing on screen saying so.
+  qudelix : { name:'Qudelix-5K',        maxBands:10, minFc:20,  maxFc:20000, minGain:-12, maxGain:12, types:['PK','LSQ','HSQ'] },
+  fiio    : { name:'FiiO (KA/BTR/K)',   maxBands:10, minFc:20,  maxFc:20000, minGain:-12, maxGain:12, types:['PK','LS','HS','LP','HP','BP','NO'] },
+  walkplay: { name:'Walkplay/KTMicro',  maxBands:8,  minFc:20,  maxFc:20000, minGain:-12, maxGain:12, types:['PK'] },
+  moondrop: { name:'Moondrop FreeDSP',  maxBands:9,  minFc:40,  maxFc:10000, minGain:-12, maxGain:3,  types:['PK'] }, // peak-only, tight range
+  generic : { name:'Generic',           maxBands:10, minFc:20,  maxFc:20000, minGain:-12, maxGain:12, types:['PK'] },
+};
+
+let hidDevice = null;
+let deviceKey = 'generic';
+let parsedBands = [];
+
+const $ = id => document.getElementById(id);
+const log = m => { $('log').textContent += m + '\n'; $('log').scrollTop = $('log').scrollHeight; };
+const setStatus = (el, msg, cls='') => { el.className = 'status ' + cls; el.textContent = msg; };
+
+// ---------------------------------------------------------------------------------------------
+// 1 · WebHID connect (REAL). requestDevice() needs a user gesture. filters:[] shows all HID
+// devices; NARROW this to devicePEQ's known vendor/product IDs so users only see supported dongles.
+// ---------------------------------------------------------------------------------------------
+$('connect').addEventListener('click', async () => {
+  if (!('hid' in navigator)) { setStatus($('dev-status'), 'WebHID unavailable — use Chrome or Edge.', 'err'); return; }
+  try {
+    // Vendor-scoped, not filters:[] — an unfiltered picker lists every HID device on the machine
+    // (keyboards, mice) and invites choosing something we will then try to write EQ into.
+    //   0x0A12 Qualcomm/CSR — Qudelix-5K (confirmed on hardware: pid 0x4003)
+    //   0x1FC9 NXP          — Qudelix newer hardware revision
+    //   0x2972 FiiO · 0x0A12 also covers some Walkplay units
+    const [dev] = await navigator.hid.requestDevice({ filters: [
+      { vendorId: 0x0A12 }, { vendorId: 0x1FC9 }, { vendorId: 0x2972 },
+    ] });
+    if (!dev) { setStatus($('dev-status'), 'No device selected.'); return; }
+    if (!dev.opened) await dev.open();
+    hidDevice = dev;
+    deviceKey = identifyDevice(dev);
+    setStatus($('dev-status'), `Connected: ${dev.productName || 'HID device'} → treating as ${DEVICES[deviceKey].name}`, 'ok');
+    log(`connected vid=0x${dev.vendorId.toString(16)} pid=0x${dev.productId.toString(16)} "${dev.productName||''}"`);
+    refresh();
+  } catch (e) { setStatus($('dev-status'), 'Connect failed: ' + e.message, 'err'); }
+});
+
+// Map a connected HID device → a DEVICES key. TODO: use devicePEQ's vendor/product-id tables.
+function identifyDevice(dev) {
+  const n = (dev.productName || '').toLowerCase();
+  if (n.includes('qudelix')) return 'qudelix';
+  if (n.includes('fiio'))    return 'fiio';
+  if (n.includes('moondrop'))return 'moondrop';
+  if (n.includes('walkplay')|| n.includes('epz') || n.includes('jcally') || n.includes('kiwi')) return 'walkplay';
+  return 'generic';
+}
+
+// ---------------------------------------------------------------------------------------------
+// 2 · Parse AutoEq ParametricEq.txt (REAL). Format Attune's "Export PEQ" (roadmap A1) will emit:
+//   Preamp: -6.0 dB
+//   Filter 1: ON PK Fc 105 Hz Gain -3.2 dB Q 0.70
+// ---------------------------------------------------------------------------------------------
+function parsePeq(text) {
+  const bands = [];
+  let preamp = 0;
+  for (const line of text.split(/\r?\n/)) {
+    const pre = line.match(/Preamp:\s*(-?[\d.]+)\s*dB/i);
+    if (pre) { preamp = parseFloat(pre[1]); continue; }
+    const m = line.match(/Filter\s+\d+:\s+ON\s+(\w+)\s+Fc\s+([\d.]+)\s*Hz\s+Gain\s+(-?[\d.]+)\s*dB\s+Q\s+([\d.]+)/i);
+    if (m) bands.push({ type:m[1].toUpperCase(), fc:+m[2], gain:+m[3], q:+m[4] });
+  }
+  return { preamp, bands };
+}
+
+// Clamp/refit parsed bands to the connected device's limits (REAL, simple version). A production
+// refit would re-optimize gains when bands are dropped; this clamps + truncates and reports it.
+function clampToDevice(bands, c) {
+  const clamped = bands
+    .filter(b => b.fc >= c.minFc && b.fc <= c.maxFc)
+    .slice(0, c.maxBands)
+    .map(b => ({
+      type: c.types.includes(b.type) ? b.type : 'PK',
+      fc:   Math.min(c.maxFc, Math.max(c.minFc, b.fc)),
+      gain: Math.min(c.maxGain, Math.max(c.minGain, b.gain)),
+      q:    b.q,
+    }));
+  const dropped = bands.length - clamped.length;
+  return { clamped, dropped };
+}
+
+function refresh() {
+  const { preamp, bands } = parsePeq($('peq').value);
+  const c = DEVICES[deviceKey];
+  const { clamped, dropped } = clampToDevice(bands, c);
+  parsedBands = clamped;
+
+  // preview table
+  $('bands').innerHTML = clamped.length ? `
+    <table><thead><tr><th>#</th><th>Type</th><th>Fc (Hz)</th><th>Gain (dB)</th><th>Q</th></tr></thead>
+    <tbody>${clamped.map((b,i)=>`<tr><td>${i+1}</td><td>${b.type}</td><td>${b.fc}</td><td>${b.gain}</td><td>${b.q}</td></tr>`).join('')}</tbody></table>
+    <p class="status">Preamp ${preamp} dB · ${clamped.length}/${c.maxBands} bands</p>` : '<p class="status">No valid filters parsed yet.</p>';
+
+  // honesty note when the device forced changes
+  $('clamp-note').textContent = (bands.length && (dropped > 0 || c.name.includes('Moondrop')))
+    ? `Note: ${c.name} supports ${c.maxBands} ${c.types.join('/')} bands, ${c.minFc}–${c.maxFc} Hz, ${c.minGain}…+${c.maxGain} dB.` +
+      (dropped>0 ? ` ${dropped} band(s) outside its range were dropped — the loaded tuning is approximated.` : '')
+    : '';
+
+  $('send').disabled = !(hidDevice && parsedBands.length);
+}
+
+$('peq').addEventListener('input', refresh);
+$('file').addEventListener('change', async e => { const f = e.target.files[0]; if (f) { $('peq').value = await f.text(); refresh(); } });
+$('sample').addEventListener('click', () => {
+  $('peq').value = `Preamp: -6.0 dB
+Filter 1: ON PK Fc 40 Hz Gain 5.0 dB Q 0.70
+Filter 2: ON PK Fc 105 Hz Gain -3.2 dB Q 0.70
+Filter 3: ON PK Fc 1900 Hz Gain -1.5 dB Q 1.20
+Filter 4: ON PK Fc 4500 Hz Gain 2.5 dB Q 1.00
+Filter 5: ON PK Fc 9000 Hz Gain -2.0 dB Q 2.00`;
+  refresh();
+});
+
+// ---------------------------------------------------------------------------------------------
+// 3 · Send (STUB — the one real integration point). Each dongle needs its own HID report format;
+// those are the reverse-engineered protocols in jeromeof/devicePEQ (0BSD). PORT the matching
+// handler (qudelixUsbHidHandler / fiioUsbHidHandler / walkplay handler) and call it here. Do NOT
+// hand-roll the byte layouts — get them from devicePEQ.
+// ---------------------------------------------------------------------------------------------
+// ---------------------------------------------------------------------------------------------
+// QUDELIX-5K USB HID WRITE
+//
+// Protocol knowledge ported from jeromeof/devicePEQ (0BSD — no attribution burden, but credited
+// because reverse-engineering this was the hard part and we did not do it):
+//   devicePEQ/qudelixUsbHidHandler.js + Q5K/QUDELIX_5K_PROTOCOL.md
+//
+// Framing (QCC/legacy):
+//   report[0] = payloadLen + 1      report[1] = 0x80      report[2..] = payload
+//   payload[0..1] = 16-bit command ID, big-endian        payload[2..] = command data
+//
+// A band is written with SetEqBandParam (0x070F) so filter/freq/gain/Q land atomically — one
+// packet per band rather than four, which halves the window in which the device holds a
+// half-updated band.
+// ---------------------------------------------------------------------------------------------
+const QX = {
+  REPORT_HOST_TO_DEVICE: 8, REPORT_OUT_FALLBACK: 7,
+  SetEqEnable: 0x0700, SetEqType: 0x0701, SetEqPreGain: 0x0703,
+  SetEqBandParam: 0x070F, SaveEqPreset: 0x0708,
+  GROUP_USR: 0, CH_MASK_BOTH: 0x03,
+  GAIN_SCALE: 10, Q_SCALE: 1024,
+  FILTER: { Bypass:0, LPF:1, HPF:2, LS:3, HS:4, Peak:5 },
+};
+
+function qxInt16(v) { const x = v < 0 ? v + 0x10000 : v; return [(x >> 8) & 0xFF, x & 0xFF]; }
+
+function qxReportId(dev) {
+  // Prefer report 8; fall back to 7 if the descriptor does not offer it. Sizes come from the
+  // device's own output reports rather than a hardcoded 64 — this unit advertises 66-byte reports.
+  let id = QX.REPORT_HOST_TO_DEVICE, size = 0;
+  for (const c of dev.collections || [])
+    for (const r of c.outputReports || []) {
+      const bytes = (r.items || []).reduce((n, it) => n + ((it.reportSize * it.reportCount) / 8 || 0), 0);
+      if (r.reportId === QX.REPORT_HOST_TO_DEVICE && bytes > 0) { id = r.reportId; size = bytes; }
+      else if (!size && r.reportId === QX.REPORT_OUT_FALLBACK && bytes > 0) { id = r.reportId; size = bytes; }
+    }
+  return { id, size: size || 64 };
+}
+
+async function qxSend(dev, rpt, cmdId, data) {
+  const payload = new Uint8Array(2 + data.length);
+  payload[0] = (cmdId >> 8) & 0xFF; payload[1] = cmdId & 0xFF;
+  payload.set(data, 2);
+  const packet = new Uint8Array(rpt.size);
+  packet[0] = payload.length + 1;   // +1 for the 0x80 flag
+  packet[1] = 0x80;
+  packet.set(payload, 2);
+  await dev.sendReport(rpt.id, packet);
+  await new Promise(r => setTimeout(r, 15));   // the device drops packets sent back-to-back
+}
+
+async function writeQudelix(dev, bands, preamp, saveSlot) {
+  const rpt = qxReportId(dev);
+  log(`qudelix: report id ${rpt.id}, ${rpt.size} bytes`);
+
+  await qxSend(dev, rpt, QX.SetEqEnable, new Uint8Array([QX.GROUP_USR, 1]));
+  await qxSend(dev, rpt, QX.SetEqType,   new Uint8Array([QX.GROUP_USR, 1]));   // 1 = PEQ
+
+  const [pgHi, pgLo] = qxInt16(Math.round(preamp * QX.GAIN_SCALE));
+  await qxSend(dev, rpt, QX.SetEqPreGain,
+               new Uint8Array([QX.GROUP_USR, QX.CH_MASK_BOTH, 0, pgHi, pgLo]));
+
+  const typeMap = { PK: QX.FILTER.Peak, LSQ: QX.FILTER.LS, HSQ: QX.FILTER.HS,
+                    LPF: QX.FILTER.LPF, HPF: QX.FILTER.HPF };
+  for (let i = 0; i < bands.length; i++) {
+    const b = bands[i];
+    const fc = Math.round(Math.max(20, Math.min(20000, b.fc)));
+    const [fHi, fLo] = [(fc >> 8) & 0xFF, fc & 0xFF];
+    const [gHi, gLo] = qxInt16(Math.round(b.gain * QX.GAIN_SCALE));
+    const [qHi, qLo] = qxInt16(Math.round(b.q * QX.Q_SCALE));
+    await qxSend(dev, rpt, QX.SetEqBandParam, new Uint8Array([
+      QX.GROUP_USR, QX.CH_MASK_BOTH, i, typeMap[b.type] ?? QX.FILTER.Peak,
+      fHi, fLo, gHi, gLo, qHi, qLo,
+    ]));
+    log(`  band ${i + 1}: ${b.type} ${fc} Hz ${b.gain > 0 ? '+' : ''}${b.gain} dB Q ${b.q}`);
+  }
+
+  // PERSISTENCE IS THE WHOLE POINT. Without a save the curve lives in RAM and dies on unplug —
+  // and the entire thesis is that you load it once and then carry the dongle to a phone.
+  if (saveSlot >= 0) {
+    await qxSend(dev, rpt, QX.SaveEqPreset, new Uint8Array([saveSlot]));
+    log(`saved to preset slot ${saveSlot}`);
+  }
+}
+
+async function writeToDevice(dev, key, bands, preamp) {
+  if (key === 'qudelix') return writeQudelix(dev, bands, preamp, 0);
+  // FiiO / Walkplay / Moondrop still need their handlers ported — same shape, different framing.
+  log(`WOULD SEND to ${DEVICES[key].name}: preamp ${preamp} dB, ${bands.length} bands`);
+  bands.forEach((b,i)=>log(`  band ${i+1}: ${b.type} Fc=${b.fc} gain=${b.gain} Q=${b.q}`));
+  throw new Error(`${DEVICES[key].name} handler not ported yet — Qudelix works today`);
+}
+
+$('send').addEventListener('click', async () => {
+  if (!hidDevice || !parsedBands.length) return;
+  const { preamp } = parsePeq($('peq').value);
+  setStatus($('send-status'), 'Sending…');
+  try {
+    await writeToDevice(hidDevice, deviceKey, parsedBands, preamp);
+    setStatus($('send-status'), 'Sent + saved to device.', 'ok');
+  } catch (e) { setStatus($('send-status'), e.message, 'err'); }
+});
+</script>
+</body>
+</html>

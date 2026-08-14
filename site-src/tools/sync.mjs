@@ -28,6 +28,7 @@ const ROOT = join(here, '..', '..');
 const ROUTES = [
   'attune', 'learn', 'graphs', 'products', 'collections', 'measure', 'support', 'privacy',
   'loaners',   // + /loaners/print, the one-page leave-behind
+  'tune',      // Attune's "Send to Device" WebHID page — source of truth is attune/companion/tune.html
 ];
 // Astro's hashed asset bundle, plus the audio the Attune demos play.
 const ASSETS = ['_astro', 'audio', 'wl'];   // wl/ = vendored wl-web runtime (wl-plot.js)
