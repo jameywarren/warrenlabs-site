@@ -87,6 +87,13 @@
   <div class="card">
     <h2>2 · Your Attune tuning</h2>
     <p class="status">Paste the <code>ParametricEq.txt</code> you exported from Attune (or load the file).</p>
+    <!-- Say the gate out loud. Exporting is an Attune Pro feature, and without this line a free
+         user can get all the way through connecting a dongle before discovering they cannot
+         produce a file. The page is genuinely useful without Attune -- any AutoEq-format text
+         works, including squig.link and the AutoEq project -- so the honest framing is "here is
+         what each path needs", not a paywall notice. -->
+    <p class="note">Exporting from Attune needs <b>Attune Pro</b>. Any AutoEq-format
+       <code>ParametricEq.txt</code> works here though — including files from AutoEq or squig.link.</p>
     <div class="row" style="margin:10px 0">
       <input type="file" id="file" accept=".txt" />
       <button class="ghost" id="sample">Load a sample</button>
