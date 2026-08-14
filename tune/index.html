@@ -80,6 +80,7 @@
     <div class="row">
       <button id="connect">Connect device…</button>
       <span id="dev-status" class="status">No device connected.</span>
+      <div id="device-note" class="note"></div>
     </div>
   </div>
 
@@ -163,9 +164,32 @@ $('connect').addEventListener('click', async () => {
     deviceKey = identifyDevice(dev);
     setStatus($('dev-status'), `Connected: ${dev.productName || 'HID device'} → treating as ${DEVICES[deviceKey].name}`, 'ok');
     log(`connected vid=0x${dev.vendorId.toString(16)} pid=0x${dev.productId.toString(16)} "${dev.productName||''}"`);
+    showDeviceNote();
     refresh();
   } catch (e) { setStatus($('dev-status'), 'Connect failed: ' + e.message, 'err'); }
 });
+
+// Per-device gotchas we cannot detect over HID, shown only once we know WHICH device is attached
+// so nobody reads a warning that does not apply to their dongle.
+//
+// The Qudelix one is real and confirmed on hardware (2026-08-14). The 20-band EQ in the Qudelix
+// app is a SEPARATE facility from the 10-band User EQ this page writes, and enabling it switches
+// User EQ off. We cannot see that state: the write is fire-and-forget, and pullFromDevice returns
+// flat defaults because the preset decoder is unimplemented — so the page would report success on
+// a send that changes nothing audible.
+//
+// The wording matters. The curve is NOT lost: it is stored in User EQ and reappears the moment you
+// switch back (verified on the unit). Writing while 20-band is on also does NOT knock the device
+// out of that mode — also verified, so we must not imply the page will fix it for you.
+const DEVICE_NOTES = {
+  qudelix: 'Using the Qudelix app\u2019s 20-band EQ? Switch it back to User EQ to hear this. ' +
+           '20-band is a separate mode that turns User EQ off. Your curve still arrives and is stored ' +
+           'in User EQ \u2014 it just does nothing until you switch back.',
+};
+
+function showDeviceNote() {
+  $('device-note').textContent = DEVICE_NOTES[deviceKey] || '';
+}
 
 // Map a connected HID device → a DEVICES key. TODO: use devicePEQ's vendor/product-id tables.
 function identifyDevice(dev) {
@@ -370,7 +394,10 @@ async function writeToDevice(dev, key, bands, preamp) {
 $('send').addEventListener('click', async () => {
   if (!hidDevice || !parsedBands.length) return;
   const { preamp } = parsePeq($('peq').value);
-  setStatus($('send-status'), 'Sending…');
+  // Observed on hardware 2026-08-14: with the Qudelix in 20-band mode this write took 12.5 s
+  // instead of the usual ~0.2 s — the device backpressures every packet. A bare 'Sending…'
+  // that hangs for 12 s reads as a broken page, so set the expectation up front.
+  setStatus($('send-status'), 'Sending… (can take ~15 s on some devices)');
   try {
     await writeToDevice(hidDevice, deviceKey, parsedBands, preamp);
     setStatus($('send-status'), 'Sent + saved to device.', 'ok');
