@@ -257,6 +257,8 @@ Filter 5: ON PK Fc 9000 Hz Gain -2.0 dB Q 2.00`;
 // packet per band rather than four, which halves the window in which the device holds a
 // half-updated band.
 // ---------------------------------------------------------------------------------------------
+// >>> qudelix-protocol (tools/js/qudelix_packet_test.mjs lifts everything between these
+// markers and diffs it byte-for-byte against devicePEQ's real-device capture — keep them intact)
 const QX = {
   REPORT_HOST_TO_DEVICE: 8, REPORT_OUT_FALLBACK: 7,
   SetEqEnable: 0x0700, SetEqType: 0x0701, SetEqPreGain: 0x0703,
@@ -326,6 +328,8 @@ async function writeQudelix(dev, bands, preamp, saveSlot) {
     log(`saved to preset slot ${saveSlot}`);
   }
 }
+
+// <<< qudelix-protocol
 
 async function writeToDevice(dev, key, bands, preamp) {
   if (key === 'qudelix') return writeQudelix(dev, bands, preamp, 0);
