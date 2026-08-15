@@ -11,7 +11,7 @@ const { endpoint = '' } = Astro.props;
     <div class="su-eyebrow">Warren Labs</div>
     <h2 class="su-title" id="su-title">Get launch news</h2>
     <p class="su-lede" id="su-lede">
-      Attune is free on the Mac App Store. Leave your email for the occasional honest update &mdash;
+      Attune is free on the Mac App Store. Leave your email for the occasional honest update:
       new measurements, what we learn on the rig, and what ships next.
     </p>
 
@@ -46,7 +46,7 @@ const { endpoint = '' } = Astro.props;
       notify: {
         title: 'Get launch news',
         submit: 'Notify me',
-        lede: "Attune is free on the Mac App Store. Leave your email for the occasional honest update — new measurements, what we learn on the rig, and what ships next.",
+        lede: "Attune is free on the Mac App Store. Leave your email for the occasional honest update: new measurements, what we learn on the rig, and what ships next.",
       },
     };
 
@@ -97,7 +97,7 @@ const { endpoint = '' } = Astro.props;
       }
       if (!endpoint) {
         if (bodyEl) bodyEl.hidden = true;
-        setNote("You're on the list — we'll be in touch.", 'ok');
+        setNote("You're on the list. We'll be in touch.", 'ok');
         return;
       }
       if (submitEl) submitEl.disabled = true;

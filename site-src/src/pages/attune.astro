@@ -32,7 +32,7 @@ const attuneApp = {
 
 <Layout
   title="Attune · Find your sound"
-  description="Attune is a Warren Labs product: personal-EQ and real-time A/B auditioning for macOS. Tune any headphone to your taste — blind, loudness-matched, on your own music. Free on the Mac App Store."
+  description="Attune is a Warren Labs product: personal-EQ and real-time A/B auditioning for macOS. Tune any headphone to your taste, blind and loudness-matched, on your own music. Free on the Mac App Store."
   signup="attune"
   jsonLd={attuneApp}
   wordmark
@@ -95,7 +95,7 @@ const attuneApp = {
         <div class="card">
           <div class="n">02</div>
           <h3>One "correct" target</h3>
-          <p>Harman. Diffuse-field. Neutral. Every tool hands you one preset curve and calls it right. Your gear and your taste never got a vote.</p>
+          <p>Diffuse-field. Neutral. Somebody's house curve. Every tool hands you one preset curve and calls it right. Your gear and your taste never got a vote.</p>
         </div>
         <div class="card">
           <div class="n">03</div>
@@ -129,7 +129,7 @@ const attuneApp = {
             </svg>
           </div>
           <h3>Pick your headphone</h3>
-          <p>Search a curated library of popular wired cans &amp; IEMs — or import your own measurement (CSV, AutoEQ, squig), free.</p>
+          <p>Search a curated library of popular wired cans &amp; IEMs, or import your own measurement (CSV, AutoEQ, squig), free.</p>
           <svg class="arrow" width="18" height="18" viewBox="0 0 18 18"><path d="M6 4l5 5-5 5" stroke="#5f646b" stroke-width="1.5" fill="none" stroke-linecap="round"></path></svg>
         </div>
         <!-- 2 -->
@@ -187,9 +187,9 @@ const attuneApp = {
             tips your hand. No sliders, no theory. You do the deciding.
           </p>
           <ul>
-            <li><span class="chk">&#9670;</span><span><b>Blind &amp; honest.</b> Every comparison is level-matched to &plusmn;0.1&nbsp;dB, so louder never masquerades as better.</span></li>
+            <li><span class="chk">&#9670;</span><span><b>Blind &amp; honest.</b> Every comparison is loudness-matched, so louder never masquerades as better.</span></li>
             <li><span class="chk">&#9670;</span><span><b>On your music.</b> The A/B runs on the track that's already playing, the passages you actually know.</span></li>
-            <li><span class="chk">&#9670;</span><span><b>Seamless switching.</b> Zero-gap, click-free crossfades between tunings. The only thing that changes is the sound.</span></li>
+            <li><span class="chk">&#9670;</span><span><b>Seamless switching.</b> Crossfades between tunings instead of muting, so the only thing that changes is the sound.</span></li>
             <li><span class="chk">&#9670;</span><span><b>Yours to keep.</b> The result is a personal EQ profile, saved per headphone and portable to your other apps.</span></li>
           </ul>
         </div>
@@ -240,7 +240,7 @@ const attuneApp = {
           </blockquote>
           <p class="cred-by">
             The same work continues in Attune, powered by Warren Labs' shipping <b>Level</b> correction engine: the
-            loudness-matched, click-free DSP trusted in the studio. <b>A Warren Labs product.</b>
+            loudness-matched correction DSP trusted in the studio. <b>A Warren Labs product.</b>
           </p>
         </div>
         <div class="cred-stats">
@@ -308,7 +308,7 @@ const attuneApp = {
             <li><span class="chk">&#9670;</span> The ear exam and voice match</li>
             <li><span class="chk">&#9670;</span> One saved profile, kept and reloaded every launch</li>
             <li><span class="chk">&#9670;</span> Built-in curves for popular wired cans and IEMs</li>
-            <li><span class="chk">&#9670;</span> Import your own measurements (CSV, AutoEQ, squig) — free, always</li>
+            <li><span class="chk">&#9670;</span> Import your own measurements (CSV, AutoEQ, squig), free, always</li>
             <li><span class="chk">&#9670;</span> The same correction engine that ships in Level</li>
           </ul>
           <Button href={APP_STORE} variant="primary">Download on the Mac App Store</Button>
@@ -322,14 +322,14 @@ const attuneApp = {
           <ul>
             <li><span class="chk">&#9670;</span> Everything in Free</li>
             <li><span class="chk">&#9670;</span> Unlimited saved profiles, across as many headphones as you own</li>
-            <li><span class="chk">&#9670;</span> Export your curve and use it outside Attune — phone, DAP or dongle</li>
+            <li><span class="chk">&#9670;</span> Export your curve and use it outside Attune: phone, DAP or dongle</li>
           </ul>
           <Button href={APP_STORE} variant="ghost">Unlock inside the app</Button>
         </div>
       </div>
 
       <div class="mem-foot">
-        The same loudness-matched, click-free engine either way. <span class="accent">No subscription, ever.</span>{' '}
+        The same loudness-matched engine either way. <span class="accent">No subscription, ever.</span>{' '}
         EQ moves tonal balance and nothing else: it will not buy you resolution, soundstage, lower distortion or
         different driver physics, and nothing on this page claims otherwise.
       </div>
@@ -361,7 +361,7 @@ const attuneApp = {
   const y = byId[p.get('yours') || ''], t = byId[p.get('target') || ''];
   if (y && t) {
     const el = document.getElementById('handoff');
-    el.textContent = `Came from the graph: Attune can voice your ${y.brand} ${y.name} toward the ${t.brand} ${t.name} — and let you A/B it, loudness-matched.`;
+    el.textContent = `Came from the graph: Attune can voice your ${y.brand} ${y.name} toward the ${t.brand} ${t.name}, and let you A/B it, loudness-matched.`;
     el.hidden = false;
   }
 </script>
