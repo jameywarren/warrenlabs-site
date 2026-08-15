@@ -35,7 +35,7 @@ const endpoint = FORMSPREE.feedback ?? '';
     <label class="fb-l" for="fb-msg">What's wrong, confusing, or missing?</label>
     <textarea id="fb-msg" name="message" rows="5" required placeholder="The treble on this graph looks…"></textarea>
 
-    <label class="fb-l" for="fb-email">Email <span class="fb-opt">— optional, only so we can reply</span></label>
+    <label class="fb-l" for="fb-email">Email <span class="fb-opt">(optional, only so we can reply)</span></label>
     <input id="fb-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" />
 
     <input type="hidden" name="surface" value={surface} />
@@ -99,7 +99,7 @@ const endpoint = FORMSPREE.feedback ?? '';
     // on a dead POST. Same posture as the Signup modal — the site is safe to deploy before the form
     // exists. (Set FORMSPREE.feedback in src/data/config.js to go live.)
     if (!endpoint) {
-      note.textContent = 'Thanks — noted.';
+      note.textContent = 'Thanks, noted.';
       setTimeout(close, 900);
       return;
     }
@@ -111,7 +111,7 @@ const endpoint = FORMSPREE.feedback ?? '';
         body: new FormData(e.currentTarget),
       });
       if (!r.ok) throw new Error(String(r.status));
-      note.textContent = 'Thanks — got it.';
+      note.textContent = 'Thanks, got it.';
       e.currentTarget.reset();
       setTimeout(close, 1000);
     } catch (err) {

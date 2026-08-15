@@ -10,7 +10,7 @@ const SITE = 'https://warrenlabs.com';
 const url = `${SITE}/measure`;
 const title = 'Send us your headphones to measure';
 const description =
-  'Mail in your headphones and we measure them on our rig — seated for best fit, published as one real seating. You get your unit’s exact curve back, and the model gets a credited page here. Insured both ways, back in about a week.';
+  'Mail in your headphones and we measure them on our rig, seated for best fit, published as one real seating. You get your unit’s exact curve back, and the model gets a credited page here. Insured both ways, back in about a week.';
 
 // Dedicated intake endpoint (see src/data/config.js). Empty is safe: the form validates and shows a
 // friendly confirmation instead of POSTing nowhere, so the page ships before the Formspree form exists.
@@ -24,7 +24,7 @@ const faq: [string, string][] = [
   ],
   [
     'Is my headphone insured in transit?',
-    'Yes, both directions. You tell us the value, we insure to it, and we photograph the unit on arrival and again before it ships back — documented, not a gotcha.',
+    'Yes, both directions. You tell us the value, we insure to it, and we photograph the unit on arrival and again before it ships back. Documented, not a gotcha.',
   ],
   [
     'How long will you keep it?',
@@ -32,7 +32,7 @@ const faq: [string, string][] = [
   ],
   [
     'What if the measurement is unflattering?',
-    'We publish it anyway. Honest graphs are the whole point — we show exactly how a headphone measures, good or bad. What we will not do is dress it up.',
+    'We publish it anyway. Honest graphs are the whole point. We show exactly how a headphone measures, good or bad. What we will not do is dress it up.',
   ],
   [
     'What if you can’t publish mine?',
@@ -44,11 +44,11 @@ const faq: [string, string][] = [
   ],
   [
     'What headphones can you measure?',
-    'Over-ear and on-ear headphones. Not IEMs — an in-ear’s response is decided by how deep it sits and how well the tip seals, and our fixture is an artificial ear with no way to control either. Measuring them here would produce a confident-looking number we could not stand behind, so we don’t. If you’re not sure yours qualifies, tell us in the form and we’ll say.',
+    'Over-ear and on-ear headphones. Not IEMs. An in-ear’s response is decided by how deep it sits and how well the tip seals, and our fixture is an artificial ear with no way to control either. Measuring them here would produce a confident-looking number we could not stand behind, so we don’t. If you’re not sure yours qualifies, tell us in the form and we’ll say.',
   ],
   [
     'Do you have old measurements from HeadRoom?',
-    'We hold them — 319 headphones measured on a Head Acoustics HMS II.3 around 2010–2013 — but we no longer publish them as measurements, and we don’t mix them with anything measured here. They are one unit per model, on a head that no longer exists, with no record of how the headphone was seated. We keep them as a research reference and measure from scratch instead. Your headphone gets measured on our own bench and labeled as such.',
+    'We hold them: 319 headphones measured on a Head Acoustics HMS II.3 around 2010–2013, but we no longer publish them as measurements, and we don’t mix them with anything measured here. They are one unit per model, on a head that no longer exists, with no record of how the headphone was seated. We keep them as a research reference and measure from scratch instead. Your headphone gets measured on our own bench and labeled as such.',
   ],
 ];
 
@@ -71,7 +71,7 @@ const jsonLd = [
 ];
 
 const steps: [string, string][] = [
-  ['Tell us what you’ve got', 'Fill in the form below — make, model, and how to reach you. Takes a minute.'],
+  ['Tell us what you’ve got', 'Fill in the form below: make, model, and how to reach you. Takes a minute.'],
   ['We send a label', 'You get a prepaid, insured return label, our address, and simple packing notes by email.'],
   ['You ship it', 'Box it up and send it. It’s insured to the value you declare, door to door.'],
   ['We measure & publish', 'It goes on the rig, gets an honest page of its own, and heads back to you in about a week.'],
@@ -115,7 +115,7 @@ const steps: [string, string][] = [
         <div class="card">
           <h3>Your unit&rsquo;s exact curve</h3>
           <p>
-            Not &ldquo;the&rdquo; HD&nbsp;650 &mdash; <b>yours</b>. Unit variation is real, and knowing how
+            Not &ldquo;the&rdquo; HD&nbsp;650, <b>yours</b>. Unit variation is real, and knowing how
             your specific pair measures is exactly what <a href="/attune">Attune</a> turns into a personal
             tuning.
           </p>
@@ -192,13 +192,13 @@ const steps: [string, string][] = [
         </div>
         <div class="trust-item">
           <div class="trust-k">Honest, or not at all</div>
-          <p>We publish exactly what we measure. If we can&rsquo;t trust the data or the unit arrives damaged, we tell you why and don&rsquo;t publish &mdash; you still get your curve.</p>
+          <p>We publish exactly what we measure. If we can&rsquo;t trust the data or the unit arrives damaged, we tell you why and don&rsquo;t publish. You still get your curve.</p>
         </div>
       </div>
       <p class="rig-note">
         <b>A word on the rig.</b> Your headphone is measured on our own bench (a miniDSP&nbsp;EARS&nbsp;Pro),
         seated deliberately for the best fit and labeled that way. What we publish is one real seating,
-        never a blend of several. One unit is one unit, not the whole model &mdash; which is exactly why
+        never a blend of several. One unit is one unit, not the whole model, which is exactly why
         measuring <em>your</em> pair is worth doing.
         <a href="/learn/how-to-read-a-frequency-response-graph">How to read the graph &rarr;</a>
       </p>
@@ -249,7 +249,7 @@ const steps: [string, string][] = [
         <h2>Send one in.</h2>
         <p class="sec-lede">
           Tell us what you&rsquo;ve got and how to reach you. We&rsquo;ll email a prepaid, insured label
-          and where to send it &mdash; no charge, no card.
+          and where to send it. No charge, no card.
         </p>
       </div>
 
@@ -305,7 +305,7 @@ const steps: [string, string][] = [
 
         <label class="field">
           <span>Anything else</span>
-          <textarea name="notes" rows="3" placeholder="Condition, whether you’d rather stay anonymous, questions — anything."></textarea>
+          <textarea name="notes" rows="3" placeholder="Condition, whether you’d rather stay anonymous, questions, anything."></textarea>
         </label>
 
         <button type="submit" class="btn btn-primary btn-lg intake-submit">Send my details</button>
@@ -324,7 +324,7 @@ const steps: [string, string][] = [
           <h2 class="vendor-h">Have a lineup? Let&rsquo;s measure it.</h2>
           <p>
             A loaner gets your headphone an honest measurement and a <b>permanent page built to rank</b> for
-            &ldquo;model frequency response&rdquo; &mdash; a durable marketing asset, not a one-off review.
+            &ldquo;model frequency response&rdquo;: a durable marketing asset, not a one-off review.
             We cover shipping both ways, insure it in transit, and send it back the day the page goes up.
             Pick <em>&ldquo;A brand or retailer&rdquo;</em> in the form and we&rsquo;ll take it from there.
           </p>
@@ -392,12 +392,12 @@ const steps: [string, string][] = [
         setNote('Please enter a valid email so we can send the label.', 'err');
         return;
       }
-      // No endpoint wired yet — succeed gracefully so the page is safe to ship early.
+      // No endpoint wired yet: succeed gracefully so the page is safe to ship early.
       if (!endpoint) {
         form.querySelectorAll('input, select, textarea, .intake-submit').forEach((el) => {
           (el as HTMLInputElement).disabled = true;
         });
-        setNote('Got it — you’re in. We’ll be in touch to arrange the label and shipping.', 'ok');
+        setNote('Got it, you’re in. We’ll be in touch to arrange the label and shipping.', 'ok');
         return;
       }
       if (submit) submit.disabled = true;
@@ -412,7 +412,7 @@ const steps: [string, string][] = [
           form.querySelectorAll('input, select, textarea, .intake-submit').forEach((el) => {
             (el as HTMLInputElement).disabled = true;
           });
-          setNote('Got it — you’re in. We’ll email you the label and where to send it.', 'ok');
+          setNote('Got it, you’re in. We’ll email you the label and where to send it.', 'ok');
         } else {
           setNote('Something went wrong. Please try again in a moment.', 'err');
           if (submit) submit.disabled = false;
