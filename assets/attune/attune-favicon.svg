@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <title>Attune favicon — 3d4-2r, amber on graphite</title>
+  <desc>Only /attune uses this. Every other page on warrenlabs.com keeps the Warren Labs W favicon
+  (assets/brand/svg/wl-favicon_*), because Warren Labs is the speaker there.
+
+  Graphite ground, so ONE file is correct in both browser themes — the same reasoning as the app
+  icon. A transparent-ground mark would need a light and a dark variant to stay legible.
+
+  Amber is #EE9A3A, the dark-ground amber. Do not substitute the site's --accent (#FF9E2C dark /
+  #a85c04 light): the ground here is fixed graphite, so the colour must be fixed too.
+
+  The mark path is copied verbatim from Assets/Logo/export/README.md in the Attune repo. Scaled to
+  the 32-unit box at 0.24 and optically centred on its INK box (the stroke, not the path), and the
+  stroke widened to 9 in mark units so it survives a 16px favicon.</desc>
+  <rect width="32" height="32" rx="6" fill="#1B1A18"/>
+  <g transform="translate(4 4.6) scale(0.24)">
+    <path d="M14 68 H26 C36 68 40 27 50 27 C60 27 64 68 74 68 H86"
+          fill="none" stroke="#EE9A3A" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

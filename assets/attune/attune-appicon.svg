@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 100 100">
+  <title>Attune app icon — 3d4-2r, amber on graphite</title>
+  <desc>THE SOURCE OF TRUTH for the app icon. attune-appicon-1024.png is rendered from this, and
+  CMake feeds that PNG to juceaide as ICON_BIG. CMAKE_CONFIGURE_DEPENDS watches the PNG, so changing
+  it re-runs configure and the icon actually rebuilds.
+
+  GRAPHITE GROUND, AMBER MARK — the Warren Labs palette, and it also settles the light/dark question
+  for free: a dark-ground icon is correct in both appearances, which is why so many are. A light
+  ground would have needed a separate dark variant to stop it glaring on a dark home screen.
+
+  Amber here is #EE9A3A, the DARK-GROUND amber. Do not substitute the design token --wl-accent
+  (oklch 0.80 0.13 75 = #EEB154) or the light-ground #A8641E without re-checking contrast: on this
+  graphite each of them is a different weight, and #A8641E on #1B1A18 is far too dim at 40pt.
+
+  One stroke, one colour, nothing colour-dependent — so the iOS tinted appearance flattens it
+  without losing anything.</desc>
+  <rect width="100" height="100" fill="#1B1A18"/>
+  <path d="M14 68 H26 C36 68 40 27 50 27 C60 27 64 68 74 68 H86"
+        fill="none" stroke="#EE9A3A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

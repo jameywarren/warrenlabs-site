@@ -27,6 +27,9 @@ const attuneApp = {
     'Personal-EQ and real-time A/B auditioning for macOS. Tune any headphone to your taste: blind, loudness-matched, on your own music.',
   brand: { '@type': 'Brand', name: 'Warren Labs' },
   publisher: { '@id': 'https://warrenlabs.com/#organization' },
+  // Attune's own mark, not the lab's. The Organization node in Layout.astro still points at the W.
+  image: 'https://warrenlabs.com/assets/attune/og-attune.png',
+  logo: 'https://warrenlabs.com/assets/attune/attune-appicon.svg',
 };
 ---
 
@@ -36,6 +39,8 @@ const attuneApp = {
   signup="attune"
   jsonLd={attuneApp}
   wordmark
+  favicon="attune"
+  image="/assets/attune/og-attune.png"
 >
   <Nav variant="attune" />
 
@@ -43,12 +48,14 @@ const attuneApp = {
   <header class="hero">
     <div class="wrap hero-grid">
       <div>
+        {/* The Attune vertical lock-up, live rather than the exported SVG: the page loads the same
+            woff2 the export is cut from, so the type matches, and live text stays selectable,
+            theme-aware and crisp at any size. The mark path is copied verbatim from the export —
+            never redraw it. See Assets/Logo/export/README.md in the Attune repo. */}
         <span class="brand-lockup">
+          <svg class="a-mark" viewBox="10.5 23.5 79 48" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 68 H26 C36 68 40 27 50 27 C60 27 64 68 74 68 H86"/></svg>
           <span class="wordmark">Attune</span>
-          <span class="by">
-            <svg class="by-mark" viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 16 C20 38 28 62 39 62 C48 62 53 46 58 38 C63 30 70 30 76 38 C81 44 84 54 92 54 C99 54 103 46 106 40"/></svg>
-            <span class="by-name">Warren Labs</span>
-          </span>
+          <span class="by">by Warren Labs</span>
         </span>
         <span class="eyebrow">Free &middot; on the Mac App Store</span>
         <h1>Find <em>your</em> sound.</h1>
@@ -619,45 +626,65 @@ const attuneApp = {
     margin-top: 16px;
   }
 
-  /* ---------- product wordmark ----------
-     Mirrors the app's header lockup in web/index.html: the Attune wordmark stays Instrument
-     Serif as the product's signature, with the Warren Labs mark beneath it as the maker credit.
-     Everything else on the page is the Warren Labs type system. */
+  /* ---------- Attune lock-up ----------
+     ONE MARK PER LOCK-UP. The Attune mark was briefed as a sibling to the Warren Labs W — one
+     continuous stroke, rounded caps, drawn not constructed — so the two compete rather than nest
+     when they share a signature. Attune is the speaker on this page, so its mark leads and Warren
+     Labs is a text credit. The W is not gone from the site; it still leads in the header, the
+     footer and every page where the lab speaks. It just does not appear inside this lock-up.
+
+     Proportions are the exported vertical lock-up's, driven off --wm so the three parts can only
+     scale together: mark ink 0.63x the wordmark, credit 0.24x (11/46 in the export).
+     tools/make_lockup.py in the Attune repo is the source of those numbers. */
   .brand-lockup {
+    --wm: 46px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    align-items: flex-start;
     width: fit-content;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
+  }
+  /* AMBER IS GROUND-DEPENDENT, and this is measured, not taste. #FF9E2C — the site accent — is
+     1.87:1 on a light ground, so a token-coloured mark all but vanishes at small sizes. These are
+     Attune's own two ambers, and they are deliberately literal rather than var(--accent): the mark
+     is a locked asset and must not drift if the site accent is retuned.
+       #EE9A3A on #0c0d0f  8.6:1     #A8641E on #f7f8f9  4.4:1 */
+  .a-mark {
+    color: #ee9a3a;
+    height: calc(var(--wm) * 0.63);
+    width: auto;
+    display: block;
+    /* Tuned by measuring the rendered gap (mark ink bottom -> wordmark baseline = 1.415x --wm in
+       the export) rather than by eye, because the wordmark's line box is not its cap height. */
+    margin-bottom: calc(var(--wm) * 0.632);
+  }
+  :root[data-theme='light'] .a-mark {
+    color: #a8641e;
   }
   .wordmark {
     font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
-    font-size: 44px;
+    font-size: var(--wm);
     line-height: 0.9;
-    letter-spacing: 0.3px;
+    /* 0.012em, NOT 0.3px. 0.3px is the app header's tracking at its 25px wordmark; hard-coding it
+       here left the type fractionally tighter than the export at 46px and would drift further at
+       any other size. In em it scales with --wm, which is the whole point of the rule that the
+       lock-up's parts only ever move together. */
+    letter-spacing: 0.012em;
     color: var(--text);
   }
+  /* A third of the title at most, or it stops reading as a credit and starts competing. */
   .by {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--muted);
-  }
-  .by-mark {
-    width: 19px;
-    height: 13px;
-    flex: 0 0 auto;
-  }
-  .by-name {
+    /* wordmark baseline -> credit baseline = 0.457x --wm in the export. */
+    margin-top: calc(var(--wm) * 0.133);
     font-family: var(--mono);
-    font-size: 9.5px;
+    font-size: calc(var(--wm) * 0.24);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     line-height: 1;
+    color: var(--muted);
   }
   @media (max-width: 720px) {
-    .wordmark { font-size: 34px; }
-    .brand-lockup { margin-bottom: 16px; }
+    .brand-lockup { --wm: 36px; margin-bottom: 18px; }
   }
 
   /* ---------- membership ---------- */
