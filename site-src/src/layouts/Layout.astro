@@ -13,6 +13,12 @@ interface Props {
   jsonLd?: object | object[];
   /** Load Instrument Serif. Only /attune needs it, for the product wordmark. */
   wordmark?: boolean;
+  /**
+   * Which mark owns the browser tab. 'wl' (the sine-W) everywhere Warren Labs is the speaker,
+   * which is everywhere but one page. 'attune' only on /attune, where Attune speaks and the
+   * Attune mark leads. See the note on the lock-up in attune.astro.
+   */
+  favicon?: 'wl' | 'attune';
 }
 
 const {
@@ -23,6 +29,7 @@ const {
   signup = 'sonicTemple',
   jsonLd,
   wordmark = false,
+  favicon = 'wl',
 } = Astro.props;
 
 // Migrated from sonictemple.io 2026-07-30. Canonical is warrenlabs.com now; the old domain gets
@@ -80,15 +87,30 @@ const ld = { '@context': 'https://schema.org', '@graph': [organization, website,
         }
       })();
     </script>
+    {/* /favicon.ico stays the W on every page: it is the last-resort guess for a browser too old
+        to read the SVG, and falling back to the lab's mark is the right failure. */}
     <link rel="icon" href="/favicon.ico" sizes="any" />
-    <link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_black_32.svg" />
-    <link
-      rel="icon"
-      type="image/svg+xml"
-      href="/assets/brand/svg/wl-favicon_white_32.svg"
-      media="(prefers-color-scheme: dark)"
-    />
-    <link rel="apple-touch-icon" href="/assets/brand/png/wl-appicon_amber-graphite_180.png" />
+    {
+      favicon === 'attune' ? (
+        <Fragment>
+          {/* One file for both browser themes — the ground is graphite, the same reasoning that
+              made the app icon dark-ground. No prefers-color-scheme pair needed. */}
+          <link rel="icon" type="image/svg+xml" href="/assets/attune/attune-favicon.svg" />
+          <link rel="apple-touch-icon" href="/assets/attune/attune-appicon-180.png" />
+        </Fragment>
+      ) : (
+        <Fragment>
+          <link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_black_32.svg" />
+          <link
+            rel="icon"
+            type="image/svg+xml"
+            href="/assets/brand/svg/wl-favicon_white_32.svg"
+            media="(prefers-color-scheme: dark)"
+          />
+          <link rel="apple-touch-icon" href="/assets/brand/png/wl-appicon_amber-graphite_180.png" />
+        </Fragment>
+      )
+    }
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#16181B" />
@@ -99,12 +121,30 @@ const ld = { '@context': 'https://schema.org', '@graph': [organization, website,
     />
     {
       /* Instrument Serif is NOT part of the Warren Labs type system. It is loaded only on pages
-         that render the Attune wordmark, which keeps its own signature the way the app does. */
+         that render the Attune wordmark, which keeps its own signature the way the app does.
+         SELF-HOSTED, and specifically the same web/fonts/InstrumentSerif-Regular.woff2 the app
+         bundles and that tools/make_lockup.py cuts the outlined lock-ups from — so the wordmark
+         here and the wordmark in the running app are one typeface by construction, not by
+         trusting two CDNs to agree.
+
+         font-display is BLOCK, not swap. Instrument Serif is not a system font, so a swap would
+         paint the hero wordmark in Georgia first and then reflow it — wider and heavier, which is
+         the exact defect that shipped once already. A same-origin 25 KB preload makes the block
+         period imperceptible; a flash of the wrong face would not be. */
       wordmark && (
-        <link
-          href="https://fonts.googleapis.com/css2?family=Instrument+Serif:wght@400&display=swap"
-          rel="stylesheet"
-        />
+        <Fragment>
+          <link
+            rel="preload"
+            href="/assets/attune/InstrumentSerif-Regular.woff2"
+            as="font"
+            type="font/woff2"
+            crossorigin
+          />
+          <style
+            is:inline
+            set:html={`@font-face{font-family:'Instrument Serif';font-style:normal;font-weight:400;font-display:block;src:url('/assets/attune/InstrumentSerif-Regular.woff2') format('woff2');}`}
+          />
+        </Fragment>
       )
     }
     <title>{title}</title>
