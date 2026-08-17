@@ -9,13 +9,17 @@ import AttuneVoiceMatchDemo from '../components/AttuneVoiceMatchDemo.astro';
 
 // Attune shipped on the Mac App Store 2026-08-12. The beta DMG is retired: a side-loaded copy gets no
 // updates and cannot buy Pro, so every download path now points at the store listing.
-const APP_STORE = 'https://apps.apple.com/app/attune-headphone-eq/id6792873303';
+//
+// PLATFORM WORDING IS NOT WRITTEN HERE. It comes from src/data/attune.js, which the handout and the
+// support page also read, because iOS is in review and only one file should decide how the site says
+// so. Do not hard-code "Mac App Store" or a system requirement into this page again.
+import { APP_STORE, ATTUNE, IOS_LIVE } from '../data/attune.js';
 
 const attuneApp = {
   '@type': 'SoftwareApplication',
   name: 'Attune',
   applicationCategory: 'MultimediaApplication',
-  operatingSystem: 'macOS',
+  operatingSystem: ATTUNE.operatingSystem,
   offers: {
     '@type': 'AggregateOffer',
     priceCurrency: 'USD',
@@ -23,8 +27,7 @@ const attuneApp = {
     highPrice: '39',
     offerCount: 2,
   },
-  description:
-    'Personal-EQ and real-time A/B auditioning for macOS. Tune any headphone to your taste: blind, loudness-matched, on your own music.',
+  description: `Personal-EQ and real-time A/B auditioning for ${ATTUNE.metaPlatforms}. Tune any headphone to your taste: blind, loudness-matched, on your own music.`,
   brand: { '@type': 'Brand', name: 'Warren Labs' },
   publisher: { '@id': 'https://warrenlabs.com/#organization' },
   // Attune's own mark, not the lab's. The Organization node in Layout.astro still points at the W.
@@ -35,7 +38,7 @@ const attuneApp = {
 
 <Layout
   title="Attune · Find your sound"
-  description="Attune is a Warren Labs product: personal-EQ and real-time A/B auditioning for macOS. Tune any headphone to your taste, blind and loudness-matched, on your own music. Free on the Mac App Store."
+  description={`Attune is a Warren Labs product: personal-EQ and real-time A/B auditioning for ${ATTUNE.metaPlatforms}. Tune any headphone to your taste, blind and loudness-matched, on your own music. Free on the ${ATTUNE.storeName}.`}
   signup="attune"
   jsonLd={attuneApp}
   wordmark
@@ -57,7 +60,7 @@ const attuneApp = {
           <span class="wordmark">Attune</span>
           <span class="by">by Warren Labs</span>
         </span>
-        <span class="eyebrow">Free &middot; on the Mac App Store</span>
+        <span class="eyebrow">{ATTUNE.storeLine}</span>
         <h1>Find <em>your</em> sound.</h1>
         <p class="lede">
           Hear your headphones the way <b style="color:var(--text)">you</b> want, or voiced like another headphone
@@ -65,10 +68,10 @@ const attuneApp = {
             style="color:var(--text)">free</b>, no subscription.
         </p>
         <div class="hero-cta">
-          <Button href={APP_STORE} variant="primary" size="lg">Download on the Mac App Store</Button>
+          <Button href={APP_STORE} variant="primary" size="lg">{ATTUNE.ctaLabel}</Button>
           <Button href="#how" variant="ghost" size="lg">See how it works</Button>
         </div>
-        <div class="hero-note"><span class="dot"></span> Free &middot; macOS 12 or later &middot; Apple&nbsp;Silicon</div>
+        <div class="hero-note"><span class="dot"></span> Free &middot; {ATTUNE.requirements}</div>
 
         {/* Handoff from /graphs Difference mode. Someone who arrives here has already picked a pair
             and been told what the correction looks like — landing them on a generic hero throws that
@@ -120,7 +123,7 @@ const attuneApp = {
     <div class="wrap sec">
       <div class="sec-head">
         <span class="eyebrow">How it works</span>
-        <h2>Four steps to your sound. Under a minute.</h2>
+        <h2>Four steps to your sound.</h2>
         <p class="sec-lede">The graph becomes the surface you're hearing through, not a chart you're reading. Everything runs in real time on your own music.</p>
       </div>
 
@@ -136,7 +139,7 @@ const attuneApp = {
             </svg>
           </div>
           <h3>Pick your headphone</h3>
-          <p>Search a curated library of popular wired cans &amp; IEMs, or import your own measurement (CSV, AutoEQ, squig), free.</p>
+          <p>Six headphones ship, and every curve is our own measurement on our own rig. Not yours? Import your own (CSV, AutoEq, squig), free, or send us the pair.</p>
           <svg class="arrow" width="18" height="18" viewBox="0 0 18 18"><path d="M6 4l5 5-5 5" stroke="#5f646b" stroke-width="1.5" fill="none" stroke-linecap="round"></path></svg>
         </div>
         <!-- 2 -->
@@ -176,7 +179,7 @@ const attuneApp = {
             </svg>
           </div>
           <h3>Save &amp; apply</h3>
-          <p>Flip <b style="color:var(--text)">Stock&nbsp;&#8644;&nbsp;Yours</b> to hear what you gained. Save the profile per headphone, then listen for real.</p>
+          <p>Flip <b style="color:var(--text)">Stock&nbsp;&#8644;&nbsp;Yours</b> to hear what you gained. Save the sound per headphone, then listen for real.</p>
         </div>
       </div>
     </div>
@@ -190,14 +193,14 @@ const attuneApp = {
           <span class="eyebrow">The ear exam</span>
           <h2>Like an eye exam, for tuning.</h2>
           <p class="sec-lede">
-            Six quick choices (<span class="mono">A or B?</span>) on your own music, gain-matched so loudness never
-            tips your hand. No sliders, no theory. You do the deciding.
+            About a dozen short comparisons (<span class="mono">A or B?</span>) on your own music, gain-matched so
+            loudness never tips your hand. No sliders, no theory. You do the deciding.
           </p>
           <ul>
             <li><span class="chk">&#9670;</span><span><b>Blind &amp; honest.</b> Every comparison is loudness-matched, so louder never masquerades as better.</span></li>
             <li><span class="chk">&#9670;</span><span><b>On your music.</b> The A/B runs on the track that's already playing, the passages you actually know.</span></li>
             <li><span class="chk">&#9670;</span><span><b>Seamless switching.</b> Crossfades between tunings instead of muting, so the only thing that changes is the sound.</span></li>
-            <li><span class="chk">&#9670;</span><span><b>Yours to keep.</b> The result is a personal EQ profile, saved per headphone and portable to your other apps.</span></li>
+            <li><span class="chk">&#9670;</span><span><b>Yours to keep.</b> The result is a personal EQ curve, saved per headphone. With Pro it exports as a standard AutoEq file and travels to your phone, DAP or dongle.</span></li>
           </ul>
         </div>
 
@@ -213,12 +216,13 @@ const attuneApp = {
     <div class="wrap sec">
       <div class="exam">
         <div>
-          <span class="eyebrow">Voice-match</span>
+          <span class="eyebrow">Voice match</span>
           <h2>Hear another headphone&rsquo;s tuning on your own cans.</h2>
           <p class="sec-lede">
-            Curious how a different headphone is voiced? <b style="color:var(--text)">Match its tonal signature</b>
-            and hear how that balance would sit on the headphones already on your head: blind, loudness-matched,
-            on your own music.
+            Curious how a different headphone is voiced? We measured both, so
+            <b style="color:var(--text)">we take the difference between the two and correct for it,
+            loudness-matched</b>. That is voice matching, and it lets you hear how another headphone&rsquo;s
+            balance would sit on the pair already on your head: blind, on your own music.
           </p>
           <ul>
             <li><span class="chk">&#9670;</span><span><b>Match the tonal signature,</b> not a literal clone. You borrow another tuning&rsquo;s balance (its bass, mids and treble) and hear it on your gear.</span></li>
@@ -235,6 +239,43 @@ const attuneApp = {
     </div>
   </section>
 
+  <!-- ===================== THE CORPUS =====================
+       The six-headphone count is not an apology, it is the claim. Inverting it answers "whose
+       measurements?" and "mine isn't listed" in one move, keeps the copy honest against the
+       licensing rule that keeps third-party corpora out of the build, and lands the reader on the
+       mail-in service. See docs/messaging-spine.md §4 in the Attune repo. -->
+  <section id="corpus" class="band">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <span class="eyebrow">Whose measurements</span>
+        <h2>Six headphones. All of them ours.</h2>
+        <p class="sec-lede">
+          Every curve in Attune is our own measurement, taken here on a miniDSP EARS&nbsp;Pro, with the
+          rig&rsquo;s uncertainty drawn on the graph rather than hidden. Nothing is scraped from a public
+          database. Six we measured ourselves beats five thousand we didn&rsquo;t.
+        </p>
+      </div>
+
+      <div class="prob-grid">
+        <div class="card">
+          <div class="n">01</div>
+          <h3>Measured here, on one rig</h3>
+          <p>One fixture, one stated seating rule, both channels kept. The method is written down and you can check it, including the parts that are not flattering.</p>
+        </div>
+        <div class="card">
+          <div class="n">02</div>
+          <h3>Yours isn&rsquo;t listed? Import it</h3>
+          <p>CSV, AutoEq or squig. Attune voice-matches to an imported curve exactly as it would to a bundled one. Free, permanently, and it will not become a paid feature.</p>
+        </div>
+        <div class="card">
+          <div class="n">03</div>
+          <h3>Or send us the pair</h3>
+          <p>We measure your exact unit on our rig and publish the result, flattering or not, then add it. About a week. <a href="/measure">See how that works</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== CREDIBILITY ===================== -->
   <section class="band">
     <div class="wrap cred">
@@ -243,7 +284,7 @@ const attuneApp = {
           <span class="eyebrow">Who's behind it</span>
           <blockquote>
             Built by people who've spent a career measuring headphones and building the tools to compare them
-            honestly &mdash; side by side, level-matched, with no hype in between.
+            honestly: side by side, level-matched, with no hype in between.
           </blockquote>
           <p class="cred-by">
             The same work continues in Attune, powered by Warren Labs' shipping <b>Level</b> correction engine: the
@@ -292,14 +333,15 @@ const attuneApp = {
             Free correction presets are everywhere, and they are good. What a preset cannot do is play you your
             own music, blind and loudness-matched, and let you pick. That part is free here, and so is <b
               style="color:var(--text)">keeping</b> what you find. Pro is a one-time unlock for people who want
-            more than one profile and want to take their curve elsewhere.
+            more than one saved sound and want to take their curve elsewhere. It is a Universal Purchase:
+            buy it once and it covers Mac and iOS.
           </p>
         </div>
       </div>
 
       <div class="incl">
         <div><span class="chk">&#9670;</span> The real-time audition engine, free forever</div>
-        <div><span class="chk">&#9670;</span> One saved profile, kept, at no cost</div>
+        <div><span class="chk">&#9670;</span> One saved sound, kept, at no cost</div>
         <div><span class="chk">&#9670;</span> No account and no card to start</div>
         <div><span class="chk">&#9670;</span> No subscription. Pro is a one-time unlock.</div>
       </div>
@@ -313,13 +355,13 @@ const attuneApp = {
           <ul>
             <li><span class="chk">&#9670;</span> Blind, loudness-matched A/B on your own music</li>
             <li><span class="chk">&#9670;</span> The ear exam and voice match</li>
-            <li><span class="chk">&#9670;</span> One saved profile, kept and reloaded every launch</li>
-            <li><span class="chk">&#9670;</span> Built-in curves for popular wired cans and IEMs</li>
-            <li><span class="chk">&#9670;</span> Import your own measurements (CSV, AutoEQ, squig), free, always</li>
+            <li><span class="chk">&#9670;</span> One saved sound, kept and reloaded every launch</li>
+            <li><span class="chk">&#9670;</span> Six headphones, all measured in-house on our own rig</li>
+            <li><span class="chk">&#9670;</span> Import your own measurements (CSV, AutoEq, squig), free, always</li>
             <li><span class="chk">&#9670;</span> The same correction engine that ships in Level</li>
           </ul>
-          <Button href={APP_STORE} variant="primary">Download on the Mac App Store</Button>
-          <p class="beta-req">Requires macOS 12 or later, Apple&nbsp;Silicon (M1 or later)</p>
+          <Button href={APP_STORE} variant="primary">{ATTUNE.ctaLabel}</Button>
+          <p class="beta-req">{ATTUNE.requirements}</p>
         </div>
         <!-- Pro (one-time unlock) -->
         <div class="tier feat">
@@ -328,8 +370,9 @@ const attuneApp = {
           <div class="per">paid once, never a subscription</div>
           <ul>
             <li><span class="chk">&#9670;</span> Everything in Free</li>
-            <li><span class="chk">&#9670;</span> Unlimited saved profiles, across as many headphones as you own</li>
-            <li><span class="chk">&#9670;</span> Export your curve and use it outside Attune: phone, DAP or dongle</li>
+            <li><span class="chk">&#9670;</span> Unlimited saved sounds, across as many headphones as you own</li>
+            <li><span class="chk">&#9670;</span> EQ export as a standard AutoEq file: phone, DAP or dongle</li>
+            <li><span class="chk">&#9670;</span> Universal Purchase: one $39 unlock covers Mac and iOS, in either direction</li>
           </ul>
           <Button href={APP_STORE} variant="ghost">Unlock inside the app</Button>
         </div>
@@ -348,11 +391,11 @@ const attuneApp = {
     <div class="wrap">
       <span class="eyebrow" style="justify-content:center">Get started</span>
       <h2>Find your sound.</h2>
-      <p>Bring your own headphones and the music you know. In under a minute you'll hear the difference. It's free on the Mac App Store.</p>
+      <p>Bring your own headphones and the music you know. A demo track is bundled, so you'll hear the difference before you load anything. It's free on the {ATTUNE.storeName}.</p>
       <div class="hero-cta">
-        <Button href={APP_STORE} variant="primary" size="lg">Download on the Mac App Store</Button>
+        <Button href={APP_STORE} variant="primary" size="lg">{ATTUNE.ctaLabel}</Button>
       </div>
-      <p class="beta-req">Requires macOS 12 or later, Apple&nbsp;Silicon (M1 or later)</p>
+      <p class="beta-req">{ATTUNE.requirements}</p>
     </div>
   </section>
 

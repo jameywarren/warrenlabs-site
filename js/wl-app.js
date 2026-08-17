@@ -202,7 +202,7 @@
   }
 
   /* The rack is portfolio evidence, not a product catalog. Three products carry a full
-     unit card (Level shipping, Attune and Tone Farm in development); everything else on
+     unit card (Level shipping, Attune on the App Store, Tone Farm in development); everything else on
      the Trueness line collapses into one static spec row underneath. Entries keep the old
      plugins.json shape so traceFor() and faceplateHTML() render them unchanged. The
      per-unit spec pages under /plugins/ are deliberately no longer linked from here. */
@@ -228,20 +228,21 @@
     },
     {
       slug: 'attune', name: 'Attune', code: 'Attn', accent: '#E9A24A',
-      category: 'Headphone auditioning + personal EQ', status: 'Beta',
+      category: 'Headphone auditioning + personal EQ', status: 'Shipping',
       blurb: 'Correction usually means somebody else\'s idea of flat. Attune finds yours instead: pick your headphone, then let a blind, loudness-matched A/B on your own music narrow in on the curve you actually prefer. It takes about a minute, and stock against yours stays on one toggle. You can also voice one headphone toward another and hear the difference, loudness-matched. Same correction engine as Level, wrapped in something a listener can use.',
       features: [
         'Blind, loudness-matched A/B on your own music',
         'Lands on a personal curve in about a minute',
         'Stock against yours on one toggle',
         'Voice one headphone toward another',
-        'macOS app on the shared Level engine'
+        'Six headphones, every curve measured in-house',
+        'Mac app on the shared Level engine, iPhone and iPad in review'
       ],
       meta: [
         ['ROLE', 'Solo. Product, DSP, and build'],
-        ['TYPE', 'macOS app'],
+        ['TYPE', 'Mac app. iPhone and iPad in review'],
         ['ENGINE', 'Shared with Level'],
-        ['STATUS', 'Free beta, macOS']
+        ['STATUS', 'On the Mac App Store. Free, $39 Pro unlock']
       ]
     },
     {

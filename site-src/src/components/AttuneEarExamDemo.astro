@@ -1,7 +1,9 @@
 ---
 // Real interactive ear-exam flow, adapted from attune/web/index.html's .exam card.
-// "A" and "B" each apply a distinct demo tuning to the CC-BY music loop so the choice is audible;
-// "This one →" advances the same six-step progress the real app uses.
+// "A" and "B" each apply a distinct demo tuning to the CC-BY music loop so the choice is audible.
+// SIX ROUNDS HERE, NOT TWELVE: the shipping exam runs about a dozen comparisons, which is the right
+// length on your own music through your own headphones and far too long for a page widget. The
+// caption says so out loud rather than letting the demo read as the exam's real length.
 const uid = 'exam';
 ---
 
@@ -9,7 +11,7 @@ const uid = 'exam';
   <div class="at-exam-top">
     <div>
       <div class="at-lbl" style="margin-bottom:4px">Try it</div>
-      <div class="why">Tap A or B to hear each tuning, then pick the one you'd choose.</div>
+      <div class="why">Tap A or B to hear each tuning, then pick the one you'd choose. Six rounds here, about a dozen in the app.</div>
     </div>
     <button class="at-btn primary" id={`start-${uid}`}>Start</button>
   </div>
