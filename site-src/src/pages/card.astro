@@ -1,0 +1,18 @@
+---
+// Same page as /canjam, different URL. This one is the QR target printed on the measurement
+// report, so a hit here means the report specifically rather than the show generally. That is the
+// only difference between them: the content lives in CanJamHandout.astro and is shared.
+//
+// Deliberately NOT a redirect to /canjam. A redirect would collapse the two into one line in any
+// log and destroy the distinction the second route exists to make.
+import Layout from '../layouts/Layout.astro';
+import CanJamHandout from '../components/CanJamHandout.astro';
+---
+
+<Layout
+  title="Jamey Warren · Warren Labs"
+  description="Headphone measurement and correction software, built solo in Livingston, Montana."
+  noindex
+>
+  <CanJamHandout />
+</Layout>
