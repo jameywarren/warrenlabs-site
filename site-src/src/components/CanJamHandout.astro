@@ -20,26 +20,15 @@ import Footer from './Footer.astro';
 import Button from './Button.astro';
 
 // ============================================================================================
-// EDIT THIS BLOCK THE MORNING OF THE SHOW. Nothing else on the page needs to change.
+// The store link and the iOS status MOVED to src/data/attune.js, which is now the one place any
+// surface reads them from: this handout, the landing page and the support page all share it, so
+// they cannot drift apart again. The verification notes that used to sit here live there too.
 //
-// Verified 2026-08-16 against ~/Projects/attune:
-//   - Attune 1.0 shipped to the Mac App Store 2026-08-12; 1.0.1 was APPROVED 2026-08-14 and is
-//     what is live right now. (CMakeLists.txt, the version-record comment block.)
-//   - 1.0.2 went to BOTH platforms and is WAITING FOR REVIEW: macOS build 2026.0816.2012
-//     (commit 5c2f992), iOS build 2026.0817.0118 (commit 17626c0).
-//   - iOS has NEVER been approved. 1.0.2 is its first release. Do not imply otherwise.
-//   - It is a Universal Purchase on ONE bundle id, so ONE App Store link serves both platforms
-//     the moment iOS clears review. That is why there is a single URL here and not two.
-//
-// When iOS is approved: set IOS_STATUS to 'live'. That is the whole edit.
+// When iOS is approved: set IOS_STATUS in that file to 'live'. That is the whole edit, site-wide.
 // ============================================================================================
-const APP_STORE = 'https://apps.apple.com/app/attune-headphone-eq/id6792873303';
-const IOS_STATUS: 'review' | 'live' = 'review';
+import { APP_STORE, ATTUNE } from '../data/attune.js';
 
-const IOS_LINE =
-  IOS_STATUS === 'live'
-    ? 'Mac and iPhone, one download.'
-    : 'Mac now. The iPhone version is in review at Apple, not approved yet.';
+const IOS_LINE = ATTUNE.platformLine;
 ---
 
 <Nav />
@@ -70,7 +59,7 @@ const IOS_LINE =
         on the same correction engine as Level.
       </p>
       <p class="status">{IOS_LINE}</p>
-      <Button href={APP_STORE} variant="primary" size="lg">Attune on the Mac App Store</Button>
+      <Button href={APP_STORE} variant="primary" size="lg">Attune on the {ATTUNE.storeName}</Button>
     </section>
 
     {/* THE REASON THE PAGE EXISTS, and where the brief had to be corrected.

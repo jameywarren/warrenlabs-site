@@ -9,9 +9,9 @@ const { endpoint = '' } = Astro.props;
   <form class="su-card">
     <button type="button" class="su-x" data-su-close aria-label="Close">&times;</button>
     <div class="su-eyebrow">Warren Labs</div>
-    <h2 class="su-title" id="su-title">Get launch news</h2>
+    <h2 class="su-title" id="su-title">Get the occasional update</h2>
     <p class="su-lede" id="su-lede">
-      Attune is free on the Mac App Store. Leave your email for the occasional honest update:
+      Attune is free on the Mac App Store, with the iPhone and iPad version in review. Leave your email for the occasional honest update:
       new measurements, what we learn on the rig, and what ships next.
     </p>
 
@@ -22,7 +22,7 @@ const { endpoint = '' } = Astro.props;
         <span>Email</span>
         <input type="email" name="email" required autocomplete="email" placeholder="you@example.com" />
       </label>
-      <button type="submit" class="btn btn-primary btn-lg su-submit">Notify me</button>
+      <button type="submit" class="btn btn-primary btn-lg su-submit">Keep me posted</button>
       <p class="su-fine">No spam. Unsubscribe anytime.</p>
     </div>
 
@@ -44,9 +44,9 @@ const { endpoint = '' } = Astro.props;
 
     const COPY: Record<string, { title: string; submit: string; lede: string }> = {
       notify: {
-        title: 'Get launch news',
-        submit: 'Notify me',
-        lede: "Attune is free on the Mac App Store. Leave your email for the occasional honest update: new measurements, what we learn on the rig, and what ships next.",
+        title: 'Get the occasional update',
+        submit: 'Keep me posted',
+        lede: "Attune is free on the Mac App Store, with the iPhone and iPad version in review. Leave your email for the occasional honest update: new measurements, what we learn on the rig, and what ships next.",
       },
     };
 

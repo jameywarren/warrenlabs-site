@@ -2,13 +2,16 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+// iOS is in review, so what this page may claim about iPhone and iPad is decided in ONE file that
+// the landing page and the CanJam handout read too. When iOS is approved, flip IOS_STATUS there.
+import { ATTUNE, IOS_LIVE } from '../data/attune.js';
 
 const email = 'jamey@warrenlabs.com';
 ---
 
 <Layout
   title="Support · Warren Labs"
-  description="Help and support for Attune, the headphone voice-matching and preference-tuning Mac app. FAQ, troubleshooting, and how to reach a real person."
+  description={`Help and support for Attune, the headphone voice-matching and preference-tuning app for ${ATTUNE.metaPlatforms}. FAQ, troubleshooting, and how to reach a real person.`}
 >
   <Nav variant="home" />
   <section class="sec">
@@ -30,10 +33,14 @@ const email = 'jamey@warrenlabs.com';
         <summary>What is Attune?</summary>
         <div class="answer">
           <p>
-            Attune voice-matches your headphones to the tonal signature of <strong>another</strong>
-            headphone, as close as measurements can get you, then helps you tune from there to what
-            <strong>you</strong> personally prefer. Everything is blind and loudness-matched, on your
-            own music, so you're judging tone rather than volume.
+            Attune plays your music through a different tuning on the headphones you already own,
+            and lets you flip back to the original instantly, at exactly the same loudness. You can
+            aim at our house voice, at the tonal signature of another headphone, or at your own
+            result from a blind listening test.
+          </p>
+          <p>
+            Everything is blind and loudness-matched, on your own music, so you're judging tone
+            rather than volume.
           </p>
         </div>
       </details>
@@ -41,10 +48,22 @@ const email = 'jamey@warrenlabs.com';
       <details>
         <summary>What do I need to run it?</summary>
         <div class="answer">
+          {IOS_LIVE ? (
+            <p>
+              <strong>macOS 12 or later on an Apple Silicon Mac</strong>, or <strong>iOS 16 or
+              later</strong> on iPhone and iPad. A pair of headphones and some of your own music is
+              all you need.
+            </p>
+          ) : (
+            <p>
+              <strong>macOS 12 or later on an Apple Silicon Mac.</strong> The iPhone and iPad
+              version is in review at Apple and needs <strong>iOS 16 or later</strong>. A pair of
+              headphones and some of your own music is all you need.
+            </p>
+          )}
           <p>
-            <strong>macOS 11 (Big Sur) or later</strong>, on Apple Silicon or Intel. Attune is a
-            universal app and runs natively on both. A pair of headphones and some of your own music
-            is all you need.
+            A demo track is bundled, so the whole flow works the moment you open it, before you
+            load anything.
           </p>
         </div>
       </details>
@@ -53,10 +72,28 @@ const email = 'jamey@warrenlabs.com';
         <summary>How do I get started?</summary>
         <div class="answer">
           <p>
-            Pick <strong>your headphone</strong> and a <strong>target headphone</strong>, load a track
-            from your Mac, then flip between <strong>Stock</strong> and <strong>Matched</strong>. Same
-            track, same loudness, only the tuning changes. When you're ready, use
-            <strong>Find your sound</strong> to fine-tune to your own taste.
+            Pick <strong>your headphone</strong> from the bar at the top, choose what to aim at,
+            then flip between <strong>Stock</strong> and <strong>Matched</strong>. Same track, same
+            loudness, only the tuning changes. When you're ready, use <strong>Find your sound</strong>
+            to tune to your own taste.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Does it work with Spotify or Apple Music?</summary>
+        <div class="answer">
+          <p>
+            Not inside Attune, and no app on macOS or iOS can. Streaming audio is protected end to
+            end, so no third-party app is allowed to process it. Attune plays music you own: WAV,
+            AIFF, FLAC, ALAC, AAC or MP3.
+          </p>
+          <p>
+            There is a way to get your tuning onto streaming, and it's the better answer anyway.
+            With Attune Pro you can export your tuning as a standard AutoEq file and load it onto a
+            DSP dongle at <a href="/tune">warrenlabs.com/tune</a>. The dongle applies the EQ at the
+            output, so it covers everything the device plays, streaming included, and it follows you
+            to your phone. Loading needs a desktop copy of Chrome or Edge.
           </p>
         </div>
       </details>
@@ -65,17 +102,109 @@ const email = 'jamey@warrenlabs.com';
         <summary>How do I use my own music?</summary>
         <div class="answer">
           <p>
-            Point Attune at your music folder or pick a track. It only gets <strong>read-only</strong>
-            access to the files you choose, and remembers your folder so you don't have to re-pick it
-            every launch. Your music never leaves your Mac.
+            Point Attune at your music folder or pick a single track. Attune only gets
+            <strong>read-only</strong> access to the files you choose, and it remembers your folder
+            so you don't have to re-pick it every launch.
+          </p>
+          <p>Your music never leaves your device. See privacy, below.</p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Is Attune free? What does Pro add?</summary>
+        <div class="answer">
+          <p>
+            Free, permanently, and not a trial: the whole audition flow, both target modes, the ear
+            exam, fine tune, importing your own measurements, and one saved sound kept for good. No
+            account, no card.
+          </p>
+          <p>
+            <strong>Attune Pro is a single $39 purchase</strong>, no subscription, and it adds two
+            things: unlimited saved sounds, and EQ export as a standard AutoEq file so a tuning
+            found here can travel to your phone, DAP or dongle. It's a Universal Purchase, so buying
+            it on the Mac unlocks it on iPhone and iPad, and the other way round.
+          </p>
+          <p>
+            <strong>Importing your own measurement is free and will not become a paid feature.</strong>
           </p>
         </div>
       </details>
 
       <details>
-        <summary>Is Attune free?</summary>
+        <summary>Whose measurements are these? My headphone isn't listed.</summary>
         <div class="answer">
-          <p>Yes. The audition, the ear exam, and one saved profile are free, with no account and no card. A one-time Pro unlock ($39) adds unlimited profiles, export, and importing your own measurements. There is no subscription. Attune is in beta now and headed for the Mac App Store.</p>
+          <p>
+            Ours. Every headphone in Attune was measured here on a miniDSP EARS Pro. Nothing is
+            pulled from a public database, and the graph draws the rig's uncertainty rather than
+            hiding it. We'd rather ship a handful we can stand behind than thousands we can't, and
+            the corpus grows as we measure.
+          </p>
+          <p>
+            If yours isn't there, you have two options that work today.
+            <strong>Import your own measurement</strong> in CSV, AutoEq or squig format and Attune
+            will voice-match to it exactly as it would to a bundled one: we take the difference
+            between the two and correct for it, loudness-matched. That path is free. Or
+            <strong>send us the headphone</strong>: we measure it on our rig, publish the result
+            either way, and add it. Email us the exact make and model and we'll put it on the list.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Is there an iPhone version?</summary>
+        <div class="answer">
+          {IOS_LIVE ? (
+            <p>
+              Yes. Attune is on iPhone and iPad, and Attune Pro is a Universal Purchase, so one $39
+              unlock covers Mac and iOS in either direction.
+            </p>
+          ) : (
+            <p>
+              Yes, and it's in review at Apple right now. It runs on iPhone and iPad and needs iOS
+              16 or later. Attune Pro is a Universal Purchase, so the one $39 unlock covers Mac and
+              iOS in either direction, whichever you buy it on.
+            </p>
+          )}
+        </div>
+      </details>
+
+      <details>
+        <summary>Why is the graph empty when I open it?</summary>
+        <div class="answer">
+          <p>
+            Because nothing is selected yet, and that's deliberate. The correction is computed from
+            a real measured response, so until Attune knows which headphones you own there's nothing
+            honest to draw. Pick your pair from the bar at the top and the graph and the Stock /
+            Matched comparison come alive immediately.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Why does Matched sound quieter?</summary>
+        <div class="answer">
+          <p>
+            It doesn't. Both sides are set to the same loudness on purpose, and we measured the
+            residual rather than assuming it: 0.04 to 1.0 dB across the headphones we tested.
+          </p>
+          <p>
+            That matching is the whole point of the comparison. Anything even slightly louder sounds
+            better for the first few seconds, every time, to everyone. Without level matching you
+            aren't comparing tunings, you're just finding out which one is louder. If Matched feels
+            quieter, what you're hearing is usually a bass or treble shift, not a level shift.
+          </p>
+        </div>
+      </details>
+
+      <details>
+        <summary>Does it work with wireless or Bluetooth headphones?</summary>
+        <div class="answer">
+          <p>
+            It will play through them, and you can tune them, but wired is the honest
+            recommendation. Bluetooth headphones usually apply their own processing that we can't
+            see or account for, so what you'd be correcting is the headphone plus whatever its
+            firmware is already doing. Our measurements are of the headphone.
+          </p>
         </div>
       </details>
 
@@ -83,10 +212,12 @@ const email = 'jamey@warrenlabs.com';
         <summary>What about my privacy?</summary>
         <div class="answer">
           <p>
-            Attune has <strong>no account and no network connection at all</strong>. It collects
-            nothing, sends nothing, and works fully offline. Your music, listening, and tunings stay
-            on your Mac. Full details on our <a href="/privacy">privacy page</a>.
+            Attune has <strong>no account, no sign-in, and makes no network requests of any
+            kind</strong>. It collects nothing and sends nothing. Your music, your listening and
+            your tunings stay on your device. There's nothing to opt out of because there's nothing
+            being gathered.
           </p>
+          <p>Full details on our <a href="/privacy">privacy page</a>.</p>
         </div>
       </details>
 
@@ -94,24 +225,27 @@ const email = 'jamey@warrenlabs.com';
         <summary>The app won't open, or I can't hear a difference.</summary>
         <div class="answer">
           <p>
-            <strong>Won't open:</strong> make sure you installed the current Attune beta build and
-            you're on macOS 11 or later. Quit and relaunch; if it still won't start, email us with your
-            macOS version and Mac model.
+            <strong>Won't open:</strong> confirm you're on macOS 12 or later with Apple Silicon, or
+            iOS 16 or later, and that Attune came from the App Store. Quit and relaunch. If it still
+            won't start, email us your OS version and device model.
           </p>
           <p>
-            <strong>No sound or "no difference":</strong> choose the correct <strong>output device</strong>
-            inside Attune and check your system volume. The Stock ⇄ Matched switch is
-            <strong>loudness-matched on purpose</strong>. Listen for a change in tone, not a jump in level.
+            <strong>No difference:</strong> check that a headphone is selected, that the correct
+            <strong>output device</strong> is chosen inside Attune, and that a track is playing.
+            Then remember the Stock and Matched comparison is
+            <strong>loudness-matched on purpose</strong>. Listen for a change in <em>tone</em>, not
+            a jump in level. Some pairs and some targets are a small correction, and a small
+            correction is a small difference.
           </p>
         </div>
       </details>
 
       <details>
-        <summary>My headphone isn't listed. Can you add it?</summary>
+        <summary>What's the demo track?</summary>
         <div class="answer">
           <p>
-            Attune ships with a large library of measured headphones. If yours is missing, email us the
-            exact <strong>make and model</strong> and we'll look at adding it in a future update.
+            "Off Road", written and performed by Jamey Warren and Kevin Toll, &copy; 2021. Jamey is
+            a rights holder, which is why it can ship with the app.
           </p>
         </div>
       </details>
@@ -129,9 +263,10 @@ const email = 'jamey@warrenlabs.com';
       <h3>Reporting a bug</h3>
       <p>The more of this you can include, the faster we can help:</p>
       <ul class="checklist">
-        <li>Your <strong>macOS version</strong>: Apple menu → About This Mac</li>
-        <li>Your <strong>Mac model</strong>: e.g. MacBook Air (M2, 2022)</li>
-        <li><strong>What you did</strong>, what you expected, and what actually happened</li>
+        <li>Your <strong>OS version</strong>: Apple menu → About This Mac, or Settings → General → About</li>
+        <li>Your <strong>device</strong>: e.g. MacBook Air (M2, 2022), or iPhone 15 Pro</li>
+        <li><strong>What you did</strong>: the steps that led to the problem</li>
+        <li><strong>What you expected</strong> vs. <strong>what happened</strong></li>
         <li>A screenshot, if it's something you can see</li>
       </ul>
     </div>
