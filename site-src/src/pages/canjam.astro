@@ -1,0 +1,18 @@
+---
+// The generic handout URL. /card renders the SAME component and exists only so scans off the
+// printed measurement report can be told apart from scans of anything else. Keep the two in step
+// by editing CanJamHandout.astro, never this file.
+//
+// noindex: this is a QR target on printed paper, not a page to rank. astro.config.mjs also drops
+// both routes from the sitemap, and tools/sync.mjs must list them or they never reach the site.
+import Layout from '../layouts/Layout.astro';
+import CanJamHandout from '../components/CanJamHandout.astro';
+---
+
+<Layout
+  title="Jamey Warren · Warren Labs"
+  description="Headphone measurement and correction software, built solo in Livingston, Montana."
+  noindex
+>
+  <CanJamHandout />
+</Layout>

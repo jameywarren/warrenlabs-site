@@ -19,6 +19,13 @@ interface Props {
    * Attune mark leads. See the note on the lock-up in attune.astro.
    */
   favicon?: 'wl' | 'attune';
+  /**
+   * Keep the page out of search. For handout targets (a QR code on printed paper) that are public
+   * URLs but are not pages we want indexed. Emits robots noindex AND drops the canonical link —
+   * a canonical on a noindexed page is a mixed signal. Pair it with the sitemap filter in
+   * astro.config.mjs, or the page is excluded and advertised at the same time.
+   */
+  noindex?: boolean;
 }
 
 const {
@@ -30,6 +37,7 @@ const {
   jsonLd,
   wordmark = false,
   favicon = 'wl',
+  noindex = false,
 } = Astro.props;
 
 // Migrated from sonictemple.io 2026-07-30. Canonical is warrenlabs.com now; the old domain gets
@@ -112,7 +120,7 @@ const ld = { '@context': 'https://schema.org', '@graph': [organization, website,
       )
     }
     <link rel="manifest" href="/site.webmanifest" />
-    <link rel="canonical" href={canonical} />
+    {noindex ? <meta name="robots" content="noindex, nofollow" /> : <link rel="canonical" href={canonical} />}
     <meta name="theme-color" content="#16181B" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link

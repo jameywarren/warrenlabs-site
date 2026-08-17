@@ -1,0 +1,298 @@
+---
+// The CanJam SoCal handout page. Rendered at BOTH /canjam and /card so scans off the printed
+// measurement report can be told apart from anything else; the two routes are otherwise identical
+// and this component is the single source for both.
+//
+// WRITTEN FOR: someone who just met Jamey, is holding a phone in a ballroom on bad hotel wifi, and
+// will give this thirty seconds. Everything here is above the fold on a phone or close to it. No
+// images, no scripts, no web fonts beyond what the shared chrome already loads.
+//
+// PORTFOLIO MODE. No pricing, no sales language, no call to action beyond "download" and "email
+// me". If you are tempted to add a third, don't.
+//
+// ---------------------------------------------------------------------------------------------
+// EVERY FACT ON THIS PAGE WAS CHECKED AGAINST THE REPO ON 2026-08-16. If you edit it, re-check.
+// The things that were wrong in the first draft of the brief are called out at each site below.
+// ---------------------------------------------------------------------------------------------
+
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import Button from './Button.astro';
+
+// ============================================================================================
+// EDIT THIS BLOCK THE MORNING OF THE SHOW. Nothing else on the page needs to change.
+//
+// Verified 2026-08-16 against ~/Projects/attune:
+//   - Attune 1.0 shipped to the Mac App Store 2026-08-12; 1.0.1 was APPROVED 2026-08-14 and is
+//     what is live right now. (CMakeLists.txt, the version-record comment block.)
+//   - 1.0.2 went to BOTH platforms and is WAITING FOR REVIEW: macOS build 2026.0816.2012
+//     (commit 5c2f992), iOS build 2026.0817.0118 (commit 17626c0).
+//   - iOS has NEVER been approved. 1.0.2 is its first release. Do not imply otherwise.
+//   - It is a Universal Purchase on ONE bundle id, so ONE App Store link serves both platforms
+//     the moment iOS clears review. That is why there is a single URL here and not two.
+//
+// When iOS is approved: set IOS_STATUS to 'live'. That is the whole edit.
+// ============================================================================================
+const APP_STORE = 'https://apps.apple.com/app/attune-headphone-eq/id6792873303';
+const IOS_STATUS: 'review' | 'live' = 'review';
+
+const IOS_LINE =
+  IOS_STATUS === 'live'
+    ? 'Mac and iPhone, one download.'
+    : 'Mac now. The iPhone version is in review at Apple, not approved yet.';
+---
+
+<Nav />
+
+<main>
+  {/* NOTE ON COMMENT STYLE IN THIS FILE: use {/​* *​/}, never <!-- -->. Astro emits HTML comments
+      into the shipped page, and this one is handed to engineers and competitors who will view
+      source. The reasoning below is internal. Expression comments are stripped at build. */}
+  <div class="wrap sheet">
+    <header class="who">
+      <span class="eyebrow">CanJam SoCal &middot; August 29 and 30</span>
+      <h1>Jamey Warren</h1>
+      {/* Verified against index.html, which is the canonical bio: "1997-2001 GRACE DESIGN,
+          EMPLOYEE #1", "2003-2017 HEADROOM, VP OPS -> CEO", "twenty-five years in audio".
+          One line, as asked. No resume. */}
+      <p class="lede">
+        Twenty-five years in audio. Employee&nbsp;#1 at Grace&nbsp;Design, then HeadRoom as VP&nbsp;Ops and
+        later President and CEO. Now measuring headphones and building the software on my own bench in
+        Livingston, Montana.
+      </p>
+    </header>
+
+    <section class="blk">
+      <h2>Attune</h2>
+      <p>
+        Pick your headphone, then let a blind, loudness-matched A/B on your own music find the tuning you
+        actually prefer. You can also voice one headphone toward another and hear the difference. It runs
+        on the same correction engine as Level.
+      </p>
+      <p class="status">{IOS_LINE}</p>
+      <Button href={APP_STORE} variant="primary" size="lg">Attune on the Mac App Store</Button>
+    </section>
+
+    {/* THE REASON THE PAGE EXISTS, and where the brief had to be corrected.
+
+        The brief asked this section to say every measurement carries "a repeatability band and an
+        error budget rather than a single line." IT DOES NOT, and saying so would repeat a bug that
+        was deliberately reverted on 2026-08-05.
+
+        Three places in the repo agree:
+          - data/fixtures.js, earspro.limits: "Seating repeatability on this bench is not
+            characterized yet, so there is no variance figure to give."
+          - pages/graphs.astro:143 publishes, in the live UI, "How repeatable this rig is" followed
+            by "We haven't published that number yet."
+          - data/demo-curves.js:12: "Reseat repeatability on this bench is not characterized yet ...
+            do not draw a variance band from another rig's SD."
+
+        The 0.37 dB and 3.87 dB figures that look like our error budget are the HeadRoom HMS II.3
+        ARCHIVE's seating SD, listed in MEASUREMENT-PIPELINE.md 3.0 under "Benchmark to beat".
+        graphs.astro:101 records that the variance band was pulled from the live site precisely
+        because drawing it would assert another rig's repeatability as our own.
+
+        So the honest differentiator is not the band. It is that the method and its limits are
+        stated, including the number we have not earned yet. Stronger for this audience anyway:
+        every engineer reading it has seen a spec sheet quote somebody else's uncertainty. */}
+    <section class="blk">
+      <h2>How the measurements are made</h2>
+      <p>
+        A miniDSP EARS&nbsp;Pro with per-unit serial-matched calibration, using IEC&nbsp;60318-4 couplers, the
+        coupler standard the industry rigs use.
+      </p>
+      <ul class="method">
+        <li>
+          <b>Seated for best fit, deliberately.</b> The headphone is adjusted for seal and sound the way
+          someone settling in to listen would adjust it, not placed at random.
+        </li>
+        <li>
+          <b>One real seating, never a blend.</b> The published curve is the median of six reseats: an
+          actual achievable placement picked by an objective rule. Averaging reseats publishes a bass
+          shelf nobody will ever hear.
+        </li>
+        <li>
+          <b>Raw and full band.</b> Not compensated to any target, normalized to 0&nbsp;dB at 1&nbsp;kHz. Both
+          channels are measured and stored separately.
+        </li>
+        <li>
+          <b>Curves from two rigs never share an axis.</b> The offset between this bench and the old
+          HeadRoom fixture has not been measured, so a cross-rig difference cannot be quoted and is not
+          drawn.
+        </li>
+        <li>
+          <b>What is not characterized yet is said out loud.</b> Reseat repeatability on this bench has
+          not been measured, so there is no variance band on these curves and there will not be one until
+          the number is earned. An EARS&nbsp;Pro is a house reference, not an industry reference coupler.
+        </li>
+      </ul>
+      {/* Deliberately no corpus count in the prose: it is six headphones today (data/measurements.js,
+          and attune commit f086a50 "say six headphones when six are listed"), it grows, and a number
+          in copy goes stale silently. "Small and honest about it" is the standing position. */}
+      <p class="small">
+        The published set is small and says so. Every curve carries the rig that produced it, the operator,
+        and its stated limits.
+      </p>
+
+      {/* ======================= RIG PHOTO GOES HERE =======================
+          Jamey is supplying it. Drop the file at assets/canjam/rig.jpg (repo root
+          assets/, not site-src/public/ — see assets/attune/README.md) and swap the
+          two lines below.
+
+          Keep loading="lazy" and the explicit width/height: this page is read on
+          hotel wifi, and an undimensioned image shifts the layout under the
+          reader's thumb as it arrives. Set width/height to the real pixel size.
+
+          <figure class="rig">
+            <img src="/assets/canjam/rig.jpg"
+                 alt="The miniDSP EARS Pro bench with a headphone seated on it"
+                 width="1600" height="1200" loading="lazy" decoding="async" />
+            <figcaption>The bench, Livingston, Montana.</figcaption>
+          </figure>
+          =================================================================== */}
+    </section>
+
+    <section class="blk contact">
+      <h2>Get in touch</h2>
+      <p>
+        <a href="mailto:jamey@jameywarren.com" class="mail">jamey@jameywarren.com</a>
+      </p>
+      <p class="small">Straight to me. No form.</p>
+    </section>
+  </div>
+</main>
+
+<Footer />
+
+<style>
+  /* Mobile-first and deliberately plain. Everything here is a shared token; nothing invents a new
+     visual language. The page has no images, no scripts and no fonts of its own, so on a bad
+     connection it paints as soon as the shared chrome does. */
+  /* Vertical padding ONLY. A `padding:` shorthand here beats the global `.wrap { padding: 0 24px }`
+     on specificity and zeroes the side gutters, which put the body copy hard against the edge of a
+     phone screen. This page is read almost entirely on phones, so that is the one thing not to get
+     wrong. */
+  .sheet {
+    padding-top: 30px;
+    padding-bottom: 8px;
+    max-width: 46rem;
+  }
+  .who {
+    padding-bottom: 26px;
+    border-bottom: 1px solid var(--line);
+  }
+  h1 {
+    font-family: var(--serif);
+    font-size: clamp(30px, 8vw, 42px);
+    line-height: 1.05;
+    margin: 12px 0 0;
+  }
+  .lede {
+    margin: 14px 0 0;
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  .blk {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .blk:last-child {
+    border-bottom: none;
+  }
+  h2 {
+    font-size: 20px;
+    margin: 0 0 12px;
+    letter-spacing: -0.01em;
+  }
+  .blk p {
+    margin: 0 0 14px;
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  /* The Attune platform line. Its own colour because it is the one line most likely to be edited
+     on the morning of the show, and it should be findable at a glance in the rendered page too. */
+  .status {
+    font-family: var(--mono);
+    /* Mono is wide. At 12px it fits a 320px phone without the line breaking mid-phrase; the
+       min-width:600px block takes it back up. */
+    font-size: 12px;
+    line-height: 1.55;
+    color: var(--accent-soft);
+  }
+  .method {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px;
+  }
+  .method li {
+    padding: 12px 0;
+    border-top: 1px solid var(--line-soft);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  .method li:first-child {
+    border-top: none;
+  }
+  .method b {
+    color: var(--text);
+    font-weight: 600;
+  }
+  .small {
+    font-size: 13.5px;
+    color: var(--muted-2);
+    line-height: 1.55;
+  }
+  /* Big enough to hit with a thumb, and it reads as an address rather than a button so nobody
+     mistakes it for a contact form. */
+  /* inline-block with vertical padding so the tap target clears ~44px. As a bare inline link it
+     measured 23px, which is a miss-prone target for a thumb, and this is the one link on the page
+     that has to work first time. It still reads as an address rather than a button, so nobody
+     mistakes it for a contact form. */
+  .mail {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: clamp(15px, 4.4vw, 19px);
+    line-height: 1.4;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid var(--accent-line);
+    padding: 10px 0;
+    overflow-wrap: anywhere;
+  }
+  .contact p {
+    margin-bottom: 10px;
+  }
+  .rig img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+  }
+  .rig {
+    margin: 20px 0 0;
+  }
+  .rig figcaption {
+    margin-top: 9px;
+    font-size: 12.5px;
+    color: var(--muted-2);
+  }
+  .blk :global(.btn) {
+    width: 100%;
+    text-align: center;
+  }
+  @media (min-width: 600px) {
+    .sheet {
+      padding-top: 44px;
+    }
+    .status {
+      font-size: 13.5px;
+    }
+    .blk :global(.btn) {
+      width: auto;
+    }
+  }
+</style>

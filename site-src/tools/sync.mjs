@@ -29,6 +29,11 @@ const ROUTES = [
   'attune', 'learn', 'graphs', 'products', 'collections', 'measure', 'support', 'privacy',
   'loaners',   // + /loaners/print, the one-page leave-behind
   'tune',      // Attune's "Send to Device" WebHID page — source of truth is attune/companion/tune.html
+  // The CanJam SoCal handout, at two URLs so report scans can be told from everything else. Both
+  // are noindex and both are dropped from the sitemap in astro.config.mjs. They are QR targets on
+  // printed paper: if either is missing from this list it 404s at the show, silently, per the
+  // warning above.
+  'canjam', 'card',
 ];
 // Astro's hashed asset bundle, plus the audio the Attune demos play.
 const ASSETS = ['_astro', 'audio', 'wl'];   // wl/ = vendored wl-web runtime (wl-plot.js)
