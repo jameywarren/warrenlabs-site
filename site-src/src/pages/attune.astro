@@ -291,10 +291,21 @@ const attuneApp = {
             loudness-matched correction DSP trusted in the studio. <b>A Warren Labs product.</b>
           </p>
         </div>
+        {/* EVERY TILE HERE MUST BE CHECKABLE. Two of the three used to fail that.
+            "1,000s / Headphones measured & evaluated" was an uncountable claim standing where the
+            page now says "six, and all of them ours" two sections up, so it read as the app's
+            library and undercut the honest version. Replaced with the HeadRoom years, which are in
+            index.html's canonical bio and can be verified by anyone who cares to.
+            "±0.1 dB / by construction" was worse: it was FALSE. The measured A/B residual is 0.04
+            to 1.0 dB (tools/ab_level_check.cpp: PM-3 +0.04, FT1 +0.76, HD 650 +1.00), and
+            "by construction" is exactly the asserted-not-measured move this product exists to
+            refuse. The replacement is the strongest number we actually own: 0.00 dB worst-case
+            between the drawn curve and the delivered audio, tools/audio_matches_graph.cpp.
+            Do not compress that to "perfect". See messaging-spine.md §6. */}
         <div class="cred-stats">
           <div class="stat"><div class="v"><span class="accent">25</span>+ yrs</div><div class="l">Professional audio &amp; headphone design</div></div>
-          <div class="stat"><div class="v">1,000s</div><div class="l">Headphones measured &amp; evaluated</div></div>
-          <div class="stat"><div class="v">&plusmn;<span class="accent">0.1</span> dB</div><div class="l">Loudness-matched A/B, by construction</div></div>
+          <div class="stat"><div class="v"><span class="accent">2003</span>-2017</div><div class="l">HeadRoom: VP Ops, then President and CEO</div></div>
+          <div class="stat"><div class="v"><span class="accent">0.00</span> dB</div><div class="l">Worst-case gap between the drawn curve and the audio you hear, across four headphones</div></div>
         </div>
       </div>
     </div>
