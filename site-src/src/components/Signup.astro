@@ -1,8 +1,19 @@
 ---
+// Signup dialog. The Attune status sentence comes from src/data/attune.js, not from a string
+// typed here: this component is rendered into all 16 learn articles, so a hardcoded status is 16
+// stale pages the moment anything changes. It was exactly that on 2026-08-21 — the landing page
+// and support page flipped to "live" from the data file while every learn article still said the
+// iPhone version was in review.
+import { ATTUNE } from '../data/attune.js';
+
 interface Props {
   endpoint?: string;
 }
 const { endpoint = '' } = Astro.props;
+
+const attuneLede =
+  `Attune is free on the ${ATTUNE.storeName}. Leave your email for the occasional honest update: ` +
+  'new measurements, what we learn on the rig, and what ships next.';
 ---
 
 <dialog id="signup" class="su" aria-labelledby="su-title" data-endpoint={endpoint}>
@@ -11,8 +22,7 @@ const { endpoint = '' } = Astro.props;
     <div class="su-eyebrow">Warren Labs</div>
     <h2 class="su-title" id="su-title">Get the occasional update</h2>
     <p class="su-lede" id="su-lede">
-      Attune is free on the Mac App Store, with the iPhone and iPad version in review. Leave your email for the occasional honest update:
-      new measurements, what we learn on the rig, and what ships next.
+      {attuneLede}
     </p>
 
     <div class="su-body">
@@ -42,11 +52,17 @@ const { endpoint = '' } = Astro.props;
     const noteEl = dlg.querySelector('[data-su-note]') as HTMLElement | null;
     const endpoint = dlg.getAttribute('data-endpoint') || '';
 
+    // The default lede is read back from the markup rather than repeated here. Astro client
+    // scripts are isolated from frontmatter, so referencing the `attuneLede` variable directly
+    // would throw at runtime; and re-typing the sentence would put the Attune status back in two
+    // places, which is the drift src/data/attune.js exists to stop.
+    const defaultLede = ledeEl?.textContent?.trim() ?? '';
+
     const COPY: Record<string, { title: string; submit: string; lede: string }> = {
       notify: {
         title: 'Get the occasional update',
         submit: 'Keep me posted',
-        lede: "Attune is free on the Mac App Store, with the iPhone and iPad version in review. Leave your email for the occasional honest update: new measurements, what we learn on the rig, and what ships next.",
+        lede: defaultLede,
       },
     };
 
