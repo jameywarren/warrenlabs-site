@@ -5,20 +5,25 @@
 // file existed the handout carried the only correct iOS status and the landing page and support
 // page carried a stale one, which is exactly the drift this prevents.
 //
-// Verified 2026-08-16 against ~/Projects/attune (docs/SUBMISSION-STATUS.md, docs/messaging-spine.md §8):
-//   - macOS 1.0.2 APPROVED and LIVE.  macOS 12 or later, Apple Silicon only. NOT universal, NOT Intel.
-//   - iOS 1.0.2 SUBMITTED, WAITING FOR REVIEW.  iOS 16 or later, iPhone and iPad.
-//   - iOS has NEVER been approved. 1.0.2 is its first release. DO NOT IMPLY OTHERWISE.
+// Verified 2026-08-21 against the live App Store listing (id6792873303):
+//   - macOS APPROVED and LIVE.  macOS 12 or later, Apple Silicon (M1 or later). NOT Intel.
+//   - iOS APPROVED and LIVE as of 2026-08-21.  iPhone iOS 16+, iPad iPadOS 16+.
 //   - Attune Pro is $39, one time, no subscription, and a Universal Purchase covering Mac and iOS.
-//   - It is a Universal Purchase on ONE bundle id, so ONE App Store link serves both platforms the
-//     moment iOS clears review. That is why there is a single URL here and not two.
+//   - One bundle id, so ONE App Store link serves every platform. That is why there is a single
+//     URL here and not two.
 //
-// WHEN iOS IS APPROVED: set IOS_STATUS to 'live'. That is the whole edit, site-wide.
+// APPLE VISION — DELIBERATELY NOT IN THE COPY. The store listing also shows
+// "Apple Vision (visionOS 1.0 or later)", but that is the automatic iPad-compatibility entry Apple
+// adds unless an app opts out; nothing here was built or tested for visionOS. Advertising it would
+// be the exact overclaim this file exists to prevent. If Attune is ever genuinely tested there,
+// change this comment and the strings together, not one of them.
+//
+// The iOS transition is DONE. IOS_STATUS is 'live'.
 
 export const APP_STORE = 'https://apps.apple.com/app/attune-headphone-eq/id6792873303';
 
 /** @type {'review' | 'live'} */
-export const IOS_STATUS = 'review';
+export const IOS_STATUS = 'live';
 
 export const IOS_LIVE = IOS_STATUS === 'live';
 
