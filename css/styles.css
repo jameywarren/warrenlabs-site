@@ -793,6 +793,11 @@ button.unit.plug {
 .dr-body p strong { color: var(--ink); font-weight: 500; }
 .dr-body p em { font-style: normal; color: var(--ink); }
 
+/* The disclosure line under the price. The same wording appears on /measure; see
+   docs/measurement-publishing.md 5a. Kept plain rather than boxed, because a disclosure that
+   looks like a badge reads as a flag, and one that appears always should read as furniture. */
+.dr-honest { margin-top: 30px; padding-top: 26px; border-top: 1px solid var(--line); }
+
 .dr-list { display: grid; gap: 14px; }
 .dr-item { display: grid; grid-template-columns: 56px 1fr; gap: 22px; align-items: start;
   border: 1px solid var(--line); border-top: 1px solid var(--panel-edge); border-radius: 8px;
