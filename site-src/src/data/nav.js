@@ -21,6 +21,7 @@ export const NAV = nav.nav;
 export const FOOTER_LINKS = nav.footerLinks;
 export const FOOTER_META = nav.footerMeta;
 export const MARK_PATH = nav.markPath;
+export const ANALYTICS = nav.analytics ?? { enabled: false };
 
 /** Non-breaking-space a label so nav items never wrap mid-phrase. */
 export const nbsp = (s) => s.replace(/ /g, '\u00a0');

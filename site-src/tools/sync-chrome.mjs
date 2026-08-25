@@ -97,15 +97,21 @@ function stampStyles(html) {
   return html.replace(/(href="[^"]*styles\.css)(\?v=[a-f0-9]+)?(")/g, `$1?v=${stylesHash}$3`);
 }
 
+// Plausible, from nav.json so all three renderers agree. Cookieless: no banner, nothing stored,
+// disclosed in /privacy. Empty string when analytics.enabled is false, which pulls it everywhere.
+const analytics = nav.analytics?.enabled
+  ? `\n<script defer data-domain="${nav.analytics.domain}" src="${nav.analytics.src}"><\/script>`
+  : '';
+
 function head(darkOnly) {
   if (darkOnly)
     return `<link rel="stylesheet" href="${wlAssets.tokens}">
-<script>document.documentElement.setAttribute('data-theme','dark');<\/script>`;
+<script>document.documentElement.setAttribute('data-theme','dark');<\/script>${analytics}`;
   return `<link rel="stylesheet" href="${wlAssets.tokens}">
 <script>
 (function(){try{var t=localStorage.getItem('wl-theme');
 if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
-<\/script>`;
+<\/script>${analytics}`;
 }
 
 // Light/dark behaviour + the button's styling, injected once per static page. Kept here rather than
