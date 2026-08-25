@@ -4,8 +4,12 @@
 #
 # The sitemap below is generated and covers the whole published site — the Astro routes plus
 # the hand-written pages, which site-src/astro.config.mjs lists explicitly as customPages.
-# /graphs is deliberately excluded there: it is built but not published, and advertising it
-# would point crawlers at a permanent "not on this server" page.
+#
+# CORRECTED 2026-08-24. This used to say /graphs was "built but not published" and that advertising
+# it would point crawlers at a permanent "not on this server" page. That stopped being true when
+# /graphs became a viewer for our own EARS Pro curves: it has been live and nav-linked for weeks,
+# and it carries no noindex. It is now in the sitemap. The only pages held out are /canjam and
+# /card, which are noindex QR targets for printed handouts.
 
 User-agent: *
 Allow: /

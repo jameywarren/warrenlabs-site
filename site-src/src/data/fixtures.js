@@ -43,8 +43,8 @@ export const FIXTURES = {
     caveat: 'Our own bench. Not an industry reference.',
     limits:
       'Measured by Warren Labs on a miniDSP EARS Pro. The headphone is seated deliberately for the ' +
-      'best fit — the way someone who cares about sound adjusts a headphone before they settle in ' +
-      'to listen — rather than placed at random, and the published curve is a single real seating ' +
+      'best fit, the way someone who cares about sound adjusts a headphone before they settle in ' +
+      'to listen, rather than placed at random, and the published curve is a single real seating ' +
       'chosen by an objective rule, never a blend. Both channels are measured and stored ' +
       'separately; the line drawn here is their average. Raw response, normalized to 0 dB at 1 kHz. ' +
       'An EARS Pro is not an industry reference coupler such as a GRAS 45CA, so read this as a ' +
