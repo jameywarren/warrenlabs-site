@@ -3,6 +3,7 @@ import '../styles/tokens.css';
 import '../styles/global.css';
 import Signup from '../components/Signup.astro';
 import { FORMSPREE } from '../data/config.js';
+import { ANALYTICS } from '../data/nav.js';
 
 interface Props {
   title: string;
@@ -122,6 +123,12 @@ const ld = { '@context': 'https://schema.org', '@graph': [organization, website,
     <link rel="manifest" href="/site.webmanifest" />
     {noindex ? <meta name="robots" content="noindex, nofollow" /> : <link rel="canonical" href={canonical} />}
     <meta name="theme-color" content="#16181B" />
+    {/* Plausible. Cookieless, so it needs no consent banner and sets nothing; see /privacy.
+        Config is nav.json so this page, the hand-written pages (tools/sync-chrome.mjs) and the
+        /plugins pages (gen_site.py) cannot drift apart. `defer` keeps it off the critical path. */}
+    {ANALYTICS.enabled && (
+      <script defer data-domain={ANALYTICS.domain} src={ANALYTICS.src}></script>
+    )}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Archivo:wght@400;500;600&display=swap"
