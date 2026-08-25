@@ -815,6 +815,11 @@ button.unit.plug {
 .dr-price-row .pv { font-size: 30px; color: var(--ink); }
 .dr-price-row .pn { font-size: 14.5px; line-height: 1.55; color: var(--dim); }
 
+/* Production measurement (design-review §06) is the only dr-block that stacks body -> price ->
+   button. Every other block uses exactly one of the three, so these gaps never had to exist. */
+#production-measurement .dr-price,
+#production-measurement .hero-cta { margin-top: 26px; }
+
 .dr-cta { padding-top: 64px; padding-bottom: 96px; border-top: 1px solid var(--line); }
 .dr-cta h2 { font-size: clamp(38px, 6vw, 72px); line-height: 1.02; }
 .dr-cta p { margin: 20px 0 30px; font-size: 17.5px; line-height: 1.6; color: var(--dim); max-width: 40em; text-wrap: pretty; }
