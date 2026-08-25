@@ -28,7 +28,7 @@
 if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 </script>
 <!-- wl:head:end -->
-<link rel="stylesheet" href="/css/styles.css?v=b1c60d5c">
+<link rel="stylesheet" href="/css/styles.css?v=a514798f">
 </head>
 <body>
 
@@ -163,6 +163,35 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
   </div>
 </section>
 
+<!-- Production measurement. A second, separate service on the design-review page rather than a page
+     of its own: this is already the one page a manufacturer reads, so the cheapest way to find out
+     whether anyone wants it is to put it in front of that reader. A dedicated page can come later.
+     What is deliberately NOT here: the seating protocol, the fixture, the analysis, and the
+     tolerance math. Those are the moat, and they are also the reason the first call is worth
+     taking. Sellable as of the 2026-08-19 EARS Pro bench day (see measurements/RIG.md in the
+     monorepo). Reporting unit-to-unit variance means nothing until you can show your own seating
+     variance is smaller than the differences you are reporting. -->
+<section class="dr-block wrap" id="production-measurement">
+  <div class="dr-head">
+    <div class="k mono">06 <span class="sig">·</span> PRODUCTION MEASUREMENT</div>
+    <h2 class="display">Before a run ships, or after one goes wrong.</h2>
+  </div>
+  <div class="dr-body">
+    <p>Send us a sample from your production units. We measure every one on the same rig under one documented seating protocol, and report unit-to-unit and channel-to-channel variance against your design intent. You get the report, the graphs, and the raw data.</p>
+    <p>I ran hardware test and QC on a factory floor before I ran the company.</p>
+  </div>
+  <div class="dr-price">
+    <div class="dr-price-row">
+      <span class="pk mono">SAMPLE RUN</span>
+      <span class="pv display">From $750</span>
+      <span class="pn">Depending on sample size. About a week on the bench.</span>
+    </div>
+  </div>
+  <div class="hero-cta">
+    <a class="btn primary" href="mailto:jamey@warrenlabs.com?subject=Production%20measurement">Start a conversation <span aria-hidden="true">→</span></a>
+  </div>
+</section>
+
 <section class="dr-cta wrap">
   <h2 class="display">Send me a unit.</h2>
   <p>Tell me what you're working on and where it is in the process. I'll confirm the fit before anything is booked.</p>
@@ -175,7 +204,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <!-- wl:footer:start -->
 <footer>
   <div class="foot-in">
-    <div class="foot-links"><a href="/">The lab</a><a href="/attune">Attune</a><a href="/collections/headphones">Headphones</a><a href="/graphs">Measurements</a><a href="/learn">Learn</a><a href="/plugins/">Plugins</a><a href="/design-review/">Design review</a><a href="/loaners">For manufacturers</a><a href="/#patch">Contact</a></div>
+    <div class="foot-links"><a href="/">The lab</a><a href="/attune">Attune</a><a href="/collections/headphones">Headphones</a><a href="/graphs">Measurements</a><a href="/learn">Learn</a><a href="/plugins/">Plugins</a><a href="/design-review/">Design review</a><a href="/design-review/#production-measurement">Production measurement</a><a href="/loaners">For manufacturers</a><a href="/#patch">Contact</a></div>
     <div class="foot-meta"><span>WARREN LABS · JAMEY WARREN</span><span>BUILT IN LIVINGSTON, MONTANA</span></div>
   </div>
 </footer>
