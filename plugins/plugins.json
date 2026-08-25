@@ -11,17 +11,40 @@
       "status": "Shipping",
       "nameStatus": "assigned",
       "tagline": "Hear your headphones honestly.",
-      "blurb": "Flattens a headphone's measured response by inverting its curve, then adds Bauer-style crossfeed so a mix translates the way speakers would. The signal comes out measurably corrected, honest before anything else.",
+      "blurb": "Flattens a headphone's measured response by inverting its curve, then adds Bauer-style crossfeed so a mix translates the way speakers would. Every curve says who measured it — six of them are ours, taken on a rig we own. The signal comes out measurably corrected, honest before anything else.",
       "features": [
-        "Measured-curve correction per model",
-        "Bauer crossfeed with interaural delay",
-        "Voicing + RTA layer",
-        "VST3 / AU / Standalone"
+        "Six headphones measured on our own rig — badged, not borrowed",
+        "Bauer crossfeed with interaural delay, loudness-neutral within 0.05 dB",
+        "Output metering with a latched clip indicator, and Safe Gain",
+        "Monitoring checks: flip, polarity, dim, mono",
+        "Voicing + RTA layer · VST3 / AU / Standalone"
       ],
       "requestCurve": true,
       "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/level-v0.2.26-beta/Level-0.2.26-beta.pkg",
       "price": 0,
-      "buyUrl": ""
+      "buyUrl": "",
+      "shots": [
+        {
+          "file": "level-ui-1-main.png",
+          "alt": "Level's faceplate: response plot, provenance line, output meter, CHECK cluster",
+          "caption": "The main view. The headphone and where its measurement came from read first, then the curve, then the level it produces."
+        },
+        {
+          "file": "level-ui-2-library.png",
+          "alt": "Level's headphone library with a MEASURED BY column",
+          "caption": "Every curve says who measured it."
+        },
+        {
+          "file": "level-ui-3-monitoring.png",
+          "alt": "Level with monitoring checks engaged",
+          "caption": "A latched check is never silent about itself."
+        },
+        {
+          "file": "level-ui-4-clipped.png",
+          "alt": "Level's output meter showing a latched OVER state",
+          "caption": "The clip indicator latches until you acknowledge it."
+        }
+      ]
     },
     {
       "slug": "square",
@@ -85,7 +108,29 @@
       ],
       "price": 0,
       "buyUrl": "",
-      "download": ""
+      "download": "",
+      "shots": [
+        {
+          "file": "pare-ui-1-full-range.png",
+          "alt": "Pare, full-range resonance suppression",
+          "caption": "Full range."
+        },
+        {
+          "file": "pare-ui-2-de-ess.png",
+          "alt": "Pare in de-ess focus",
+          "caption": "De-ess focus."
+        },
+        {
+          "file": "pare-ui-3-de-mud.png",
+          "alt": "Pare in de-mud focus",
+          "caption": "De-mud focus."
+        },
+        {
+          "file": "pare-ui-4-custom.png",
+          "alt": "Pare with a custom focus range",
+          "caption": "Custom focus."
+        }
+      ]
     },
     {
       "slug": "bevel",
@@ -202,6 +247,12 @@
       "title": "Capturing your own reverb (impulse responses)",
       "source": "tools/ir_capture/README.md",
       "summary": "Sample the reverb of a real room, your studio or a hall, and load it into a convolution reverb."
+    },
+    {
+      "slug": "level-manual",
+      "title": "Level — manual",
+      "source": "Level/MANUAL.md",
+      "summary": "What every control does, what Safe Gain actually guarantees, and what Level deliberately does not do."
     }
   ],
   "delivery": "https://lean-budgie-8375.warrenlabs.deno.net/download",

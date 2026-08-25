@@ -218,3 +218,20 @@ ul.features li::before{content:"›"; color:var(--shot-accent,var(--acc)); margi
 .gate-note {
   margin: 8px 0 0; font-size: 12px; line-height: 1.5; color: var(--muted); opacity: 0.8;
 }
+
+/* Guide tables (2026-08-19) — added when Level's manual became a published guide. The markdown
+   renderer emits <table class="md">; without this it rendered as unstyled browser-default rows. */
+table.md{width:100%;border-collapse:collapse;margin:18px 0;font-size:15px}
+table.md th,table.md td{text-align:left;padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.08);vertical-align:top}
+table.md th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);font-weight:600}
+table.md tr:last-child td{border-bottom:none}
+table.md code{white-space:nowrap}
+.guide hr,article hr{border:0;border-top:1px solid rgba(255,255,255,.08);margin:28px 0}
+
+/* Real UI screenshots (2026-08-19). Replaces the CSS-drawn faceplate on plugins that have them. */
+.shot-real{margin:0 0 18px;border-radius:10px;overflow:hidden;background:#0b0d0f;border:1px solid rgba(255,255,255,.07)}
+.shot-real img{display:block;width:100%;height:auto}
+.shot-real figcaption,.shot-strip figcaption{font-size:12px;color:var(--dim);padding:8px 12px;letter-spacing:.02em}
+.shot-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:20px}
+.shot-strip figure{margin:0;border-radius:8px;overflow:hidden;background:#0b0d0f;border:1px solid rgba(255,255,255,.07)}
+.shot-strip img{display:block;width:100%;height:auto}

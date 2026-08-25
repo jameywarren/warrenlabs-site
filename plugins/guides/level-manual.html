@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Level — manual · Warren Labs</title><meta property="og:title" content="Level — manual · Warren Labs"><meta name="description" content="What every control does, what Safe Gain actually guarantees, and what Level deliberately does not do."><meta property="og:description" content="What every control does, what Safe Gain actually guarantees, and what Level deliberately does not do."><meta name="twitter:description" content="What every control does, what Safe Gain actually guarantees, and what Level deliberately does not do."><link rel="canonical" href="https://warrenlabs.com/plugins/guides/level-manual.html"><meta property="og:url" content="https://warrenlabs.com/plugins/guides/level-manual.html"><meta name="theme-color" content="#16181B"><meta property="og:image" content="https://warrenlabs.com/assets/brand/og-card.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://warrenlabs.com/assets/brand/og-card.png"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_black_32.svg"><link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_white_32.svg" media="(prefers-color-scheme: dark)"><link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/png/wl-favicon_black_32.png"><link rel="apple-touch-icon" href="/assets/brand/png/wl-appicon_amber-graphite_180.png"><link rel="manifest" href="/site.webmanifest"><link rel="stylesheet" href="../style.css"></head><body><header class="site"><div class="wrap head-in"><a class="logo-mark" href="../../"><svg class="wl-mark" viewBox="0 0 120 80" aria-hidden="true"><path d="M16 16 C20 38 28 62 39 62 C48 62 53 46 58 38 C63 30 70 30 76 38 C81 44 84 54 92 54 C99 54 103 46 106 40" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>WARREN&nbsp;LABS</span></a><nav class="site"><a href="../index.html">Plugins</a><a href="../guides/index.html">Guides</a><a href="/attune">Attune</a><a href="/collections/headphones">Headphones</a><a href="/graphs">Measurements</a><a href="/measure">Send&nbsp;One&nbsp;In</a><a href="/learn">Learn</a><a href="/#patch">Patch&nbsp;In</a></nav></div></header><main class="wrap"><article class="prose"><h1>Level — manual</h1>
+<p><strong>Headphone correction and crossfeed.</strong> Level flattens a headphone&#x27;s measured frequency response by inverting it, then optionally adds a speaker-like crossfeed so a stereo mix stops sitting inside your head. It is a <em>monitoring</em> plugin: it belongs on your output, not in your mix.</p>
+<p><em>Warren Labs · Trueness line · VST3 · AU · Standalone · macOS</em></p>
+<hr>
+<h2>What it&#x27;s for</h2>
+<p>Headphones are not flat, and no two models are wrong in the same way. Level corrects a specific headphone toward a defined target, so what you hear is closer to what is actually in the file.</p>
+<p>It does two separable jobs, each with its own bypass:</p>
+<ul>
+<li><strong>Correction</strong> — a 12-band minimum-phase EQ derived from a measurement of your headphone.</li>
+<li><strong>Crossfeed</strong> — a small, delayed, filtered blend of each channel into the opposite ear, the way a pair of speakers in a room reaches both of your ears.</li>
+</ul>
+<p>Minimum-phase IIR by design. Linear-phase FIR would pre-ring, which is audible and wrong for this job, so Level will not offer it.</p>
+<hr>
+<h2>The controls</h2>
+<h3>SELECT (encoder) — choosing a headphone</h3>
+<p>Opens the library. Type to filter, turn or click to choose, <code>ESC</code> to close. Every row carries a <strong>provenance badge</strong>, which is the single most important thing to read:</p>
+<table class="md">
+<thead><tr><th>Badge</th><th>What it means</th></tr></thead>
+<tbody>
+<tr><td><strong>FIRST PARTY</strong></td><td>Measured by us, on our own rig.</td></tr>
+<tr><td><strong>3RD PARTY</strong></td><td>Bundled, but measured by someone else on another rig, against their own target.</td></tr>
+<tr><td><strong>IMPORTED</strong></td><td>Your own file, dropped into the folder below. We know nothing about where it came from.</td></tr>
+</tbody></table>
+<p><strong>The badge states who measured it, not how good it is.</strong> Two measurements of the same headphone on different rigs are different data — for three headphones that appear in both sets here, the two corrections disagree by 2.4–3.6 dB RMS and up to 8.9 dB. That is more than the entire range of the Tilt control. Neither is &quot;wrong&quot;; they are answers to different questions.</p>
+<p><strong>Load file… / your own curves.</strong> Level reads AutoEq-format <code>.txt</code> files from <code>~/Music/Warren Labs/Level</code>, created for you on first run. Drop a file in and it appears in the list, badged <code>IMPORTED</code>. This is also how a measurement we make of <em>your</em> headphone reaches the plugin.</p>
+<h3>SPEAKER ANGLE</h3>
+<p>The angle of the imagined speaker pair, 30°–90°, default 60°. This is literal geometry, not an effect depth: the angle sets how much signal crosses to the far ear, how dark that crossed signal is, and how late it arrives.</p>
+<ul>
+<li><strong>Narrow (30°)</strong> — speakers close together, more crosstalk, shorter delay, brighter. Pulls the image together.</li>
+<li><strong>Wide (90°)</strong> — the head shadows the far ear, so less crosstalk and darker, with a longer delay.</li>
+</ul>
+<p>Crosstalk never reaches zero at any setting, because real speakers always cross-couple.</p>
+<p>The interaural delay is derived from the angle by the Woodworth approximation, ≈133 µs at the narrowest to ≈380 µs at the widest. The delay is what makes the image sit <em>outside</em> your head; without it crossfeed only darkens and centres. The live value is shown in the Advanced panel.</p>
+<h3>TILT</h3>
+<p>A broadband warm↔bright shelf pair at 1 kHz, ±3 dB, applied after correction. For nudging the whole balance without touching the correction itself. Click the Tilt readout to reset it.</p>
+<h3>Crossfeed / Correct switches</h3>
+<p>Independent bypasses. Crossfeed off and settled is bit-transparent — the signal is untouched, not merely unprocessed.</p>
+<h3>Voicing EQ (the plot)</h3>
+<p>Five bands over the corrected baseline: a low shelf, three bells with adjustable frequency and Q, and a high shelf. Drag the dots on the curve. This is where you define <em>your</em> reference, as opposed to the measured correction underneath it. Toggle it with the <code>EQ</code> chip.</p>
+<hr>
+<h2>The display</h2>
+<ul>
+<li><strong>EQ</strong> (amber) — the correction plus voicing actually being applied.</li>
+<li><strong>Measure</strong> (dim, dashed) — the headphone&#x27;s measured response, i.e. what is being corrected.</li>
+<li><strong>RTA</strong> — a live analyzer of the output.</li>
+<li><strong>Output</strong> — output peak in dBFS. See below.</li>
+<li><strong>MONITORING</strong> (amber strip) — appears only when a monitoring control is engaged, and names it.</li>
+</ul>
+<h3>Output and the clip indicator</h3>
+<p>Level applies large boosts. A +9 dB correction on a headphone with a deep notch is routine, and that headroom has to come from somewhere.</p>
+<p>The <code>Output</code> cell shows output peak. If the output ever reaches 0 dBFS, the label changes to <strong>OVER</strong>, the value turns red and shows how far over you went — and it <strong>stays</strong> there until you click it. A clip indicator that clears itself lets the one event you needed to see disappear while you were looking at the curve.</p>
+<p>Seeing <code>OVER</code> is not a disaster in a floating-point DAW, but it tells you the signal reaching your converter is being asked for more than it has. Turn something down, or use Safe Gain.</p>
+<hr>
+<h2>Advanced panel (<code>ADV</code>)</h2>
+<p><strong>Crossfeed ITD / Feed / HF</strong> — the three tuning levers behind the angle mapping, each <code>1.0×</code> at the factory setting, with a caret on the track showing where that is.</p>
+<p><strong>FLIP L/R · POLARITY (R) · DIM</strong> — monitoring checks. Polarity inverts the right channel only, which is what isolates the side signal when combined with mono fold. They live here rather than on the faceplate because they are things you engage, listen to, and disengage — and the amber MONITORING strip on the main display is what stops one being left on by accident.</p>
+<p><strong>TEST SIGNAL</strong> — a built-in generator (pink noise, mono, anti-phase, sines) for checking the monitoring path without needing material.</p>
+<hr>
+<h2>Parameters without front-panel controls</h2>
+<p>Automatable and host-mappable, no on-screen control yet:</p>
+<table class="md">
+<thead><tr><th>Parameter</th><th>Range</th><th>Default</th><th>Notes</th></tr></thead>
+<tbody>
+<tr><td><code>Safe Gain</code></td><td>on/off</td><td><strong>on</strong></td><td>See below.</td></tr>
+<tr><td><code>Dim Level</code></td><td>−40…−3 dB</td><td>−20 dB</td><td>How far Dim drops the output.</td></tr>
+<tr><td><code>Balance</code></td><td>−1…+1</td><td>0</td><td><strong>Attenuates only</strong> — never boosts either side.</td></tr>
+<tr><td><code>Soft Start</code></td><td>0–2000 ms</td><td>0 (off)</td><td>Ramps the output up when playback begins after silence.</td></tr>
+</tbody></table>
+<h3>Safe Gain — and exactly what it guarantees</h3>
+<p>With Safe Gain on, Level measures the peak of its own composed response — correction, voicing, tilt and crossfeed — and attenuates by that much, so a full-scale input cannot push the output past 0 dBFS. It only ever attenuates; spare headroom stays yours.</p>
+<p><strong>It is on by default, and on its own it costs you nothing.</strong> Every correction curve already carries a preamp that compensates its own boosts, so with a curve loaded and nothing else changed Safe Gain attenuates by 0.0–0.1 dB. It starts doing real work only when <em>you</em> add something on top — tilt, voicing, or crossfeed — which is exactly when clipping becomes likely.</p>
+<p><strong>Two limits, stated plainly:</strong></p>
+<p>1. It bounds the <strong>steady-state magnitude response</strong>. A guarantee covering <em>any</em> possible signal would need the impulse response&#x27;s l1 norm, which costs many more dB of level to defend against a case music does not produce. So: it will not clip on tonal content. The clip meter remains the backstop that tells the truth either way. 2. The gain is smoothed over 20 ms, so immediately after you change a setting there is a brief window where the new guarantee has not arrived yet. The clip meter will catch it. This is deliberate — an unsmoothed gain change would click on every edit.</p>
+<hr>
+<h2>Setups (the EQ cell → Setups)</h2>
+<p>Eight starting points. They are <strong>setups, not tone presets</strong>: Level&#x27;s tone comes from the measured curve you pick, so a preset that shipped an EQ shape would be arguing with the measurement.</p>
+<p><strong>No setup ever changes your headphone.</strong> Choosing a headphone is a statement of fact about your hardware; a preset has no business overriding it. They also leave <code>bypass</code> alone (your host owns it) and never switch on Safe Gain behind you.</p>
+<table class="md">
+<thead><tr><th>Setup</th><th>What it&#x27;s for</th></tr></thead>
+<tbody>
+<tr><td><strong>Flat reference</strong></td><td>Correction only. No crossfeed, no voicing — the measurement and nothing else.</td></tr>
+<tr><td><strong>Speakers in a room</strong></td><td>Crossfeed at its voiced depth, 60° pair. The default starting point.</td></tr>
+<tr><td><strong>Wide speakers</strong></td><td>A 90° pair: more separation, darker and later at the far ear.</td></tr>
+<tr><td><strong>Narrow, close in</strong></td><td>A 30° pair pulls the image together when a mix feels scattered.</td></tr>
+<tr><td><strong>Mix check (mono + dim)</strong></td><td>Sums to mono and drops the level. The oldest check there is.</td></tr>
+<tr><td><strong>Side check (mono + polarity)</strong></td><td>Mono with the right channel inverted, isolating the side signal.</td></tr>
+<tr><td><strong>Long session</strong></td><td>Slightly deeper crossfeed, a touch of warmth, soft start. For hours.</td></tr>
+<tr><td><strong>Late night</strong></td><td>Dimmed, gently lifted at the extremes to survive the level drop.</td></tr>
+</tbody></table>
+<p>The voicing in these stays inside ±2 dB on purpose. A preset that makes a strong tonal claim about a headphone it has never measured is guessing with your ears.</p>
+<h2>A worked example — setting up a new headphone</h2>
+<p>1. Insert Level <strong>last</strong> on your monitor path. It is a monitoring plugin; bypass it when you bounce. 2. <code>SELECT</code> → type your model. Prefer a <strong>FIRST PARTY</strong> badge if one exists. 3. Listen with <code>Correct</code> on and off. The difference should read as tonal only — the two are loudness matched, so nothing should jump in level. 4. Turn <code>Crossfeed</code> on at 60°. A centred mono element should step slightly out of your head rather than merely sounding darker. If it does not, raise Crossfeed ITD in the Advanced panel. 5. Check <code>Output</code>. If it reads <code>OVER</code>, enable Safe Gain or lower your source. 6. Leave <code>Tilt</code> alone for a week before touching it. It is there for a room you have learned, not for first impressions.</p>
+<hr>
+<h2>What Level does not do</h2>
+<p>Stated because the absence is deliberate, not an oversight:</p>
+<ul>
+<li><strong>No room or speaker simulation, no HRTF, no head tracking.</strong> Level models an idealised speaker pair, not a specific control room with its own flaws.</li>
+<li><strong>No per-ear (asymmetric L/R) correction yet.</strong> The measurements to support it honestly do not exist.</li>
+<li><strong>No uncertainty band on the plot.</strong> The repeatability of our rig is not yet characterised, and a band drawn before then would be decoration. Some measurements are known to be bimodal across seatings, and a band across those would represent no seating that ever happened.</li>
+<li><strong>It is not a mixing tool.</strong> Bypass it when printing.</li>
+</ul>
+<hr>
+<h2>Specifications</h2>
+<ul>
+<li><strong>Formats:</strong> VST3, AU, Standalone · macOS 11+ · universal (arm64 + x86_64)</li>
+<li><strong>Processing:</strong> 12-band minimum-phase IIR correction · Bauer-style crossfeed with Woodworth interaural delay (Lagrange-3rd fractional) · 5-band voicing EQ · all sample rates</li>
+<li><strong>Latency:</strong> none reported beyond the crossfeed&#x27;s interaural delay on the crossed path only; the direct path is never delayed.</li>
+<li><strong>Real-time safety:</strong> no allocation on the audio thread; render is bit-identical across host buffer sizes.</li>
+</ul></article></main><footer class="site"><div class="wrap" style="display:flex;justify-content:space-between;width:100%;padding:0;flex-wrap:wrap;gap:12px"><span>Warren Labs. Tools that tell the truth.</span><span class="mono">VST3 · AU · Standalone · macOS</span></div></footer></body></html>
