@@ -9,8 +9,11 @@
 // best fit (warren-labs/MEASUREMENT-PIPELINE.md §1).
 //
 // HONEST LIMITS, because this data is shown to the public:
-//  - Reseat repeatability on this bench is not characterized yet. Do not present fine treble
-//    detail off these curves as settled, and do not draw a variance band from another rig's SD.
+//  - Reseat repeatability WAS characterized 2026-08-19/24, and the result is that it is per MODEL,
+//    not per rig: 0.059 dB (HD 800 R) to 0.316 dB (PM-3 R) in the control band, and 0.44-0.76 dB
+//    at 2-10 kHz. So the guidance is unchanged and now has a number behind it: do not present fine
+//    treble detail off these curves as settled, and do not draw one variance band over all of them
+//    -- neither another rig's SD nor one of ours. See warren-labs/measurements/RIG.md.
 //  - An EARS Pro is a house reference, not an industry reference coupler.
 //  - NEVER add a curve from another fixture to this file. Two fixtures never share an axis
 //    (§4.1), and a demo is not an exception to that.

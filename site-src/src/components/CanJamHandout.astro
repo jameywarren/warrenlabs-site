@@ -62,28 +62,23 @@ const IOS_LINE = ATTUNE.platformLine;
       <Button href={APP_STORE} variant="primary" size="lg">Attune on the {ATTUNE.storeName}</Button>
     </section>
 
-    {/* THE REASON THE PAGE EXISTS, and where the brief had to be corrected.
+    {/* THE REASON THE PAGE EXISTS.
 
-        The brief asked this section to say every measurement carries "a repeatability band and an
-        error budget rather than a single line." IT DOES NOT, and saying so would repeat a bug that
-        was deliberately reverted on 2026-08-05.
+        HISTORY, because the reasoning still matters: the original brief asked this section to claim
+        every measurement carries "a repeatability band and an error budget rather than a single
+        line." That was declined, because on 2026-08-05 the only numbers available (0.37 / 3.87 dB)
+        were the HeadRoom HMS II.3 ARCHIVE's seating SD, and drawing them over our curves would have
+        asserted another rig's repeatability as our own.
 
-        Three places in the repo agree:
-          - data/fixtures.js, earspro.limits: "Seating repeatability on this bench is not
-            characterized yet, so there is no variance figure to give."
-          - pages/graphs.astro:143 publishes, in the live UI, "How repeatable this rig is" followed
-            by "We haven't published that number yet."
-          - data/demo-curves.js:12: "Reseat repeatability on this bench is not characterized yet ...
-            do not draw a variance band from another rig's SD."
+        UPDATED 2026-08-24, after the bench day. The number is now ours and measured, and the answer
+        is better than a band: reseat repeatability is a property of the HEADPHONE, not the rig.
+        0.059 dB (HD 800 R) to 0.316 dB (PM-3 R) in the control band, a 5x range on one bench. So we
+        still draw no band, but for the opposite reason -- not "we haven't earned a number" but "one
+        number would misstate every curve it covers." Numbers: warren-labs/measurements/RIG.md.
 
-        The 0.37 dB and 3.87 dB figures that look like our error budget are the HeadRoom HMS II.3
-        ARCHIVE's seating SD, listed in MEASUREMENT-PIPELINE.md 3.0 under "Benchmark to beat".
-        graphs.astro:101 records that the variance band was pulled from the live site precisely
-        because drawing it would assert another rig's repeatability as our own.
-
-        So the honest differentiator is not the band. It is that the method and its limits are
-        stated, including the number we have not earned yet. Stronger for this audience anyway:
-        every engineer reading it has seen a spec sheet quote somebody else's uncertainty. */}
+        The differentiator is unchanged and is now evidence rather than restraint. Still the right
+        pitch for this audience: every engineer reading it has seen a spec sheet quote somebody
+        else's uncertainty. */}
     <section class="blk">
       <h2>How the measurements are made</h2>
       <p>
@@ -96,9 +91,10 @@ const IOS_LINE = ATTUNE.platformLine;
           someone settling in to listen would adjust it, not placed at random.
         </li>
         <li>
-          <b>One real seating, never a blend.</b> The published curve is the median of six reseats: an
-          actual achievable placement picked by an objective rule. Averaging reseats publishes a bass
-          shelf nobody will ever hear.
+          <b>One real seating, never a blend.</b> The published curve is the <i>medoid</i> of the run,
+          between 10 and 24 reseats depending on the headphone: an actual achievable placement the data
+          elected, not a computed middle. Averaging reseats publishes a bass shelf nobody will ever hear,
+          and on one headphone here it published a treble peak no seating ever produced.
         </li>
         <li>
           <b>Raw and full band.</b> Not compensated to any target, normalized to 0&nbsp;dB at 1&nbsp;kHz. Both
@@ -110,9 +106,15 @@ const IOS_LINE = ATTUNE.platformLine;
           drawn.
         </li>
         <li>
-          <b>What is not characterized yet is said out loud.</b> Reseat repeatability on this bench has
-          not been measured, so there is no variance band on these curves and there will not be one until
-          the number is earned. An EARS&nbsp;Pro is a house reference, not an industry reference coupler.
+          <b>Repeatability is measured, and it is a property of the headphone.</b> The instrument
+          contributes 0.002&nbsp;dB. Reseating moves the midrange by 0.06&nbsp;dB on an HD&nbsp;800 and
+          0.32&nbsp;dB on a PM-3, so there is no single variance band to draw over every curve and we
+          do not draw one. An EARS&nbsp;Pro is a house reference, not an industry reference coupler.
+        </li>
+        <li>
+          <b>Two of the six are older and say so.</b> Four rows are regenerated from verified,
+          archived runs. The SR60x and RS1x predate that method and have no archived run behind them.
+          They are labelled, not quietly mixed in.
         </li>
       </ul>
       {/* Deliberately no corpus count in the prose: it is six headphones today (data/measurements.js,

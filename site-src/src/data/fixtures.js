@@ -49,8 +49,10 @@ export const FIXTURES = {
       'separately; the line drawn here is their average. Raw response, normalized to 0 dB at 1 kHz. ' +
       'An EARS Pro is not an industry reference coupler such as a GRAS 45CA, so read this as a ' +
       'house reference: repeatable against our other EARS Pro measurements, not directly comparable ' +
-      'to another lab. Seating repeatability on this bench is not characterized yet, so there is no ' +
-      'variance figure to give.',
+      'to another lab. Seating repeatability was characterized in August 2026 and turned out to be ' +
+      'a property of the headphone rather than of the rig: reseating moves the midrange by about ' +
+      '0.06 dB on some models and 0.32 dB on others, so no single variance band is drawn here. ' +
+      'The instrument itself contributes 0.002 dB.',
   },
 };
 

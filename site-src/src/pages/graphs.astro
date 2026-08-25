@@ -99,9 +99,12 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES };
                 </select>
               </label>
               {/* Seating-variance toggle removed 2026-08-05: the band was drawn from the HeadRoom
-                  archive's SD, and this page now plots only our own EARS Pro curves, whose reseat
-                  repeatability is not characterised yet. Restore this control together with
-                  SEATING_SD_KNOWN once RIG.md's day-one table is filled in. */}
+                  archive's SD, and this page plots only our own EARS Pro curves.
+
+                  UPDATED 2026-08-24. RIG.md's day-one table IS filled in now, so the old restore
+                  condition is met and it is still the wrong thing to do. See SEATING_SD_KNOWN
+                  below: seating sd turned out to be per MODEL (5x range across three headphones),
+                  so one global band misstates every curve it is drawn over. */}
                 </div>
               </div>
 
@@ -142,10 +145,17 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES };
           <div>
             <h4>How repeatable this rig is</h4>
             <p>
-              <b>We haven&rsquo;t published that number yet.</b> Reseat repeatability on this bench
-              is being characterised now, and it goes here, whatever it says, rather than being
-              borrowed from another rig. Until then, treat a line as directional in the treble and
-              don&rsquo;t read fine detail above about 10&nbsp;kHz.
+              Measured in August 2026, and the answer is that <b>it depends on the headphone, not
+              on the rig</b>. The instrument itself contributes 0.002&nbsp;dB. Lifting the same
+              headphone off and reseating it moves the midrange by 0.06&nbsp;dB on an HD&nbsp;800
+              and 0.32&nbsp;dB on a PM-3, a fivefold difference between two headphones on one
+              bench. There is no single number to put here, so we are not going to invent one.
+            </p>
+            <p>
+              Above 2&nbsp;kHz every headphone we have measured moves more, 0.44 to
+              0.76&nbsp;dB, which is why the advice has not changed: treat a line as directional in
+              the treble and don&rsquo;t read fine detail above about 10&nbsp;kHz. That used to be a
+              hedge. It is now a measurement.
             </p>
           </div>
           <div>
@@ -477,8 +487,16 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES };
   // asserting another rig's repeatability as our own, which is the precise thing we just spent a
   // day removing from this site.
   //
-  // Re-enable by filling the RIG.md day-one table and putting OUR numbers here. The plotting code
-  // is left intact and working so that is a one-line change.
+  // STILL false as of 2026-08-24, and the reason has CHANGED. The RIG.md day-one table is now
+  // filled in, so the condition written above has been met -- do not take that as the go-ahead.
+  // The measurement says seating sd is a property of the HEADPHONE, not the rig: 0.059 dB on an
+  // HD 800 right, 0.316 dB on a PM-3 right, in the same control band on the same bench. Two
+  // globals (SD_LO/SD_HI) cannot express that, and drawing one band over every curve would
+  // overstate the good models and understate the bad ones.
+  //
+  // The correct re-enable is NOT a one-liner: store a per-model seating sd per band alongside each
+  // curve, and draw each curve's own band. Until that exists, no band. The plotting code is left
+  // intact for whoever does it.
   const SEATING_SD_KNOWN = false;
   const SD_LO_HZ = 200, SD_LO = 0.37, SD_HI_HZ = 12000, SD_HI = 3.87;
   const sdAt = (hz) => {
