@@ -16,6 +16,15 @@
 //   2. RAW ONLY, never render the diffuse-field-compensated columns.
 //   3. NAME THE RIG, NOTHING ELSE. No company name, no location, no rights claims.
 //
+// SCOPE OF RULE 3, narrowed 2026-08-25 (Jamey's call). Rule 3 came from the HeadRoom archive, where
+// a rights claim would assert title that is genuinely unsettled: HeadRoom Corporation dissolved and
+// Jamey was one of several shareholders, and attune/docs/headroom-title-brief.md §8.6 says do not
+// apply a CC licence to that data without counsel sign-off. The archive left this page on
+// 2026-08-05. What remains is first-party EARS Pro data Warren Labs measured and owns, so that
+// rationale does not reach it, and the page now carries a CC BY-NC 4.0 notice for the measured rows.
+// Rule 3 still binds for any third-party or archive data. That is why the reference SHAPES from
+// targets.js are excluded from the notice. Rules 1 and 2 are untouched: still render-only, still raw.
+//
 // Provenance: every curve here came off one fixture, so the page states that once, on the plot.
 // When EARS Pro measurements land, curves carry their own bench and a mixed selection must split
 // into two stacked panels rather than share an axis. See docs: two fixtures never share an axis.
@@ -176,8 +185,34 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES };
               that seal alike, and <b>doesn't</b> between a sealed one and an open one.
             </p>
           </div>
+          <div>
+            <h4>Using these measurements</h4>
+            <p>
+              The measured curves on this page are licensed <a
+                href="https://creativecommons.org/licenses/by-nc/4.0/"
+                rel="license noopener noreferrer" target="_blank">CC&nbsp;BY-NC&nbsp;4.0</a>. Quote
+              them, plot them, cite them, teach with them, build on them for anything
+              non-commercial, with attribution to Warren Labs and a link back to this page. Full
+              resolution, on purpose: a measurement you cannot check is not evidence.
+            </p>
+            <p>
+              The reference shapes drawn for comparison are not our measurements and are not
+              covered. Commercial use, including bundling the data into a product or a service,
+              needs a separate licence from us. Email <a
+                href="mailto:jamey@warrenlabs.com?subject=Commercial%20measurement%20data%20licence"
+              >jamey@warrenlabs.com</a> and say what you have in mind.
+            </p>
+          </div>
         </div>
       </details>
+      <p class="lic">
+        Measurements by <b>Warren Labs</b>, licensed <a
+          href="https://creativecommons.org/licenses/by-nc/4.0/"
+          rel="license noopener noreferrer" target="_blank">CC&nbsp;BY-NC&nbsp;4.0</a>. Commercial
+        licensing: <a
+          href="mailto:jamey@warrenlabs.com?subject=Commercial%20measurement%20data%20licence"
+        >jamey@warrenlabs.com</a>
+      </p>
     </div>
   </main>
 
@@ -193,6 +228,13 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES };
 
   /* ---------- gate ---------- */
   .gate { min-height: calc(100vh - var(--wl-head-h)); display: grid; place-items: center; padding: 40px 20px; }
+  /* --muted, not --muted-2: this functions as legal notice, so it should not be the least
+     legible text on the page. --muted-2 measured ~3.2:1 in light mode at this size. */
+  .lic { margin: 16px 2px 0; font-size: 12px; line-height: 1.65; color: var(--muted); }
+  .lic b { color: var(--text); font-weight: 600; }
+  .lic a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+  .lic a:hover { color: var(--text); }
+
   .gate-card { max-width: 460px; text-align: center; }
   .gate-card .eyebrow {
     font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;

@@ -3,6 +3,11 @@
 //
 // DISPLAY reference shapes. NOT the app's voice-match targets — see gen-measurements.mjs for why
 // targets.dat must never be published as a reference line.
+//
+// DELIBERATELY NOT CC BY-NC. These are rig-agnostic reference SHAPES derived from public research
+// (KEMAR diffuse field, an in-room preference shape), not Warren Labs measurements, so they are not
+// ours to license. Claiming a licence over them would be the false-provenance error that
+// attune/docs/headroom-title-brief.md §8.7 warns about. Keep the notice scoped to measurements.js.
 
 export const REFERENCES = {
   "kemar-diffuse-field": { name: "KEMAR Diffuse Field", db: [0, 0, 0, 0, 0, 0, 0.01, 0.01, 0.01, 0.01, 0.02, 0.02, 0.02, 0.02, 0.03, 0.03, 0.04, 0.04, 0.04, 0.05, 0.05, 0.06, 0.06, 0.07, 0.07, 0.08, 0.09, 0.1, 0.11, 0.12, 0.13, 0.15, 0.16, 0.17, 0.19, 0.21, 0.24, 0.27, 0.3, 0.33, 0.37, 0.41, 0.45, 0.5, 0.56, 0.62, 0.68, 0.75, 0.83, 0.92, 1.01, 1.12, 1.23, 1.35, 1.47, 1.61, 1.75, 1.91, 2.07, 2.23, 2.4, 2.57, 2.74, 2.91, 3.08, 3.23, 3.37, 3.51, 3.66, 3.81, 3.96, 4.11, 4.3, 4.51, 4.75, 5.03, 5.33, 5.68, 6.08, 6.57, 7.14, 7.78, 8.49, 9.29, 10.16, 11.06, 11.96, 12.83, 13.67, 14.46, 15.16, 15.71, 16.08, 16.29, 16.31, 16.16, 15.85, 15.35, 14.74, 14.05, 13.34, 12.68, 12.13, 11.64, 11.11, 10.43, 9.33, 7.86, 6.3, 5.74, 6.1, 5.63, 3.57, 0.94, 0.59, 1.01, 0.63, 1.17, 2.4, 2.65, 2.74, 2.48, 1.53, 0.08, -0.72, -0.54, -1.04, -4.48] },
