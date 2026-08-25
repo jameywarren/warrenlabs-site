@@ -51,10 +51,22 @@ for (const [srcRel, outName, exportName, blurb] of [
 // /graphs, and the same rows the app ships — regenerated every build so the two cannot drift.
 //
 // Raw, same-rig, NOT diffuse-field compensated. 128-point log grid, 20 Hz - 20 kHz.
-// The HeadRoom archive is a DIFFERENT fixture and never shares an axis with these.`],
+// The HeadRoom archive is a DIFFERENT fixture and never shares an axis with these.
+//
+// LICENCE (added 2026-08-25): CC BY-NC 4.0, https://creativecommons.org/licenses/by-nc/4.0/
+// Attribution: Warren Labs, https://warrenlabs.com/graphs
+// Commercial licensing: jamey@warrenlabs.com
+// Covers the measured rows in THIS file only. First-party EARS Pro data, measured and owned by
+// Warren Labs. Full resolution is published deliberately; see docs/measurement-publishing.md for
+// the decision and the trigger that would revisit it.`],
   ['rig-agnostic/references.dat', 'targets.js', 'REFERENCES',
    `// DISPLAY reference shapes. NOT the app's voice-match targets — see gen-measurements.mjs for why
-// targets.dat must never be published as a reference line.`],
+// targets.dat must never be published as a reference line.
+//
+// DELIBERATELY NOT CC BY-NC. These are rig-agnostic reference SHAPES derived from public research
+// (KEMAR diffuse field, an in-room preference shape), not Warren Labs measurements, so they are not
+// ours to license. Claiming a licence over them would be the false-provenance error that
+// attune/docs/headroom-title-brief.md §8.7 warns about. Keep the notice scoped to measurements.js.`],
 ]) {
   const path = resolve(SRC, srcRel);
   if (!existsSync(path)) {

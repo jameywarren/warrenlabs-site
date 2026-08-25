@@ -6,6 +6,13 @@
 //
 // Raw, same-rig, NOT diffuse-field compensated. 128-point log grid, 20 Hz - 20 kHz.
 // The HeadRoom archive is a DIFFERENT fixture and never shares an axis with these.
+//
+// LICENCE (added 2026-08-25): CC BY-NC 4.0, https://creativecommons.org/licenses/by-nc/4.0/
+// Attribution: Warren Labs, https://warrenlabs.com/graphs
+// Commercial licensing: jamey@warrenlabs.com
+// Covers the measured rows in THIS file only. First-party EARS Pro data, measured and owned by
+// Warren Labs. Full resolution is published deliberately; see docs/measurement-publishing.md for
+// the decision and the trigger that would revisit it.
 
 export const MEASUREMENTS = [
   { id: "sennheiser-hd-800", b: "Sennheiser", n: "HD 800", db: [-4.37, -4.12, -3.79, -3.45, -3.13, -2.81, -2.43, -2.06, -1.83, -1.63, -1.42, -1.28, -1.19, -1.11, -1.13, -1.18, -1.22, -1.25, -1.26, -1.21, -1.15, -1.08, -0.99, -0.85, -0.68, -0.49, -0.3, -0.11, 0.05, 0.13, 0.15, 0.14, 0.17, 0.06, -0.21, -0.09, 0.12, 0.2, 0.27, 0.3, 0.32, 0.34, 0.36, 0.38, 0.39, 0.4, 0.4, 0.38, 0.35, 0.32, 0.29, 0.25, 0.21, 0.16, 0.14, 0.12, 0.11, 0.09, 0.05, 0.01, -0.03, -0.03, -0.02, -0.01, 0, 0, 0.02, 0.05, 0.08, 0.09, 0, -0.11, -0.28, -0.41, -0.52, -0.79, -1.21, -1.63, -1.92, -2.05, -2.04, -2.03, -1.71, -0.79, 0.02, 1.04, 2.03, 2.79, 3.49, 4.42, 4.99, 5.24, 4.76, 3.87, 2.68, 2.06, 1.2, 1.18, 1.87, 2.8, 4.6, 7.11, 9.29, 12.02, 13.87, 10, 5.91, 4.19, 3.59, 4.13, 3.03, -3.18, -13.52, -12.49, -8.66, -9.92, -5.4, -2.97, -3.67, -2.47, -0.23, -1.97, -9.84, -17.11, -10.15, -8.84, -9.8, -9.62] },
