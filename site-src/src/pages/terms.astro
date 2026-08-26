@@ -1,0 +1,147 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const updated = 'August 2026';
+---
+
+<Layout
+  title="Terms · Warren Labs"
+  description="The terms for buying and using Warren Labs audio software. Who you are actually buying from, what a licence lets you do, and what happens if something goes wrong."
+>
+  <Nav variant="home" />
+  <section class="sec">
+    <div class="wrap prose">
+      <span class="eyebrow">Terms</span>
+      <h2>Terms and Conditions</h2>
+      <p class="sec-lede">
+        <b>You are buying a licence to use software, from a reseller, with 14 days to change your
+        mind.</b> The rest of this page is the detail behind that sentence, written to be read
+        rather than skimmed past.
+      </p>
+
+      <h3>Who you are actually buying from</h3>
+      <p>
+        Warren Labs makes the software. <b>FastSpring is the merchant of record</b> — the legal
+        seller for the transaction. When you buy, your contract for the <em>purchase</em> is with
+        FastSpring, and their terms govern payment, tax and the refund mechanics. They collect and
+        remit sales tax and VAT, and their name is what appears on your statement and receipt.
+      </p>
+      <p>
+        Warren Labs licenses you the software itself, and that is what this page covers. Both
+        relationships are real and they cover different things: FastSpring handles the money, we
+        handle the product.
+      </p>
+
+      <h3>What you are buying</h3>
+      <p>
+        A <b>licence to use</b> the software, not the software itself and not its source code. The
+        licence is permanent for the version you bought, and does not expire or need renewing. It
+        is not a subscription and there is nothing to cancel.
+      </p>
+
+      <h3>What the licence lets you do</h3>
+      <p>
+        Install and use it on <b>any machine you personally own or control</b> — your studio, your
+        laptop, a backup machine. Use it on <b>paid, commercial work</b>, with no royalty, no extra
+        licence and no reporting. There is no seat count to manage and no activation limit to trip
+        over on a deadline.
+      </p>
+
+      <h3>What it doesn't let you do</h3>
+      <p>
+        Resell, rent, redistribute or sublicense it. Share your licence file with anyone else, or
+        publish it. Reverse-engineer, decompile or extract parts of it for use in another product.
+        If you are buying for a team, buy a licence for each person; if that's awkward at your size,
+        write to us and we'll work something out.
+      </p>
+
+      <h3>The licence file, and why it works the way it does</h3>
+      <p>
+        Your licence is a small signed <code>.wllicense</code> file you save to a folder on your
+        machine. The plugin verifies it <b>offline</b>. It does not phone home, does not check in
+        with a server, and will not stop working because we had an outage, changed providers, or
+        stopped trading. It carries the name and email you bought with, which is what makes it
+        yours and not transferable.
+      </p>
+      <p>
+        This is deliberate. Software you paid for should not depend on our servers still being there
+        in ten years, and it does not.
+      </p>
+
+      <h3>This is beta software, and we mean it</h3>
+      <p>
+        The plugin line is in <b>public beta</b>. It is priced accordingly and it is honest work,
+        but it will have bugs, some behaviour will change, and features may be added or reworked
+        before 1.0. If you would rather wait for a finished product, wait — that is a reasonable
+        thing to do and we would rather you did that than felt misled.
+      </p>
+
+      <h3>Updates</h3>
+      <p>
+        Updates within the version you bought are free, and we will email you when they land. We do
+        not promise free upgrades to a future major version, and we won't pretend otherwise here so
+        that we can quietly change our minds later. If that ever changes, buyers will be told
+        directly, not by us editing this page.
+      </p>
+
+      <h3>Refunds</h3>
+      <p>
+        <b>14 days, no questions asked.</b> The details, including how to ask and what happens to
+        your licence, are on the <a href="/refunds">refund policy</a> page.
+      </p>
+
+      <h3>What we don't promise</h3>
+      <p>
+        The software is provided as it is. We do not warrant that it is free of defects, that it
+        will suit a particular purpose, or that it will be uninterrupted — no software vendor
+        honestly can, and this one is a beta. To the extent the law allows, our liability is limited
+        to what you paid for the licence.
+      </p>
+      <p>
+        That limit is a normal legal backstop, not a shrug. If the software damages a session or
+        loses you work, tell us. We would rather fix it and make it right than point at this
+        paragraph.
+      </p>
+
+      <h3>Your statutory rights</h3>
+      <p>
+        Nothing here removes rights the law gives you. If you are a consumer in the EU, the UK, or
+        anywhere else with mandatory consumer protection, those rights apply on top of this page and
+        override anything here that conflicts with them.
+      </p>
+
+      <h3>Changes to these terms</h3>
+      <p>
+        If we change this page, the change applies to purchases made <b>after</b> the change. It
+        does not reach backwards into a licence you already bought. The date at the bottom is when
+        it was last touched.
+      </p>
+
+      <h3>Governing law</h3>
+      <p>
+        Warren Labs operates from Livingston, Montana, United States, and these terms are governed
+        by Montana law. Your separate purchase contract with FastSpring is governed by whatever
+        their terms say, which you agree to at their checkout.
+      </p>
+
+      <h3>Contact</h3>
+      <p>
+        Anything at all, including the awkward questions:
+        <a href="mailto:jamey@warrenlabs.com">jamey@warrenlabs.com</a>. A real person reads it.
+      </p>
+
+      <p class="updated">Last updated: {updated}</p>
+    </div>
+  </section>
+  <Footer variant="home" />
+</Layout>
+
+<style>
+  .prose { max-width: 720px; }
+  .prose h3 { margin: 30px 0 8px; font-size: 1.15rem; }
+  .prose p { margin: 0 0 14px; line-height: 1.65; }
+  .prose code { font-size: 0.92em; }
+  .prose .updated { margin-top: 30px; font-size: 0.85rem; opacity: 0.55; }
+</style>
