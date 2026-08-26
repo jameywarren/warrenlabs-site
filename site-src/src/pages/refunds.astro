@@ -1,0 +1,110 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const updated = 'August 2026';
+---
+
+<Layout
+  title="Refunds · Warren Labs"
+  description="Fourteen days, no questions asked. How to request a refund on Warren Labs audio software, what happens to your licence, and what to do if we don't reply."
+>
+  <Nav variant="home" />
+  <section class="sec">
+    <div class="wrap prose">
+      <span class="eyebrow">Refunds</span>
+      <h2>Refund Policy</h2>
+      <p class="sec-lede">
+        <b>14 days, no questions asked.</b> Email
+        <a href="mailto:jamey@warrenlabs.com?subject=Refund%20request">jamey@warrenlabs.com</a>
+        with your order number and we'll refund it. You don't have to explain why, and we won't ask
+        you to sit through an attempt to talk you out of it.
+      </p>
+
+      <h3>Why no questions</h3>
+      <p>
+        You cannot properly evaluate a mixing tool in a shop. You have to put it on a real session,
+        on your own material, in your own room, and find out whether it earns its place. That takes
+        more than a demo and it sometimes ends in no. A refund policy that makes you argue your case
+        is a policy designed to keep money from people who found out the honest way.
+      </p>
+
+      <h3>How to ask</h3>
+      <p>
+        Email <a href="mailto:jamey@warrenlabs.com?subject=Refund%20request">jamey@warrenlabs.com</a>
+        with the order number from your receipt, within 14 days of purchase. That's the whole
+        process. You'll get a reply from a person, usually the same day.
+      </p>
+
+      <h3>What happens next</h3>
+      <p>
+        <b>FastSpring is the merchant of record</b> — the legal seller — so the money goes back the
+        way it came, through them, to the card or account you paid with. We authorise it; they move
+        it. Expect the refund to appear within a few business days, depending on your bank, and the
+        line on your statement will name FastSpring rather than Warren Labs.
+      </p>
+
+      <h3>What happens to your licence</h3>
+      <p>
+        It stops being valid, and we'll say plainly what that does and doesn't mean. Your
+        <code>.wllicense</code> file verifies offline, so a copy sitting on a machine that never
+        goes online is not something we can reach out and switch off. We're asking you to delete it
+        and stop using the software, and we're trusting you to.
+      </p>
+      <p>
+        We'd rather tell you the truth about how the licensing works than imply a remote kill switch
+        we deliberately chose not to build. The same design that means we can't revoke your licence
+        is the one that means our servers going away can't revoke it either.
+      </p>
+
+      <h3>If we don't reply</h3>
+      <p>
+        We should, and quickly. But if you email a refund request and hear nothing for
+        <b>two business days</b>, you can take it straight to
+        <a href="https://fastspring.com/consumer-support/" rel="noopener">FastSpring's support</a>
+        and they will handle it. That's their policy as merchant of record, and we're telling you
+        about it up front rather than leaving you to discover it while frustrated.
+      </p>
+
+      <h3>After 14 days</h3>
+      <p>
+        Write to us anyway. The 14 days is a promise, not a shutter — it's the window where the
+        answer is automatically yes. Past it, if the software isn't doing what we said it does, or
+        something went wrong on our side, we'd still rather sort it out than hold you to a date.
+      </p>
+
+      <h3>Your statutory rights</h3>
+      <p>
+        If you're a consumer in the EU or the UK, you have a statutory right of withdrawal for
+        online purchases, and nothing on this page reduces it. Where those rights give you more than
+        this policy does, they win. This policy is written to sit at or above that floor, so you
+        shouldn't ever need to work out which applies.
+      </p>
+
+      <h3>Chargebacks</h3>
+      <p>
+        Please email first. A chargeback costs us a fee on top of the refund and takes months to
+        resolve, and there is genuinely no scenario where it gets you your money faster than just
+        asking. If you've already filed one, tell us and we'll stop duplicating the work.
+      </p>
+
+      <h3>Contact</h3>
+      <p>
+        <a href="mailto:jamey@warrenlabs.com">jamey@warrenlabs.com</a>. Include the order number if
+        you have it; we'll find it if you don't.
+      </p>
+
+      <p class="updated">Last updated: {updated}</p>
+    </div>
+  </section>
+  <Footer variant="home" />
+</Layout>
+
+<style>
+  .prose { max-width: 720px; }
+  .prose h3 { margin: 30px 0 8px; font-size: 1.15rem; }
+  .prose p { margin: 0 0 14px; line-height: 1.65; }
+  .prose code { font-size: 0.92em; }
+  .prose .updated { margin-top: 30px; font-size: 0.85rem; opacity: 0.55; }
+</style>

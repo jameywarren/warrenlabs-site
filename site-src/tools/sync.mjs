@@ -27,6 +27,10 @@ const ROOT = join(here, '..', '..');
 // published at all, and /graphs serves our own EARS Pro measurements inlined at build time.)
 const ROUTES = [
   'attune', 'learn', 'graphs', 'products', 'collections', 'measure', 'support', 'privacy',
+  // Legal pages. FastSpring will not activate a store whose site lacks live links to terms,
+  // privacy and a refund policy, so if any of these three drops off this list the store cannot
+  // go live -- and, as with canjam/card below, it fails silently as a 404.
+  'terms', 'refunds',
   'loaners',   // + /loaners/print, the one-page leave-behind
   'tune',      // Attune's "Send to Device" WebHID page — source of truth is attune/companion/tune.html
   // The CanJam SoCal handout, at two URLs so report scans can be told from everything else. Both
