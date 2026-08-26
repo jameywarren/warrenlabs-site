@@ -21,7 +21,7 @@
       ],
       "requestCurve": true,
       "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/level-v0.2.26-beta/Level-0.2.26-beta.pkg",
-      "price": 0,
+      "price": 29,
       "buyUrl": "",
       "shots": [
         {
@@ -261,7 +261,7 @@
       "slug": "reference-desk",
       "name": "The Reference Desk",
       "line": "Trueness",
-      "tagline": "Everything you need to hear the mix honestly — free while in beta.",
+      "tagline": "Everything you need to hear the mix honestly.",
       "blurb": "Five corrective and diagnostic tools on one shared engine: metering that shows what the low end really does, an EQ and a compressor, a resonance suppressor that also de-esses and de-muds, and a matching EQ that doubles as a translation check.",
       "members": [
         "square",
@@ -270,7 +270,7 @@
         "pare",
         "scribe"
       ],
-      "price": 0,
+      "price": 49,
       "buyUrl": "",
       "download": ""
     },
@@ -278,14 +278,14 @@
       "slug": "character-collection",
       "name": "The Character Collection",
       "line": "Character",
-      "tagline": "Heat, motion, and space — free while in beta.",
+      "tagline": "Heat, motion, and space.",
       "blurb": "Three colour tools, each covering a whole corner: six saturation models from tube warmth to full fuzz, echo plus chorus/flanger/phaser on one delay core, and a reverb that runs both an FDN and real captured spaces.",
       "members": [
         "temper",
         "ripple",
         "wake"
       ],
-      "price": 0,
+      "price": 39,
       "buyUrl": "",
       "download": ""
     }
@@ -294,8 +294,8 @@
     "slug": "bundle",
     "name": "The Whole Lab",
     "tagline": "Every Warren Labs plugin, one install.",
-    "blurb": "Every Warren Labs plugin in one install — free while the line is in public beta. Individual downloads stay available; this is just the fast way to get everything.",
-    "price": 0,
+    "blurb": "Every Warren Labs plugin in one install — the Trueness and Character lines together, on one shared engine.",
+    "price": 79,
     "buyUrl": "",
     "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/bundle-v0.1.0-beta/WarrenLabs-Bundle-0.1.0-beta.pkg"
   }
