@@ -27,11 +27,11 @@
       "cta": true
     }
   ],
-  "_analyticsComment": "Plausible, added 2026-08-24 ahead of CanJam. Cookieless, so no consent banner and nothing to opt into; disclosed in /privacy. There is NO account id in the snippet -- Plausible keys on data-domain -- so this works the moment warrenlabs.com is added at plausible.io and harmlessly 404s until then. The .file-downloads.outbound-links variant auto-tracks GitHub release downloads, App Store links and mailto: clicks, which is most of what we want to know without hand-instrumenting anything. Read by all THREE renderers: Layout.astro, tools/sync-chrome.mjs, and tools/gen_site.py in the monorepo. Set enabled=false to pull it from all three at once.",
+  "_analyticsComment": "Plausible, added 2026-08-24, real site created 2026-08-27. Cookieless, so no consent banner and nothing to opt into; disclosed in /privacy. NOTE: this is Plausible's NEWER script format — the site id is baked into the FILENAME (pa-<id>.js) and there is no data-domain attribute; it must be paired with the inline plausible.init() stub, which each renderer emits. `domain` below is kept for humans only, the script no longer reads it. File-download and outbound-link tracking are NO LONGER selected via the script filename (the old script.file-downloads.outbound-links.js) — they are toggled per-site in the Plausible dashboard. Read by all THREE renderers: Layout.astro, tools/sync-chrome.mjs, and tools/gen_site.py in the monorepo. Set enabled=false to pull it from all three at once.",
   "analytics": {
     "enabled": true,
     "domain": "warrenlabs.com",
-    "src": "https://plausible.io/js/script.file-downloads.outbound-links.js"
+    "src": "https://plausible.io/js/pa-7zF1GswBt5oYNLddNETeJ.js"
   },
   "footerLinks": [
     {
