@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Warren Labs · Headphone measurements and audio tools</title>
-<meta name="description" content="We measure headphones on our own bench and publish what the rig says — flattering or not. Attune tunes any headphone to your taste, free.">
+<meta name="description" content="I measure headphones on my own bench in Montana and publish what the rig says, flattering or not. Attune tunes your headphones by ear, free on the App Store.">
 <meta property="og:title" content="Warren Labs: Jamey Warren">
-<meta property="og:description" content="Headphone measurements made on our own miniDSP EARS Pro, published whatever they say. Attune tunes any headphone to your taste, free. Send yours in and get your unit’s exact curve.">
+<meta property="og:description" content="I measure headphones on my own bench in Montana and publish what the rig says, flattering or not. Attune tunes your headphones by ear, free on the App Store.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://warrenlabs.com/">
 <meta property="og:image" content="https://warrenlabs.com/assets/brand/og-card.png">
@@ -61,14 +61,18 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
   <p class="hero-status mono">FREE &middot; ON THE APP STORE FOR MAC, IPHONE AND IPAD</p>
   <div class="hero-sub">
     <div class="hero-lede-col">
-      <p class="lede">Attune plays your own music, loudness matched, and asks which of two tunings you like better. About a dozen answers later you have a personal EQ curve for the headphones on your head. No target to agree with, no preset to take on faith, no subscription.</p>
-      <p class="hero-byline">Built by Jamey Warren on the bench in Livingston, Montana, on measurements taken here.</p>
-      <div class="hero-cta">
+      <p class="lede">Attune plays your own music, loudness matched, and asks which of two tunings you like better. About a dozen answers later, you have a personal EQ curve for the headphones on your head. There is no target you have to agree with, no preset to take on faith, and no subscription.</p>
+      <p class="hero-byline">I built it here in Livingston, Montana, on measurements I took myself.</p>
+      <!-- The scope sits BEHIND the buttons, not behind the headline and not as its own band.
+           Behind the h1 it competed with the one thing the page has to say; below the hero it was
+           just decoration. Behind the CTAs it reads as signal under the thing you act on. -->
+      <div class="hero-cta ctawrap">
+        <canvas id="scope" height="150" aria-hidden="true"></canvas>
         <a class="btn primary" href="https://apps.apple.com/app/attune-headphone-eq/id6792873303" target="_blank" rel="noopener">Download on the App Store <span aria-hidden="true">&#8599;</span></a>
         <a class="btn ghost" href="/attune">How it works</a>
       </div>
       <p class="hero-fine">Free. No account, no card.</p>
-      <p class="hero-aside mono">Building a headphone? The bench takes outside work. <a href="/design-review/">DESIGN REVIEW &rarr;</a></p>
+      <p class="hero-aside mono">Building a headphone? I take outside work. <a href="/design-review/">DESIGN REVIEW &rarr;</a></p>
     </div>
     <div class="creds mono">
       <div class="cred"><span class="k">1997&ndash;2001</span><span class="v">GRACE DESIGN, EMPLOYEE #1</span></div>
@@ -78,10 +82,6 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
     </div>
   </div>
 </section>
-
-<!-- The scope moved out from behind the headline: it was competing with the h1 at the one moment
-     the page has a single thing to say. It now reads as a divider under the calls to action. -->
-<div class="scopeband"><canvas id="scope" height="150" aria-hidden="true"></canvas></div>
 
 <section class="offer-zone" id="attune">
   <div class="wrap">
@@ -93,7 +93,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
     <div class="steps">
       <div class="step">
         <span class="step-n mono">01 &middot; PICK YOUR HEADPHONE</span>
-        <p>Every headphone that ships in Attune was measured here, on our own rig. Not one of ours? Import a measurement you already have &mdash; CSV, AutoEq or squig &mdash; free. Or <a href="/measure">send your pair in</a> and we&rsquo;ll measure it.</p>
+        <p>Every headphone in Attune was measured on my own rig. If yours isn&rsquo;t there yet, you can import a measurement you already have (CSV, AutoEq or squig) for free, or <a href="/measure">send your pair in</a> and I&rsquo;ll measure it.</p>
       </div>
       <div class="step">
         <span class="step-n mono">02 &middot; ANSWER A OR B</span>
@@ -101,10 +101,10 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       </div>
       <div class="step">
         <span class="step-n mono">03 &middot; KEEP IT</span>
-        <p>Your answers build one curve, saved per headphone. One saved sound is free and stays free. Pro is a one-time $39 unlock &mdash; never a subscription &mdash; for unlimited sounds and AutoEq export.</p>
+        <p>Your answers build one curve, saved per headphone. One saved sound is free and stays free. Pro is a one-time $39 unlock for unlimited sounds and AutoEq export. It is not a subscription and never will be.</p>
       </div>
     </div>
-    <p class="honesty">EQ moves tonal balance and nothing else. It will not buy you resolution, soundstage, lower distortion or different driver physics, and nothing on this page says otherwise.</p>
+    <p class="honesty">EQ moves tonal balance and nothing else. It won&rsquo;t buy you resolution, soundstage, lower distortion or different driver physics, and nothing on this page says otherwise.</p>
   </div>
 </section>
 
@@ -112,7 +112,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
   <div class="approach-head">
     <div class="k mono">THE BENCH <span class="sig">&middot;</span> LIVINGSTON, MONTANA</div>
     <h2 class="display">Why trust the measurements</h2>
-    <p class="sub">Because the method is written down and you can check it. A measurement you can&rsquo;t audit is just a picture of a line.</p>
+    <p class="sub">Because I wrote the method down and you can check it. A measurement you can&rsquo;t audit is just a picture of a line.</p>
   </div>
   <div class="specstrip mono">
     <div><span class="ss-k">FIXTURE</span><span class="ss-v">miniDSP EARS Pro, IEC 60318-4</span></div>
@@ -123,15 +123,15 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
   <ol class="method">
     <li>
       <b>The rig.</b>
-      <p>A miniDSP EARS Pro with per-unit serial-matched calibration, using IEC 60318-4 couplers &mdash; the coupler standard the industry rigs use. It&rsquo;s a house reference, not an industry reference coupler, and it&rsquo;s labelled that way next to every graph.</p>
+      <p>A miniDSP EARS Pro with per-unit serial-matched calibration, using the IEC 60318-4 couplers that the industry rigs use. It is a house reference rather than an industry reference coupler, and I label it that way next to every graph.</p>
     </li>
     <li>
       <b>Seated for best fit, deliberately.</b>
-      <p>The headphone is adjusted for seal and for sound the way someone settling in to listen would adjust it, not dropped on at random. You don&rsquo;t listen at a random seating, so we measure the good one &mdash; and then prove we can find it again.</p>
+      <p>I adjust the headphone for seal and for sound, the way you would settle in to listen, rather than dropping it on at random. You don&rsquo;t listen at a random seating, so I measure the good one and then show I can find it again.</p>
     </li>
     <li>
       <b>Published raw, flattering or not.</b>
-      <p>Every first-party measurement goes up at full resolution under CC BY-NC 4.0, with the rig and the date on it. <a href="/graphs">See the measurements</a>.</p>
+      <p>Every measurement I take goes up at full resolution under CC BY-NC 4.0, with the rig and the date on it. <a href="/graphs">See the measurements</a>.</p>
     </li>
   </ol>
 </section>
@@ -140,17 +140,17 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
   <div class="wrap">
     <div class="offer-head">
       <div class="k mono">THE BENCH <span class="sig">&middot;</span> WHAT IT COSTS</div>
-      <h2 class="display">Send us your pair.</h2>
-      <p class="sub">Every correction you can buy is built from somebody else&rsquo;s sample of your model. Send yours and get the curve of the pair actually in your hands &mdash; published either way, flattering or not.</p>
+      <h2 class="display">Send me your pair.</h2>
+      <p class="sub">Every correction you can buy is built from somebody else&rsquo;s sample of your model. Send me yours and you get the curve of the pair actually in your hands. I publish it either way, flattering or not.</p>
     </div>
     <a class="offer" href="/measure">
       <div class="offer-main">
         <div class="offer-k mono">SEND ONE IN</div>
-        <h3 class="display">Your unit, on our rig</h3>
-        <p>Measured on the EARS Pro, seated for best fit and labelled by rig, back to you in about a week &mdash; and it gets its own page here, credited however you like. Unit variation is real, and what your specific pair measures is exactly what Attune turns into a personal tuning.</p>
+        <h3 class="display">Your unit, on my rig</h3>
+        <p>I measure it on the EARS Pro, seated for best fit and labelled by rig, and send it back in about a week. It gets its own page here, credited however you like. Unit variation is real, and what your specific pair measures is exactly what Attune turns into a personal tuning.</p>
       </div>
       <div class="offer-side mono">
-        <div class="offer-spec"><span class="sk">ON OUR LIST</span><span class="sv">Free, both ways</span></div>
+        <div class="offer-spec"><span class="sk">ON MY LIST</span><span class="sv">Free, both ways</span></div>
         <div class="offer-spec"><span class="sk">ANYTHING ELSE</span><span class="sv">$89</span></div>
         <div class="offer-spec"><span class="sk">TURNAROUND</span><span class="sv">About a week</span></div>
         <span class="offer-note">Every result published, flattering or not.</span>
@@ -160,21 +160,21 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 
     <div class="k mono ladder-k">YOU MAKE HEADPHONES</div>
     <a class="offer-alt" href="/loaners">
-      <span class="oa-k mono">FREE &middot; LOAN US A HEADPHONE</span>
+      <span class="oa-k mono">FREE &middot; LOAN ME A HEADPHONE</span>
       <span class="oa-main"><b>Send me the headphone. I&rsquo;ll send you back the data.</b>
-        One retail unit on loan for two weeks, measured on a documented rig, with the raw measurement file returned for your own use and no conditions attached. You cover shipping out; we insure and pay the return.</span>
+        Lend me one retail unit for two weeks. I measure it on a documented rig and return the raw file for your own use, with no conditions attached. You cover shipping out, and I insure and pay the return.</span>
       <span class="oa-go mono">LOAN ONE &#8599;</span>
     </a>
     <a class="offer-alt" href="/design-review/#production-measurement">
       <span class="oa-k mono">PRODUCTION MEASUREMENT</span>
       <span class="oa-main"><b>Before a run ships, or after one goes wrong.</b>
-        Send a sample from your production units. Every one measured on the same rig under one documented seating protocol, reported unit to unit and channel to channel against your design intent. You get the report, the graphs, and the raw data.</span>
+        Send me a sample from your production units. I measure every one on the same rig under one documented seating protocol, and report unit to unit and channel to channel against your design intent. You get the report, the graphs and the raw data.</span>
       <span class="oa-go mono">FROM $750 &#8599;</span>
     </a>
     <a class="offer-alt" href="/design-review/">
       <span class="oa-k mono">HEADPHONE DESIGN REVIEW</span>
       <span class="oa-main"><b>An outside read on one product.</b>
-        Send a prototype or a shipping unit. It gets measured, listened to critically, and written up: who the design actually serves, what it&rsquo;s trading off, and a short list of specific changes ranked by what each would cost you to make. Two weeks, fixed fee, no ongoing commitment.</span>
+        Send me a prototype or a shipping unit. I measure it, listen to it critically, and write up who the design actually serves, what it&rsquo;s trading off, and a short list of specific changes ranked by what each would cost you to make. Two weeks, fixed fee, and no ongoing commitment.</span>
       <span class="oa-go mono">$4,500 FIXED &#8599;</span>
     </a>
   </div>
@@ -185,7 +185,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
     <div class="offer-head">
       <div class="k mono">YOU MIX <span class="sig">&middot;</span> AU AND VST3 FOR MACOS</div>
       <h2 class="display">Tools that tell the truth.</h2>
-      <p class="sub">Nine plugins on one shared DSP library, built alongside the measurement work. Level is the correction engine Attune runs on, as a plugin for your DAW.</p>
+      <p class="sub">Nine plugins on one shared DSP library, built alongside the measurement work. Level is the same correction engine Attune runs on, as a plugin for your DAW.</p>
     </div>
     <!-- Price and STATE are separate fields on purpose. When the store opens, the chip becomes a
          buy link and the note below is deleted — no layout change. See docs/homepage-redesign.md §8. -->
@@ -198,7 +198,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <a class="pline" href="/plugins/#reference-desk">
         <span class="pl-nm">The Reference Desk</span><span class="pl-pr mono">$49</span>
         <span class="pl-st mono">PUBLIC BETA</span>
-        <span class="pl-bl">Square, Bevel, Brace, Pare, Scribe &mdash; everything you need to hear the mix honestly.</span>
+        <span class="pl-bl">Square, Bevel, Brace, Pare and Scribe. Everything you need to hear the mix honestly.</span>
       </a>
       <a class="pline" href="/plugins/#character-collection">
         <span class="pl-nm">The Character Collection</span><span class="pl-pr mono">$39</span>
@@ -211,7 +211,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
         <span class="pl-bl">Every Warren Labs plugin, one install.</span>
       </a>
     </div>
-    <p class="plug-state"><b>Paid public beta.</b> The store is built and tested and not switched on yet, so those are the prices, not a checkout. Leave your address on the plugin page and I&rsquo;ll tell you the day it opens.</p>
+    <p class="plug-state"><b>Paid public beta.</b> The store is built and tested but not switched on yet, so those are the prices rather than a checkout. Leave your address on the plugin page and I&rsquo;ll tell you the day it opens.</p>
   </div>
 </section>
 
@@ -222,15 +222,20 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
   <div class="also-grid">
     <a class="also-card" href="https://github.com/makerphones/first-chair" target="_blank" rel="noopener">
       <h3>makerphones</h3>
-      <p>An open source headphone you can build and service yourself. Sprung steel bow, commodity pads, printed parts &mdash; designed so a tweaker can take it apart.</p>
+      <p>An open source headphone you can build and service yourself. Sprung steel bow, commodity pads and printed parts, designed so a tweaker can take it apart.</p>
     </a>
     <a class="also-card" href="/graphs">
       <h3>The measurements</h3>
       <p>Every first-party measurement published raw and at full resolution under CC BY-NC 4.0. Flattering or not.</p>
     </a>
-    <a class="also-card" href="/learn">
-      <h3>The Art and Science of Headphone Design</h3>
-      <p>The book. Written from the same bench, and the same method, the measurements on this site come from.</p>
+    <a class="also-card bookcard" href="https://www.amazon.com/dp/B0H6XWXM4C" target="_blank" rel="noopener">
+      <img class="bookcard-cover" src="assets/book-cover.jpg" width="560" height="800" loading="lazy"
+           alt="Cover of The Art and Science of Headphone Design by Jamey Warren">
+      <div class="bookcard-body">
+        <h3>The Art and Science of Headphone Design</h3>
+        <p>I wrote it from the same bench, using the same method, that produced the measurements on this site.</p>
+        <span class="bookcard-go mono">ON AMAZON &#8599;</span>
+      </div>
     </a>
   </div>
 </section>
@@ -238,7 +243,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <section class="contact wrap" id="patch">
   <div class="k">OUTPUT SECTION &middot; CONTACT</div>
   <h2 class="display">Building something in audio? <span class="accent">Patch in.</span></h2>
-  <p class="contact-sub">Tell me what you&rsquo;re working on and where it is in the process. I&rsquo;ll confirm the fit before anything is booked.</p>
+  <p class="contact-sub">Tell me what you&rsquo;re working on and roughly where it is. I&rsquo;ll say honestly whether I&rsquo;m the right fit before anything gets booked.</p>
 
   <div class="pbay" id="pbay">
     <div class="pbay-panel">

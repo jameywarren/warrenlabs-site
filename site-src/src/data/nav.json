@@ -63,6 +63,10 @@
       "label": "Plugins"
     },
     {
+      "href": "/plugins/guides/",
+      "label": "Guides"
+    },
+    {
       "href": "/design-review/",
       "label": "Design review"
     },
