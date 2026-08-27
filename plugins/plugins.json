@@ -11,16 +11,16 @@
       "status": "Shipping",
       "nameStatus": "assigned",
       "tagline": "Hear your headphones honestly.",
-      "blurb": "Flattens a headphone's measured response by inverting its curve, then adds Bauer-style crossfeed so a mix translates the way speakers would. Every curve says who measured it — six of them are ours, taken on a rig we own. The signal comes out measurably corrected, honest before anything else.",
+      "blurb": "Flattens a headphone's measured response by inverting its curve, then adds Bauer-style crossfeed so a mix translates the way speakers would. Every curve says who measured it \u2014 six of them are ours, taken on a rig we own. The signal comes out measurably corrected, honest before anything else.",
       "features": [
-        "Six headphones measured on our own rig — badged, not borrowed",
+        "Six headphones measured on our own rig \u2014 badged, not borrowed",
         "Bauer crossfeed with interaural delay, loudness-neutral within 0.05 dB",
         "Output metering with a latched clip indicator, and Safe Gain",
         "Monitoring checks: flip, polarity, dim, mono",
-        "Voicing + RTA layer · VST3 / AU / Standalone"
+        "Voicing + RTA layer \u00b7 VST3 / AU / Standalone"
       ],
       "requestCurve": true,
-      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/level-v0.2.26-beta/Level-0.2.26-beta.pkg",
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/level-v0.3.0/Level-0.3.0.zip",
       "price": 29,
       "buyUrl": "",
       "shots": [
@@ -44,7 +44,8 @@
           "alt": "Level's output meter showing a latched OVER state",
           "caption": "The clip indicator latches until you acknowledge it."
         }
-      ]
+      ],
+      "notarized": true
     },
     {
       "slug": "square",
@@ -65,7 +66,8 @@
       ],
       "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/square-v0.1.0-beta/Square-0.1.0-beta.pkg",
       "price": 0,
-      "buyUrl": ""
+      "buyUrl": "",
+      "notarized": false
     },
     {
       "slug": "scribe",
@@ -77,7 +79,7 @@
       "status": "Beta",
       "nameStatus": "set",
       "tagline": "Scribe a tonal fit to target.",
-      "blurb": "Learns a reference's per-band tonal balance and pulls your program toward it — broad and musical, not surgical. Audition modes flip the same plugin into a translation check: hear the mix coloured like a phone, earbuds, a laptop or a car before you commit to the render.",
+      "blurb": "Learns a reference's per-band tonal balance and pulls your program toward it \u2014 broad and musical, not surgical. Audition modes flip the same plugin into a translation check: hear the mix coloured like a phone, earbuds, a laptop or a car before you commit to the render.",
       "features": [
         "Learn a reference curve from anything playing",
         "Tilt + smoothing for a broad tonal fit",
@@ -86,7 +88,8 @@
       ],
       "price": 0,
       "buyUrl": "",
-      "download": ""
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/scribe-v0.2.0-beta/Scribe-0.2.0-beta.pkg",
+      "notarized": false
     },
     {
       "slug": "pare",
@@ -108,7 +111,7 @@
       ],
       "price": 0,
       "buyUrl": "",
-      "download": "",
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/pare-v0.2.0/Pare-0.2.0.zip",
       "shots": [
         {
           "file": "pare-ui-1-full-range.png",
@@ -130,7 +133,8 @@
           "alt": "Pare with a custom focus range",
           "caption": "Custom focus."
         }
-      ]
+      ],
+      "notarized": true
     },
     {
       "slug": "bevel",
@@ -152,7 +156,8 @@
       ],
       "price": 0,
       "buyUrl": "",
-      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/bevel-v0.1.0-beta/Bevel-0.1.0-beta.pkg"
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/bevel-v0.1.0-beta/Bevel-0.1.0-beta.pkg",
+      "notarized": false
     },
     {
       "slug": "brace",
@@ -174,7 +179,8 @@
       ],
       "price": 0,
       "buyUrl": "",
-      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/brace-v0.1.0-beta/Brace-0.1.0-beta.pkg"
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/brace-v0.1.0-beta/Brace-0.1.0-beta.pkg",
+      "notarized": false
     },
     {
       "slug": "temper",
@@ -186,7 +192,7 @@
       "status": "Beta",
       "nameStatus": "set",
       "tagline": "Controlled heat, all the way up.",
-      "blurb": "One oversampled waveshaper, six models — from tube warmth and tape compression through transformer iron to diode overdrive, crunch and full fuzz. Bias sets the harmonic character, a velcro gate makes the dirt sputter and die with the note.",
+      "blurb": "One oversampled waveshaper, six models \u2014 from tube warmth and tape compression through transformer iron to diode overdrive, crunch and full fuzz. Bias sets the harmonic character, a velcro gate makes the dirt sputter and die with the note.",
       "features": [
         "Six models: Tube / Tape / Transformer / Diode / Crunch / Fuzz",
         "4x oversampled, latency-compensated dry path",
@@ -195,7 +201,8 @@
       ],
       "price": 0,
       "buyUrl": "",
-      "download": ""
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/temper-v0.2.0-beta/Temper-0.2.0-beta.pkg",
+      "notarized": false
     },
     {
       "slug": "ripple",
@@ -207,7 +214,7 @@
       "status": "Beta",
       "nameStatus": "set",
       "tagline": "Repeats that ripple out.",
-      "blurb": "A modulated stereo echo with tape and BBD character, ping-pong and tempo sync — plus chorus, flanger and phaser on the same interpolated-delay core. The control set follows the engine you pick rather than relabelling the same knobs.",
+      "blurb": "A modulated stereo echo with tape and BBD character, ping-pong and tempo sync \u2014 plus chorus, flanger and phaser on the same interpolated-delay core. The control set follows the engine you pick rather than relabelling the same knobs.",
       "features": [
         "Echo: tape / BBD character, ping-pong, tempo sync",
         "Motion: chorus, flanger, phaser",
@@ -216,7 +223,8 @@
       ],
       "price": 0,
       "buyUrl": "",
-      "download": ""
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/ripple-v0.2.0-beta/Ripple-0.2.0-beta.pkg",
+      "notarized": false
     },
     {
       "slug": "wake",
@@ -238,7 +246,8 @@
       ],
       "price": 0,
       "buyUrl": "",
-      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/wake-v0.1.0-beta/Wake-0.1.0-beta.pkg"
+      "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/wake-v0.1.0-beta/Wake-0.1.0-beta.pkg",
+      "notarized": false
     }
   ],
   "guides": [
@@ -250,7 +259,7 @@
     },
     {
       "slug": "level-manual",
-      "title": "Level — manual",
+      "title": "Level \u2014 manual",
       "source": "Level/MANUAL.md",
       "summary": "What every control does, what Safe Gain actually guarantees, and what Level deliberately does not do."
     }
@@ -294,7 +303,7 @@
     "slug": "bundle",
     "name": "The Whole Lab",
     "tagline": "Every Warren Labs plugin, one install.",
-    "blurb": "Every Warren Labs plugin in one install — the Trueness and Character lines together, on one shared engine.",
+    "blurb": "Every Warren Labs plugin in one install \u2014 the Trueness and Character lines together, on one shared engine.",
     "price": 79,
     "buyUrl": "",
     "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/bundle-v0.1.0-beta/WarrenLabs-Bundle-0.1.0-beta.pkg"
