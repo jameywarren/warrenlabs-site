@@ -75,7 +75,14 @@
 <body>
   <h1>Attune · Send to Device</h1>
   <p class="sub">Load your Attune tuning onto a compatible DSP dongle. It applies to everything your phone or
-    Mac plays — including streaming — because the dongle EQs the decoded audio at the output.</p>
+    Mac plays, including streaming, because the dongle EQs the decoded audio at the output.</p>
+  <!-- SAY WHICH ONES WORK. The picker lists four vendors and only the Qudelix handler is ported.
+       The rest throw from sendToDevice() at the moment Send is pressed, which is AFTER you have
+       connected hardware and pasted a tuning, so the failure lands at the end of the flow or in
+       front of someone at a show. Keep this line in step with sendToDevice(). -->
+  <p class="sub"><b>Qudelix-5K works today</b>, confirmed on hardware. FiiO, Walkplay/KTMicro and
+    Moondrop are recognised, but their handlers are not ported yet, so Send stops and says so
+    rather than half-writing a tuning.</p>
 
   <div class="card">
     <h2>1 · Connect your dongle</h2>
