@@ -223,8 +223,13 @@
         ['FORMATS', 'VST3 · AU · Standalone'],
         ['BUILD', '0.2.26 · macOS · not yet notarized']
       ],
-      link: 'https://github.com/jameywarren/warrenlabs-site/releases/download/level-v0.2.26-beta/Level-0.2.26-beta.pkg',
-      linkLabel: 'DOWNLOAD FOR MACOS ↗'
+      // NOT a direct download. Level is a PAID product (docs/selling-the-beta.md reversed the
+      // free-beta decision on 2026-08-25). This used to link straight at a public GitHub release
+      // asset, so the homepage gave away for nothing the thing the store charges $29 for — no
+      // email gate, no payment, verified reachable by an unauthenticated client. Point at the
+      // product page and let that page own how Level is obtained.
+      link: '/plugins/level/',
+      linkLabel: 'SEE LEVEL →'
     },
     {
       slug: 'attune', name: 'Attune', code: 'Attn', accent: '#E9A24A',
