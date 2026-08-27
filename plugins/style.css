@@ -235,3 +235,12 @@ table.md code{white-space:nowrap}
 .shot-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:20px}
 .shot-strip figure{margin:0;border-radius:8px;overflow:hidden;background:#0b0d0f;border:1px solid rgba(255,255,255,.07)}
 .shot-strip img{display:block;width:100%;height:auto}
+
+/* Price shown before the store is activated (no buyUrl yet). Once buyUrl is set the Buy button
+   replaces this, so it only ever appears in the pre-launch window. */
+.price-tag {
+  font: 600 1.45rem/1 "JetBrains Mono", ui-monospace, monospace;
+  color: var(--ink, #e8eaec);
+  margin: 0 0 10px;
+  letter-spacing: -0.01em;
+}
