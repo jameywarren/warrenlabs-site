@@ -61,7 +61,9 @@ header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) ro
 .hero-kicker { display: flex; flex-wrap: wrap; gap: 10px 24px; font-size: 12px; letter-spacing: 0.2em; color: var(--dim); margin-bottom: 30px; }
 .hero-kicker .sep { color: var(--faint); }
 .hero h1 { font-size: var(--h1); line-height: var(--h1-lh); letter-spacing: 0.06em; position: relative; z-index: 2; }
-#scope { display: block; width: 100vw; height: 230px; margin-top: -48px; position: relative; z-index: 1; margin-left: calc(50% - 50vw); }
+.scopeband { position: relative; height: 150px; overflow: hidden;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+#scope { position: absolute; inset: 0; width: 100%; height: 150px; display: block; pointer-events: none; }
 .hero-sub { display: grid; grid-template-columns: 1fr 480px; gap: 64px; padding: 10px 0 84px; align-items: start; }
 .hero-sub .lede { font-size: 25px; line-height: 1.45; max-width: 640px; text-wrap: pretty; }
 .hero-sub .lede em { font-style: normal; color: var(--ink); }
@@ -109,34 +111,11 @@ header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) ro
 @keyframes chainflow { to { background-position: 8px 0; } }
 
 /* ---------- rack section ---------- */
-/* ---- DARK ISLANDS -------------------------------------------------------------------------
-   The rack and the patchbay are photorealistic renderings of black anodized hardware — rails with
-   screw holes, knobs, jacks, VU meters, patch cables. Black gear is black in any theme, so these
-   two sections stay dark while the rest of the page follows light/dark like everything else.
-   That is why the homepage keeps its theme toggle: only these bands opt out, not the page.
-
-   Implemented by redeclaring the SITE aliases (not the --wl-* tokens): `--bg: var(--wl-bg)` is
-   substituted at :root and descendants inherit the resolved value, so overriding --wl-bg here
-   would have no effect. Accent stays the DARK amber — the light one is darkened for white grounds
-   and would disappear against graphite. */
-.rack-zone,
-.contact {
-  --bg: #0c0d0f;
-  --bg2: #0f1012;
-  --ink: #e8ebed;
-  --dim: #868d92;
-  --faint: #565b60;
-  --line: #24272b;
-  --panel: #1b1d20;
-  --panel-hi: #26292d;
-  --panel-edge: #34383d;
-  --acc: #FF9E2C;
-  --acc2: #FF9E2C;
-  --echo-amber: #FF9E2C;
-  --decor: #e8ebed;
-  background: var(--bg2);
-  color: var(--ink);
-}
+/* ---- DARK ISLANDS: REMOVED 2026-08-27 -------------------------------------------------------
+   .rack-zone and .contact used to redeclare the site aliases to graphite in EVERY theme, because
+   both rendered photorealistic black hardware. The rack is gone, and the contact section is now
+   type plus the patchbay rather than a rendered panel — so neither needs to opt out. Light mode is
+   a real design across the whole page now instead of a page with two black holes in it. */
 /* .contact carries no band background of its own in the original design — keep that, so the
    patchbay reads as gear sitting on the page rather than a second full-width slab. */
 .contact { background: var(--bg); }
@@ -850,3 +829,78 @@ button.unit.plug {
    font's uppercase transform. Element-qualified and placed last so it outranks the
    heading rules above it (.also-card h4, .ov-head h2) rather than tying and losing. */
 h1.lc, h2.lc, h3.lc, h4.lc, span.lc, .lc { text-transform: lowercase; }
+
+
+/* ============================================================================================
+   HOMEPAGE 2026-08-27 — Front Door structure. docs/homepage-redesign.md
+   ============================================================================================ */
+
+/* The h1 is a sentence now, not the wordmark, so it opts out of --h1 (110–196px) and of the
+   uppercase transform .display carries. */
+/* .hero h1 is 0,0,1,1 and sets --h1 (110–196px, sized for the WARREN LABS wordmark), so a bare
+   .h1-lede at 0,0,1,0 loses and the sentence renders at 172px. Match the specificity. */
+.hero h1.h1-lede { font-size: clamp(34px, 4.6vw, 58px); line-height: 1.05; letter-spacing: -0.022em;
+  text-transform: none; font-weight: 600; margin: 0 0 14px; max-width: 17ch; text-wrap: balance; }
+.hero-status { font-size: 12px; letter-spacing: 0.13em; color: var(--acc); margin: 0 0 26px; }
+.hero-byline { font-size: 15.5px; color: var(--faint); margin: 0 0 26px; max-width: 56ch; }
+.hero-fine { font-size: 14px; color: var(--faint); margin: 14px 0 0; }
+.hero-aside { font-size: 12px; letter-spacing: 0.06em; color: var(--faint); margin: 20px 0 0; }
+.hero-aside a { color: var(--dim); text-decoration: none; border-bottom: 1px solid var(--line); }
+.hero-aside a:hover { color: var(--acc); border-color: var(--acc); }
+
+/* three steps */
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+.step-n { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.13em;
+  color: var(--acc); margin-bottom: 10px; }
+.step p { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--dim); }
+.step a { color: var(--ink); text-decoration-color: var(--acc); text-underline-offset: 3px; }
+.honesty { border-left: 2px solid var(--line); padding-left: 18px; margin: 34px 0 0;
+  font-size: 14.5px; color: var(--faint); max-width: 62ch; }
+
+/* spec strip + method */
+.specstrip { display: grid; grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--line); border-radius: 4px; overflow: hidden; margin: 0 0 38px; }
+.specstrip > div { padding: 16px 18px; border-right: 1px solid var(--line); background: var(--panel); }
+.specstrip > div:last-child { border-right: 0; }
+.ss-k { display: block; font-size: 10px; letter-spacing: 0.14em; color: var(--faint); margin-bottom: 6px; }
+.ss-v { font-size: 14px; color: var(--ink); }
+ol.method { list-style: none; counter-reset: m; padding: 0; margin: 0; display: grid; gap: 22px; }
+/* Two columns: the counter in col 1, ALL the content in col 2. Without pinning b and p to
+   column 2 they auto-place, so the paragraph lands in the 30px counter column and the list item
+   renders ~1000px tall. */
+ol.method li { counter-increment: m; display: grid; grid-template-columns: 30px 1fr;
+  column-gap: 16px; row-gap: 4px; }
+ol.method li > b, ol.method li > p { grid-column: 2; }
+ol.method li::before { content: counter(m) "."; font-family: "JetBrains Mono", monospace;
+  font-size: 13px; font-weight: 700; color: var(--acc); padding-top: 3px; }
+ol.method b { display: block; font-size: 16.5px; margin-bottom: 5px; }
+ol.method p { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--dim); max-width: 66ch; }
+ol.method a { color: var(--ink); text-decoration-color: var(--acc); text-underline-offset: 3px; }
+
+.ladder-k { margin: 40px 0 16px; }
+
+/* plugin offers — price and state are separate fields so the store opening is a data change */
+.plines { border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+.pline { display: grid; grid-template-columns: 210px 90px 116px 1fr; gap: 22px; align-items: baseline;
+  padding: 19px 24px; border-bottom: 1px solid var(--line); background: var(--panel);
+  text-decoration: none; color: inherit; }
+.pline:last-child { border-bottom: 0; }
+.pline:hover { background: var(--panel-hi); }
+.pl-nm { font-size: 17px; font-weight: 600; }
+.pl-pr { font-size: 16px; font-weight: 700; color: var(--acc); font-variant-numeric: tabular-nums; }
+.pl-st { font-size: 9.5px; font-weight: 700; letter-spacing: 0.11em; color: var(--faint);
+  border: 1px solid var(--line); border-radius: 2px; padding: 3px 7px; justify-self: start; }
+.pl-st.shipping { color: var(--acc); border-color: var(--acc); }
+.pl-bl { font-size: 14.5px; color: var(--dim); }
+.plug-state { margin: 20px 0 0; padding: 16px 20px; border: 1px solid var(--line); border-radius: 4px;
+  background: var(--bg2); font-size: 15px; color: var(--dim); }
+.plug-state b { color: var(--ink); }
+
+@media (max-width: 900px) {
+  .steps { grid-template-columns: 1fr; gap: 26px; }
+  .specstrip { grid-template-columns: 1fr 1fr; }
+  .specstrip > div:nth-child(2) { border-right: 0; }
+  .pline { grid-template-columns: 1fr auto; gap: 8px 14px; }
+  .pl-st { grid-column: 1 / -1; }
+  .pl-bl { grid-column: 1 / -1; }
+}

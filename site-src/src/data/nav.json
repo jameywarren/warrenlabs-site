@@ -22,6 +22,10 @@
       "label": "LEARN"
     },
     {
+      "href": "/design-review/",
+      "label": "FOR MAKERS"
+    },
+    {
       "href": "/#patch",
       "label": "PATCH IN",
       "cta": true

@@ -32,7 +32,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <script async src="https://plausible.io/js/pa-7zF1GswBt5oYNLddNETeJ.js"></script>
 <script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script>
 <!-- wl:head:end -->
-<link rel="stylesheet" href="css/styles.css?v=6a025c55">
+<link rel="stylesheet" href="css/styles.css?v=2c7abc40">
 </head>
 <body>
 
@@ -46,7 +46,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <span>WARREN&nbsp;LABS</span>
     </div>
     <nav id="primary-nav">
-      <a href="/attune">ATTUNE</a><a href="/collections/headphones">HEADPHONES</a><a href="/graphs">MEASUREMENTS</a><a href="/measure">SEND ONE IN</a><a href="/learn">LEARN</a><a class="cta" href="/#patch">PATCH IN</a>
+      <a href="/attune">ATTUNE</a><a href="/collections/headphones">HEADPHONES</a><a href="/graphs">MEASUREMENTS</a><a href="/measure">SEND ONE IN</a><a href="/learn">LEARN</a><a href="/design-review/">FOR MAKERS</a><a class="cta" href="/#patch">PATCH IN</a>
     </nav>
     <button class="wl-theme" id="wl-theme" aria-label="Switch between light and dark" title="Light / dark">◐</button>
     <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="primary-nav">
@@ -57,229 +57,192 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <!-- wl:header:end -->
 
 <section class="hero wrap">
-  <div class="hero-kicker mono">
-    <span>THE&nbsp;LAB&nbsp;OF&nbsp;JAMEY&nbsp;WARREN</span><span class="sep">/</span>
-    <span>HEADPHONES&nbsp;·&nbsp;AMPS&nbsp;·&nbsp;DACS&nbsp;·&nbsp;DSP</span><span class="sep">/</span>
-    <span>IDEA&nbsp;→&nbsp;SHELF</span><span class="sep">/</span>
-    <span>LIVINGSTON,&nbsp;MT</span>
-  </div>
-  <h1 class="display">Warren<br>Labs</h1>
-  <canvas id="scope" height="230"></canvas>
+  <h1 class="display h1-lede">Tune your headphones by ear.</h1>
+  <p class="hero-status mono">FREE &middot; ON THE APP STORE FOR MAC, IPHONE AND IPAD</p>
   <div class="hero-sub">
     <div class="hero-lede-col">
-      <p class="lede">Measurement, correction, and a line of audio tools, built solo from a desk in Montana. I'm Jamey: twenty-five years in audio, soldering benches at Grace Design, then HeadRoom as CEO. Now I measure headphones on my own bench, publish what the rig says, and build the software that puts it to work.</p>
+      <p class="lede">Attune plays your own music, loudness matched, and asks which of two tunings you like better. About a dozen answers later you have a personal EQ curve for the headphones on your head. No target to agree with, no preset to take on faith, no subscription.</p>
+      <p class="hero-byline">Built by Jamey Warren on the bench in Livingston, Montana, on measurements taken here.</p>
       <div class="hero-cta">
-        <a class="btn primary" href="/attune">Try Attune, free <span aria-hidden="true">→</span></a>
-        <a class="btn ghost" href="/measure">Send a headphone in</a>
+        <a class="btn primary" href="https://apps.apple.com/app/attune-headphone-eq/id6792873303" target="_blank" rel="noopener">Download on the App Store <span aria-hidden="true">&#8599;</span></a>
+        <a class="btn ghost" href="/attune">How it works</a>
       </div>
-      <div class="now-chip"><span class="now-dot"></span>Open to projects &amp; partnerships</div>
+      <p class="hero-fine">Free. No account, no card.</p>
+      <p class="hero-aside mono">Building a headphone? The bench takes outside work. <a href="/design-review/">DESIGN REVIEW &rarr;</a></p>
     </div>
     <div class="creds mono">
-      <div class="cred"><span class="k">1997–2001</span><span class="v">GRACE DESIGN, EMPLOYEE #1</span></div>
-      <div class="cred"><span class="k">2003–2017</span><span class="v">HEADROOM, VP OPS → CEO</span></div>
-      <div class="cred"><span class="k">NOW</span><span class="v">WARREN LABS · INDEPENDENT</span></div>
+      <div class="cred"><span class="k">1997&ndash;2001</span><span class="v">GRACE DESIGN, EMPLOYEE #1</span></div>
+      <div class="cred"><span class="k">2003&ndash;2017</span><span class="v">HEADROOM, VP OPS &rarr; CEO</span></div>
+      <div class="cred"><span class="k">NOW</span><span class="v">WARREN LABS &middot; INDEPENDENT</span></div>
       <div class="cred"><span class="k">AUTHOR</span><span class="v">THE ART AND SCIENCE OF HEADPHONE DESIGN</span></div>
     </div>
   </div>
 </section>
 
+<!-- The scope moved out from behind the headline: it was competing with the h1 at the one moment
+     the page has a single thing to say. It now reads as a divider under the calls to action. -->
+<div class="scopeband"><canvas id="scope" height="150" aria-hidden="true"></canvas></div>
 
-
-<section class="rack-zone" id="work">
-  <div class="rack-head wrap">
-    <div class="k">THE WORK <span class="sig">·</span> BUILT SOLO</div>
-    <h2 class="display">Built in the open.</h2>
-    <p class="sub">Products I took from idea to working software myself: the DSP, the interface, and the calls about what ships. Level is shipping; Attune is on the App Store for Mac, iPhone and iPad; Tone Farm is in free beta.</p>
-    <div class="rack-instr mono"><span class="dot"></span>CLICK A UNIT FOR THE DETAIL</div>
-  </div>
-
-  <div class="rack-scene">
-    <div class="rack" id="rack3d">
-      <div class="rack-side"></div>
-      <div class="rail left"><div class="holes"></div></div>
-      <div class="rail right"><div class="holes"></div></div>
-
-      <div id="rackUnits"></div>
-
-      <div class="unit vent static"><div class="slots"></div></div>
-
-      <div class="rack-shadow"></div>
+<section class="offer-zone" id="attune">
+  <div class="wrap">
+    <div class="offer-head">
+      <div class="k mono">YOU OWN HEADPHONES <span class="sig">&middot;</span> REAL TIME, ON YOUR OWN MUSIC</div>
+      <h2 class="display">You listen. It writes the curve.</h2>
+      <p class="sub">Everything happens on the track you already have playing.</p>
     </div>
-  </div>
-</section>
-<section class="offer-zone" id="bench">
-<div class="wrap">
-<div class="offer-head">
-<div class="k mono">THE BENCH <span class="sig">·</span> MEASURED HERE</div>
-<h2 class="display">We measure headphones.</h2>
-<p class="sub">Every correction you can buy is built from somebody else&rsquo;s sample of your model. Send yours and get the curve of the pair actually in your hands, published either way, flattering or not.</p>
-</div>
-<a class="offer" href="/measure">
-<div class="offer-main">
-<div class="offer-k mono">SEND ONE IN</div>
-<h3 class="display">Your unit, on our rig</h3>
-<p>Measured on a miniDSP EARS&nbsp;Pro, seated for best fit and labelled by rig, back to you in about a week, and it gets its own page here, credited however you like. Unit variation is real, and your pair&rsquo;s exact curve is what Attune turns into a personal tuning.</p>
-</div>
-<div class="offer-side mono">
-<div class="offer-spec"><span class="sk">ON OUR LIST</span><span class="sv">Free, shipping both ways</span></div>
-<div class="offer-spec"><span class="sk">ANYTHING ELSE</span><span class="sv">$89</span></div>
-<div class="offer-spec"><span class="sk">TURNAROUND</span><span class="sv">About a week</span></div>
-<span class="offer-note">Every result published, flattering or not.</span>
-<span class="offer-go">SEND ONE IN &#8599;</span>
-</div>
-</a>
-<!-- Manufacturers get their own door. The business cards are printed and can't carry the URL, so
-     the path from "who is this guy" to "here is the ask, in writing" has to be obvious from the
-     home page. Deliberately understated: it is a second door, not a second pitch. -->
-<a class="offer-alt" href="/loaners">
-  <span class="oa-k mono">FOR MANUFACTURERS</span>
-  <span class="oa-main">
-    <b>Loan us a headphone and we&rsquo;ll send you back the data.</b>
-    Your unit on a documented rig, the raw measurement file returned for your own use, free. You cover
-    shipping out; we insure and pay the return.
-  </span>
-  <span class="oa-go mono">THE ASK, IN WRITING &#8599;</span>
-</a>
-</div>
-</section>
-
-
-<section class="also wrap" id="projects">
-  <div class="also-head">
-    <div class="k mono">MORE FROM THE LAB</div>
-    <p class="sub">Two more things built here: the open field manual on how headphones work, and an iOS app. Click either for the detail.</p>
-  </div>
-  <div class="also-grid">
-    <button class="also-card" data-unit="maker"><span class="led" style="--led-c:var(--led-green)"></span><h4 class="lc">makerphones</h4><span class="ac-cat">Build manual · Author</span><span class="ac-tl">32 chapters turning headphone design, driver physics to tuning, into something anyone can build.</span></button>
-    <button class="also-card" data-unit="changes"><span class="led blink" style="--led-c:var(--led-amber)"></span><h4>Changes</h4><span class="ac-cat">iOS app · Solo product + build</span><span class="ac-tl">Hum a song, get a Nashville number chart. Defined it, built it, shipped it, all on-device.</span></button>
-  </div>
-</section>
-
-<section class="about wrap" id="about">
-  <h2 class="display">Why trust the measurements</h2>
-  <div class="about-grid">
-    <img src="assets/photo-desk.jpg" alt="Jamey at the Warren Labs desk">
-    <div class="about-col">
-      <p>Because the method is written down and you can check it. Every headphone is <strong>seated deliberately, for the best fit</strong>. That means adjusted for seal and for sound, the way you adjust a headphone before you settle in to listen, not dropped on at random. Most published measurements average a handful of careless placements together. We think that answers the wrong question: you don't listen at a random seating, you listen at the one you fiddled your way to. So we measure the good one, then prove we can find it again.</p>
-      <p>What gets published is <strong>one real seating, never a blend of several</strong>, chosen by a stated rule. Both channels are measured and kept. The rig, the seating procedure, and what we know about repeatability go on the page next to the curve, including the parts that aren't flattering: where the fixture stops being trustworthy, and how far a line moves if you seat it again. That last one turned out to be a property of the headphone rather than of the rig, so it is published as a range instead of a single band. <strong>A measurement you can't audit is just a picture of a line.</strong></p>
-      <p class="about-bio">Background, for what it's worth: I was employee&nbsp;#1 at Grace Design, where one of my jobs was building the automated measurement system the gear was tested against, and I later ran HeadRoom as president and CEO. It's why I care about this, and it's how I learned what a bad measurement looks like. It isn't the reason to trust the graph. The method above is.</p>
-    </div>
-  </div>
-  <!-- The book. makerphones.com is LIVE and real. The Kindle edition is LIVE on Amazon. Print (Amazon) + IngramSpark listings are still in review. Placeholder anchor kept commented below until they go live. -->
-  <div class="book">
-    <img class="book-cover" src="assets/book-cover.jpg" width="560" height="800" loading="lazy" alt="Cover of The Art and Science of Headphone Design by Jamey Warren">
-    <div class="book-body">
-      <div class="book-meta mono">
-        <span class="bk-k">THE BOOK</span>
-        <span class="bk-stat"><span class="led" style="--led-c:var(--led-green)"></span>FREE &amp; OPEN · makerphones.com</span>
+    <div class="steps">
+      <div class="step">
+        <span class="step-n mono">01 &middot; PICK YOUR HEADPHONE</span>
+        <p>Every headphone that ships in Attune was measured here, on our own rig. Not one of ours? Import a measurement you already have &mdash; CSV, AutoEq or squig &mdash; free. Or <a href="/measure">send your pair in</a> and we&rsquo;ll measure it.</p>
       </div>
-      <h3 class="book-title">The Art and Science of Headphone Design</h3>
-      <p class="book-copy">I wrote <em>The Art and Science of Headphone Design</em>, a bench manual on how headphones actually work, from driver physics to measurement and tuning. The full reference is free and open at <a href="https://makerphones.com" target="_blank" rel="noopener">makerphones.com</a>. There's also a print and Kindle edition for anyone who wants it on the bench.</p>
-      <div class="book-links">
-        <a class="btn ghost" href="https://makerphones.com" target="_blank" rel="noopener">Read it free at makerphones.com <span aria-hidden="true">↗</span></a>
-        <a class="btn ghost" href="https://www.amazon.com/dp/B0H6XWXM4C" target="_blank" rel="noopener">Kindle edition on Amazon <span aria-hidden="true">↗</span></a>
-        <!-- Still in review: print (Amazon) + IngramSpark. When a listing goes live, uncomment the matching anchor and drop the real URL in place of the placeholder. -->
-        <!-- <a class="btn ghost" href="INGRAM_URL_PLACEHOLDER" target="_blank" rel="noopener">Available wherever books are sold <span aria-hidden="true">↗</span></a> -->
+      <div class="step">
+        <span class="step-n mono">02 &middot; ANSWER A OR B</span>
+        <p>About a dozen short comparisons, blind and loudness matched, so louder can never pass for better. It crossfades between the two instead of muting, so the only thing that changes is the sound.</p>
+      </div>
+      <div class="step">
+        <span class="step-n mono">03 &middot; KEEP IT</span>
+        <p>Your answers build one curve, saved per headphone. One saved sound is free and stays free. Pro is a one-time $39 unlock &mdash; never a subscription &mdash; for unlimited sounds and AutoEq export.</p>
       </div>
     </div>
-  </div>
-  <div class="era-cards">
-    <div class="era">
-      <div class="y"><span>1997 · GRACE DESIGN</span><span>01</span></div>
-      <h4>Employee #1</h4>
-      <p>Production, testing, repair, prototyping, and the automated measurement system the gear was tested against. Two founders and me, to twenty people and gear in studios worldwide.</p>
-    </div>
-    <div class="era">
-      <div class="y"><span>2003 · HEADROOM</span><span>02</span></div>
-      <h4>VP Ops → President &amp; CEO</h4>
-      <p>Relaunched the entire headphone-amplifier line: every model from concept through prototype into production.</p>
-    </div>
-    <div class="era">
-      <div class="y"><span>NOW · WARREN LABS</span><span>03</span></div>
-      <h4>Building in public</h4>
-      <p>An independent line of audio tools and an open headphone field manual. Running the whole product chain myself, in the open, so you can see exactly how I work.</p>
-    </div>
+    <p class="honesty">EQ moves tonal balance and nothing else. It will not buy you resolution, soundstage, lower distortion or different driver physics, and nothing on this page says otherwise.</p>
   </div>
 </section>
 
 <section class="approach wrap" id="approach">
   <div class="approach-head">
-    <div class="k mono">WHAT I DO <span class="sig">·</span> THE SIGNAL CHAIN</div>
-    <h2 class="display">The same chain, every time.</h2>
-    <p class="sub">Every product above ran this chain, idea to shelf: the measurements, the DSP, and the calls about what ships. It&rsquo;s also what I&rsquo;m hired for, one stage or the whole path.</p>
+    <div class="k mono">THE BENCH <span class="sig">&middot;</span> LIVINGSTON, MONTANA</div>
+    <h2 class="display">Why trust the measurements</h2>
+    <p class="sub">Because the method is written down and you can check it. A measurement you can&rsquo;t audit is just a picture of a line.</p>
   </div>
-  <div class="chain">
-    <div class="chain-mod">
-      <div class="stage"><span>SOURCE</span><span class="n">01</span></div>
-      <svg class="chain-icon" viewBox="0 0 48 32" aria-hidden="true"><path d="M2 16 q4 -11 8 0 t8 0 t8 0"/><line x1="34" y1="16" x2="43" y2="16"/><path d="M39 12 l5 4 -5 4"/></svg>
-      <h3>Find the signal</h3>
-      <p>What's actually worth building: the real problem, the honest market, the thing only you can pull off.</p>
-    </div>
-    <div class="chain-mod">
-      <div class="stage"><span>SHAPE</span><span class="n">02</span></div>
-      <svg class="chain-icon" viewBox="0 0 48 32" aria-hidden="true"><path d="M2 22 C9 22 11 9 18 9 C25 9 27 23 34 23 C39 23 42 17 46 17"/><circle cx="18" cy="9" r="2.6"/><circle cx="34" cy="23" r="2.6"/></svg>
-      <h3>What's in, what's out</h3>
-      <p>Settling the feature set and holding the line. The best calls are usually the things left out.</p>
-    </div>
-    <div class="chain-mod">
-      <div class="stage"><span>ROUTING</span><span class="n">03</span></div>
-      <svg class="chain-icon" viewBox="0 0 48 32" aria-hidden="true"><circle cx="7" cy="16" r="3"/><line x1="10" y1="16" x2="39" y2="7"/><line x1="10" y1="16" x2="40" y2="16"/><line x1="10" y1="16" x2="39" y2="25"/><circle cx="42" cy="6" r="2.4"/><circle cx="43" cy="16" r="2.4"/><circle cx="42" cy="26" r="2.4"/></svg>
-      <h3>Who it's for</h3>
-      <p>Who actually buys it and why, what it costs, and the story that lands it in the right hands.</p>
-    </div>
-    <div class="chain-mod">
-      <div class="stage"><span>OUTPUT</span><span class="n">04</span></div>
-      <svg class="chain-icon" viewBox="0 0 48 32" aria-hidden="true"><line x1="6" y1="23" x2="6" y2="15"/><line x1="12" y1="23" x2="12" y2="9"/><line x1="18" y1="23" x2="18" y2="18"/><line x1="26" y1="16" x2="42" y2="16"/><path d="M38 11 l5 5 -5 5"/></svg>
-      <h3>Get it shipped</h3>
-      <p>Prototype to production. Hardware and software, sketch to shelf, including the places it tends to go sideways.</p>
-    </div>
+  <div class="specstrip mono">
+    <div><span class="ss-k">FIXTURE</span><span class="ss-v">miniDSP EARS Pro, IEC 60318-4</span></div>
+    <div><span class="ss-k">INSTRUMENT FLOOR</span><span class="ss-v">0.002 dB, 200 Hz &ndash; 2 kHz</span></div>
+    <div><span class="ss-k">PUBLISHED</span><span class="ss-v">Raw, full res, CC BY-NC 4.0</span></div>
+    <div><span class="ss-k">BENCH</span><span class="ss-v">Livingston, Montana</span></div>
   </div>
+  <ol class="method">
+    <li>
+      <b>The rig.</b>
+      <p>A miniDSP EARS Pro with per-unit serial-matched calibration, using IEC 60318-4 couplers &mdash; the coupler standard the industry rigs use. It&rsquo;s a house reference, not an industry reference coupler, and it&rsquo;s labelled that way next to every graph.</p>
+    </li>
+    <li>
+      <b>Seated for best fit, deliberately.</b>
+      <p>The headphone is adjusted for seal and for sound the way someone settling in to listen would adjust it, not dropped on at random. You don&rsquo;t listen at a random seating, so we measure the good one &mdash; and then prove we can find it again.</p>
+    </li>
+    <li>
+      <b>Published raw, flattering or not.</b>
+      <p>Every first-party measurement goes up at full resolution under CC BY-NC 4.0, with the rig and the date on it. <a href="/graphs">See the measurements</a>.</p>
+    </li>
+  </ol>
 </section>
-<section class="offer-zone" id="offer">
+
+<section class="offer-zone" id="bench">
   <div class="wrap">
     <div class="offer-head">
-      <div class="k mono">ALSO AVAILABLE <span class="sig">·</span> FIXED FEE</div>
-      <h2 class="display">Need a second pair of ears?</h2>
-      <p class="sub">If you&rsquo;re building a headphone, I&rsquo;ll read one from the outside: measured, listened to, and written up. Occasional work, taken a few times a year.</p>
+      <div class="k mono">THE BENCH <span class="sig">&middot;</span> WHAT IT COSTS</div>
+      <h2 class="display">Send us your pair.</h2>
+      <p class="sub">Every correction you can buy is built from somebody else&rsquo;s sample of your model. Send yours and get the curve of the pair actually in your hands &mdash; published either way, flattering or not.</p>
     </div>
-    <a class="offer" href="/design-review/">
+    <a class="offer" href="/measure">
       <div class="offer-main">
-        <div class="offer-k mono">THE OFFER</div>
-        <h3 class="display">Headphone Design Review</h3>
-        <p>Send me a prototype or a shipping unit. I measure it, listen critically, and deliver a written report on what the design is doing, what it's trading off, and what I'd change.</p>
+        <div class="offer-k mono">SEND ONE IN</div>
+        <h3 class="display">Your unit, on our rig</h3>
+        <p>Measured on the EARS Pro, seated for best fit and labelled by rig, back to you in about a week &mdash; and it gets its own page here, credited however you like. Unit variation is real, and what your specific pair measures is exactly what Attune turns into a personal tuning.</p>
       </div>
       <div class="offer-side mono">
-        <div class="offer-spec"><span class="sk">FEE</span><span class="sv">$4,500 fixed</span></div>
-        <div class="offer-spec"><span class="sk">TURNAROUND</span><span class="sv">Two weeks</span></div>
-        <div class="offer-spec"><span class="sk">COMMITMENT</span><span class="sv">None ongoing</span></div>
-        <span class="offer-note">Larger engagements scoped separately.</span>
-      <span class="offer-go">SEE WHAT'S IN THE REPORT ↗</span>
+        <div class="offer-spec"><span class="sk">ON OUR LIST</span><span class="sv">Free, both ways</span></div>
+        <div class="offer-spec"><span class="sk">ANYTHING ELSE</span><span class="sv">$89</span></div>
+        <div class="offer-spec"><span class="sk">TURNAROUND</span><span class="sv">About a week</span></div>
+        <span class="offer-note">Every result published, flattering or not.</span>
+        <span class="offer-go">SEND ONE IN &#8599;</span>
       </div>
     </a>
-    <!-- Second paid service, added as a quieter sibling for the same reason /loaners is one in the
-         bench section above: it is "there is also this", not a competing pitch. It has no page of
-         its own yet, so it deep-links to the block on /design-review that describes it. -->
+
+    <div class="k mono ladder-k">YOU MAKE HEADPHONES</div>
+    <a class="offer-alt" href="/loaners">
+      <span class="oa-k mono">FREE &middot; LOAN US A HEADPHONE</span>
+      <span class="oa-main"><b>Send me the headphone. I&rsquo;ll send you back the data.</b>
+        One retail unit on loan for two weeks, measured on a documented rig, with the raw measurement file returned for your own use and no conditions attached. You cover shipping out; we insure and pay the return.</span>
+      <span class="oa-go mono">LOAN ONE &#8599;</span>
+    </a>
     <a class="offer-alt" href="/design-review/#production-measurement">
       <span class="oa-k mono">PRODUCTION MEASUREMENT</span>
-      <span class="oa-main">
-        <b>Before a run ships, or after one goes wrong.</b>
-        Send a sample from your production units. Every one measured on the same rig under one
-        documented seating protocol, reported unit to unit and channel to channel against your
-        design intent. You get the report, the graphs, and the raw data.
-      </span>
+      <span class="oa-main"><b>Before a run ships, or after one goes wrong.</b>
+        Send a sample from your production units. Every one measured on the same rig under one documented seating protocol, reported unit to unit and channel to channel against your design intent. You get the report, the graphs, and the raw data.</span>
       <span class="oa-go mono">FROM $750 &#8599;</span>
+    </a>
+    <a class="offer-alt" href="/design-review/">
+      <span class="oa-k mono">HEADPHONE DESIGN REVIEW</span>
+      <span class="oa-main"><b>An outside read on one product.</b>
+        Send a prototype or a shipping unit. It gets measured, listened to critically, and written up: who the design actually serves, what it&rsquo;s trading off, and a short list of specific changes ranked by what each would cost you to make. Two weeks, fixed fee, no ongoing commitment.</span>
+      <span class="oa-go mono">$4,500 FIXED &#8599;</span>
+    </a>
+  </div>
+</section>
+
+<section class="offer-zone" id="plugins">
+  <div class="wrap">
+    <div class="offer-head">
+      <div class="k mono">YOU MIX <span class="sig">&middot;</span> AU AND VST3 FOR MACOS</div>
+      <h2 class="display">Tools that tell the truth.</h2>
+      <p class="sub">Nine plugins on one shared DSP library, built alongside the measurement work. Level is the correction engine Attune runs on, as a plugin for your DAW.</p>
+    </div>
+    <!-- Price and STATE are separate fields on purpose. When the store opens, the chip becomes a
+         buy link and the note below is deleted — no layout change. See docs/homepage-redesign.md §8. -->
+    <div class="plines">
+      <a class="pline" href="/plugins/level/">
+        <span class="pl-nm">Level</span><span class="pl-pr mono">$29</span>
+        <span class="pl-st mono shipping">SHIPPING</span>
+        <span class="pl-bl">Headphone correction plus Bauer crossfeed with interaural delay. Every curve says who measured it.</span>
+      </a>
+      <a class="pline" href="/plugins/">
+        <span class="pl-nm">The Reference Desk</span><span class="pl-pr mono">$49</span>
+        <span class="pl-st mono">PUBLIC BETA</span>
+        <span class="pl-bl">Square, Bevel, Brace, Pare, Scribe &mdash; everything you need to hear the mix honestly.</span>
+      </a>
+      <a class="pline" href="/plugins/">
+        <span class="pl-nm">The Character Collection</span><span class="pl-pr mono">$39</span>
+        <span class="pl-st mono">PUBLIC BETA</span>
+        <span class="pl-bl">Temper, Ripple, Wake. Heat, motion and space.</span>
+      </a>
+      <a class="pline" href="/plugins/">
+        <span class="pl-nm">The Whole Lab</span><span class="pl-pr mono">$79</span>
+        <span class="pl-st mono">PUBLIC BETA</span>
+        <span class="pl-bl">Every Warren Labs plugin, one install.</span>
+      </a>
+    </div>
+    <p class="plug-state"><b>Paid public beta.</b> The store is built and tested and not switched on yet, so those are the prices, not a checkout. Leave your address on the plugin page and I&rsquo;ll tell you the day it opens.</p>
+  </div>
+</section>
+
+<section class="also wrap" id="projects">
+  <div class="also-head">
+    <div class="k mono">ALSO FROM THE LAB</div>
+  </div>
+  <div class="also-grid">
+    <a class="also-card" href="https://github.com/makerphones/first-chair" target="_blank" rel="noopener">
+      <h3>makerphones</h3>
+      <p>An open source headphone you can build and service yourself. Sprung steel bow, commodity pads, printed parts &mdash; designed so a tweaker can take it apart.</p>
+    </a>
+    <a class="also-card" href="/graphs">
+      <h3>The measurements</h3>
+      <p>Every first-party measurement published raw and at full resolution under CC BY-NC 4.0. Flattering or not.</p>
+    </a>
+    <a class="also-card" href="/learn">
+      <h3>The Art and Science of Headphone Design</h3>
+      <p>The book. Written from the same bench, and the same method, the measurements on this site come from.</p>
     </a>
   </div>
 </section>
 
 <section class="contact wrap" id="patch">
-  <div class="k">OUTPUT SECTION · CONTACT</div>
+  <div class="k">OUTPUT SECTION &middot; CONTACT</div>
   <h2 class="display">Building something in audio? <span class="accent">Patch in.</span></h2>
-  <p class="contact-sub">Tell me what you're working on, and I'll let you know honestly whether I'm the right fit.</p>
+  <p class="contact-sub">Tell me what you&rsquo;re working on and where it is in the process. I&rsquo;ll confirm the fit before anything is booked.</p>
 
   <div class="pbay" id="pbay">
     <div class="pbay-panel">
-      <div class="pbay-title mono">WL PATCHBAY · 12 CH · CLICK A JACK TO RE-PATCH</div>
+      <div class="pbay-title mono">WL PATCHBAY &middot; 12 CH &middot; CLICK A JACK TO RE-PATCH</div>
       <div class="pbay-row" id="pbayRow"></div>
     </div>
     <canvas id="pbayCv"></canvas>
@@ -287,8 +250,8 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
   </div>
   <div class="contact-links">
     <a class="primary" href="mailto:jamey@warrenlabs.com">JAMEY@WARRENLABS.COM</a>
-    <a href="https://www.linkedin.com/in/jameywarren" target="_blank" rel="noopener">LINKEDIN ↗</a>
-    <a href="https://github.com/jameywarren" target="_blank" rel="noopener">GITHUB ↗</a>
+    <a href="https://www.linkedin.com/in/jameywarren" target="_blank" rel="noopener">LINKEDIN &#8599;</a>
+    <a href="https://github.com/jameywarren" target="_blank" rel="noopener">GITHUB &#8599;</a>
   </div>
 </section>
 
@@ -315,20 +278,6 @@ b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';
   dispatchEvent(new CustomEvent('wl-theme-change',{detail:{theme:n}}));});})();
 </script>
 <!-- wl:footer:end -->
-
-<!-- fullscreen unit overlay -->
-<div class="ov" id="ov">
-  <div class="ov-scrim" id="ovScrim"></div>
-  <div class="ov-card">
-    <div class="ov-head">
-      <span class="u-num" id="ovNum"></span>
-      <h2 id="ovTitle"></h2>
-      <div class="u-status" id="ovStatus"></div>
-      <button class="ov-close" id="ovClose">✕</button>
-    </div>
-    <div class="ov-body" id="ovBody"></div>
-  </div>
-</div>
 
 <script src="js/wl-eq1.js"></script>
 <script src="js/wl-app.js"></script>

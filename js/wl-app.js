@@ -1,528 +1,86 @@
-// Warren Labs core app: oscilloscope, 3D rack, unit overlays
+// Warren Labs homepage: oscilloscope + mobile nav.
+//
+// The 3D rack, its parallax, its unit data and its fullscreen overlay were removed 2026-08-27.
+// Reason, in short: FEATURED/SUITES here was a THIRD hand-maintained source of truth for the same
+// nine products, alongside web/plugins.json and site-src/src/data/*.js, and every stale fact on the
+// page lived in that fork — Level pinned at "0.2.26 · not yet notarized" when it was 0.3.0 and
+// notarized, Attune iOS "in review" when attune.js had read live for a week, and "Trueness suite"
+// when the store sells "The Reference Desk". Correcting a fork only resets the clock. See
+// docs/homepage-redesign.md §1.4.
 (function () {
   'use strict';
 
-  /* ---------------- oscilloscope ---------------- */
+  /* ---------------- oscilloscope ----------------
+     Moved out from behind the h1 into its own band under the calls to action — it was competing
+     with the headline at the one moment the page has a single thing to say.
+
+     Colours are READ FROM CSS rather than hardcoded. The old version baked in
+     rgba(232,235,237,…), which is why it was invisible in light mode and why it got classed as
+     decoration worth deleting. It isn't decoration: the trace swells toward the pointer. */
   const scope = document.getElementById('scope');
-  const sctx = scope.getContext('2d');
-  let W = 0;
-  function sizeScope() {
-    W = window.innerWidth;
-    scope.width = W;
-  }
-  sizeScope();
-  window.addEventListener('resize', sizeScope);
+  if (scope) {
+    const sctx = scope.getContext('2d');
+    const H = 150, MID = 75;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let W = 0;
 
-  let mouseX = W / 2, energy = 0.4, t = 0;
-  document.addEventListener('pointermove', e => {
-    mouseX = e.clientX;
-    energy = Math.min(1.2, energy + 0.06);
-  });
-  function drawScope() {
-    t += 0.016;
-    energy += (0.4 - energy) * 0.012;
-    sctx.clearRect(0, 0, W, 230);
-    const mid = 125;
-    sctx.strokeStyle = 'rgba(255,255,255,0.05)';
-    sctx.lineWidth = 1;
-    sctx.beginPath();
-    for (let x = 0; x <= W; x += 80) { sctx.moveTo(x, mid - 58); sctx.lineTo(x, mid + 58); }
-    sctx.stroke();
-    // Hero waveform is decorative. Neutral off-white trace (graphite world), not the amber accent.
-    const base = '232,235,237';
+    const tok = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+    let TRACE = tok('--wl-text') || '#e8ebed';
+    let GRIDA = 0.05;
+    const reread = () => { TRACE = tok('--wl-text') || '#e8ebed'; };
+    window.addEventListener('wl-theme', reread);
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    mq.addEventListener && mq.addEventListener('change', reread);
+    new MutationObserver(reread).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    const sizeScope = () => {
+      W = scope.clientWidth;
+      scope.width = W * dpr; scope.height = H * dpr;
+      sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    sizeScope();
+    window.addEventListener('resize', sizeScope);
+
+    let mouseX = 0, energy = 0.4, t = 0;
+    document.addEventListener('pointermove', e => {
+      const r = scope.getBoundingClientRect();
+      mouseX = e.clientX - r.left;
+      energy = Math.min(1.2, energy + 0.06);
+    });
+
     const layers = [
-      { amp: 44, freq: 0.012, speed: 2.0, color: `rgba(${base},0.60)`, w: 2.2 },
-      { amp: 25, freq: 0.02, speed: -1.4, color: `rgba(${base},0.22)`, w: 1.4 },
-      { amp: 62, freq: 0.007, speed: 1.0, color: 'rgba(255,255,255,0.07)', w: 1 }
+      { amp: 30, freq: 0.012, speed: 2.0, alpha: 0.55, w: 2.2 },
+      { amp: 17, freq: 0.020, speed: -1.4, alpha: 0.22, w: 1.4 },
+      { amp: 42, freq: 0.007, speed: 1.0, alpha: 0.08, w: 1.0 }
     ];
-    layers.forEach(L => {
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function drawScope() {
+      t += 0.016;
+      energy += (0.4 - energy) * 0.012;
+      sctx.clearRect(0, 0, W, H);
+
+      sctx.globalAlpha = GRIDA; sctx.strokeStyle = TRACE; sctx.lineWidth = 1;
       sctx.beginPath();
-      sctx.strokeStyle = L.color;
-      sctx.lineWidth = L.w;
-      for (let x = 0; x <= W; x += 4) {
-        const prox = Math.exp(-Math.pow((x - mouseX) / 220, 2));
-        const a = L.amp * energy * (0.55 + prox * 1.6);
-        const y = mid
-          + Math.sin(x * L.freq + t * L.speed) * a
-          + Math.sin(x * L.freq * 2.7 + t * L.speed * 1.7) * a * 0.3;
-        x === 0 ? sctx.moveTo(x, y) : sctx.lineTo(x, y);
-      }
+      for (let x = 0; x <= W; x += 80) { sctx.moveTo(x, MID - 40); sctx.lineTo(x, MID + 40); }
       sctx.stroke();
-    });
-    requestAnimationFrame(drawScope);
-  }
-  drawScope();
 
-  /* ---------------- rack parallax ---------------- */
-  const rack = document.getElementById('rack3d');
-  const scene = document.querySelector('.rack-scene');
-  document.querySelector('.rack-zone').addEventListener('mousemove', e => {
-    const r = scene.getBoundingClientRect();
-    const nx = (e.clientX - (r.left + r.width / 2)) / r.width;   // -0.5..0.5
-    const ny = (e.clientY - (r.top + r.height / 2)) / r.height;
-    rack.style.setProperty('--mx', (nx * 5).toFixed(2) + 'deg');
-    rack.style.setProperty('--my', (-ny * 3).toFixed(2) + 'deg');
-  });
-  document.querySelector('.rack-zone').addEventListener('mouseleave', () => {
-    rack.style.setProperty('--mx', '0deg');
-    rack.style.setProperty('--my', '0deg');
-  });
-
-  /* ---------------- WL-EQ1 faceplate curve ---------------- */
-  const eqMini = document.getElementById('eqMini');
-  if (eqMini) {
-    const mctx = eqMini.getContext('2d');
-    const MW = 500, MH = 176;
-    function cssVarLocal(n) {
-      return getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-    }
-    function curveG(t) {
-      return 4.2 * Math.exp(-Math.pow((t - 0.16) / 0.13, 2))
-           - 3.4 * Math.exp(-Math.pow((t - 0.52) / 0.12, 2))
-           + 5.0 * Math.exp(-Math.pow((t - 0.84) / 0.11, 2));
-    }
-    function drawMini() {
-      // Faceplate curve reads like the plugin screen: white trace, neutral band markers.
-      const dotc = '#c6cacd';
-      mctx.clearRect(0, 0, MW, MH);
-      // grid
-      mctx.strokeStyle = 'rgba(255,255,255,0.06)';
-      mctx.lineWidth = 1;
-      for (let x = 62; x < MW; x += 62) {
-        mctx.beginPath(); mctx.moveTo(x, 8); mctx.lineTo(x, MH - 8); mctx.stroke();
-      }
-      mctx.strokeStyle = 'rgba(255,255,255,0.12)';
-      mctx.beginPath(); mctx.moveTo(8, MH / 2); mctx.lineTo(MW - 8, MH / 2); mctx.stroke();
-      // curve
-      mctx.beginPath();
-      for (let x = 8; x <= MW - 8; x += 4) {
-        const t = (x - 8) / (MW - 16);
-        const y = MH / 2 - curveG(t) * 11;
-        x === 8 ? mctx.moveTo(x, y) : mctx.lineTo(x, y);
-      }
-      mctx.strokeStyle = 'rgba(255,255,255,0.9)';
-      mctx.lineWidth = 3;
-      mctx.stroke();
-      // band dots
-      [[0.16, dotc], [0.52, dotc], [0.84, dotc]].forEach(([t, c]) => {
-        const x = 8 + t * (MW - 16);
-        const y = MH / 2 - curveG(t) * 11;
-        mctx.beginPath(); mctx.arc(x, y, 8, 0, Math.PI * 2);
-        mctx.fillStyle = c; mctx.fill();
-        mctx.beginPath(); mctx.arc(x, y, 14, 0, Math.PI * 2);
-        mctx.strokeStyle = c + '55'; mctx.lineWidth = 2.5; mctx.stroke();
-      });
-    }
-    drawMini();
-  }
-
-  /* ---------------- the rack ----------------
-     The rack used to build itself from plugins/plugins.json and render the full 12-unit
-     catalog. It is now a curated shortlist defined in FEATURED below, because this section
-     is portfolio evidence rather than a storefront. Status LED = green (shipping) / amber
-     blink (in development); knob pointers take each product's faceplate accent. The
-     personal projects live in the "More from the lab" strip below (overlays, via UNITS). */
-  function knobRots(seed, n) {
-    let h = 0;
-    for (const ch of seed) h = (h * 131 + ch.charCodeAt(0)) >>> 0;
-    const out = [];
-    for (let i = 0; i < n; i++) { h = (h * 1103515245 + 12345) & 0x7fffffff; out.push(Math.round(h / 0x7fffffff * 240 - 120)); }
-    return out;
-  }
-  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
-
-  // The Warren Labs Mark (wave sine-W). Canonical path, scale-only, stroke=currentColor so the
-  // popup faceplate tints it with the plugin accent. Matches the site logo + the real plugin etch.
-  const WL_MARK = '<svg class="wl-mark" viewBox="0 0 120 80" aria-hidden="true">'
-    + '<path d="M16 16 C20 38 28 62 39 62 C48 62 53 46 58 38 C63 30 70 30 76 38 C81 44 84 54 92 54 '
-    + 'C99 54 103 46 106 40" fill="none" stroke="currentColor" stroke-width="6.5" '
-    + 'stroke-linecap="round" stroke-linejoin="round"></path></svg>';
-
-  // A signal trace shaped to the plugin's job (matches the /plugins page faceplate shots).
-  // Character line varies by color + shape; the Trueness line shares the amber identity but
-  // each tool's screen shows what it actually does, so they read as distinct instruments.
-  function traceFor(p) {
-    const slug = (p.slug || '').toLowerCase();
-    const cat = ((p.category || '') + ' ' + slug).toLowerCase();
-    // Character line
-    if (/echo|delay|ripple/.test(cat)) {                       // decaying repeats
-      let bars = '', x = 18;
-      [34, 26, 19, 13, 9, 6].forEach(h => { bars += `<line class="trace" x1="${x}" y1="46" x2="${x}" y2="${46 - h}"/>`; x += 28; });
-      return bars;
-    }
-    // NOTE: the echo test above runs FIRST, so Ripple (now 'Echo / delay / modulation') keeps
-    // its delay-taps trace rather than falling through to this sine swirl.
-    if (/modulation/.test(cat)) return '<path class="trace" d="M6,40 C30,8 54,8 78,40 S126,72 150,40 S198,8 218,28"/>';  // sine swirl
-    if (/reverb/.test(cat) || slug === 'wake') {               // diffuse decaying tail
-      let bars = '', x = 12;
-      [40, 33, 27, 22, 18, 14, 11, 9, 7, 5, 4, 3].forEach(h => { bars += `<line class="trace" x1="${x}" y1="46" x2="${x}" y2="${46 - h}"/>`; x += 17; });
-      return bars;
-    }
-    // dirt trio, same engine, increasing "squareness": soft → clipped → near-square
-    if (slug === 'temper') return '<path class="trace" d="M6,32 C16,12 30,12 44,32 C58,52 72,52 86,32 C100,12 114,12 128,32 C142,52 156,52 170,32 C184,12 198,12 212,32"/>';
-    // 'grind' + 'burr' retired — absorbed into Temper as MODELS. See FINISH.md Part 2.
-    if (/saturation|drive|distortion|fuzz/.test(cat))
-      return '<path class="trace" d="M6,64 C44,64 60,18 112,16 C164,14 180,60 218,60"/>';  // generic dirt
-    // Attune: a personal-EQ A/B, the stock curve read against the one you land on.
-    if (slug === 'attune')
-      return '<path class="trace-dim" d="M6,40 C50,40 62,48 112,44 C158,40 172,26 218,30"/>'
-           + '<path class="trace" d="M6,34 C50,34 64,20 112,24 C160,28 174,42 218,38"/>';
-    // Tone Farm: a guitar signal driven into soft clip.
-    if (slug === 'tonefarm')
-      return '<path class="trace" d="M6,54 C34,54 44,16 74,14 C104,12 112,50 142,50 C172,50 184,14 218,16"/>';
-    // Trueness line
-    if (slug === 'square')                                     // goniometer / phase scope
-      return '<ellipse class="trace" cx="112" cy="32" rx="34" ry="12" transform="rotate(-34 112 32)"/>';
-    if (slug === 'scribe')                                     // matching EQ: source pulled to a target
-      return '<path class="trace-dim" d="M6,42 C56,42 66,22 112,22 C158,22 168,42 218,42"/>'
-           + '<path class="trace" d="M6,46 C56,46 70,26 112,26 C154,26 168,44 218,40"/>';
-    if (slug === 'pare')                                       // dynamic resonance: surgical notches (renamed from reveal)
-      return '<path class="trace" d="M6,26 L70,26 L77,26 L83,50 L89,26 L134,26 L141,26 L147,48 L153,26 L218,26"/>';
-    // 'plane' (de-esser) retired — absorbed into Pare as a focus MODE. See FINISH.md Part 2.
-    if (slug === 'bevel')                                      // parametric EQ: a boost and a cut
-      return '<path class="trace" d="M6,34 C40,34 48,12 78,12 C104,12 108,34 134,34 C158,34 164,54 190,54 C206,54 212,40 218,38"/>';
-    if (slug === 'brace')                                      // compressor: peaks held to a plateau
-      return '<path class="trace" d="M6,50 L44,50 C56,50 58,18 70,18 L150,18 C164,18 166,50 178,50 L218,50"/>';
-    // 'seat' (mix translation) retired — absorbed into Scribe as audition MODES. See FINISH.md Part 2.
-    return '<path class="trace" d="M6,30 C40,30 44,46 72,46 C104,46 110,20 140,22 C170,24 186,38 218,34"/>';  // level: correction curve
-  }
-  function faceplateHTML(p) {
-    const knobs = knobRots(p.slug || p.name, 3).map(r => `<span class="knob" style="--rot:${r}deg"></span>`).join('');
-    const brand = 'WARREN LABS &nbsp;&middot;&nbsp; ' + esc((p.category || '').toUpperCase());
-    return `<div class="shot" style="--shot-accent:${esc(p.accent || 'var(--acc)')}">
-      <span class="screw tl"></span><span class="screw tr"></span><span class="screw bl"></span><span class="screw br"></span>
-      <div class="face">
-        <div class="screen"><svg viewBox="0 0 224 64" preserveAspectRatio="none">
-          <line class="grid-x" x1="0" y1="21" x2="224" y2="21"/><line class="grid-x" x1="0" y1="43" x2="224" y2="43"/>
-          ${traceFor(p)}</svg></div>
-        <div class="knobs">${knobs}</div>
-      </div>
-      <div class="id">${WL_MARK}<div class="txt"><div class="nm">${esc(p.name)}</div><div class="br">${brand}</div></div></div>
-    </div>`;
-  }
-
-  /* The rack is portfolio evidence, not a product catalog. Three products carry a full
-     unit card (Level shipping, Attune on the App Store, Tone Farm in development); everything else on
-     the Trueness line collapses into one static spec row underneath. Entries keep the old
-     plugins.json shape so traceFor() and faceplateHTML() render them unchanged. The
-     per-unit spec pages under /plugins/ are deliberately no longer linked from here. */
-  const FEATURED = [
-    {
-      slug: 'level', name: 'Level', code: 'Levl', accent: '#D8A24E',
-      category: 'Headphone correction + crossfeed', status: 'Shipping',
-      blurb: "Flattens a headphone's measured response by inverting its curve, then adds Bauer-style crossfeed so a mix translates the way speakers would. The signal comes out measurably corrected, honest before anything else.",
-      features: [
-        'Measured-curve correction per model',
-        'Bauer crossfeed with interaural delay',
-        'Voicing + RTA layer',
-        'VST3 / AU / Standalone'
-      ],
-      meta: [
-        ['ROLE', 'Solo. Product, DSP, and build'],
-        ['TYPE', 'Audio plugin'],
-        ['FORMATS', 'VST3 · AU · Standalone'],
-        ['BUILD', '0.2.26 · macOS · not yet notarized']
-      ],
-      // NOT a direct download. Level is a PAID product (docs/selling-the-beta.md reversed the
-      // free-beta decision on 2026-08-25). This used to link straight at a public GitHub release
-      // asset, so the homepage gave away for nothing the thing the store charges $29 for — no
-      // email gate, no payment, verified reachable by an unauthenticated client. Point at the
-      // product page and let that page own how Level is obtained.
-      link: '/plugins/level/',
-      linkLabel: 'SEE LEVEL →'
-    },
-    {
-      slug: 'attune', name: 'Attune', code: 'Attn', accent: '#E9A24A',
-      category: 'Headphone auditioning + personal EQ', status: 'Shipping',
-      blurb: 'Correction usually means somebody else\'s idea of flat. Attune finds yours instead: pick your headphone, then let a blind, loudness-matched A/B on your own music narrow in on the curve you actually prefer. It takes about a minute, and stock against yours stays on one toggle. You can also voice one headphone toward another and hear the difference, loudness-matched. Same correction engine as Level, wrapped in something a listener can use.',
-      features: [
-        'Blind, loudness-matched A/B on your own music',
-        'Lands on a personal curve in about a minute',
-        'Stock against yours on one toggle',
-        'Voice one headphone toward another',
-        'Six headphones, every curve measured in-house',
-        'Mac app on the shared Level engine, iPhone and iPad in review'
-      ],
-      meta: [
-        ['ROLE', 'Solo. Product, DSP, and build'],
-        ['TYPE', 'Mac app. iPhone and iPad in review'],
-        ['ENGINE', 'Shared with Level'],
-        ['STATUS', 'On the Mac App Store. Free, $39 Pro unlock']
-      ]
-    },
-    {
-      slug: 'tonefarm', name: 'Tone Farm', code: 'Tnfm', accent: '#F0A644',
-      category: 'Guitar amp + FX', status: 'Beta',
-      blurb: 'Most amp sims ask you to assemble a rig. Tone Farm ships three amps that never switch off, captured from real hardware with a neural model, and builds the pedals, cab, room, and console around them. One plugin, one signal path, no blank canvas. Being finished in the open at tone.farm.',
-      features: [
-        'Three amps, neural-captured off real hardware',
-        'Pedals, cab, room, console, effects',
-        'One signal path, not a blank pedalboard',
-        'VST3 / AU / Standalone'
-      ],
-      meta: [
-        ['ROLE', 'Solo. Product, DSP, and build'],
-        ['TYPE', 'Audio plugin'],
-        ['CAPTURE', 'Neural models off a real rig'],
-        ['STATUS', 'In development']
-      ],
-      link: 'https://tone.farm', linkLabel: 'TONE.FARM ↗'
-    }
-  ];
-
-  // The rest of the Trueness line, shown as one spec row rather than a rack of its own.
-  // Each module carries its slug so the row's screen can draw that tool's real trace,
-  // which is what keeps the row from reading as a plain list.
-  // Both lines get a card. Trueness runs one accent across its screen because the whole
-  // line is the same promise (say what is there, honestly); Character takes each tool's
-  // real faceplate color, which is the point of that line.
-  const SUITES = [
-    {
-      name: 'Trueness suite',
-      sub: 'Reference + correction modules',
-      note: 'Five more tools on the shared DSP library, built alongside Level.',
-      accent: '#D8A24E',
-      modules: [
-        { name: 'Bevel',  slug: 'bevel',  category: 'Parametric EQ' },
-        { name: 'Brace',  slug: 'brace',  category: 'Compressor' },
-        { name: 'Square', slug: 'square', category: 'Mono compatibility' },
-        { name: 'Pare',   slug: 'pare',   category: 'Resonance suppressor + de-esser' },
-        { name: 'Scribe', slug: 'scribe', category: 'Matching EQ + mix translation' }
-      ]
-    },
-    {
-      name: 'Character suite',
-      sub: 'Dirt, space, and motion',
-      note: 'Three tools for saturation, echo, modulation, and reverb.',
-      accent: '#e8b066',
-      modules: [
-        { name: 'Temper', slug: 'temper', category: 'Saturation / drive / fuzz', accent: '#e8b066' },
-        { name: 'Ripple', slug: 'ripple', category: 'Echo / delay / modulation', accent: '#46c7c0' },
-        { name: 'Wake',   slug: 'wake',   category: 'Reverb',            accent: '#8f86e6' }
-      ]
-    }
-  ];
-
-  const PLUGINS = {};   // slug → entry, for the popup
-  function pluginUnitHTML(p) {
-    const shipping = /^shipping/i.test(p.status || '');
-    const led = shipping ? 'var(--led-green)' : 'var(--led-amber)';
-    const knobs = knobRots(p.slug || p.name, 3).map(r => `<span class="tknob" style="--rot:${r}deg"></span>`).join('');
-    // A lit mini-screen on each panel: the product's signal trace (same shape as the popup
-    // faceplate), tinted with its accent via --decor.
-    const screen = `<div class="plug-screen"><svg viewBox="0 0 224 64" preserveAspectRatio="none">`
-      + `<line class="grid-x" x1="0" y1="21" x2="224" y2="21"/><line class="grid-x" x1="0" y1="43" x2="224" y2="43"/>`
-      + `${traceFor(p)}</svg></div>`;
-    // A button, not a link: there is no per-unit page to fall through to any more, so a
-    // plain click opens the detail popup and that is the only destination.
-    return `<button type="button" class="unit plug" data-plugin="${esc(p.slug)}" style="--decor:${esc(p.accent || 'var(--acc)')}">
-      <span class="u-num">WL-${esc((p.code || '').toUpperCase())}</span>
-      <div class="u-name"><h3>${esc(p.name)}</h3><span class="u-sub">${esc((p.category || '').toUpperCase())}</span></div>
-      ${screen}
-      <div class="plug-knobs">${knobs}</div>
-      <div class="u-hint">
-        <span class="u-status"><span class="led${shipping ? '' : ' blink'}" style="--led-c:${led}"></span>${esc((p.status || '').toUpperCase())}</span>
-        <span class="u-open">DETAIL ↗</span>
-      </div>
-    </button>`;
-  }
-  // One static row for the remainder of the line. No status LED and no badge: these are
-  // listed as evidence of the body of work, not offered as downloads. The screen is a
-  // seven-cell strip, one live trace per module, in the same left-to-right order as the
-  // spec line that names them, so the row reads as a faceplate rather than a bare list.
-  function suiteUnitHTML(s) {
-    const cells = s.modules.map(m =>
-      `<span class="suite-cell"${m.accent ? ` style="--decor:${esc(m.accent)}"` : ''} title="${esc(m.name)}: ${esc(m.category)}">
-        <svg viewBox="0 0 224 64" preserveAspectRatio="none">${traceFor(m)}</svg>
-      </span>`).join('');
-    return `<div class="unit suite static" style="--decor:${esc(s.accent)}">
-      <div class="u-name"><h3>${esc(s.name)}</h3><span class="u-sub">${esc(s.sub.toUpperCase())}</span></div>
-      <div class="suite-screen">${cells}</div>
-      <div class="suite-spec">
-        <span class="suite-mods mono">${s.modules.map(m => esc(m.name)).join(' · ')}</span>
-        <span class="suite-note">${esc(s.note)}</span>
-      </div>
-    </div>`;
-  }
-  (function buildRack() {
-    const host = document.getElementById('rackUnits');
-    if (!host) return;
-    FEATURED.forEach(p => { PLUGINS[p.slug] = p; });
-    host.innerHTML = FEATURED.map(pluginUnitHTML).join('')
-      + '<div class="unit vent static"><div class="slots"></div></div>'
-      + SUITES.map(suiteUnitHTML).join('');
-    host.querySelectorAll('[data-plugin]').forEach(el =>
-      el.addEventListener('click', () => openPlugin(el.dataset.plugin)));
-  })();
-
-  /* ---------------- unit data (the "Also from the lab" projects) ---------------- */
-  const UNITS = {
-    changes: {
-      num: 'WL-CH1', title: 'Changes',
-      led: 'var(--led-amber)', blink: true, status: 'BETA',
-      link: '/changes/', linkLabel: 'OPEN THE LANDING PAGE ↗',
-      desc: [
-        "An <b>iPhone app</b> that turns a rough recording, played, hummed, or dropped in from a voice memo, into a session-ready <b>Nashville Number chart</b>, then a MIDI you open straight in Logic Pro. The whole thing runs <b>on-device</b>: your audio never leaves the phone.",
-        "Built like a musician's tool, not a transcriber. The chart is <b>transpose-proof</b>, one chart in any key, and it <b>flags the bars it's unsure of</b> so you fix them in taps, and it plays your take back with a marker following the changes.",
-        "First milestone is a tight beta: capture, chart, fix, and export a MIDI for Logic. Run Analyze for a Chord Track, then add Session Players that follow the changes."
-      ],
-      meta: [['ROLE', 'Solo. Product + build'], ['PLATFORM', 'iPhone · iOS 27'], ['PRIVACY', 'On-device · no upload, no account'], ['STATUS', 'Beta list open']]
-    },
-    maker: {
-      num: 'WL-MP1', title: 'makerphones', lowercase: true,
-      led: 'var(--led-green)', status: 'LIVE',
-      link: 'https://makerphones.com',
-      desc: [
-        "An open field manual for building your own headphones, driver physics through measurement and tuning. Thirty-two chapters off the bench, all done and free to read. The resource I wish I'd had thirty years ago.",
-        "It starts with the <b>Daily Driver</b>: a 40 mm open-back that's forgiving to design and to assemble, buildable by a first-timer, and good enough to keep wearing once it's done. The model is <b>fully parametric</b>: change the driver, the pad, or the head size and it follows.",
-        "Honest sonic target: a <b>bright, open, detailed open-back</b>, strong mids and treble, modest bass. That's what a small driver in an open baffle does, and the design leans into it instead of chasing sub-bass the hardware can't make.",
-        "The same reference is also a book, <b>The Art and Science of Headphone Design</b>: free and open to read online, with a print and Kindle edition for anyone who wants it on the bench."
-      ],
-      meta: [['ROLE', 'Author'], ['FORMAT', 'Free online · print + Kindle'], ['FIRST BUILD', 'Daily Driver · 40 mm open-back'], ['SCOPE', 'Driver physics → measurement → tuning'], ['STATUS', '32 chapters · complete']]
-    }
-  };
-
-  /* ---------------- overlay ---------------- */
-  const ov = document.getElementById('ov');
-  const ovBody = document.getElementById('ovBody');
-  let openKey = null;
-
-  function knobHTML(c, i) {
-    const rot = -135 + c.init * 270;
-    return `<div class="knob-group">
-      <div class="knob" data-ovknob="${i}" style="--rot:${rot}deg"></div>
-      <div class="knob-label">${c.label}</div>
-      <div class="knob-val" data-ovval="${i}">${c.fmt(c.init)}</div>
-    </div>`;
-  }
-
-  function openUnit(key) {
-    const u = UNITS[key];
-    if (!u) return;
-    openKey = key;
-    document.getElementById('ovNum').textContent = u.num;
-    const ovTitle = document.getElementById('ovTitle');
-    ovTitle.textContent = u.title;
-    // Brands that are lowercase by definition (makerphones) must survive the display
-    // font's uppercase transform, so the name is right in the source AND on screen.
-    ovTitle.classList.toggle('lc', !!u.lowercase);
-    document.getElementById('ovStatus').innerHTML =
-      `<div class="led${u.blink ? ' blink' : ''}" style="--led-c:${u.led}"></div>${u.status}`;
-
-    if (u.plugin) {
-      ovBody.innerHTML = `
-        <div id="wl-plugin-mount"></div>
-        <div class="ov-grid" style="margin-top:40px">
-          <div class="ov-desc">${u.desc.map(d => `<p>${d}</p>`).join('')}</div>
-          <div class="ov-side">
-            ${u.link ? `<a class="ov-cta" href="${u.link}"${/^https?:/.test(u.link) ? ' target="_blank" rel="noopener"' : ''}>${u.linkLabel || 'LEARN MORE ↗'}</a>` : ''}
-            <div class="ov-meta">${u.meta.map(m =>
-              `<div class="m"><span class="mk">${m[0]}</span><span class="mv">${m[1]}</span></div>`).join('')}</div>
-          </div>
-        </div>`;
-      window.WLEQ1.mount(document.getElementById('wl-plugin-mount'));
-    } else {
-      ovBody.innerHTML = `
-        <div class="ov-grid">
-          <div class="ov-desc">${u.desc.map(d => `<p>${d}</p>`).join('')}</div>
-          <div class="ov-side">
-            ${u.link ? `<a class="ov-cta" href="${u.link}"${/^https?:/.test(u.link) ? ' target="_blank" rel="noopener"' : ''}>${u.linkLabel || 'VISIT ↗'}</a>` : ''}
-            <div class="ov-meta">${u.meta.map(m =>
-              `<div class="m"><span class="mk">${m[0]}</span><span class="mv">${m[1]}</span></div>`).join('')}</div>
-            ${u.controls ? `<div class="ov-controls">${u.controls.map(knobHTML).join('')}</div>` : ''}
-          </div>
-        </div>`;
-      if (u.controls) wireKnobs(u.controls);
-    }
-    ov.classList.add('show');
-    document.body.style.overflow = 'hidden';
-  }
-
-  // Product detail popup: faceplate mockup, blurb, features, and the build facts. No
-  // catalog CTA. The rack shows what the work is, it does not sell units.
-  function openPlugin(slug) {
-    const p = PLUGINS[slug];
-    if (!p) return;
-    openKey = null;   // not a UNITS (projects) overlay
-    const shipping = /^shipping/i.test(p.status || '');
-    document.getElementById('ovNum').textContent = 'WL-' + (p.code || '').toUpperCase();
-    document.getElementById('ovTitle').textContent = p.name;
-    document.getElementById('ovStatus').innerHTML =
-      `<div class="led${shipping ? '' : ' blink'}" style="--led-c:${shipping ? 'var(--led-green)' : 'var(--led-amber)'}"></div>${esc((p.status || '').toUpperCase())}`;
-    const feats = (p.features || []).map(f => `<li>${esc(f)}</li>`).join('');
-    const meta = (p.meta || []).map(m =>
-      `<div class="m"><span class="mk">${esc(m[0])}</span><span class="mv">${esc(m[1])}</span></div>`).join('');
-    ovBody.innerHTML = `
-      ${faceplateHTML(p)}
-      <div class="ov-grid" style="margin-top:32px">
-        <div class="ov-desc"><p>${esc(p.blurb || p.tagline || '')}</p>
-          ${feats ? `<ul class="ov-features">${feats}</ul>` : ''}
-        </div>
-        <div class="ov-side">
-          ${p.link ? `<a class="ov-cta" href="${esc(p.link)}" target="_blank" rel="noopener">${esc(p.linkLabel || 'VISIT ↗')}</a>` : ''}
-          <div class="ov-meta">${meta}</div>
-        </div>
-      </div>`;
-    ov.classList.add('show');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeUnit() {
-    if (!ov.classList.contains('show')) return;
-    ov.classList.remove('show');
-    document.body.style.overflow = '';
-    if (openKey && UNITS[openKey] && UNITS[openKey].plugin) window.WLEQ1.unmount();
-    ovBody.innerHTML = '';
-    openKey = null;
-  }
-
-  function wireKnobs(controls) {
-    controls.forEach((c, i) => {
-      const el = ovBody.querySelector(`[data-ovknob="${i}"]`);
-      const val = ovBody.querySelector(`[data-ovval="${i}"]`);
-      if (!el || c.fixed) { if (el) el.style.cursor = 'default'; return; }
-      let v = c.init, sy = 0, sv = 0, drag = false, springTimer = null;
-      const render = () => {
-        el.style.setProperty('--rot', (-135 + v * 270) + 'deg');
-        val.textContent = c.fmt(v);
-      };
-      el.addEventListener('pointerdown', e => {
-        drag = true; sy = e.clientY; sv = v; e.preventDefault();
-        if (springTimer) { clearInterval(springTimer); springTimer = null; }
-      });
-      window.addEventListener('pointermove', e => {
-        if (!drag) return;
-        v = Math.max(0, Math.min(1, sv + (sy - e.clientY) * 0.005));
-        if (c.linkInvert !== undefined) {
-          const other = ovBody.querySelector(`[data-ovknob="${c.linkInvert}"]`);
-          const otherVal = ovBody.querySelector(`[data-ovval="${c.linkInvert}"]`);
-          if (other) {
-            other.style.setProperty('--rot', (-135 + (1 - v) * 270) + 'deg');
-            otherVal.textContent = Math.round((1 - v) * 100) + '%';
-          }
+      layers.forEach(L => {
+        sctx.beginPath();
+        sctx.globalAlpha = L.alpha; sctx.strokeStyle = TRACE; sctx.lineWidth = L.w;
+        for (let x = 0; x <= W; x += 4) {
+          const prox = Math.exp(-Math.pow((x - mouseX) / 220, 2));
+          const y = MID + Math.sin(x * L.freq + t * L.speed) * L.amp * (0.55 + energy * 0.45) * (1 + prox * 0.9);
+          x ? sctx.lineTo(x, y) : sctx.moveTo(x, y);
         }
-        render();
+        sctx.stroke();
       });
-      window.addEventListener('pointerup', () => {
-        if (!drag) return;
-        drag = false;
-        if (c.locked && v > 0) {
-          // spring back to zero. Some knobs aren't negotiable
-          springTimer = setInterval(() => {
-            v = Math.max(0, v - 0.06);
-            render();
-            if (v <= 0) { clearInterval(springTimer); springTimer = null; }
-          }, 16);
-        }
-      });
-    });
+      sctx.globalAlpha = 1;
+      if (!reduce) requestAnimationFrame(drawScope);
+    }
+    drawScope();
   }
-
-  document.querySelectorAll('[data-unit]').forEach(el =>
-    el.addEventListener('click', () => openUnit(el.dataset.unit)));
-  document.getElementById('ovClose').addEventListener('click', closeUnit);
-  document.getElementById('ovScrim').addEventListener('click', closeUnit);
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeUnit(); });
 
   /* ---------------- mobile nav ---------------- */
   const navToggle = document.querySelector('.nav-toggle');
