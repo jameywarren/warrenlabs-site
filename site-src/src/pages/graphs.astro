@@ -42,6 +42,50 @@ import WL_ASSETS from '../data/wl-assets.json';   // content-hashed paths, writt
 // what makes it hard to violate by accident. If a second bench is ever added it slots in here.
 const ours = MEASUREMENTS.map((m) => ({ id: m.id, b: m.b, n: m.n, db: m.db }));
 const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES };
+
+// STRUCTURED DATA. schema.org/Dataset, so the CC BY-NC notice this page already renders for humans
+// is also machine-readable. A crawler could previously read the licence only as prose.
+//
+// Scoped to MEASUREMENTS and nothing else. REFERENCES (the comparison shapes from targets.js) are
+// deliberately absent: they are not our measurements, we do not license them, and rule 3 still binds
+// for any third-party data. This is the same boundary the rendered notice draws.
+//
+// NOTE THE OMISSION: Dataset normally carries `distribution` -> DataDownload with a contentUrl, and
+// every SEO guide will tell you to add it. It is left out ON PURPOSE. Rule 1 is render-only, no
+// export or download control anywhere, and a downloadUrl in the markup is an export control that
+// happens to be machine-readable. `isAccessibleForFree` is true because reading the plot is free;
+// that is a different claim from offering a file.
+const MEASURED_LD = {
+  '@context': 'https://schema.org',
+  '@type': 'Dataset',
+  name: 'Warren Labs headphone frequency-response measurements',
+  description:
+    `Raw frequency-response measurements of ${MEASUREMENTS.length} headphones, made in-house on a ` +
+    'miniDSP EARS Pro with serial-matched calibration and IEC 60318-4 couplers, seated for best fit. ' +
+    `Published at full resolution, ${GRID_HZ.length} points from ${GRID_HZ[0]} Hz to ${GRID_HZ[GRID_HZ.length - 1]} Hz, ` +
+    'uncompensated. Reference shapes drawn on the same plot for comparison are not part of this dataset.',
+  url: 'https://warrenlabs.com/graphs/',
+  license: 'https://creativecommons.org/licenses/by-nc/4.0/',
+  isAccessibleForFree: true,
+  creator: {
+    '@type': 'Organization',
+    name: 'Warren Labs',
+    url: 'https://warrenlabs.com',
+  },
+  measurementTechnique:
+    'Swept-sine acoustic measurement on a miniDSP EARS Pro fixture with IEC 60318-4 couplers, ' +
+    'per-unit serial-matched calibration, headphone seated for best fit.',
+  variableMeasured: {
+    '@type': 'PropertyValue',
+    name: 'Sound pressure level versus frequency',
+    unitText: 'dB',
+  },
+  about: MEASUREMENTS.map((m) => ({
+    '@type': 'Product',
+    name: `${m.b} ${m.n}`,
+    brand: { '@type': 'Brand', name: m.b },
+  })),
+};
 ---
 
 <Layout
@@ -217,6 +261,11 @@ const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES };
   </main>
 
   <Feedback surface="graphs" />
+
+  {/* In <body> on purpose. Layout.astro has no head slot, and adding one would touch every page on
+      the site days before Jamey hands out URLs at a show. JSON-LD is valid anywhere in the document
+      and Google reads it here. */}
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(MEASURED_LD)} />
 </Layout>
 
 <style>

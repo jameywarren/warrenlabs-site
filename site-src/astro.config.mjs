@@ -18,11 +18,17 @@ export default defineConfig({
       // no reason. tools/sync.mjs already records that the old reason died when /graphs stopped
       // being an archive viewer and started serving our own EARS Pro curves inline.
       //
-      // /canjam and /card ARE published, but they are noindex handout targets for a printed QR
-      // code. Listing a noindexed page in the sitemap asks a crawler to fetch it and then tells
-      // it to forget what it found, so they come out here. Both must stay in step with the
-      // `noindex` prop on their pages.
-      filter: (page) => !['/canjam', '/card'].some((p) => page.includes(p)),
+      // /canjam, /card and /loaners/print ARE published, but they are noindex documents: two
+      // handout targets for a printed QR code, and the one-page loaner leave-behind. Listing a
+      // noindexed page in the sitemap asks a crawler to fetch it and then tells it to forget what
+      // it found, so they come out here. All three must stay in step with the `noindex` on their
+      // pages.
+      //
+      // /loaners/print added 2026-08-27. It had been listed here since it was written while also
+      // emitting `<meta name="robots" content="noindex">` -- exactly the mixed signal this filter
+      // exists to prevent. It sets its own <head> by hand instead of going through Layout.astro,
+      // so it never took the `noindex` prop that would have made the contradiction obvious.
+      filter: (page) => !['/canjam', '/card', '/loaners/print'].some((p) => page.includes(p)),
       // The hand-written pages live outside this Astro project, so list them explicitly.
       customPages: [
         'https://warrenlabs.com/',
