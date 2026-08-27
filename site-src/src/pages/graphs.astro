@@ -262,6 +262,12 @@ const MEASURED_LD = {
 
   <Feedback surface="graphs" />
 
+  {/* Footer.astro was imported on line 33 and never rendered, so /graphs -- the MEASUREMENTS item
+      in the primary nav, and one of the most-linked pages on the site -- had no footer at all.
+      Terms, Privacy and Refunds are reachable ONLY from the footer, so from here they were
+      reachable from nowhere. */}
+  <Footer variant="home" />
+
   {/* In <body> on purpose. Layout.astro has no head slot, and adding one would touch every page on
       the site days before Jamey hands out URLs at a show. JSON-LD is valid anywhere in the document
       and Google reads it here. */}

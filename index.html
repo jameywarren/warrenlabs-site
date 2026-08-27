@@ -46,7 +46,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <span>WARREN&nbsp;LABS</span>
     </div>
     <nav id="primary-nav">
-      <a href="/attune">ATTUNE</a><a href="/collections/headphones">HEADPHONES</a><a href="/graphs">MEASUREMENTS</a><a href="/measure">SEND ONE IN</a><a href="/learn">LEARN</a><a href="/design-review/">FOR MAKERS</a><a class="cta" href="/#patch">PATCH IN</a>
+      <a href="/attune/">ATTUNE</a><a href="/collections/headphones/">HEADPHONES</a><a href="/graphs/">MEASUREMENTS</a><a href="/measure/">SEND ONE IN</a><a href="/learn/">LEARN</a><a href="/design-review/">FOR MAKERS</a><a class="cta" href="/#patch">PATCH IN</a>
     </nav>
     <button class="wl-theme" id="wl-theme" aria-label="Switch between light and dark" title="Light / dark">◐</button>
     <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="primary-nav">
@@ -263,7 +263,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <!-- wl:footer:start -->
 <footer>
   <div class="foot-in">
-    <div class="foot-links"><a href="/">The lab</a><a href="/attune">Attune</a><a href="/collections/headphones">Headphones</a><a href="/graphs">Measurements</a><a href="/learn">Learn</a><a href="/plugins/">Plugins</a><a href="/plugins/guides/">Guides</a><a href="/design-review/">Design review</a><a href="/design-review/#production-measurement">Production measurement</a><a href="/loaners">For manufacturers</a><a href="/#patch">Contact</a><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/refunds">Refunds</a></div>
+    <div class="foot-links"><a href="/">The lab</a><a href="/attune/">Attune</a><a href="/collections/headphones/">Headphones</a><a href="/graphs/">Measurements</a><a href="/learn/">Learn</a><a href="/plugins/">Plugins</a><a href="/plugins/guides/">Guides</a><a href="/design-review/">Design review</a><a href="/design-review/#production-measurement">Production measurement</a><a href="/loaners/">For manufacturers</a><a href="/support/">Support</a><a href="/#patch">Contact</a><a href="/terms/">Terms</a><a href="/privacy/">Privacy</a><a href="/refunds/">Refunds</a></div>
     <div class="foot-meta"><span>WARREN LABS · JAMEY WARREN</span><span>BUILT IN LIVINGSTON, MONTANA</span></div>
   </div>
 </footer>
@@ -287,5 +287,72 @@ b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';
 <script src="js/wl-eq1.js"></script>
 <script src="js/wl-app.js"></script>
 <script src="js/wl-patchbay.js"></script>
+
+<!-- Structured data. The homepage had NONE, while 36 other pages carried an Organization
+     node whose @id is https://warrenlabs.com/#organization -- an identifier that points
+     here. This defines it at the URL it names, and adds the Person and the Book, both of
+     which the page already links but nothing declared.
+     No Product/Offer here on purpose: the eight bundle-only plugins have no individual
+     price, and an Offer without one is an incomplete offer that Google flags. -->
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://warrenlabs.com/#organization",
+   "name": "Warren Labs",
+   "url": "https://warrenlabs.com",
+   "logo": "https://warrenlabs.com/assets/brand/png/wl-mark_amber_512.png",
+   "description": "Audio product work by Jamey Warren: headphones, amps, DACs, DSP, and the software around them.",
+   "founder": {
+    "@type": "Person",
+    "@id": "https://warrenlabs.com/#jamey",
+    "name": "Jamey Warren"
+   },
+   "sameAs": [
+    "https://github.com/jameywarren",
+    "https://www.linkedin.com/in/jameywarren"
+   ]
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://warrenlabs.com/#website",
+   "url": "https://warrenlabs.com",
+   "name": "Warren Labs",
+   "inLanguage": "en",
+   "publisher": {
+    "@id": "https://warrenlabs.com/#organization"
+   }
+  },
+  {
+   "@type": "Person",
+   "@id": "https://warrenlabs.com/#jamey",
+   "name": "Jamey Warren",
+   "url": "https://warrenlabs.com",
+   "jobTitle": "Audio product consultant",
+   "worksFor": {
+    "@id": "https://warrenlabs.com/#organization"
+   },
+   "sameAs": [
+    "https://github.com/jameywarren",
+    "https://www.linkedin.com/in/jameywarren"
+   ]
+  },
+  {
+   "@type": "Book",
+   "@id": "https://warrenlabs.com/#book",
+   "name": "The Art and Science of Headphone Design",
+   "author": {
+    "@id": "https://warrenlabs.com/#jamey"
+   },
+   "image": "https://warrenlabs.com/assets/book-cover.jpg",
+   "url": "https://www.amazon.com/dp/B0H6XWXM4C",
+   "bookFormat": "https://schema.org/EBook",
+   "inLanguage": "en"
+  }
+ ]
+}
+</script>
 </body>
 </html>

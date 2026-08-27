@@ -2,23 +2,23 @@
   "_comment": "Canonical header/footer for warrenlabs.com. Read by nav.js (Astro) and by tools/gen_site.py in the monorepo (the /plugins pages). Edit here only.",
   "nav": [
     {
-      "href": "/attune",
+      "href": "/attune/",
       "label": "ATTUNE"
     },
     {
-      "href": "/collections/headphones",
+      "href": "/collections/headphones/",
       "label": "HEADPHONES"
     },
     {
-      "href": "/graphs",
+      "href": "/graphs/",
       "label": "MEASUREMENTS"
     },
     {
-      "href": "/measure",
+      "href": "/measure/",
       "label": "SEND ONE IN"
     },
     {
-      "href": "/learn",
+      "href": "/learn/",
       "label": "LEARN"
     },
     {
@@ -43,19 +43,19 @@
       "label": "The lab"
     },
     {
-      "href": "/attune",
+      "href": "/attune/",
       "label": "Attune"
     },
     {
-      "href": "/collections/headphones",
+      "href": "/collections/headphones/",
       "label": "Headphones"
     },
     {
-      "href": "/graphs",
+      "href": "/graphs/",
       "label": "Measurements"
     },
     {
-      "href": "/learn",
+      "href": "/learn/",
       "label": "Learn"
     },
     {
@@ -75,23 +75,27 @@
       "label": "Production measurement"
     },
     {
-      "href": "/loaners",
+      "href": "/loaners/",
       "label": "For manufacturers"
+    },
+    {
+      "href": "/support/",
+      "label": "Support"
     },
     {
       "href": "/#patch",
       "label": "Contact"
     },
     {
-      "href": "/terms",
+      "href": "/terms/",
       "label": "Terms"
     },
     {
-      "href": "/privacy",
+      "href": "/privacy/",
       "label": "Privacy"
     },
     {
-      "href": "/refunds",
+      "href": "/refunds/",
       "label": "Refunds"
     }
   ],
