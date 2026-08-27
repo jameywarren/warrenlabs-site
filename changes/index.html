@@ -85,6 +85,8 @@ a { color: inherit; }
             </div>
             <form class="beta-form" action="https://formspree.io/f/xppzavao" method="POST" style="display:flex; flex-wrap:wrap; gap:10px; max-width:480px;">
               <input type="hidden" name="_subject" value="Changes beta list signup">
+                 <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true"
+                        style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
                  <input class="email-input" type="email" name="email" required placeholder="you@band.com" aria-label="Email address" style="flex:1 1 220px; min-width:0; padding:14px 16px; border-radius:11px; border:1px solid rgba(240,230,209,0.22); background:rgba(240,230,209,0.05); color:#F0E6D1; font-family:'Inter',sans-serif; font-size:16px; outline:none;">
               <button type="submit" class="cta-orange" style="flex:0 0 auto; padding:14px 22px; border-radius:11px; border:none; background:#E5481F; color:#F0E6D1; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; cursor:pointer;">Join the beta list</button>
             </form>
@@ -345,6 +347,8 @@ a { color: inherit; }
           </div>
           <form class="beta-form" action="https://formspree.io/f/xppzavao" method="POST" style="display:flex; flex-wrap:wrap; gap:10px;">
             <input type="hidden" name="_subject" value="Changes beta list signup">
+                 <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true"
+                        style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">
                  <input class="email-input" type="email" name="email" required placeholder="you@band.com" aria-label="Email address" style="flex:1 1 220px; min-width:0; padding:14px 16px; border-radius:11px; border:1px solid rgba(240,230,209,0.22); background:rgba(20,16,13,0.4); color:#F0E6D1; font-family:'Inter',sans-serif; font-size:16px; outline:none;">
             <button type="submit" class="cta-orange" style="flex:0 0 auto; padding:14px 22px; border-radius:11px; border:none; background:#E5481F; color:#F0E6D1; font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px; cursor:pointer;">Join the beta list</button>
           </form>
@@ -601,6 +605,10 @@ a { color: inherit; }
         var btn = form.querySelector('button[type=submit]');
         var val = input && input.value ? input.value.trim() : '';
         if (!val || val.indexOf('@') === -1) return;
+        // Honeypot: a visible-to-bots-only field. Drop silently rather than showing an error,
+        // so a bot gets no signal about why it failed.
+        var hp = form.querySelector('input[name="_gotcha"]');
+        if (hp && hp.value) return;
         if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
         // Clear a previous failure before retrying, or a later success shows both at once.
         document.querySelectorAll('.beta-error').forEach(function (x) { x.style.display = 'none'; });
