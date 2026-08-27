@@ -48,7 +48,7 @@ const relatedLive = hp.related.filter(([h]) => {
   return r && MEASURED.has(r.curveId ?? h);
 });
 
-const title = `${full} — frequency response & honest take · Warren Labs`;
+const title = `${full}: frequency response and an honest take · Warren Labs`;
 const description = `${full} measured frequency response, specs, and a plain-English take: ${hp.signature.toLowerCase()}. ${hp.type}, ${hp.impedance}. See how it measures and tune it to your taste in Attune.`;
 
 const jsonLd = [
@@ -151,7 +151,7 @@ const jsonLd = [
 
     <section class="sec">
       <h2 class="sec-h">Common questions</h2>
-      <p class="sec-lede">Straight answers &mdash; the same ones our measurements support.</p>
+      <p class="sec-lede">Straight answers, the same ones our measurements support.</p>
       <div class="faq">
         {hp.faqs.map(([q, a]) => (
           <div class="qa">

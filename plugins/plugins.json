@@ -11,9 +11,9 @@
       "status": "Shipping",
       "nameStatus": "assigned",
       "tagline": "Hear your headphones honestly.",
-      "blurb": "Flattens a headphone's measured response by inverting its curve, then adds Bauer-style crossfeed so a mix translates the way speakers would. Every curve says who measured it — six of them are ours, taken on a rig we own. The signal comes out measurably corrected, honest before anything else.",
+      "blurb": "Flattens a headphone's measured response by inverting its curve, then adds Bauer-style crossfeed so a mix translates the way speakers would. Every curve says who measured it, and six of them are ours, taken on a rig we own. The signal comes out measurably corrected, honest before anything else.",
       "features": [
-        "Six headphones measured on our own rig — badged, not borrowed",
+        "Six headphones measured on our own rig, badged not borrowed",
         "Bauer crossfeed with interaural delay, loudness-neutral within 0.05 dB",
         "Output metering with a latched clip indicator, and Safe Gain",
         "Monitoring checks: flip, polarity, dim, mono",
@@ -86,7 +86,7 @@
       "status": "Beta",
       "nameStatus": "set",
       "tagline": "Scribe a tonal fit to target.",
-      "blurb": "Learns a reference's per-band tonal balance and pulls your program toward it — broad and musical, not surgical. Audition modes flip the same plugin into a translation check: hear the mix coloured like a phone, earbuds, a laptop or a car before you commit to the render.",
+      "blurb": "Learns a reference's per-band tonal balance and pulls your program toward it, broad and musical rather than surgical. Audition modes flip the same plugin into a translation check: hear the mix coloured like a phone, earbuds, a laptop or a car before you commit to the render.",
       "features": [
         "Learn a reference curve from anything playing",
         "Tilt + smoothing for a broad tonal fit",
@@ -206,7 +206,7 @@
         {
           "file": "brace-ui-1-main.png",
           "alt": "Brace's faceplate: compression transfer curve with the knee drawn, CLEAN/FET/OPTO models, and the control row",
-          "caption": "The transfer curve draws the knee as you set it — here Clean at 4:1 over a −18 dB threshold, 6 dB knee."
+          "caption": "The transfer curve draws the knee as you set it. Here, Clean at 4:1 over a −18 dB threshold, 6 dB knee."
         }
       ]
     },
@@ -220,7 +220,7 @@
       "status": "Beta",
       "nameStatus": "set",
       "tagline": "Controlled heat, all the way up.",
-      "blurb": "One oversampled waveshaper, six models — from tube warmth and tape compression through transformer iron to diode overdrive, crunch and full fuzz. Bias sets the harmonic character, a velcro gate makes the dirt sputter and die with the note.",
+      "blurb": "One oversampled waveshaper, six models, from tube warmth and tape compression through transformer iron to diode overdrive, crunch and full fuzz. Bias sets the harmonic character, a velcro gate makes the dirt sputter and die with the note.",
       "features": [
         "Six models: Tube / Tape / Transformer / Diode / Crunch / Fuzz",
         "4x oversampled, latency-compensated dry path",
@@ -249,7 +249,7 @@
       "status": "Beta",
       "nameStatus": "set",
       "tagline": "Repeats that ripple out.",
-      "blurb": "A modulated stereo echo with tape and BBD character, ping-pong and tempo sync — plus chorus, flanger and phaser on the same interpolated-delay core. The control set follows the engine you pick rather than relabelling the same knobs.",
+      "blurb": "A modulated stereo echo with tape and BBD character, ping-pong and tempo sync, plus chorus, flanger and phaser on the same interpolated-delay core. The control set follows the engine you pick rather than relabelling the same knobs.",
       "features": [
         "Echo: tape / BBD character, ping-pong, tempo sync",
         "Motion: chorus, flanger, phaser",
@@ -308,7 +308,7 @@
     },
     {
       "slug": "level-manual",
-      "title": "Level — manual",
+      "title": "Level manual",
       "source": "Level/MANUAL.md",
       "summary": "What every control does, what Safe Gain actually guarantees, and what Level deliberately does not do."
     }
@@ -352,7 +352,7 @@
     "slug": "bundle",
     "name": "The Whole Lab",
     "tagline": "Every Warren Labs plugin, one install.",
-    "blurb": "Every Warren Labs plugin in one install — the Trueness and Character lines together, on one shared engine.",
+    "blurb": "Every Warren Labs plugin in one install: the Trueness and Character lines together, on one shared engine.",
     "price": 79,
     "buyUrl": "",
     "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/bundle-v0.1.0-beta/WarrenLabs-Bundle-0.1.0-beta.pkg"
