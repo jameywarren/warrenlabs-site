@@ -11,13 +11,13 @@
       "status": "Shipping",
       "nameStatus": "assigned",
       "tagline": "Hear your headphones honestly.",
-      "blurb": "Flattens a headphone's measured response by inverting its curve, then adds Bauer-style crossfeed so a mix translates the way speakers would. Every curve says who measured it \u2014 six of them are ours, taken on a rig we own. The signal comes out measurably corrected, honest before anything else.",
+      "blurb": "Flattens a headphone's measured response by inverting its curve, then adds Bauer-style crossfeed so a mix translates the way speakers would. Every curve says who measured it — six of them are ours, taken on a rig we own. The signal comes out measurably corrected, honest before anything else.",
       "features": [
-        "Six headphones measured on our own rig \u2014 badged, not borrowed",
+        "Six headphones measured on our own rig — badged, not borrowed",
         "Bauer crossfeed with interaural delay, loudness-neutral within 0.05 dB",
         "Output metering with a latched clip indicator, and Safe Gain",
         "Monitoring checks: flip, polarity, dim, mono",
-        "Voicing + RTA layer \u00b7 VST3 / AU / Standalone"
+        "Voicing + RTA layer · VST3 / AU / Standalone"
       ],
       "requestCurve": true,
       "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/level-v0.3.0/Level-0.3.0.zip",
@@ -67,7 +67,14 @@
       "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/square-v0.1.0-beta/Square-0.1.0-beta.pkg",
       "price": 0,
       "buyUrl": "",
-      "notarized": false
+      "notarized": false,
+      "shots": [
+        {
+          "file": "square-ui-1-main.png",
+          "alt": "Square's faceplate: goniometer, correlation meter, crossover readout and BASS MONO engaged",
+          "caption": "The goniometer and correlation meter, with the bass-mono crossover at 120 Hz."
+        }
+      ]
     },
     {
       "slug": "scribe",
@@ -79,7 +86,7 @@
       "status": "Beta",
       "nameStatus": "set",
       "tagline": "Scribe a tonal fit to target.",
-      "blurb": "Learns a reference's per-band tonal balance and pulls your program toward it \u2014 broad and musical, not surgical. Audition modes flip the same plugin into a translation check: hear the mix coloured like a phone, earbuds, a laptop or a car before you commit to the render.",
+      "blurb": "Learns a reference's per-band tonal balance and pulls your program toward it — broad and musical, not surgical. Audition modes flip the same plugin into a translation check: hear the mix coloured like a phone, earbuds, a laptop or a car before you commit to the render.",
       "features": [
         "Learn a reference curve from anything playing",
         "Tilt + smoothing for a broad tonal fit",
@@ -89,7 +96,14 @@
       "price": 0,
       "buyUrl": "",
       "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/scribe-v0.2.0-beta/Scribe-0.2.0-beta.pkg",
-      "notarized": false
+      "notarized": false,
+      "shots": [
+        {
+          "file": "scribe-ui-1-main.png",
+          "alt": "Scribe's faceplate: tonal fit curve against a flat-plus-tilt target, with the translation mode row",
+          "caption": "Match mode against a flat + tilt target. The row along the bottom auditions the same mix on phone, earbuds, laptop and car."
+        }
+      ]
     },
     {
       "slug": "pare",
@@ -157,7 +171,14 @@
       "price": 0,
       "buyUrl": "",
       "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/bevel-v0.1.0-beta/Bevel-0.1.0-beta.pkg",
-      "notarized": false
+      "notarized": false,
+      "shots": [
+        {
+          "file": "bevel-ui-1-main.png",
+          "alt": "Bevel's faceplate: a six-band parametric EQ curve with draggable band handles over a ±12 dB grid",
+          "caption": "Six bands, dragged straight on the curve. Wheel sets Q, double-click bypasses a band."
+        }
+      ]
     },
     {
       "slug": "brace",
@@ -180,7 +201,14 @@
       "price": 0,
       "buyUrl": "",
       "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/brace-v0.1.0-beta/Brace-0.1.0-beta.pkg",
-      "notarized": false
+      "notarized": false,
+      "shots": [
+        {
+          "file": "brace-ui-1-main.png",
+          "alt": "Brace's faceplate: compression transfer curve with the knee drawn, CLEAN/FET/OPTO models, and the control row",
+          "caption": "The transfer curve draws the knee as you set it — here Clean at 4:1 over a −18 dB threshold, 6 dB knee."
+        }
+      ]
     },
     {
       "slug": "temper",
@@ -192,7 +220,7 @@
       "status": "Beta",
       "nameStatus": "set",
       "tagline": "Controlled heat, all the way up.",
-      "blurb": "One oversampled waveshaper, six models \u2014 from tube warmth and tape compression through transformer iron to diode overdrive, crunch and full fuzz. Bias sets the harmonic character, a velcro gate makes the dirt sputter and die with the note.",
+      "blurb": "One oversampled waveshaper, six models — from tube warmth and tape compression through transformer iron to diode overdrive, crunch and full fuzz. Bias sets the harmonic character, a velcro gate makes the dirt sputter and die with the note.",
       "features": [
         "Six models: Tube / Tape / Transformer / Diode / Crunch / Fuzz",
         "4x oversampled, latency-compensated dry path",
@@ -202,7 +230,14 @@
       "price": 0,
       "buyUrl": "",
       "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/temper-v0.2.0-beta/Temper-0.2.0-beta.pkg",
-      "notarized": false
+      "notarized": false,
+      "shots": [
+        {
+          "file": "temper-ui-1-main.png",
+          "alt": "Temper's faceplate: saturation transfer curve with all six models listed, Tube selected",
+          "caption": "One saturation engine, six models from Tube through Fuzz. The transfer curve shows what the drive is actually doing."
+        }
+      ]
     },
     {
       "slug": "ripple",
@@ -214,7 +249,7 @@
       "status": "Beta",
       "nameStatus": "set",
       "tagline": "Repeats that ripple out.",
-      "blurb": "A modulated stereo echo with tape and BBD character, ping-pong and tempo sync \u2014 plus chorus, flanger and phaser on the same interpolated-delay core. The control set follows the engine you pick rather than relabelling the same knobs.",
+      "blurb": "A modulated stereo echo with tape and BBD character, ping-pong and tempo sync — plus chorus, flanger and phaser on the same interpolated-delay core. The control set follows the engine you pick rather than relabelling the same knobs.",
       "features": [
         "Echo: tape / BBD character, ping-pong, tempo sync",
         "Motion: chorus, flanger, phaser",
@@ -224,7 +259,14 @@
       "price": 0,
       "buyUrl": "",
       "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/ripple-v0.2.0-beta/Ripple-0.2.0-beta.pkg",
-      "notarized": false
+      "notarized": false,
+      "shots": [
+        {
+          "file": "ripple-ui-1-main.png",
+          "alt": "Ripple's faceplate: echo train showing decaying taps, Tape character, and the Echo/Chorus/Flanger/Phaser mode row",
+          "caption": "The echo train draws every tap and its decay. Tape character, and the same delay core runs chorus, flanger and phaser."
+        }
+      ]
     },
     {
       "slug": "wake",
@@ -247,7 +289,14 @@
       "price": 0,
       "buyUrl": "",
       "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/wake-v0.1.0-beta/Wake-0.1.0-beta.pkg",
-      "notarized": false
+      "notarized": false,
+      "shots": [
+        {
+          "file": "wake-ui-1-main.png",
+          "alt": "Wake's faceplate: impulse response display with RT60 readout, Hall preset, and the algorithmic/convolution toggle",
+          "caption": "The impulse response, drawn. ALGO runs the FDN; CONV plays a captured space, and you can load your own IR."
+        }
+      ]
     }
   ],
   "guides": [
@@ -259,7 +308,7 @@
     },
     {
       "slug": "level-manual",
-      "title": "Level \u2014 manual",
+      "title": "Level — manual",
       "source": "Level/MANUAL.md",
       "summary": "What every control does, what Safe Gain actually guarantees, and what Level deliberately does not do."
     }
@@ -303,7 +352,7 @@
     "slug": "bundle",
     "name": "The Whole Lab",
     "tagline": "Every Warren Labs plugin, one install.",
-    "blurb": "Every Warren Labs plugin in one install \u2014 the Trueness and Character lines together, on one shared engine.",
+    "blurb": "Every Warren Labs plugin in one install — the Trueness and Character lines together, on one shared engine.",
     "price": 79,
     "buyUrl": "",
     "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/bundle-v0.1.0-beta/WarrenLabs-Bundle-0.1.0-beta.pkg"
