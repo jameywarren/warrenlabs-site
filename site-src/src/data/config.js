@@ -14,8 +14,18 @@ export const FORMSPREE = {
   sonicTemple: 'https://formspree.io/f/xbdngbol',
   attune: 'https://formspree.io/f/mwvglzoe',
   measure: 'https://formspree.io/f/mzdngqjo',
-  // Beta feedback pill (src/components/Feedback.astro). EMPTY until the form exists: the pill still
-  // opens and accepts a report rather than POSTing nowhere, so this is safe to ship today. Create a
-  // Formspree form and paste its endpoint here to start receiving them.
+  // Beta feedback pill (src/components/Feedback.astro). The comment here used to say this was
+  // EMPTY until a form existed; it has an endpoint, so that note was stale and made the pill look
+  // inert when it was live.
   feedback: 'https://formspree.io/f/xkoddkko',
+
+  // Changes beta waitlist. DIFFERENT PRODUCT: the Changes iOS app, not the audio line, and the
+  // consent does not transfer. Someone here agreed to hear about the Changes beta and nothing
+  // else, so do not merge this list into `sonicTemple` for a Warren Labs announcement.
+  //
+  // NOT read by anything in this project. /changes is hand-written HTML outside the Astro build
+  // (sync.mjs deliberately skips it), so the endpoint is inline in changes/index.html. It is
+  // recorded here because this file is where anyone will look for it, and an endpoint that exists
+  // in exactly one hand-written file is the kind that gets lost. Change it in BOTH places.
+  changesBeta: 'https://formspree.io/f/xppzavao',
 };
