@@ -99,8 +99,12 @@ function stampStyles(html) {
 
 // Plausible, from nav.json so all three renderers agree. Cookieless: no banner, nothing stored,
 // disclosed in /privacy. Empty string when analytics.enabled is false, which pulls it everywhere.
+// Plausible's NEWER format: site id is in the FILENAME (pa-<id>.js), no data-domain, and the
+// loader MUST be paired with the inline init() stub or nothing is recorded at all.
+const PLAUSIBLE_INIT = "window.plausible=window.plausible||function(){(plausible.q=plausible.q||[])"
+  + ".push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()";
 const analytics = nav.analytics?.enabled
-  ? `\n<script defer data-domain="${nav.analytics.domain}" src="${nav.analytics.src}"><\/script>`
+  ? `\n<script async src="${nav.analytics.src}"><\/script>\n<script>${PLAUSIBLE_INIT}<\/script>`
   : '';
 
 function head(darkOnly) {
