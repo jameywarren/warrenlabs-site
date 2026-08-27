@@ -122,7 +122,9 @@ const ld = { '@context': 'https://schema.org', '@graph': [organization, website,
     }
     <link rel="manifest" href="/site.webmanifest" />
     {noindex ? <meta name="robots" content="noindex, nofollow" /> : <link rel="canonical" href={canonical} />}
-    <meta name="theme-color" content="#16181B" />
+    <!-- #0c0d0f is --wl-bg and what the toggle writes on switch. #16181B was in no token file,
+         so the browser chrome never matched the page it framed. -->
+    <meta name="theme-color" content="#0c0d0f" />
     {/* Plausible. Cookieless, so it needs no consent banner and sets nothing; see /privacy.
         Config is nav.json so this page, the hand-written pages (tools/sync-chrome.mjs) and the
         /plugins pages (gen_site.py) cannot drift apart. `defer` keeps it off the critical path. */}
