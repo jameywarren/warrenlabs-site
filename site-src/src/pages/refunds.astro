@@ -8,7 +8,7 @@ const updated = 'August 2026';
 
 <Layout
   title="Refunds · Warren Labs"
-  description="Fourteen days, no questions asked. How to request a refund on Warren Labs audio software, what happens to your licence, and what to do if we don't reply."
+  description="Fourteen days, no questions asked, on anything bought from this site. Attune Pro is an App Store purchase, so Apple refunds that one: here is exactly where to ask, and what we can and cannot do."
 >
   <Nav variant="home" />
   <section class="sec">
@@ -16,10 +16,15 @@ const updated = 'August 2026';
       <span class="eyebrow">Refunds</span>
       <h2>Refund Policy</h2>
       <p class="sec-lede">
-        <b>14 days, no questions asked.</b> Email
+        <b>14 days, no questions asked, on anything you buy from this site.</b> Email
         <a href="mailto:jamey@warrenlabs.com?subject=Refund%20request">jamey@warrenlabs.com</a>
         with your order number and we'll refund it. You don't have to explain why, and we won't ask
         you to sit through an attempt to talk you out of it.
+      </p>
+      <p class="sec-lede alt">
+        <b>Attune Pro is the exception, and right now it is the one thing you can actually buy.</b>
+        It is an in-app purchase, so Apple is the seller and Apple issues the refund.
+        <a href="#attune-pro">Here is how to ask them</a>, and what we can and cannot do about it.
       </p>
 
       <h3>Why no questions</h3>
@@ -30,11 +35,44 @@ const updated = 'August 2026';
         is a policy designed to keep money from people who found out the honest way.
       </p>
 
-      <h3>How to ask</h3>
+      <h3 id="attune-pro">Attune Pro, and why we cannot refund it</h3>
+      <p>
+        Attune is on the App Store and the $39 Pro unlock is an in-app purchase, which makes
+        <b>Apple the seller</b>, not us. We never see the transaction. There is no order number on
+        our side to look up, and Apple gives developers no way to issue a refund. If we invited you
+        to email us about it, we would only be putting a step in front of the real one.
+      </p>
+      <p>
+        Ask Apple directly at
+        <a href="https://reportaproblem.apple.com" rel="noopener">reportaproblem.apple.com</a>,
+        signed in with the Apple Account you bought it with. Choose the purchase, pick a reason, and
+        submit it. Apple usually decides within a couple of days.
+      </p>
+      <p>
+        Two things worth saying plainly, because they are the parts people find out the hard way.
+        <b>The 14 days above is our promise and we cannot make it on Apple's behalf</b>: outside the
+        EU and the UK an App Store refund is at Apple's discretion, and that is a weaker guarantee
+        than the one at the top of this page. And if you are in the EU or the UK, your statutory
+        right of withdrawal covers this purchase too, and Apple honours it.
+      </p>
+      <p>
+        If Apple turns you down and you think that is wrong, write to us anyway at
+        <a href="mailto:jamey@warrenlabs.com?subject=Attune%20Pro%20refund">jamey@warrenlabs.com</a>.
+        We cannot overturn Apple's decision and we are not going to pretend otherwise. But if the app
+        did not do what this site said it does, that is worth knowing regardless of who took the
+        money, and it is the kind of thing we would rather fix than argue about.
+      </p>
+      <p>
+        The free version of Attune is unaffected by any of this. It stays free, it keeps working, and
+        a refunded Pro unlock simply puts you back on it.
+      </p>
+
+      <h3>How to ask, for anything bought here</h3>
       <p>
         Email <a href="mailto:jamey@warrenlabs.com?subject=Refund%20request">jamey@warrenlabs.com</a>
         with the order number from your receipt, within 14 days of purchase. That's the whole
-        process. You'll get a reply from a person, usually the same day.
+        process. You'll get a reply from a person, usually the same day. This is the route for the
+        plugins and anything else sold through this site, not for Attune Pro.
       </p>
 
       <h3>What happens next</h3>
@@ -58,7 +96,7 @@ const updated = 'August 2026';
         is the one that means our servers going away can't revoke it either.
       </p>
 
-      <h3>If we don't reply</h3>
+      <h3>If we don't reply, on a purchase made here</h3>
       <p>
         We should, and quickly. But if you email a refund request and hear nothing for
         <b>two business days</b>, you can take it straight to
@@ -106,5 +144,6 @@ const updated = 'August 2026';
   .prose h3 { margin: 30px 0 8px; font-size: 1.15rem; }
   .prose p { margin: 0 0 14px; line-height: 1.65; }
   .prose code { font-size: 0.92em; }
+  .sec-lede.alt { margin-top: 10px; }
   .prose .updated { margin-top: 30px; font-size: 0.85rem; opacity: 0.55; }
 </style>
