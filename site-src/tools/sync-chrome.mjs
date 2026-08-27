@@ -34,6 +34,16 @@ const nav = JSON.parse(
 const stylesPath = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'css', 'styles.css');
 const stylesHash = createHash('sha256').update(await readFile(stylesPath, 'utf8')).digest('hex').slice(0, 8);
 
+// Content hashes for the homepage scripts, keyed by bare filename.
+const scriptHashes = {};
+for (const name of ['wl-app.js', 'wl-patchbay.js']) {
+  try {
+    scriptHashes[name] = createHash('sha256')
+      .update(await readFile(new URL(`../../js/${name}`, import.meta.url), 'utf8'))
+      .digest('hex').slice(0, 8);
+  } catch { /* file gone: leave unstamped rather than emitting ?v=undefined */ }
+}
+
 const wlAssets = JSON.parse(
   await readFile(join(dirname(fileURLToPath(import.meta.url)), '..', 'src', 'data', 'wl-assets.json'), 'utf8')
 );
@@ -95,6 +105,15 @@ function header(logoHref, darkOnly) {
 // it would break the next hand edit. GitHub Pages honours the query, which is what matters here.
 function stampStyles(html) {
   return html.replace(/(href="[^"]*styles\.css)(\?v=[a-f0-9]+)?(")/g, `$1?v=${stylesHash}$3`);
+}
+
+// Same treatment for the homepage scripts. They had NO cache key at all, so a change to
+// wl-app.js relied entirely on GitHub Pages revalidating -- meaning a returning visitor could keep
+// running the previous build against new markup. That is the exact failure the styles.css hash
+// exists to prevent, and it bit twice on 2026-08-27 before anyone noticed it applied to JS too.
+function stampScripts(html) {
+  return html.replace(/(src="[^"]*\/?(?:wl-app|wl-patchbay)\.js)(\?v=[a-f0-9]+)?(")/g,
+    (_m, path, _old, tail) => `${path}?v=${scriptHashes[path.split('/').pop()] ?? ''}${tail}`);
 }
 
 // Plausible, from nav.json so all three renderers agree. Cookieless: no banner, nothing stored,
@@ -173,6 +192,7 @@ for (const { file, logoHref, darkOnly } of PAGES) {
   }
   const before = html;
   html = stampStyles(html);
+  html = stampScripts(html);
   html = replaceBlock(html, 'head', head(darkOnly), file);
   html = replaceBlock(html, 'header', header(logoHref, darkOnly), file);
   html = replaceBlock(html, 'footer', footer() + (darkOnly ? '' : '\n' + themeScript()), file);

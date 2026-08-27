@@ -63,8 +63,15 @@ header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) ro
 /* The scope lives BEHIND the call-to-action row. No divider rules: it is signal under the thing
    you act on, not a band between sections. */
 .hero-cta.ctawrap { position: relative; isolation: isolate; padding: 26px 0; }
-.hero-cta.ctawrap > #scope { position: absolute; left: -40px; right: -40px; top: 50%;
-  transform: translateY(-50%); width: calc(100% + 80px); height: 150px;
+/* FULL-BLEED, not a 40px bleed past the button column. The old homepage ran this the whole width
+   of the window and that is most of why it read as an instrument rather than an ornament.
+
+   left:50% + margin-left:-50vw is the full-viewport-width trick from inside a centred, padded
+   column. 100vw counts the scrollbar on desktop, which would push the page ~15px wide; body already
+   carries overflow-x:hidden so that is absorbed. The previous -40px/+80px version overflowed for
+   real: it made the homepage the only page on the site wider than a 375px phone viewport. */
+.hero-cta.ctawrap > #scope { position: absolute; top: 50%; transform: translateY(-50%);
+  left: 50%; margin-left: -50vw; width: 100vw; height: 220px;
   z-index: -1; pointer-events: none; opacity: 0.7; }
 .hero-cta.ctawrap > .btn { position: relative; z-index: 1; }
 .hero-sub { display: grid; grid-template-columns: 1fr 480px; gap: 64px; padding: 10px 0 84px; align-items: start; }

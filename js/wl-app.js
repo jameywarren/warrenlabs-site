@@ -20,7 +20,7 @@
   const scope = document.getElementById('scope');
   if (scope) {
     const sctx = scope.getContext('2d');
-    const H = 150, MID = 75;
+    const H = 220, MID = 110;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let W = 0;
 
@@ -48,10 +48,14 @@
       energy = Math.min(1.2, energy + 0.06);
     });
 
+    // Amplitudes and the second harmonic below are restored from the pre-redesign version. The
+    // redesign kept the shape but flattened the behaviour: one sine per layer and a proximity term
+    // that barely moved it, which is why it stopped reading as an instrument and started reading as
+    // a decorative squiggle.
     const layers = [
-      { amp: 30, freq: 0.012, speed: 2.0, alpha: 0.55, w: 2.2 },
-      { amp: 17, freq: 0.020, speed: -1.4, alpha: 0.22, w: 1.4 },
-      { amp: 42, freq: 0.007, speed: 1.0, alpha: 0.08, w: 1.0 }
+      { amp: 40, freq: 0.012, speed: 2.0, alpha: 0.55, w: 2.2 },
+      { amp: 23, freq: 0.020, speed: -1.4, alpha: 0.22, w: 1.4 },
+      { amp: 56, freq: 0.007, speed: 1.0, alpha: 0.08, w: 1.0 }
     ];
 
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -63,15 +67,26 @@
 
       sctx.globalAlpha = GRIDA; sctx.strokeStyle = TRACE; sctx.lineWidth = 1;
       sctx.beginPath();
-      for (let x = 0; x <= W; x += 80) { sctx.moveTo(x, MID - 40); sctx.lineTo(x, MID + 40); }
+      for (let x = 0; x <= W; x += 80) { sctx.moveTo(x, MID - 58); sctx.lineTo(x, MID + 58); }
       sctx.stroke();
 
       layers.forEach(L => {
         sctx.beginPath();
         sctx.globalAlpha = L.alpha; sctx.strokeStyle = TRACE; sctx.lineWidth = L.w;
         for (let x = 0; x <= W; x += 4) {
+          // Proximity multiplies the WHOLE amplitude (up to ~2.15x), rather than nudging it. That
+          // is the swell that follows the pointer, and it is what made the old one feel alive.
           const prox = Math.exp(-Math.pow((x - mouseX) / 220, 2));
-          const y = MID + Math.sin(x * L.freq + t * L.speed) * L.amp * (0.55 + energy * 0.45) * (1 + prox * 0.9);
+          // 1.3 rather than the original 1.6. The original ran on a 230px canvas and let its peaks
+          // run ~32px off the top, which is part of the look; at 1.6 on this 220px canvas they run
+          // 65px off, across the full width, which stops reading as headroom and starts reading as
+          // a clipped render. 1.3 clips ~41px, proportionally about the same as the original.
+          const a = L.amp * energy * (0.55 + prox * 1.3);
+          // Second harmonic, slightly detuned in both frequency and rate. Without it every layer is
+          // a plain sine and the trace never develops any character between the peaks.
+          const y = MID
+            + Math.sin(x * L.freq + t * L.speed) * a
+            + Math.sin(x * L.freq * 2.7 + t * L.speed * 1.7) * a * 0.3;
           x ? sctx.lineTo(x, y) : sctx.moveTo(x, y);
         }
         sctx.stroke();
