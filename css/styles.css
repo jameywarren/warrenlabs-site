@@ -19,6 +19,10 @@
   --led-green: var(--wl-good); --led-amber: var(--wl-accent); --led-cyan: var(--wl-accent);
   --font-display: "Barlow", sans-serif; --disp-weight: 700; --disp-ls: 0.01em; --disp-tt: uppercase;
   --h1: clamp(110px, 13.5vw, 196px); --h1-lh: 0.95;
+  /* Hero grid geometry. The scope's full-bleed correction derives from these two numbers, so the
+     grid and the trace can never drift apart. See .hero-cta.ctawrap > #scope below. */
+  --hero-creds-col: 480px; --hero-sub-gap: 64px;
+  --hero-scope-offset: calc((var(--hero-creds-col) + var(--hero-sub-gap)) / 2);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -66,15 +70,22 @@ header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) ro
 /* FULL-BLEED, not a 40px bleed past the button column. The old homepage ran this the whole width
    of the window and that is most of why it read as an instrument rather than an ornament.
 
-   left:50% + margin-left:-50vw is the full-viewport-width trick from inside a centred, padded
-   column. 100vw counts the scrollbar on desktop, which would push the page ~15px wide; body already
+   left:50% + margin-left:-50vw is the full-viewport-width trick, but it only lands correctly when
+   the containing column is itself centred in the viewport. Ours is not: #scope sits in
+   .hero-lede-col, the 1fr cell of a `1fr var(--hero-creds-col)` grid, so that column's centre is
+   half the creds column plus half the gap LEFT of the viewport centre. Anchoring at a bare 50% put
+   the trace 272px off at 1080px+, hanging off the left edge and dying short of the right. Adding
+   --hero-scope-offset back moves the anchor to the true viewport centre. Below 1080px the grid
+   collapses to one column and the offset is zeroed there.
+
+   100vw counts the scrollbar on desktop, which would push the page ~15px wide; body already
    carries overflow-x:hidden so that is absorbed. The previous -40px/+80px version overflowed for
    real: it made the homepage the only page on the site wider than a 375px phone viewport. */
 .hero-cta.ctawrap > #scope { position: absolute; top: 50%; transform: translateY(-50%);
-  left: 50%; margin-left: -50vw; width: 100vw; height: 220px;
+  left: calc(50% + var(--hero-scope-offset)); margin-left: -50vw; width: 100vw; height: 220px;
   z-index: -1; pointer-events: none; opacity: 0.7; }
 .hero-cta.ctawrap > .btn { position: relative; z-index: 1; }
-.hero-sub { display: grid; grid-template-columns: 1fr 480px; gap: 64px; padding: 10px 0 84px; align-items: start; }
+.hero-sub { display: grid; grid-template-columns: 1fr var(--hero-creds-col); gap: var(--hero-sub-gap); padding: 10px 0 84px; align-items: start; }
 .hero-sub .lede { font-size: 25px; line-height: 1.45; max-width: 640px; text-wrap: pretty; }
 .hero-sub .lede em { font-style: normal; color: var(--ink); }
 .creds { border-left: 1px solid var(--line); padding-left: 32px; display: grid; gap: 18px; }
@@ -301,6 +312,8 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   .wrap { padding: 0 32px; }
   .head-in { padding: 0 32px; }
   .hero-sub { grid-template-columns: 1fr; gap: 36px; padding-bottom: 64px; }
+  /* single column: .hero-lede-col is centred again, so the scope needs no correction */
+  :root { --hero-scope-offset: 0px; }
   .creds { border-left: none; border-top: 1px solid var(--line); padding: 24px 0 0; }
   .chain { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .chain-mod:not(:last-child)::after { display: none; }
