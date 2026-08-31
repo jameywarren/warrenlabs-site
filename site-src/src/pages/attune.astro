@@ -321,7 +321,16 @@ const attuneApp = {
   {/* Real screenshots from the shipping build, not mockups. The interactive demos above explain the
       idea better than a still can — you move a target and watch the graph follow — but only a
       screenshot proves the app exists and looks like this. Both jobs, neither compromised.
-      Lazy-loaded: 5 images below the fold shouldn't cost the hero anything. */}
+      Lazy-loaded: 5 images below the fold shouldn't cost the hero anything.
+
+      THESE ARE COPIES OF THE APP STORE CAPTURES — Attune's Assets/Store/0*.png, cropped below the
+      62 px title bar and halved to 1440x868. Do not re-shoot them here. The first set was taken
+      with `screencapture -R <region>`, which grabs a rectangle of the SCREEN, so whatever floated
+      above Attune landed in the frame: four of the five shipped with an editor window and an iOS
+      Simulator across the right third, legible, for two weeks. Attune's tools/shoot_screenshots.sh
+      fixed that with `screencapture -l <windowid>` (the window's own buffer, so occlusion cannot
+      reach it) but only the store copies were re-shot. Take new ones from that script, then crop
+      and copy across — the whole point is that this strip has one source, and it is checked. */}
   <section id="shots" class="band">
     <div class="wrap">
       <span class="eyebrow">The actual app</span>
@@ -330,13 +339,14 @@ const attuneApp = {
         Not renders. This is what installs.
       </p>
       <div class="shot-strip">
-        <figure>{/* lossless WebP with the PNG as fallback: 2.27 MiB -> 1.06 MiB across the five,
-            byte-identical pixels. Not re-compressed lossily; these are product screenshots. */}
-        <picture><source srcset="/assets/attune/01-cockpit.webp" type="image/webp" /><img src="/assets/attune/01-cockpit.png" alt="Attune's main screen: frequency-response graph with yours, target and voice-matched curves" width="1440" height="900" loading="lazy" decoding="async" /></picture><figcaption>The graph is the instrument.</figcaption></figure>
-        <figure><picture><source srcset="/assets/attune/02-another-headphone.webp" type="image/webp" /><img src="/assets/attune/02-another-headphone.png" alt="Voice-matching one headphone toward another" width="1440" height="900" loading="lazy" decoding="async" /></picture><figcaption>Hear another headphone&rsquo;s voice on yours.</figcaption></figure>
-        <figure><picture><source srcset="/assets/attune/03-make-it-yours.webp" type="image/webp" /><img src="/assets/attune/03-make-it-yours.png" alt="Warmth and vibrancy controls tuning the house target" width="1440" height="900" loading="lazy" decoding="async" /></picture><figcaption>Tune the house voice to taste.</figcaption></figure>
-        <figure><picture><source srcset="/assets/attune/04-find-your-sound.webp" type="image/webp" /><img src="/assets/attune/04-find-your-sound.png" alt="The blind, loudness-matched A/B listening exam" width="1440" height="900" loading="lazy" decoding="async" /></picture><figcaption>Blind A/B, loudness-matched.</figcaption></figure>
-        <figure><picture><source srcset="/assets/attune/05-pro-unlock.webp" type="image/webp" /><img src="/assets/attune/05-pro-unlock.png" alt="Saved sounds panel with the Attune Pro unlock" width="1440" height="900" loading="lazy" decoding="async" /></picture><figcaption>Your sounds, saved.</figcaption></figure>
+        <figure>{/* lossless WebP with the PNG as fallback: 0.94 MiB -> 0.48 MiB across the five,
+            pixel-identical wherever anything is visible. Not re-compressed lossily; these are
+            product screenshots. */}
+        <picture><source srcset="/assets/attune/01-your-sound.webp" type="image/webp" /><img src="/assets/attune/01-your-sound.png" alt="Attune's main screen: the frequency-response graph with your headphone, the target and the voice-matched curve, over warmth, presence and treble-ease sliders" width="1440" height="868" loading="lazy" decoding="async" /></picture><figcaption>The graph is the instrument.</figcaption></figure>
+        <figure><picture><source srcset="/assets/attune/02-another-headphone.webp" type="image/webp" /><img src="/assets/attune/02-another-headphone.png" alt="Voice-matching one headphone toward another: a Sennheiser HD 650 corrected toward an HD 800" width="1440" height="868" loading="lazy" decoding="async" /></picture><figcaption>Hear another headphone&rsquo;s voice on yours.</figcaption></figure>
+        <figure><picture><source srcset="/assets/attune/03-fine-tune.webp" type="image/webp" /><img src="/assets/attune/03-fine-tune.png" alt="Attune's Fine tune panel: sweeping a probe across the spectrum and notching down what sticks out" width="1440" height="868" loading="lazy" decoding="async" /></picture><figcaption>Sweep it, then pull down what sticks out.</figcaption></figure>
+        <figure><picture><source srcset="/assets/attune/04-find-your-sound.webp" type="image/webp" /><img src="/assets/attune/04-find-your-sound.png" alt="The blind, loudness-matched A/B listening exam, judging the warmth axis" width="1440" height="868" loading="lazy" decoding="async" /></picture><figcaption>Blind A/B, loudness-matched.</figcaption></figure>
+        <figure><picture><source srcset="/assets/attune/05-pro-unlock.webp" type="image/webp" /><img src="/assets/attune/05-pro-unlock.png" alt="The saved-sounds panel with the Attune Pro unlock and EQ export" width="1440" height="868" loading="lazy" decoding="async" /></picture><figcaption>Your sounds, saved.</figcaption></figure>
       </div>
     </div>
   </section>
