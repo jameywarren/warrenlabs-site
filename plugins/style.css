@@ -37,7 +37,10 @@ a:hover{text-decoration:underline}
 
 /* header: Warren Labs Mark + mono nav, matching the homepage lockup */
 header.site{border-bottom:1px solid var(--line)}
-.head-in{display:flex; align-items:center; justify-content:space-between; padding:24px 0}
+/* padding-block only. This element carries BOTH `wrap` and `head-in` (see gen_site.py's header
+   builder), and a `padding:24px 0` shorthand here silently cancelled .wrap's `0 24px`, so the
+   header ran edge to edge while every other row on the page was inset. Found 2026-09-01. */
+.head-in{display:flex; align-items:center; justify-content:space-between; padding-top:24px; padding-bottom:24px}
 .logo-mark{display:flex; align-items:center; gap:10px; color:var(--ink)}
 .logo-mark:hover{text-decoration:none}
 /* header mark carries the accent, matching wl-ui/WLBrand.h drawWarrenLabsMarkAccent */
@@ -151,14 +154,32 @@ ul.features li::before{content:"›"; color:var(--shot-accent,var(--acc)); margi
 .prose pre code{background:none; border:0; padding:0; color:var(--ink)}
 .prose ul{padding-left:20px} .prose li{margin:4px 0}
 
-@media (max-width:560px){
-  .head-in{padding:18px 0}
+/* Header fit, measured 2026-09-01, and this renderer was the worst of the three: the row
+   overflowed its own column from about 950px all the way down to the 560px wrap below, because
+   the only step was that one. The steps mirror css/styles.css and Nav.astro -- same numbers, same
+   order -- except that there is no drawer here (no toggle in gen_site.py's markup and no JS on
+   these pages), so the bottom step wraps instead. Note .wrap is 1080 here against 1320 on the
+   main site, so the column is narrower and the squeeze has to start sooner. */
+@media (max-width:1180px){
+  nav.site a{margin-left:20px}
+}
+@media (max-width:1040px){
+  nav.site a{margin-left:14px; font-size:11.5px; letter-spacing:.09em}
   .logo-mark .wl-mark{width:34px}
-  .logo-mark span{font-size:12px; letter-spacing:.18em}
-  nav.site a{margin-left:16px; font-size:11px}
+  .logo-mark{gap:9px}
+  .logo-mark span{font-size:13px; letter-spacing:.14em}
+}
+@media (max-width:940px){
   /* The nav is shared with the rest of the site now, so nothing is dropped by position.
      Let it wrap instead of hiding whichever link happens to be last. */
   nav.site{display:flex; flex-wrap:wrap; gap:0 4px; justify-content:flex-end}
+  nav.site a{margin-left:16px}
+}
+@media (max-width:560px){
+  .head-in{padding-top:18px; padding-bottom:18px}
+  .logo-mark .wl-mark{width:34px}
+  .logo-mark span{font-size:12px; letter-spacing:.18em}
+  nav.site a{margin-left:16px; font-size:11px}
   .shot .id .br{display:none}
 }
 

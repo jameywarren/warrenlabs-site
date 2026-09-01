@@ -308,9 +308,52 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
 .foot-meta { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-top: 1px solid var(--line); padding-top: 18px; font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 0.16em; color: var(--faint); }
 
 /* ---------- responsive ---------- */
+
+/* Header fit, measured 2026-09-01. This is the hand-written half of the same header Nav.astro
+   renders, and the two MUST stay equal -- see the gap comment up at `nav`. At full size the row
+   needs about 990px of content (logo 180 + nav 777 + theme 32), and the drawer used to wait until
+   720px, so from roughly 720 to 1180 the wordmark and the first nav link sat touching with zero
+   gap. Three steps now: relax, squeeze, drawer. Ported verbatim from Nav.astro except that the
+   drawer trigger there is one media block and here it is two, because this file's 720px block
+   carries a lot of non-header rules that should stay at 720. */
+@media (max-width: 1180px) {
+  .head-in { padding: 0 32px; }
+  nav { gap: 22px; }
+}
+/* Last stop before the drawer: type down a step, gaps tightened. Buys back ~150px, which is what
+   it takes to still fit at 940. */
+@media (max-width: 1040px) {
+  .head-in { padding: 0 24px; }
+  nav { gap: 15px; }
+  nav a { font-size: 11.5px; letter-spacing: 0.09em; }
+  nav a.cta { padding: 9px 14px; }
+  .wl-mark { width: 30px; }
+  .logo-mark { gap: 9px; }
+  .logo-mark span { font-size: 13px; letter-spacing: 0.14em; }
+}
+@media (max-width: 940px) {
+  .head-in { padding: 0 20px; }
+  .logo-mark { gap: 8px; }
+  .wl-mark { width: 34px; }
+  .logo-mark span { font-size: 12px; letter-spacing: 0.16em; }
+  .nav-toggle { display: flex; }
+  nav {
+    position: absolute; top: 100%; left: 0; right: 0; z-index: 60;
+    flex-direction: column; gap: 0;
+    background: var(--bg2); border-bottom: 1px solid var(--line);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.32s cubic-bezier(.2,.8,.3,1);
+  }
+  header.nav-open nav { max-height: 240px; }
+  /* Undo the 1040px squeeze: in the drawer each link is a full-width row, so the tightened
+     tracking would read as a mistake rather than as economy. */
+  nav a { font-size: 12px; letter-spacing: 0.16em; color: var(--ink); padding: 17px 20px; border-top: 1px solid var(--line); }
+  nav a.cta { border: none; border-top: 1px solid var(--line); border-radius: 0; padding: 17px 20px; }
+}
+
 @media (max-width: 1080px) {
   .wrap { padding: 0 32px; }
-  .head-in { padding: 0 32px; }
   .hero-sub { grid-template-columns: 1fr; gap: 36px; padding-bottom: 64px; }
   /* single column: .hero-lede-col is centred again, so the scope needs no correction */
   :root { --hero-scope-offset: 0px; }
@@ -331,22 +374,6 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
 @media (max-width: 720px) {
   :root { --h1: clamp(60px, 18vw, 104px); }
   .wrap { padding: 0 20px; }
-  .head-in { padding: 0 20px; }
-  .logo-mark { gap: 8px; }
-  .wl-mark { width: 34px; }
-  .logo-mark span { font-size: 12px; letter-spacing: 0.16em; }
-  .nav-toggle { display: flex; }
-  nav {
-    position: absolute; top: 100%; left: 0; right: 0; z-index: 60;
-    flex-direction: column; gap: 0;
-    background: var(--bg2); border-bottom: 1px solid var(--line);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-    max-height: 0; overflow: hidden;
-    transition: max-height 0.32s cubic-bezier(.2,.8,.3,1);
-  }
-  header.nav-open nav { max-height: 240px; }
-  nav a { font-size: 12px; letter-spacing: 0.16em; color: var(--ink); padding: 17px 20px; border-top: 1px solid var(--line); }
-  nav a.cta { border: none; border-top: 1px solid var(--line); border-radius: 0; padding: 17px 20px; }
   .approach { padding-top: 64px; padding-bottom: 32px; }
   .approach-head { margin-bottom: 36px; }
   .hero { padding-top: 44px; }
