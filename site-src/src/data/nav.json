@@ -22,7 +22,7 @@
       "label": "LEARN"
     },
     {
-      "href": "/design-review/",
+      "href": "/loaners/",
       "label": "FOR MAKERS"
     },
     {
@@ -65,14 +65,6 @@
     {
       "href": "/plugins/guides/",
       "label": "Guides"
-    },
-    {
-      "href": "/design-review/",
-      "label": "Design review"
-    },
-    {
-      "href": "/design-review/#production-measurement",
-      "label": "Production measurement"
     },
     {
       "href": "/loaners/",

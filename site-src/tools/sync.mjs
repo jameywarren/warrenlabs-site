@@ -3,7 +3,7 @@
 //
 // Only the routes listed in ROUTES are published, and only those directories are cleaned before
 // each copy. That matters: the repo root also holds hand-written files (index.html, 404.html,
-// css/, js/, design-review/, plugins/, changes/) and a blanket copy would clobber them.
+// css/, js/, plugins/, changes/) and a blanket copy would clobber them.
 //
 // Run via `npm run build` from site-src/.
 

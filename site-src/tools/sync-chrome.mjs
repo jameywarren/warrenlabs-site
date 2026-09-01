@@ -1,6 +1,6 @@
 // Render the shared header and footer into the hand-written pages.
 //
-// The homepage, /design-review and /404 are static HTML with no build step of their own, so they
+// The homepage and /404 are static HTML with no build step of their own, so they
 // cannot import a component. Instead each one marks the region it delegates:
 //
 //   <!-- wl:head:start   -->  ...generated...  <!-- wl:head:end   -->   (tokens + no-flash theme)
@@ -63,7 +63,6 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 // are now DARK ISLANDS (see .rack-zone/.contact in css/styles.css) and the page keeps its toggle.
 const PAGES = [
   { file: 'index.html', logoHref: null },
-  { file: 'design-review/index.html', logoHref: '/' },
   { file: '404.html', logoHref: '/' },
 ];
 

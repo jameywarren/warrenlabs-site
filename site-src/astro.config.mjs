@@ -32,7 +32,6 @@ export default defineConfig({
       // The hand-written pages live outside this Astro project, so list them explicitly.
       customPages: [
         'https://warrenlabs.com/',
-        'https://warrenlabs.com/design-review/',
         'https://warrenlabs.com/plugins/',
         'https://warrenlabs.com/changes/',
         // The nine plugin pages and the guides index. gen_site.py in the monorepo renders these,
