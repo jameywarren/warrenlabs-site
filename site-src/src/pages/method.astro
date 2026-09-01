@@ -16,9 +16,13 @@
 // internal -- they are not what anyone means by "the method."
 //
 // DELIBERATELY NOT HERE: the competitive positioning from pipeline section 1 (how we talk about
-// GraphWorks), and any number the source flags as unverified. The 60318-4 defined range is
-// described rather than pinned to a figure, because MEASUREMENT-PIPELINE.md section 2 says to
-// verify the exact number against the standard before publishing it. Pin it and this page can say it.
+// GraphWorks).
+//
+// The 60318-4 range WAS the one unverified number on this page. Pinned 2026-09-01 against IEC's own
+// publication record for 60318-4:2010: specified 100 Hz to 10 kHz; above 10 kHz it "does not
+// simulate a human ear, but can be used as an acoustic coupler" to 16 kHz; below 100 Hz it "has not
+// been verified to simulate a human ear," usable as a coupler to 20 Hz. The low-end half was not in
+// MEASUREMENT-PIPELINE.md at all, and it is why the limits section now caveats BOTH ends.
 //
 // VOICE: checked against makerphones/scripts/voice-lint.mjs. Plain, first-person-plural, short
 // sentences. No "X, not Y" as a structural device, no aphoristic closers, no lab-coat register.
@@ -43,10 +47,10 @@ const RIG = [
 ];
 
 const BANDS = [
-  ['20&ndash;200 Hz', 'Seal. How forgiving the headphone is about fit.'],
+  ['20&ndash;200 Hz', 'Seal. How forgiving the headphone is about fit. Below 100 Hz the coupler is outside its verified range &mdash; see the limits.'],
   ['200 Hz&ndash;2 kHz', 'The control band. Scatter here should be near zero. If it isn&rsquo;t, our measurement is wrong and we go again.'],
   ['2&ndash;10 kHz', 'Placement on the pinna. How fussy the headphone is about alignment.'],
-  ['Above 10 kHz', 'Reported, but read it gently. See below.'],
+  ['Above 10 kHz', 'Reported, and outside the standard&rsquo;s simulated range. Read it gently.'],
 ];
 
 const jsonLd = [
@@ -215,17 +219,24 @@ const jsonLd = [
     <section class="sec">
       <h2>Where our measurements stop being trustworthy</h2>
       <p>
-        <b>Above roughly 10 kHz, read the graph gently.</b> The ear-simulator standard our coupler is
-        built to has a defined range, and it ends up there. Past it, the coupler&rsquo;s own resonances
-        start contributing rather than the eardrum pressure we are trying to represent. There is a
-        second reason usually given &mdash; ear canals differ more between people than headphones differ
-        from each other &mdash; and it is true, but softer. The instrument reason is the one that decides
-        it.
+        <b>The standard our coupler is built to covers 100 Hz to 10 kHz.</b> That is the range where
+        IEC 60318-4 says the thing behaves like an occluded human ear. Outside it, the standard is
+        blunt about what you are holding: above 10 kHz it &ldquo;does not simulate a human ear, but can
+        be used as an acoustic coupler&rdquo; out to 16 kHz, and below 100 Hz it &ldquo;has not been
+        verified to simulate a human ear,&rdquo; usable as a coupler down to 20 Hz.
       </p>
       <p>
-        We publish that region anyway. Truncating at 8 kHz throws away pinna interaction and driver
-        resonance, and that is most of what people mean when they talk about treble character. Better
-        to show it and label it.
+        So both ends of our graphs sit outside the simulated range, and the two ends fail differently.
+        A reading below 100 Hz is a real, repeatable acoustic measurement of a real cavity. What it
+        stops being is a claim about the pressure at your eardrum. Up top, the same caveat plus the
+        harder problem that ear canals differ more between people than headphones differ from each
+        other, so the top octave is partly about whose ear you are asking.
+      </p>
+      <p>
+        We publish both regions anyway. Truncating at 8 kHz throws away pinna interaction and driver
+        resonance, and that is most of what people mean by treble character. Cutting off at 100 Hz
+        would throw away the sub-bass, which is half of why people buy headphones. Better to show
+        them and say where the ground gets soft.
       </p>
       <p>
         <b>One unit is one unit.</b> A single measurement of a single sample is exactly that. Unit
