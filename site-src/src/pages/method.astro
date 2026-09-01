@@ -1,0 +1,361 @@
+---
+// /method — the measurement method, published.
+//
+// WHY THIS PAGE EXISTS: /loaners has been telling manufacturers "our measurement method is written
+// down and published before anything gets measured, so you can read exactly how your headphone will
+// be treated." It was written down (warren-labs/MEASUREMENT-PIPELINE.md) and it was not published.
+// This page makes that sentence true. See warren-labs/PLAN.md item 6.
+//
+// WHY IT COULD BE PUBLISHED NOW: measurements/RIG.md used to say the protocol, the fixture and the
+// tolerance math were "deliberately not published -- that is the moat, and it is also what makes the
+// first call worth taking." That was written to protect the paid production-measurement service,
+// which came down 2026-09-01. The thing the secrecy protected no longer exists.
+//
+// SOURCE: MEASUREMENT-PIPELINE.md sections 1-3 and the claimable block in measurements/RIG.md.
+// Sections 4-8 of the pipeline (findings, data structures, script specs, open questions) stay
+// internal -- they are not what anyone means by "the method."
+//
+// DELIBERATELY NOT HERE: the competitive positioning from pipeline section 1 (how we talk about
+// GraphWorks), and any number the source flags as unverified. The 60318-4 defined range is
+// described rather than pinned to a figure, because MEASUREMENT-PIPELINE.md section 2 says to
+// verify the exact number against the standard before publishing it. Pin it and this page can say it.
+//
+// VOICE: checked against makerphones/scripts/voice-lint.mjs. Plain, first-person-plural, short
+// sentences. No "X, not Y" as a structural device, no aphoristic closers, no lab-coat register.
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+
+const SITE = 'https://warrenlabs.com';
+const description =
+  'How Warren Labs measures a headphone: the rig, the seating rule, the 19 captures per side, and ' +
+  'the repeatability figures that came off our own bench. Published in full so you can check it.';
+
+const RIG = [
+  ['Fixture', 'miniDSP EARS Pro, both capsules, per-unit calibration at 1/24 octave.'],
+  ['Coupler', 'IEC 60318-4 — the ear-simulator standard the industry rigs use.'],
+  ['Analog gain', '0 dB, and it stays there. Moving it invalidates the calibration files.'],
+  ['Sample rate', '48 kHz.'],
+  ['Drive', 'The fixture&rsquo;s own headphone output, set once at 94 dB SPL and never touched between left and right.'],
+  ['Captures', '19 per side. 38 per headphone. 60&ndash;90 minutes.'],
+  ['Published band', 'Full. Nothing truncated at 8 kHz.'],
+];
+
+const BANDS = [
+  ['20&ndash;200 Hz', 'Seal. How forgiving the headphone is about fit.'],
+  ['200 Hz&ndash;2 kHz', 'The control band. Scatter here should be near zero. If it isn&rsquo;t, our measurement is wrong and we go again.'],
+  ['2&ndash;10 kHz', 'Placement on the pinna. How fussy the headphone is about alignment.'],
+  ['Above 10 kHz', 'Reported, but read it gently. See below.'],
+];
+
+const jsonLd = [
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
+      { '@type': 'ListItem', position: 2, name: 'How we measure', item: `${SITE}/method` },
+    ],
+  },
+];
+---
+
+<Layout title="How we measure · Warren Labs" description={description} jsonLd={jsonLd}>
+  <Nav variant="home" />
+
+  <main class="wrap mt">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href="/">Home</a><span>/</span><span aria-current="page">How we measure</span>
+    </nav>
+
+    <span class="eyebrow">The bench</span>
+    <h1>How we measure a headphone.</h1>
+    <p class="lede">
+      Every graph on this site came out of the procedure below. We are publishing it in full &mdash;
+      the rig, the seating rule, the capture count, and the repeatability numbers off our own bench &mdash;
+      so you can decide what our measurements are worth instead of taking our word for it.
+    </p>
+
+    <div class="terms">
+      {RIG.map(([k, v]) => (
+        <div class="term">
+          <span class="tk">{k}</span>
+          <span class="tv" set:html={v} />
+        </div>
+      ))}
+    </div>
+
+    <section class="sec">
+      <h2>We measure it seated well, then prove we can find that seating again</h2>
+      <p>
+        This is the choice everything else follows from, so it goes first.
+      </p>
+      <p>
+        <b>We seat the headphone the way you would.</b> Shift the cups, move the headband, settle the
+        pads, listen, adjust again. Keep going until it seals properly and sounds right. Then measure
+        it there, and prove we can come back to the same spot.
+      </p>
+      <p>
+        That is a departure from the usual practice, and the departure is on purpose. The convention
+        headphone reviewing settled on &mdash; five placements per side, deliberately randomised, then
+        averaged &mdash; was designed to answer a different question: where does a careless user end up?
+        That is a fair question. It is also one nobody asks about their own headphones, because nobody
+        listens at a random seating. You fiddle until it sounds right, and then you listen for three
+        hours at that position.
+      </p>
+      <p>
+        So the response worth publishing is the one you converge on. Our grid of nine positions is a
+        search for that spot rather than a survey of how bad the misses are.
+      </p>
+    </section>
+
+    <section class="sec">
+      <h2>We never average the reseats</h2>
+      <p>
+        Averaging has a real problem underneath it. A seal either holds or it breaks, so the reseats
+        come out in two clumps. Average four good seals with one broken one and you publish a bass
+        shelf that no listener will ever hear, then build a correction on top of it. The average of a
+        two-humped distribution is a value that never happened.
+      </p>
+      <p>
+        What we publish instead is the <b>medoid</b>: of six real reseats at the winning coordinates,
+        the one closest to the middle of the group. It is an actual placement that actually occurred,
+        picked by a stated rule rather than by taste. Nothing is blended.
+      </p>
+      <p>
+        The spread across those six gets published too. Nobody else publishes it, and it turns out to
+        be the more interesting number.
+      </p>
+    </section>
+
+    <section class="sec">
+      <h2>The procedure, per side</h2>
+      <p>
+        <b>Fit.</b> Set the jig spacing for even pad pressure on both sides, write it down, and use
+        that same setting every time we measure that model. Ever.
+      </p>
+      <p>
+        <b>Nine on a grid.</b> A 3&times;3 pattern at a fixed step, with plate coordinates recorded for
+        every position. Each one is normalised to 0 dB at 1 kHz and resampled to a log grid before
+        anything is computed, so that a plain level shift between seatings doesn&rsquo;t read as
+        instability and the top octave doesn&rsquo;t swamp the metric. The winner is the position that
+        deviates least from its eight neighbours. If the winner lands on an edge of the grid, we
+        guessed the starting point wrong, so we recentre and run it again.
+      </p>
+      <p>
+        <b>Six reseats.</b> At the winning coordinates, lift the headphone off and seat it again, six
+        times. The medoid of those six is the published response. Their spread is the repeatability
+        figure, and if it comes out wide it means the coordinates aren&rsquo;t capturing the fit and
+        the grid needs rerunning.
+      </p>
+      <p>
+        <b>Four perturbations.</b> Headband too tight, headband too loose, and the seal broken with a
+        thin eyeglass arm and a thick one. Glasses wreck a seal, and how much depends on the frame.
+      </p>
+      <p>
+        Nineteen captures a side, thirty-eight a headphone. The sweeps themselves take seconds. All the
+        time goes into moving the headphone.
+      </p>
+    </section>
+
+    <section class="sec">
+      <h2>Four bands, because they fail differently</h2>
+      <div class="terms">
+        {BANDS.map(([k, v]) => (
+          <div class="term">
+            <span class="tk" set:html={k} />
+            <span class="tv" set:html={v} />
+          </div>
+        ))}
+      </div>
+      <p class="after">
+        Spread is reported as a 10th&ndash;90th percentile range, which survives one bad seating and
+        reads as a plain &plusmn; figure.
+      </p>
+    </section>
+
+    <section class="sec">
+      <h2>What our own bench does</h2>
+      <p>
+        We ran this on ourselves before we ran it on anyone&rsquo;s headphones, and the numbers are
+        published here whether or not they flatter us.
+      </p>
+      <p>
+        <b>The instrument contributes 0.002 dB</b> through the midrange &mdash; thirty captures with
+        nothing touched between them, both capsules agreeing. So the instrument is never the thing
+        that limits a measurement here. Seating is.
+      </p>
+      <p>
+        <b>And seating repeatability belongs to the headphone.</b> That was the surprise. Measured
+        across three headphones and five sides, seat-to-seat spread through the midrange ran from
+        <b>0.059 dB on an HD 800</b> to <b>0.316 dB on an Oppo PM-3</b>. A five-fold range on one
+        bench, one operator, one afternoon.
+      </p>
+      <p>
+        We could quote you the 0.059 and let you assume it applies to everything. It would be a lie of
+        the most convenient kind, and we have made a version of it before: this figure has been stated
+        wrongly twice in our own notes, once too pessimistic and once too flattering. There is no
+        single number that describes how repeatably this rig seats a headphone, because the headphone
+        gets a vote.
+      </p>
+      <p>
+        The two Sennheisers are opposites, which is the clearest way to see it. The HD 800 seals
+        beautifully and hates being moved. The HD 650 is the reverse. So &ldquo;open circumaurals
+        behave like this&rdquo; is not a rule, and no shortcut by category survives contact with the
+        bench.
+      </p>
+      <p>
+        <b>The good news is that the hard ones are still measurable.</b> They need more seatings.
+        Against our own derived tolerance, an HD 800 needs one seating per unit and a PM-3 needs eight.
+        The method absorbs the difference by working harder, which is what a per-model tolerance is
+        for.
+      </p>
+    </section>
+
+    <section class="sec">
+      <h2>Where our measurements stop being trustworthy</h2>
+      <p>
+        <b>Above roughly 10 kHz, read the graph gently.</b> The ear-simulator standard our coupler is
+        built to has a defined range, and it ends up there. Past it, the coupler&rsquo;s own resonances
+        start contributing rather than the eardrum pressure we are trying to represent. There is a
+        second reason usually given &mdash; ear canals differ more between people than headphones differ
+        from each other &mdash; and it is true, but softer. The instrument reason is the one that decides
+        it.
+      </p>
+      <p>
+        We publish that region anyway. Truncating at 8 kHz throws away pinna interaction and driver
+        resonance, and that is most of what people mean when they talk about treble character. Better
+        to show it and label it.
+      </p>
+      <p>
+        <b>One unit is one unit.</b> A single measurement of a single sample is exactly that. Unit
+        variation is real and we have no way to tell you where in the distribution yours fell.
+      </p>
+      <p>
+        <b>Left and right are always measured separately.</b> Channels can differ by several dB. We
+        keep both and never average them into one line.
+      </p>
+      <p>
+        <b>Our repeatability figures are about our bench.</b> They describe how precisely we can
+        repeat ourselves, on one rig, with one operator. They are not error bars on your headphone
+        and they never appear as a band around a published curve.
+      </p>
+    </section>
+
+    <section class="sec">
+      <h2>Things we record that often go unrecorded</h2>
+      <p>
+        Pads dominate the response, and pad condition is the variable most commonly left out of a
+        published measurement. So we write down the pad type, its age and condition, the jig spacing,
+        and the clamping force if it has been modified. The headphone comes up to room temperature
+        before it goes on the rig, because cold pads seal differently.
+      </p>
+      <p>
+        The rig itself gets the same treatment. Capsule serial numbers, calibration files, gain
+        setting, drive level. Every one of those is part of the measurement, and a change to any of
+        them means measurements taken either side of it are not comparable &mdash; which we say out
+        loud when it happens.
+      </p>
+      <p>
+        One thing is still open and worth naming: the fixture&rsquo;s manual does not state the output
+        impedance of its headphone output. A high output impedance interacts with a headphone&rsquo;s
+        impedance curve and would put some of the amplifier into the result. We have asked. When we
+        have an answer it goes here, and if it comes back high we will revisit the decision and say
+        what changed.
+      </p>
+    </section>
+
+    <section class="sec">
+      <h2>Two rigs never share an axis</h2>
+      <p>
+        We also hold an older archive measured on a Head Acoustics HMS II.3, from the HeadRoom years.
+        It is a research reference and we treat it as one. It never shares a graph with anything
+        measured here, and no count on this site ever adds the two together. Different fixture,
+        different coordinate system, and no honest way to merge them.
+      </p>
+      <div class="cta-row tight">
+        <Button href="/learn/why-two-rigs-cant-share-an-axis" variant="ghost">Why that matters</Button>
+        <Button href="/learn/how-to-read-a-frequency-response-graph" variant="ghost">How to read the graph</Button>
+      </div>
+    </section>
+
+    <div class="ln-cta">
+      <div>
+        <h2 class="cta-h">Send us a headphone and hold us to it.</h2>
+        <p>
+          Everything above is what happens to it. If we depart from any of it, the departure gets
+          recorded on the measurement page.
+        </p>
+      </div>
+      <div class="cta-btns">
+        <Button href="/measure" variant="primary">Send one in</Button>
+        <Button href="/graphs" variant="ghost">See the measurements</Button>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<style>
+  .mt { padding: 56px 24px 24px; }
+  .crumb {
+    font-family: var(--mono); font-size: 11.5px; color: var(--muted-2);
+    display: flex; gap: 9px; margin-bottom: 26px;
+  }
+  .crumb a:hover { color: var(--text); }
+  .crumb [aria-current] { color: var(--muted); }
+  .mt h1 {
+    font-family: var(--serif); font-weight: 400;
+    font-size: clamp(34px, 5.2vw, 54px); line-height: 1.05; margin: 12px 0 0;
+  }
+  .lede {
+    color: var(--muted); font-size: 18px; line-height: 1.6;
+    max-width: 64ch; margin: 20px 0 0; text-wrap: pretty;
+  }
+
+  .terms {
+    margin-top: 40px; border: 1px solid var(--line); border-radius: var(--radius);
+    background: var(--surface); overflow: hidden;
+  }
+  .sec .terms { margin-top: 8px; }
+  .term {
+    display: grid; grid-template-columns: 220px 1fr; gap: 20px;
+    padding: 16px 22px; border-bottom: 1px solid var(--line); align-items: baseline;
+  }
+  .term:last-child { border-bottom: 0; }
+  .tk {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--accent-soft);
+  }
+  .tv { font-size: 15.5px; line-height: 1.55; color: var(--text); }
+  @media (max-width: 640px) {
+    .term { grid-template-columns: 1fr; gap: 6px; }
+  }
+
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+  .cta-row.tight { margin-top: 20px; }
+
+  .sec { margin-top: 52px; max-width: 68ch; }
+  .sec h2 {
+    font-family: var(--serif); font-weight: 400; font-size: 26px; margin: 0 0 14px;
+  }
+  .sec p {
+    color: var(--muted); font-size: 16px; line-height: 1.65; margin: 0 0 14px; text-wrap: pretty;
+  }
+  .sec p.after { margin-top: 14px; }
+  .sec p b { color: var(--text); font-weight: 500; }
+
+  .ln-cta {
+    margin-top: 60px;
+    background: linear-gradient(120deg, rgba(255, 158, 44, 0.07), var(--surface) 55%);
+    border: 1px solid var(--accent-line); border-radius: 18px; padding: 30px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 24px; flex-wrap: wrap;
+  }
+  .cta-h {
+    font-family: var(--serif); font-weight: 400; font-size: 24px; margin: 0; max-width: 24ch;
+  }
+  .ln-cta p { color: var(--muted); font-size: 15px; margin: 8px 0 0; max-width: 52ch; }
+  .cta-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+</style>

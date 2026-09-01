@@ -27,6 +27,7 @@ const ROOT = join(here, '..', '..');
 // published at all, and /graphs serves our own EARS Pro measurements inlined at build time.)
 const ROUTES = [
   'attune', 'learn', 'graphs', 'products', 'collections', 'measure', 'support', 'privacy',
+  'method',    // the published measurement method — /loaners and /measure both promise it by name
   // Legal pages. FastSpring will not activate a store whose site lacks live links to terms,
   // privacy and a refund policy, so if any of these three drops off this list the store cannot
   // go live -- and, as with canjam/card below, it fails silently as a 404.
