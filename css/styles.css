@@ -316,13 +316,13 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
    gap. Three steps now: relax, squeeze, drawer. Ported verbatim from Nav.astro except that the
    drawer trigger there is one media block and here it is two, because this file's 720px block
    carries a lot of non-header rules that should stay at 720. */
-@media (max-width: 1180px) {
+@media (max-width: 1260px) {
   .head-in { padding: 0 32px; }
   nav { gap: 22px; }
 }
 /* Last stop before the drawer: type down a step, gaps tightened. Buys back ~150px, which is what
    it takes to still fit at 940. */
-@media (max-width: 1040px) {
+@media (max-width: 1120px) {
   .head-in { padding: 0 24px; }
   nav { gap: 15px; }
   nav a { font-size: 11.5px; letter-spacing: 0.09em; }

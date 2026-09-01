@@ -47,8 +47,12 @@ header.site{border-bottom:1px solid var(--line)}
 .logo-mark .wl-mark{color:var(--acc); width:40px; height:auto; display:block; overflow:visible; flex:none}
 .logo-mark span{font-family:var(--sans); font-weight:600; font-size:14px; letter-spacing:.22em; color:var(--ink)}
 nav.site{display:flex; align-items:center}
+/* margin-left is 20, not the 26 the other two renderers use at full size, because this page's
+   column is capped at 1080 (.wrap) against 1320 on the rest of the site. With eight nav items the
+   header fills that narrower column exactly, so the "relaxed" spacing is never affordable here at
+   any viewport width -- measured 2026-09-01, gap was 0 from 1280 all the way up. */
 nav.site a{font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase;
-  color:var(--dim); margin-left:26px; text-decoration:none}
+  color:var(--dim); margin-left:20px; text-decoration:none}
 nav.site a:hover{color:var(--acc); text-decoration:none}
 
 footer.site{border-top:1px solid var(--line); margin-top:72px; padding:30px 0 56px;
@@ -160,10 +164,7 @@ ul.features li::before{content:"›"; color:var(--shot-accent,var(--acc)); margi
    order -- except that there is no drawer here (no toggle in gen_site.py's markup and no JS on
    these pages), so the bottom step wraps instead. Note .wrap is 1080 here against 1320 on the
    main site, so the column is narrower and the squeeze has to start sooner. */
-@media (max-width:1180px){
-  nav.site a{margin-left:20px}
-}
-@media (max-width:1040px){
+@media (max-width:1120px){
   nav.site a{margin-left:14px; font-size:11.5px; letter-spacing:.09em}
   .logo-mark .wl-mark{width:34px}
   .logo-mark{gap:9px}

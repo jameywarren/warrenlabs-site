@@ -239,7 +239,7 @@ const { variant = 'home' } = Astro.props;
      1080px, which left the wordmark and the first nav link touching with zero gap anywhere
      from roughly 900 to 1180. Two steps now, so the full nav survives every common laptop
      width (1024, 1152, 1280) and the drawer takes over before anything collides. */
-  @media (max-width: 1180px) {
+  @media (max-width: 1260px) {
     .wl-head-in {
       padding: 0 32px;
     }
@@ -248,8 +248,9 @@ const { variant = 'home' } = Astro.props;
     }
   }
   /* Last stop before the drawer. Type comes down a step and the gaps tighten; together this
-     buys back roughly 150px, which is what it takes to still fit at 940. */
-  @media (max-width: 1040px) {
+     buys back roughly 150px. It starts at 1120 rather than 1040 because the nav
+     carries eight items: with seven there was room to wait, with eight there is a pinch at ~1100. */
+  @media (max-width: 1120px) {
     .wl-head-in {
       padding: 0 24px;
     }

@@ -14,6 +14,10 @@
       "label": "MEASUREMENTS"
     },
     {
+      "href": "/method/",
+      "label": "METHOD"
+    },
+    {
       "href": "/measure/",
       "label": "SEND ONE IN"
     },
