@@ -1,0 +1,76 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+const updated = 'September 2026';
+---
+
+<Layout
+  title="Proof · Support · Warren Labs"
+  description="Support for Proof, the audio measurement app for iPhone, iPad and Mac. What it does, how to get help, and what it does not do yet."
+>
+  <Nav variant="home" />
+  <section class="sec">
+    <div class="wrap prose">
+      <span class="eyebrow">Support</span>
+      <h2>Proof</h2>
+      <p class="sec-lede">
+        <b>A measurement whose floor is unknown is not a measurement.</b> Proof measures what your
+        own audio interface contributes — its noise and its distortion — before it measures anything
+        else, and then reports every reading against that floor.
+      </p>
+
+      <h3>Getting help</h3>
+      <p>
+        Email <a href="mailto:jamey@warrenlabs.com">jamey@warrenlabs.com</a>. It reaches a person.
+        If you are reporting something that looks wrong, the most useful thing you can send is the
+        measurement record itself — Proof writes every capture as a readable text file you can open,
+        check and share.
+      </p>
+
+      <h3>Getting started</h3>
+      <p>
+        Proof asks for three things before it can measure: an audio interface, one short cable from
+        its output 1 back into its input 1, and the input gain turned down. It then measures that
+        loop for about ninety seconds. Everything you measure afterwards is reported against what it
+        learned.
+      </p>
+      <p>
+        You can skip that step. Nothing is disabled if you do — every capture still works and every
+        record still exports — but readings are marked <b>Indicative</b>, meaning there is no
+        measured floor to hold them against. The bench measurement is re-runnable at any time.
+      </p>
+
+      <h3>Microphone access</h3>
+      <p>
+        Proof needs the microphone permission to read any audio input at all, including a USB or
+        Thunderbolt interface — on iOS every input arrives through the same permission. If Proof says
+        it cannot see an input, the switch is in
+        <b>Settings › Privacy &amp; Security › Microphone › Proof</b>. Nothing it hears leaves your
+        device.
+      </p>
+
+      <h3>What it does not do yet</h3>
+      <p>
+        Stated plainly, because an instrument that overstates itself is worse than one that does
+        less. Proof reads a capture through nine <i>lenses</i>; three of them work today — harmonic
+        spectrum, frequency response and THD against frequency. The others need work that is not
+        finished: impulse, energy-time and decay need an acoustic capture path; THD against level
+        needs a series of captures rather than one; impedance needs a measurement jig. Each one says
+        so when you open it, rather than drawing something that looks like an answer.
+      </p>
+
+      <h3>Your measurements</h3>
+      <p>
+        Every capture is written as a Proof record: the rig it was taken on, the floor it was bounded
+        by, the curves, and a content hash over the whole file. Re-opened later, each record is
+        re-hashed rather than trusted, so a file that has been edited says so. They live in the app's
+        own documents folder and go nowhere unless you export them.
+      </p>
+
+      <p class="meta">Last updated {updated} · <a href="/privacy">Privacy</a></p>
+    </div>
+  </section>
+  <Footer />
+</Layout>
