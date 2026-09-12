@@ -238,8 +238,14 @@ const { variant = 'home' } = Astro.props;
      990px of content: logo 180 + nav 777 + theme button 32. The old first step down was at
      1080px, which left the wordmark and the first nav link touching with zero gap anywhere
      from roughly 900 to 1180. Two steps now, so the full nav survives every common laptop
-     width (1024, 1152, 1280) and the drawer takes over before anything collides. */
-  @media (max-width: 1260px) {
+     width (1024, 1152, 1280) and the drawer takes over before anything collides.
+
+     MOVED OUT 2026-09-11, when PROOF made it NINE items. The numbers above were measured for
+     eight, and a ninth label plus its gap adds roughly 90px at full size and ~75px at the first
+     step — so each of the three thresholds moves out by about that much. STARTING POINT ONLY:
+     see the verification note below, which records what a browser actually showed. If a TENTH
+     item is added, measure it; do not extrapolate again. */
+  @media (max-width: 1340px) {
     .wl-head-in {
       padding: 0 32px;
     }
@@ -248,9 +254,9 @@ const { variant = 'home' } = Astro.props;
     }
   }
   /* Last stop before the drawer. Type comes down a step and the gaps tighten; together this
-     buys back roughly 150px. It starts at 1120 rather than 1040 because the nav
-     carries eight items: with seven there was room to wait, with eight there is a pinch at ~1100. */
-  @media (max-width: 1120px) {
+     buys back roughly 150px. It started at 1120 for eight items (with seven there was room to
+     wait); nine puts the same pinch at ~1180, so it starts at 1200. */
+  @media (max-width: 1200px) {
     .wl-head-in {
       padding: 0 24px;
     }
@@ -275,7 +281,7 @@ const { variant = 'home' } = Astro.props;
       letter-spacing: 0.14em;
     }
   }
-  @media (max-width: 940px) {
+  @media (max-width: 1000px) {
     .wl-head-in {
       padding: 0 20px;
     }

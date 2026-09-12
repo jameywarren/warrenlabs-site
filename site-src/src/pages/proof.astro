@@ -2,75 +2,879 @@
 import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import Button from '../components/Button.astro';
+import ProofFloorDiagram from '../components/ProofFloorDiagram.astro';
+
+// ONE PAGE, TWO JOBS, ON PURPOSE.
+//
+// /proof is both the product page and the App Store Connect **Support URL** — a required field,
+// and warrenlabs.com/proof was a 404 when Proof was first prepared for submission. Splitting them
+// (/proof + /proof/support) would give the only Proof URL on the site two halves, each missing
+// what the other has: a reviewer or a stuck user landing on a marketing page with no help on it,
+// or a help page that never says what the app is for. So the argument runs first and the support
+// material sits below it under #support, and the single URL satisfies both.
+//
+// The support copy below came from the earlier draft of this file (commit 09cc235) and is kept
+// close to verbatim — it was right. What changed: it is no longer the whole page, and the floor
+// measurement's DURATION is gone. See the note on that at #support.
+//
+// ACCURACY RULES FOR THIS PAGE. Proof has not shipped. Nothing here may imply it has.
+//   1. NEVER write "the binary contains no networking code". proof/docs/SUBMISSION.md records that
+//      exact sentence as FALSE and corrects it: `nm -u` finds NSURLSession, _socket and _connect,
+//      and otool -L shows WebKit.framework, all pulled in by JUCE and the system frameworks
+//      regardless of our flags. The true claim describes BEHAVIOUR, and is the one used below.
+//   2. Three of nine lenses work. The app's own masthead prints "1 of 9 · 3 ready". LENSES below is
+//      transcribed from app/Lens.cpp — names and reasons are the app's words, not a paraphrase.
+//   3. No screenshots. Every render in proof/shots/ — the 11 correctly-sized store shots included —
+//      comes from a component-tree render with no measurement behind it, so all of them show an
+//      empty plot ("No rig chosen · nothing plotted yet"). ProofFloorDiagram is a captioned diagram
+//      instead. When real bench shots exist, they go in the slot marked below.
+//   4. No price. proof/docs/FREE-TIER.md leaves pricing explicitly undecided.
+//   5. No duration for the floor measurement. The app disagrees with itself — ProofView.cpp:3627
+//      says "About ninety seconds", ProofView.cpp:4408 says "about forty seconds", about the same
+//      operation. Restating either here would make the website a third, equally unreliable copy.
 
 const updated = 'September 2026';
+
+// Transcribed from proof/app/Lens.cpp — allLenses(). The `why` strings are that file's own `needs`
+// field. When a lens becomes ready in the app, change it HERE too; this table is a copy and the
+// app owns the fact.
+const LENSES = [
+  {
+    group: 'Ready',
+    note: 'Everything these need is already in an electrical capture.',
+    items: [
+      { name: 'Harmonic spectrum', why: 'Each harmonic against the floor it stands on.' },
+      { name: 'THD vs frequency', why: 'Distortion swept, with the floor drawn underneath as a region.' },
+      { name: 'Frequency response', why: 'Bounded by the noise spectrum rather than the distortion floor — a level is not a ratio.' },
+    ],
+  },
+  {
+    group: 'Not yet',
+    note: 'Each of these says so when you open it, rather than drawing something that looks like an answer.',
+    items: [
+      { name: 'Impulse response', why: 'Nothing writes an impulse into a record yet.' },
+      { name: 'ETC', why: 'Needs an acoustic capture — a microphone and a room.' },
+      { name: 'RT60', why: 'Needs an acoustic capture, and a tail long enough to hold the decay.' },
+      { name: 'Waterfall / CSD', why: 'Needs an acoustic capture — decay over time needs something that decays.' },
+      { name: 'THD vs level', why: 'Needs a series of sweeps at several drive levels, each with its own floor.' },
+      { name: 'Impedance', why: 'Needs a sense-resistor jig, and a rig with a reference channel.' },
+    ],
+  },
+];
+
+const proofApp = {
+  '@type': 'SoftwareApplication',
+  name: 'Proof',
+  applicationCategory: 'MultimediaApplication',
+  operatingSystem: 'macOS, iPadOS, iOS',
+  description:
+    'An audio measurement instrument that measures its own noise and distortion first, then reports every reading against that floor. For Mac, iPad and iPhone.',
+  brand: { '@type': 'Brand', name: 'Warren Labs' },
+  publisher: { '@id': 'https://warrenlabs.com/#organization' },
+  // No `offers` node. Pricing is undecided (proof/docs/FREE-TIER.md) and an offer with a price of
+  // zero would be a claim, not an omission.
+};
 ---
 
 <Layout
-  title="Proof · Support · Warren Labs"
-  description="Support for Proof, the audio measurement app for iPhone, iPad and Mac. What it does, how to get help, and what it does not do yet."
+  title="Proof · Measure, with a known floor"
+  description="Proof is an audio measurement instrument for Mac, iPad and iPhone. It measures its own noise and distortion before it measures anything else, then reports every reading against that floor. Coming soon to the App Store."
+  jsonLd={proofApp}
 >
   <Nav variant="home" />
-  <section class="sec">
+
+  <!-- ===================== HERO ===================== -->
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Coming soon to the App&nbsp;Store</span>
+        <h1>A measurement whose floor is unknown <em>is not a measurement.</em></h1>
+        <p class="lede">
+          Every analyzer prints numbers. <b>Proof prints the floor those numbers sit on</b>, and
+          refuses to show a digit it has not earned. It measures what your own interface
+          contributes &mdash; its noise and its distortion &mdash; before it measures anything
+          else, and then reports every reading against that.
+        </p>
+        <div class="chips">
+          <span class="chip">Mac</span><span class="chip">iPad</span><span class="chip">iPhone</span>
+          <span class="chip quiet">One app, all three</span>
+        </div>
+        <div class="hero-cta">
+          <Button href="#readings" variant="primary" size="lg">See how a reading prints</Button>
+          <Button href="#support" variant="ghost" size="lg">Support</Button>
+        </div>
+        <p class="hero-note">
+          <span class="dot"></span> Not released yet. There is no download and no price &mdash;
+          when there is, it will be here.
+        </p>
+      </div>
+
+      <ProofFloorDiagram />
+    </div>
+  </header>
+
+  <!-- Jump strip. The page is long and its sections answer different questions; a reviewer who
+       landed here for support should not have to scroll the argument to find it. -->
+  <nav class="jump" aria-label="On this page">
+    <div class="wrap jump-in">
+      <a href="#floor">The floor</a>
+      <a href="#readings">How a reading prints</a>
+      <a href="#tiers">Trust</a>
+      <a href="#lenses">The nine lenses</a>
+      <a href="#records">Records</a>
+      <a href="#support">Support</a>
+    </div>
+  </nav>
+
+  <!-- ===================== THE FLOOR ===================== -->
+  <section id="floor" class="band">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <span class="eyebrow">The argument</span>
+        <h2>Your interface is in every measurement you take.</h2>
+        <p class="sec-lede">
+          Its noise and its distortion are added to whatever you are trying to measure, and they do
+          not announce themselves. A number that does not say how far it sits above them is a
+          number you cannot act on.
+        </p>
+      </div>
+
+      <div class="prob-grid">
+        <div class="card">
+          <div class="n">01</div>
+          <h3>Measure the instrument first</h3>
+          <p>
+            Patch output 1 back into input 1 and Proof measures that loop before it measures
+            anything else. What it learns is the floor &mdash; and it is re-runnable whenever the
+            rig changes.
+          </p>
+        </div>
+        <div class="card">
+          <div class="n">02</div>
+          <h3>A floor is a shape, not a line</h3>
+          <p>
+            No converter has a flat one. Proof draws it as a region under the curves, across
+            frequency, because that is what it actually is &mdash; and a single number for it would
+            be a fiction.
+          </p>
+        </div>
+        <div class="card">
+          <div class="n">03</div>
+          <h3>Then hold every reading to it</h3>
+          <p>
+            A reading well clear of the floor is real. One near it is a range. One under it is an
+            inequality. The floor decides which, on every read.
+          </p>
+        </div>
+      </div>
+
+      <div class="pull">
+        You can skip the bench measurement.<br />
+        <span>Nothing is disabled &mdash; every reading is just marked <i>Indicative</i>, because there is no measured floor to hold it against.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HOW A READING PRINTS ===================== -->
+  <section id="readings" class="sec-wrap">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <span class="eyebrow">Bounded numerics</span>
+        <h2>Three readings, three different printings.</h2>
+        <p class="sec-lede">
+          This is the part that makes Proof different, and it is not a feature you turn on. Where a
+          reading sits relative to the measured floor decides how it is allowed to be written down.
+        </p>
+      </div>
+
+      <div class="readtable" role="table" aria-label="How a reading is printed depending on its position relative to the measured floor">
+        <div class="rt-head" role="row">
+          <span role="columnheader">Where it sits</span>
+          <span role="columnheader">How it prints</span>
+          <span role="columnheader">Why</span>
+        </div>
+
+        <div class="rt-row real" role="row">
+          <span role="cell" class="rt-where"><b class="tag">Real</b> Well clear of the floor</span>
+          <span role="cell" class="rt-how mono">&minus;78.4 dB</span>
+          <span role="cell" class="rt-why">The floor is far enough below that it cannot have moved the answer. Print the number.</span>
+        </div>
+
+        <div class="rt-row marginal" role="row">
+          <span role="cell" class="rt-where"><b class="tag">Marginal</b> Close to the floor</span>
+          <span role="cell" class="rt-how mono">&minus;116 &hellip; &minus;109 dB</span>
+          <span role="cell" class="rt-why">A range, <b>never a plus-or-minus</b> &mdash; a floor can only push a reading up, so the uncertainty is one-sided and writing it as symmetric would be a lie about its shape.</span>
+        </div>
+
+        <div class="rt-row bound" role="row">
+          <span role="cell" class="rt-where"><b class="tag">Bound</b> Under the floor</span>
+          <span role="cell" class="rt-how mono">&lt; &minus;117 dB</span>
+          <span role="cell" class="rt-why">The instrument cannot see it. The floor is the whole of what is known, so the floor is what gets printed.</span>
+        </div>
+      </div>
+
+      <div class="sigfig">
+        <h3>Significant figures are derived, not preferred</h3>
+        <p>
+          There is no setting for how many digits to show. The number of figures comes from
+          headroom: <b>four figures means the instrument is entitled to four.</b> When the headroom
+          is not there, the digits are not there either &mdash; which is the same rule as the table
+          above, applied one decimal place at a time.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TRUST TIERS ===================== -->
+  <section id="tiers" class="band">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <span class="eyebrow">Trust</span>
+        <h2>Every read is graded by the rig it ran on.</h2>
+        <p class="sec-lede">
+          The tier is computed from the rig on every read and <b>never stored</b>, so a hand-edited
+          file cannot claim one it has not earned.
+        </p>
+      </div>
+
+      <div class="tier-grid">
+        <div class="card tier">
+          <span class="tier-name mono">INDICATIVE</span>
+          <p>
+            No measured floor, or a rig that cannot vouch for itself. The readings are still real
+            work &mdash; they are just not bounded by anything. The built-in simulator is capped
+            here permanently, because a modelled rig has perfect provenance of nothing.
+          </p>
+        </div>
+        <div class="card tier">
+          <span class="tier-name mono">BOUNDED</span>
+          <p>
+            A floor has been measured on this rig and the readings are held against it. This is the
+            tier the app is built to reach on ordinary hardware.
+          </p>
+        </div>
+        <div class="card tier">
+          <span class="tier-name mono">REFERENCE</span>
+          <p>
+            A reference channel and calibration on every active channel. Proof will tell you
+            exactly which reasons are keeping a rig below this, one line each.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== THE NINE LENSES ===================== -->
+  <section id="lenses" class="sec-wrap">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <span class="eyebrow">The lenses</span>
+        <h2>Nine ways to read a capture. Three of them work today.</h2>
+        <p class="sec-lede">
+          Stated plainly, because an instrument that overstates itself is worse than one that does
+          less. The app's own masthead prints <span class="mono">3 ready</span>, and each of the
+          other six explains itself when you open it rather than drawing something that looks like
+          an answer.
+        </p>
+      </div>
+
+      {LENSES.map((g) => (
+        <div class="lens-group">
+          <div class="lens-ghead">
+            <span class={`gbadge ${g.group === 'Ready' ? 'on' : 'off'}`}>{g.group}</span>
+            <span class="gnote">{g.note}</span>
+          </div>
+          <div class="lens-grid">
+            {g.items.map((l) => (
+              <div class={`lens ${g.group === 'Ready' ? 'on' : 'off'}`}>
+                <h3>{l.name}</h3>
+                <p>{l.why}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <p class="lens-foot">
+        The work left on the other six is ours, not yours: an acoustic capture path, a series of
+        captures, and a measurement jig. Nothing about your rig is in the way.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== RECORDS ===================== -->
+  <section id="records" class="band">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <span class="eyebrow">Records</span>
+        <h2>A measurement you can check later.</h2>
+      </div>
+      <div class="prob-grid">
+        <div class="card">
+          <h3>Readable text</h3>
+          <p>
+            Every capture is written as a Proof record: the rig it was taken on, the floor it was
+            bounded by, and the curves. You can open it in any text editor.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Hashed over every byte</h3>
+          <p>
+            Re-opened later, a record is <b>re-hashed rather than trusted</b>. One that has been
+            edited says so, and one that fails its own hash is refused rather than drawn.
+          </p>
+        </div>
+        <div class="card">
+          <h3>Yours</h3>
+          <p>
+            Records live in the app's own documents folder on your device. Read them, verify them,
+            delete them, export them. We never receive a copy.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== WHAT IT WILL NOT DO ===================== -->
+  <section class="sec-wrap">
+    <div class="wrap sec narrow">
+      <div class="sec-head">
+        <span class="eyebrow">The other half of the promise</span>
+        <h2>What it will not do.</h2>
+      </div>
+      <p class="willnot">
+        Proof will not print a number it cannot justify. It will not draw a floor it has not
+        measured. It will not report phase or arrival time on a rig running two uncorrected clocks,
+        because those are not reportable there &mdash; and it says so rather than adding a caveat
+        underneath.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== SUPPORT ===================== -->
+  <!-- App Store Connect's Support URL points here. Everything a stuck user or a reviewer needs is
+       below this line, and the anchor is linked from the jump strip and the hero. -->
+  <section id="support" class="band">
     <div class="wrap prose">
       <span class="eyebrow">Support</span>
-      <h2>Proof</h2>
-      <p class="sec-lede">
-        <b>A measurement whose floor is unknown is not a measurement.</b> Proof measures what your
-        own audio interface contributes — its noise and its distortion — before it measures anything
-        else, and then reports every reading against that floor.
-      </p>
+      <h2>Proof &mdash; help</h2>
 
       <h3>Getting help</h3>
       <p>
         Email <a href="mailto:jamey@warrenlabs.com">jamey@warrenlabs.com</a>. It reaches a person.
         If you are reporting something that looks wrong, the most useful thing you can send is the
-        measurement record itself — Proof writes every capture as a readable text file you can open,
-        check and share.
+        measurement record itself &mdash; Proof writes every capture as a readable text file you
+        can open, check and share.
       </p>
 
       <h3>Getting started</h3>
       <p>
         Proof asks for three things before it can measure: an audio interface, one short cable from
         its output 1 back into its input 1, and the input gain turned down. It then measures that
-        loop for about ninety seconds. Everything you measure afterwards is reported against what it
-        learned.
+        loop, and everything you measure afterwards is reported against what it learned.
       </p>
       <p>
-        You can skip that step. Nothing is disabled if you do — every capture still works and every
-        record still exports — but readings are marked <b>Indicative</b>, meaning there is no
-        measured floor to hold them against. The bench measurement is re-runnable at any time.
+        You can skip that step. Nothing is disabled if you do &mdash; every capture still works and
+        every record still exports &mdash; but readings are marked <b>Indicative</b>, meaning there
+        is no measured floor to hold them against. The bench measurement is re-runnable at any
+        time.
       </p>
 
       <h3>Microphone access</h3>
       <p>
         Proof needs the microphone permission to read any audio input at all, including a USB or
-        Thunderbolt interface — on iOS every input arrives through the same permission. If Proof says
-        it cannot see an input, the switch is in
-        <b>Settings › Privacy &amp; Security › Microphone › Proof</b>. Nothing it hears leaves your
-        device.
+        Thunderbolt interface &mdash; on iOS every input arrives through the same permission. If
+        Proof says it cannot see an input, the switch is in
+        <b>Settings &rsaquo; Privacy &amp; Security &rsaquo; Microphone &rsaquo; Proof</b>.
+      </p>
+      <p>
+        Proof reads the input in two places, and in both you choose which one. On the
+        <b>Measure</b> tab it runs a capture you start, on the rig you picked, and stops when the
+        capture ends. On the <b>Tools</b> tab it streams from the input you selected in Settings
+        for as long as that tab is open, so the meters have something to read; the input in use is
+        named in the status strip at the top of every tool screen. Nothing is written to disk in
+        either case except a measurement record you asked for.
+      </p>
+
+      <h3>Privacy</h3>
+      <p>
+        <b>Proof makes no network connections.</b> It has no analytics, no crash reporting, no
+        telemetry and no account, and nothing you measure leaves your device unless you export it
+        yourself. The full policy is on the <a href="/privacy/">privacy page</a>.
       </p>
 
       <h3>What it does not do yet</h3>
       <p>
-        Stated plainly, because an instrument that overstates itself is worse than one that does
-        less. Proof reads a capture through nine <i>lenses</i>; three of them work today — harmonic
-        spectrum, frequency response and THD against frequency. The others need work that is not
-        finished: impulse, energy-time and decay need an acoustic capture path; THD against level
-        needs a series of captures rather than one; impedance needs a measurement jig. Each one says
-        so when you open it, rather than drawing something that looks like an answer.
+        Three of the nine lenses work today &mdash; harmonic spectrum, frequency response and THD
+        against frequency. <a href="#lenses">The list above</a> says what each of the others is
+        waiting on. Each one says so in the app when you open it.
       </p>
 
-      <h3>Your measurements</h3>
-      <p>
-        Every capture is written as a Proof record: the rig it was taken on, the floor it was bounded
-        by, the curves, and a content hash over the whole file. Re-opened later, each record is
-        re-hashed rather than trusted, so a file that has been edited says so. They live in the app's
-        own documents folder and go nowhere unless you export them.
+      <p class="meta">
+        Last updated {updated} &middot; <a href="/privacy/">Privacy</a> &middot;
+        <a href="/terms/">Terms</a>
       </p>
-
-      <p class="meta">Last updated {updated} · <a href="/privacy">Privacy</a></p>
     </div>
   </section>
+
+  <!-- SCREENSHOT SLOT. Deliberately empty. See accuracy rule 3 at the top of this file: every
+       render in proof/shots/ today shows an empty plot, so there is nothing here worth showing.
+       When bench shots exist, a gallery goes here — Mac / iPad / iPhone, the way the reference
+       page groups them. -->
+
+  <!-- ===================== CTA ===================== -->
+  <section class="cta-end">
+    <div class="wrap">
+      <h2>Coming soon to the App Store.</h2>
+      <p>
+        Mac, iPad and iPhone. If you measure things and you want to know when it lands, say so
+        &mdash; it goes to a person, not a list broker.
+      </p>
+      <Button href="mailto:jamey@warrenlabs.com?subject=Proof" variant="primary" size="lg">
+        jamey@warrenlabs.com
+      </Button>
+    </div>
+  </section>
+
   <Footer />
 </Layout>
+
+<style>
+  /* ---------- hero ---------- */
+  .hero {
+    padding: 56px 0 44px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: 48px;
+    align-items: center;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(30px, 4.4vw, 50px);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin: 12px 0 18px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--accent);
+  }
+  .hero .lede {
+    font-size: 16.5px;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 54ch;
+  }
+  .hero .lede b {
+    color: var(--text);
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 22px 0 24px;
+  }
+  .chip {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-radius: 100px;
+    padding: 6px 13px;
+  }
+  .chip.quiet {
+    color: var(--muted-2);
+    border-style: dashed;
+  }
+  .hero-note {
+    margin-top: 18px;
+    font-size: 13px;
+    color: var(--muted-2);
+    display: flex;
+    align-items: center;
+    gap: 9px;
+  }
+  .hero-note .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex: none;
+  }
+
+  /* ---------- jump strip ---------- */
+  .jump {
+    border-bottom: 1px solid var(--line);
+    background: var(--bg-deep);
+    position: sticky;
+    top: 0;
+    z-index: 40;
+  }
+  .jump-in {
+    display: flex;
+    gap: 26px;
+    overflow-x: auto;
+    padding: 13px 0;
+    scrollbar-width: none;
+  }
+  .jump-in::-webkit-scrollbar {
+    display: none;
+  }
+  .jump a {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .jump a:hover {
+    color: var(--accent);
+  }
+
+  .sec-wrap {
+    padding: 64px 0;
+  }
+  .sec.narrow {
+    max-width: 720px;
+  }
+
+  /* ---------- three-card rows (same shape /attune uses) ---------- */
+  .prob-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 34px;
+  }
+  .prob-grid .card .n {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .prob-grid .card h3 {
+    font-size: 17px;
+    margin: 0 0 8px;
+  }
+  .prob-grid .card p {
+    font-size: 14px;
+    line-height: 1.62;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .pull {
+    margin-top: 40px;
+    padding: 26px 28px;
+    border-left: 2px solid var(--accent);
+    background: var(--surface);
+    font-family: var(--serif);
+    font-size: 20px;
+    line-height: 1.45;
+  }
+  .pull span {
+    display: block;
+    margin-top: 8px;
+    font-family: var(--sans);
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .pull i {
+    font-style: normal;
+    color: var(--text);
+  }
+
+  /* ---------- the bounded-numerics table ---------- */
+  .readtable {
+    margin-top: 34px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .rt-head,
+  .rt-row {
+    display: grid;
+    grid-template-columns: 1fr 200px 1.5fr;
+    gap: 20px;
+    padding: 16px 20px;
+    align-items: start;
+  }
+  .rt-head {
+    background: var(--bg-deep);
+    border-bottom: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted-2);
+  }
+  .rt-row + .rt-row {
+    border-top: 1px solid var(--line);
+  }
+  .rt-where {
+    font-size: 14.5px;
+    color: var(--muted);
+  }
+  .tag {
+    display: block;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .real .tag {
+    color: var(--accent);
+  }
+  .marginal .tag {
+    color: var(--text);
+  }
+  .bound .tag {
+    color: var(--muted-2);
+  }
+  .rt-how {
+    font-size: 16px;
+    color: var(--text);
+    white-space: nowrap;
+  }
+  .real .rt-how {
+    color: var(--accent);
+  }
+  .bound .rt-how {
+    color: var(--muted);
+  }
+  .rt-why {
+    font-size: 13.5px;
+    line-height: 1.62;
+    color: var(--muted);
+  }
+  .rt-why b {
+    color: var(--text);
+  }
+
+  .sigfig {
+    margin-top: 34px;
+    padding: 24px 26px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+  }
+  .sigfig h3 {
+    font-size: 17px;
+    margin: 0 0 9px;
+  }
+  .sigfig p {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 72ch;
+  }
+  .sigfig b {
+    color: var(--text);
+  }
+
+  /* ---------- trust tiers ---------- */
+  .tier-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 34px;
+  }
+  .tier-name {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .card.tier p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.62;
+    color: var(--muted);
+  }
+
+  /* ---------- the lens catalogue ---------- */
+  .lens-group {
+    margin-top: 36px;
+  }
+  .lens-ghead {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+  }
+  .gbadge {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 5px 11px;
+    border-radius: 3px;
+    flex: none;
+  }
+  .gbadge.on {
+    color: var(--on-accent);
+    background: var(--accent);
+  }
+  .gbadge.off {
+    color: var(--muted-2);
+    border: 1px solid var(--line);
+  }
+  .gnote {
+    font-size: 13.5px;
+    color: var(--muted-2);
+  }
+  .lens-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .lens {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    background: var(--surface);
+  }
+  .lens.on {
+    border-color: var(--accent-line);
+  }
+  .lens.off {
+    background: none;
+  }
+  .lens h3 {
+    font-size: 15px;
+    margin: 0 0 7px;
+  }
+  .lens.off h3 {
+    color: var(--muted);
+  }
+  .lens p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .lens.off p {
+    color: var(--muted-2);
+  }
+  .lens-foot {
+    margin-top: 30px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 70ch;
+  }
+
+  .willnot {
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--muted);
+    margin-top: 26px;
+  }
+
+  /* ---------- support prose ---------- */
+  .prose {
+    max-width: 720px;
+  }
+  .prose h2 {
+    font-family: var(--serif);
+    font-size: clamp(24px, 3vw, 32px);
+    margin: 10px 0 22px;
+  }
+  .prose h3 {
+    font-size: 17px;
+    margin: 30px 0 9px;
+  }
+  .prose p {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--muted);
+    margin: 0 0 14px;
+  }
+  .prose b {
+    color: var(--text);
+  }
+  .prose a {
+    color: var(--accent);
+  }
+  .prose .meta {
+    margin-top: 30px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    color: var(--muted-2);
+  }
+
+  /* ---------- closing ---------- */
+  .cta-end {
+    padding: 68px 0 76px;
+    text-align: center;
+    border-top: 1px solid var(--line);
+  }
+  .cta-end h2 {
+    font-family: var(--serif);
+    font-size: clamp(24px, 3.4vw, 36px);
+    margin: 0 0 14px;
+  }
+  .cta-end p {
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--muted);
+    max-width: 52ch;
+    margin: 0 auto 26px;
+  }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 1000px) {
+    .hero-grid {
+      grid-template-columns: 1fr;
+      gap: 34px;
+    }
+    .prob-grid,
+    .tier-grid,
+    .lens-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 760px) {
+    .hero {
+      padding: 38px 0 34px;
+    }
+    .sec-wrap {
+      padding: 48px 0;
+    }
+    .prob-grid,
+    .tier-grid,
+    .lens-grid {
+      grid-template-columns: 1fr;
+    }
+    .rt-head {
+      display: none;
+    }
+    .rt-row {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .rt-how {
+      font-size: 18px;
+    }
+    .jump {
+      position: static;
+    }
+  }
+</style>

@@ -6,6 +6,10 @@
       "label": "ATTUNE"
     },
     {
+      "href": "/proof/",
+      "label": "PROOF"
+    },
+    {
       "href": "/collections/headphones/",
       "label": "HEADPHONES"
     },
@@ -49,6 +53,10 @@
     {
       "href": "/attune/",
       "label": "Attune"
+    },
+    {
+      "href": "/proof/",
+      "label": "Proof"
     },
     {
       "href": "/collections/headphones/",

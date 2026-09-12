@@ -28,6 +28,12 @@ const ROOT = join(here, '..', '..');
 const ROUTES = [
   'attune', 'learn', 'graphs', 'products', 'collections', 'measure', 'support', 'privacy',
   'method',    // the published measurement method — /loaners and /measure both promise it by name
+  // /proof is the Proof landing page AND the App Store Connect Support URL for the app, which is a
+  // required submission field. It is the same trap as /loaners above, with a deadline attached: if
+  // this entry goes missing the page builds, pushes and 404s, and the 404 is on a URL Apple has
+  // been given. The page was in fact authored once without this line (commit 09cc235) and would
+  // have published nothing.
+  'proof',
   // Legal pages. FastSpring will not activate a store whose site lacks live links to terms,
   // privacy and a refund policy, so if any of these three drops off this list the store cannot
   // go live -- and, as with canjam/card below, it fails silently as a 404.

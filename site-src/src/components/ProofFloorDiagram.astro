@@ -1,0 +1,194 @@
+---
+// The bounded-numerics argument, drawn. This is the one picture the Proof page needs: a measured
+// floor as a REGION rather than a line, and three readings that print differently depending on
+// where they sit relative to it.
+//
+// DELIBERATELY A DIAGRAM, NOT A SCREENSHOT, and captioned as one. Every screenshot in the Proof
+// repo (shots/, including shots/app-store/) renders the component tree without running a
+// measurement, so all of them show an empty plot — "No rig chosen · nothing plotted yet". A shot
+// of a blank grid teaches nothing and a shot of simulator output would caption a modelled number
+// as a product claim. The numbers below are illustrative and the caption says so.
+//
+// Themed with CSS variables rather than the hardcoded hex the older diagrams use (see
+// FrRegionsDiagram), so it follows the light/dark toggle like the rest of the page.
+---
+
+<figure class="floor-fig">
+  <div class="figscroll">
+    <svg viewBox="0 0 800 372" role="img"
+         aria-label="A plot with the instrument's own noise floor drawn as a shaded region across frequency. Three readings are marked: one well above the floor prints as a number, one close to the floor prints as a range, and one below the floor prints as a less-than inequality.">
+
+      <!-- dB grid -->
+      <g class="grid">
+        <line x1="60" y1="40" x2="740" y2="40"></line>
+        <line x1="60" y1="121" x2="740" y2="121"></line>
+        <line x1="60" y1="202" x2="740" y2="202"></line>
+        <line x1="60" y1="284" x2="740" y2="284"></line>
+        <line x1="60" y1="330" x2="740" y2="330" class="axis"></line>
+      </g>
+      <g class="tick" text-anchor="end">
+        <text x="52" y="44">0</text>
+        <text x="52" y="125">&minus;40</text>
+        <text x="52" y="206">&minus;80</text>
+        <text x="52" y="288">&minus;120</text>
+      </g>
+
+      <!-- The floor, as a shape. No converter has a flat one: it rises at both extremes, which is
+           exactly why a single number for "the noise floor" is a fiction. -->
+      <path class="floor-fill"
+        d="M60 258 C140 272 210 283 300 286 C400 289 480 288 560 283 C640 278 700 268 740 260 L740 330 L60 330 Z"></path>
+      <path class="floor-line"
+        d="M60 258 C140 272 210 283 300 286 C400 289 480 288 560 283 C640 278 700 268 740 260"></path>
+
+      <!-- Reading A — well clear of the floor. Prints as a number. -->
+      <g class="rd real">
+        <line x1="287" y1="202" x2="287" y2="286"></line>
+        <circle cx="287" cy="202" r="5"></circle>
+        <text x="287" y="188" text-anchor="middle">&minus;78.4 dB</text>
+      </g>
+
+      <!-- Reading B — close to the floor. Prints as a RANGE, never a plus-or-minus: a floor can
+           only push a reading up, so the uncertainty is one-sided. -->
+      <g class="rd marginal">
+        <line x1="445" y1="262" x2="445" y2="288"></line>
+        <rect x="437" y="255" width="16" height="22" rx="2"></rect>
+        <text x="445" y="245" text-anchor="middle">&minus;116 … &minus;109 dB</text>
+      </g>
+
+      <!-- Reading C — under the floor. Prints as an inequality, because that is the honest answer:
+           the floor is all that is known. -->
+      <g class="rd bound">
+        <line x1="621" y1="276" x2="621" y2="300" stroke-dasharray="3 3"></line>
+        <circle cx="621" cy="276" r="5" class="hollow"></circle>
+        <text x="621" y="318" text-anchor="middle">&lt; &minus;117 dB</text>
+      </g>
+
+      <!-- Frequency axis -->
+      <g class="tick" text-anchor="middle">
+        <text x="60" y="348">20</text>
+        <text x="218" y="348">100</text>
+        <text x="445" y="348">1k</text>
+        <text x="672" y="348">10k</text>
+        <text x="740" y="348">20k</text>
+      </g>
+
+      <text class="floorlabel" x="150" y="308">THE INSTRUMENT&rsquo;S OWN FLOOR</text>
+    </svg>
+  </div>
+  <figcaption>
+    <b>Three readings, three different printings.</b> Clear of the floor, a reading is a number.
+    Close to it, a range &mdash; never a plus-or-minus, because a floor can only push a reading
+    <i>up</i>. Under it, an inequality, because the floor is all that is known.
+    <span class="fig-note">A diagram. The values are illustrative, not a measurement of anything.</span>
+  </figcaption>
+</figure>
+
+<style>
+  .floor-fig {
+    margin: 0;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 20px 20px 18px;
+  }
+  .figscroll {
+    overflow-x: auto;
+  }
+  .floor-fig svg {
+    display: block;
+    width: 100%;
+    min-width: 560px;
+    height: auto;
+  }
+
+  .grid line {
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+  .grid line.axis {
+    stroke: var(--line-soft);
+  }
+  .tick text {
+    font-family: var(--mono);
+    font-size: 10px;
+    fill: var(--muted-2);
+  }
+
+  /* The floor is a region, not a line — the whole point. */
+  .floor-fill {
+    fill: var(--muted);
+    opacity: 0.16;
+  }
+  .floor-line {
+    fill: none;
+    stroke: var(--muted);
+    stroke-width: 1.4;
+    stroke-dasharray: 5 3;
+    opacity: 0.85;
+  }
+  .floorlabel {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    fill: var(--muted-2);
+  }
+
+  .rd text {
+    font-family: var(--mono);
+    font-size: 11px;
+    fill: var(--text);
+  }
+  .rd line {
+    stroke-width: 1.2;
+  }
+
+  /* Accent is reserved for signal state site-wide, and "this reading is real" is exactly that. */
+  .real circle {
+    fill: var(--accent);
+  }
+  .real line {
+    stroke: var(--accent);
+  }
+  .real text {
+    fill: var(--accent);
+  }
+
+  .marginal rect {
+    fill: none;
+    stroke: var(--text);
+    stroke-width: 1.4;
+  }
+  .marginal line {
+    stroke: var(--muted);
+  }
+
+  .bound circle.hollow {
+    fill: var(--bg);
+    stroke: var(--muted);
+    stroke-width: 1.4;
+  }
+  .bound line {
+    stroke: var(--muted);
+  }
+  .bound text {
+    fill: var(--muted);
+  }
+
+  figcaption {
+    margin-top: 14px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  figcaption b {
+    color: var(--text);
+  }
+  .fig-note {
+    display: block;
+    margin-top: 6px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--muted-2);
+  }
+</style>
