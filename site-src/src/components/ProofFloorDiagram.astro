@@ -48,19 +48,24 @@
       </g>
 
       <!-- Reading B — close to the floor. Prints as a RANGE, never a plus-or-minus: a floor can
-           only push a reading up, so the uncertainty is one-sided. -->
-      <g class="rd marginal">
-        <line x1="445" y1="262" x2="445" y2="288"></line>
-        <rect x="437" y="255" width="16" height="22" rx="2"></rect>
-        <text x="445" y="245" text-anchor="middle">&minus;116 … &minus;109 dB</text>
+           only push a reading up, so the uncertainty is one-sided.
+           Drawn as a capped range bar rather than a marker. The first version was a small rect and
+           read as a rendering glitch at page size — the whole point of this reading is that it has
+           EXTENT, so the extent has to be the thing you see. -->
+      <g class="marginal">
+        <line class="bar" x1="445" y1="264" x2="445" y2="286"></line>
+        <line class="cap" x1="437" y1="264" x2="453" y2="264"></line>
+        <line class="cap" x1="437" y1="286" x2="453" y2="286"></line>
+        <text x="445" y="254" text-anchor="middle">&minus;119 … &minus;108 dB</text>
       </g>
 
       <!-- Reading C — under the floor. Prints as an inequality, because that is the honest answer:
-           the floor is all that is known. -->
-      <g class="rd bound">
-        <line x1="621" y1="276" x2="621" y2="300" stroke-dasharray="3 3"></line>
-        <circle cx="621" cy="276" r="5" class="hollow"></circle>
-        <text x="621" y="318" text-anchor="middle">&lt; &minus;117 dB</text>
+           the floor is all that is known. The hollow marker sits ON the floor, not below it: the
+           floor is the only value there is to draw. -->
+      <g class="bound">
+        <line x1="621" y1="281" x2="621" y2="300" stroke-dasharray="3 3"></line>
+        <circle cx="621" cy="281" r="5" class="hollow"></circle>
+        <text x="621" y="314" text-anchor="middle">&lt; &minus;116 dB</text>
       </g>
 
       <!-- Frequency axis -->
@@ -77,8 +82,8 @@
   </div>
   <figcaption>
     <b>Three readings, three different printings.</b> Clear of the floor, a reading is a number.
-    Close to it, a range &mdash; never a plus-or-minus, because a floor can only push a reading
-    <i>up</i>. Under it, an inequality, because the floor is all that is known.
+    Close to it, a range &mdash; never a plus-or-minus, because a floor can only push a
+    reading <i>up</i>. Under it, an inequality, because the floor is all that is known.
     <span class="fig-note">A diagram. The values are illustrative, not a measurement of anything.</span>
   </figcaption>
 </figure>
@@ -90,6 +95,12 @@
     border: 1px solid var(--line);
     border-radius: var(--radius);
     padding: 20px 20px 18px;
+    /* THE FIGURE IS A GRID ITEM AND THE SVG BELOW HAS A min-width. Without this, the item's default
+       min-width:auto refuses to shrink under the svg's min-content width, .figscroll never gets to
+       scroll, and the PAGE scrolls sideways instead — measured at 236px of horizontal overflow on a
+       390pt phone before this line existed. Any wide child inside a grid or flex item needs the
+       same treatment; the overflow container alone is not enough. */
+    min-width: 0;
   }
   .figscroll {
     overflow-x: auto;
@@ -133,7 +144,9 @@
     fill: var(--muted-2);
   }
 
-  .rd text {
+  .rd text,
+  .marginal text,
+  .bound text {
     font-family: var(--mono);
     font-size: 11px;
     fill: var(--text);
@@ -153,13 +166,15 @@
     fill: var(--accent);
   }
 
-  .marginal rect {
-    fill: none;
+  /* The range bar. Full-strength ink, because a range IS the reading here — not an annotation on
+     one. */
+  .marginal .bar {
     stroke: var(--text);
-    stroke-width: 1.4;
+    stroke-width: 1.6;
   }
-  .marginal line {
-    stroke: var(--muted);
+  .marginal .cap {
+    stroke: var(--text);
+    stroke-width: 1.6;
   }
 
   .bound circle.hollow {

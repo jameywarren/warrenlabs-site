@@ -240,11 +240,26 @@ const { variant = 'home' } = Astro.props;
      from roughly 900 to 1180. Two steps now, so the full nav survives every common laptop
      width (1024, 1152, 1280) and the drawer takes over before anything collides.
 
-     MOVED OUT 2026-09-11, when PROOF made it NINE items. The numbers above were measured for
-     eight, and a ninth label plus its gap adds roughly 90px at full size and ~75px at the first
-     step — so each of the three thresholds moves out by about that much. STARTING POINT ONLY:
-     see the verification note below, which records what a browser actually showed. If a TENTH
-     item is added, measure it; do not extrapolate again. */
+     MOVED OUT 2026-09-11, when PROOF made it NINE items: 1260 -> 1340, 1120 -> 1200, 940 -> 1000.
+     MEASURED IN A BROWSER against the built page, not derived — the arithmetic was only used to
+     pick which widths to look at. Probed the gap between the wordmark's right edge and the first
+     nav link's left edge, plus header and document overflow, at 1440/1360/1341/1330/1220/1201/
+     1190/1030/1005/1001/980:
+
+       >=1341 (container capped at 1320)  gap 18px   nav->theme 32px   overflow 0
+        1330                              gap 86px                     overflow 0
+        1220                              gap 36px                     overflow 0
+        1201 (narrowest in this band)     gap 26px   nav->theme 40px   overflow 0
+        1190                              gap 111px                    overflow 0
+        1030                              gap 31px                     overflow 0
+        1001 (narrowest before drawer)    gap 17px   nav->theme 31px   overflow 0
+        980                               drawer
+
+     So the tightest point anywhere is 17px and nothing overflows or collides in any band. Note the
+     worst case is NOT at the widest width: the container is capped at 1320, so every width above
+     1341 renders identically and 18px is the permanent full-size gap. That gap is tighter than the
+     32px rhythm between nav items, which is the first thing to spend width on if a TENTH item ever
+     lands — and at that point measure again rather than extrapolating from these numbers. */
   @media (max-width: 1340px) {
     .wl-head-in {
       padding: 0 32px;

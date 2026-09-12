@@ -203,13 +203,13 @@ const proofApp = {
 
         <div class="rt-row marginal" role="row">
           <span role="cell" class="rt-where"><b class="tag">Marginal</b> Close to the floor</span>
-          <span role="cell" class="rt-how mono">&minus;116 &hellip; &minus;109 dB</span>
+          <span role="cell" class="rt-how mono">&minus;119 &hellip; &minus;108 dB</span>
           <span role="cell" class="rt-why">A range, <b>never a plus-or-minus</b> &mdash; a floor can only push a reading up, so the uncertainty is one-sided and writing it as symmetric would be a lie about its shape.</span>
         </div>
 
         <div class="rt-row bound" role="row">
           <span role="cell" class="rt-where"><b class="tag">Bound</b> Under the floor</span>
-          <span role="cell" class="rt-how mono">&lt; &minus;117 dB</span>
+          <span role="cell" class="rt-how mono">&lt; &minus;116 dB</span>
           <span role="cell" class="rt-why">The instrument cannot see it. The floor is the whole of what is known, so the floor is what gets printed.</span>
         </div>
       </div>
@@ -385,12 +385,12 @@ const proofApp = {
       <p>
         Proof needs the microphone permission to read any audio input at all, including a USB or
         Thunderbolt interface &mdash; on iOS every input arrives through the same permission. If
-        Proof says it cannot see an input, the switch is in
-        <b>Settings &rsaquo; Privacy &amp; Security &rsaquo; Microphone &rsaquo; Proof</b>.
+        Proof says it cannot see an input, the switch is
+        in <b>Settings &rsaquo; Privacy &amp; Security &rsaquo; Microphone &rsaquo; Proof</b>.
       </p>
       <p>
-        Proof reads the input in two places, and in both you choose which one. On the
-        <b>Measure</b> tab it runs a capture you start, on the rig you picked, and stops when the
+        Proof reads the input in two places, and in both you choose which one. On
+        the <b>Measure</b> tab it runs a capture you start, on the rig you picked, and stops when the
         capture ends. On the <b>Tools</b> tab it streams from the input you selected in Settings
         for as long as that tab is open, so the meters have something to read; the input in use is
         named in the status strip at the top of every tool screen. Nothing is written to disk in
@@ -412,8 +412,7 @@ const proofApp = {
       </p>
 
       <p class="meta">
-        Last updated {updated} &middot; <a href="/privacy/">Privacy</a> &middot;
-        <a href="/terms/">Terms</a>
+        Last updated {updated} &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a>
       </p>
     </div>
   </section>
@@ -842,7 +841,10 @@ const proofApp = {
   /* ---------- responsive ---------- */
   @media (max-width: 1000px) {
     .hero-grid {
-      grid-template-columns: 1fr;
+      /* minmax(0, 1fr), not 1fr: a bare 1fr track is min-width:auto and will not let the diagram's
+         scroll container shrink. The desktop rule above already says minmax(0, ...) — this was the
+         other side of that pair. */
+      grid-template-columns: minmax(0, 1fr);
       gap: 34px;
     }
     .prob-grid,
