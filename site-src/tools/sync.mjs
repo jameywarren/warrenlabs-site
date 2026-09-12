@@ -32,6 +32,10 @@ const ROUTES = [
   // privacy and a refund policy, so if any of these three drops off this list the store cannot
   // go live -- and, as with canjam/card below, it fails silently as a 404.
   'terms', 'refunds',
+  // /chain/privacy — the privacy URL App Store Connect requires for Chain
+  // (io.sonictemple.chain). App Review fetches it anonymously. Drop this entry and the URL
+  // 404s with no error anywhere, per the warning above, and Chain cannot be submitted.
+  'chain',
   'loaners',   // + /loaners/print, the one-page leave-behind
   'tune',      // Attune's "Send to Device" WebHID page — source of truth is attune/companion/tune.html
   // The CanJam SoCal handout, at two URLs so report scans can be told from everything else. Both

@@ -1,0 +1,215 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+
+// The text below is NOT authored here. Its source of truth is chain/docs/privacy-policy.md in the
+// Chain repo, where it lives next to the code it describes, so that a change to what the app does
+// and a change to what this page claims can land in one commit. Every factual claim in it was
+// checked against Chain's source on 2026-09-11.
+//
+// Several sentences are deliberately narrow and read as unflattering: the on-device content check
+// runs only where the user has Sensitive Content Warning switched on, and deleting something you
+// published means emailing us, because there is no in-app delete control yet. Both are true.
+// **Do not broaden either one.** If something here looks wrong, fix it in the Chain repo and
+// re-render; correcting the copy instead of the source is how a page and an app drift apart.
+//
+// This page is an App Store Connect requirement for Chain (io.sonictemple.chain). It must stay
+// reachable anonymously, with no password gate. It is on warrenlabs.com rather than sonictemple.io
+// because the App Store developer line reads Warren Labs and Chain's in-app support link already
+// points at warrenlabs.com/support. See chain/docs/whose-app.md.
+//
+// NOT REVIEWED BY A LAWYER. It describes the app's behaviour accurately. Whether that is
+// *sufficient* for the GDPR, the CCPA or Montana law is open, and the source file says so too.
+const updated = '11 September 2026';
+const email = 'jamey@warrenlabs.com';
+---
+
+<Layout
+  title="Privacy · Chain · Warren Labs"
+  description="How Chain handles your data. No account, no analytics, no third party code. Your collection stays on your device, and only what you publish leaves it."
+>
+  <Nav variant="home" />
+  <section class="sec">
+    <div class="wrap prose">
+      <span class="eyebrow">Chain</span>
+      <h2>Privacy</h2>
+      <p class="byline">
+        <b>Chain</b>, by Warren Labs. Last updated {updated}.
+      </p>
+      <p class="sec-lede">
+        Chain keeps a record of audio gear you own: what it is, what you paid, what you changed,
+        what it sounds like to you, and photographs of it. Some of that is private to you. Some of
+        it is published, by you, on purpose. This page says which is which, because that is the
+        only part of a privacy policy that matters.
+      </p>
+
+      <h3>The short version</h3>
+      <ul class="points">
+        <li>
+          <b>Chain has no account and asks for no email address or password.</b> You can open it,
+          record your whole collection, and never tell us anything.
+        </li>
+        <li>
+          <b>Your collection stays on your device</b> unless you choose to publish something.
+        </li>
+        <li>
+          <b>Nothing is sold, ever, to anybody.</b> There is no advertising in Chain, no analytics,
+          and no third party code that reports on you. We have not installed a single tracking
+          library and do not intend to.
+        </li>
+        <li>
+          <b>We cannot read your collection.</b> That is not a promise about our conduct. It is a
+          property of where the data sits.
+        </li>
+      </ul>
+
+      <h3>What stays on your device</h3>
+      <p>Everything you record about gear you own:</p>
+      <ul class="points">
+        <li>Your chains, and the units in them</li>
+        <li>Serial numbers, marks, what you paid, when you bought it, who you bought it from</li>
+        <li>Condition grades, your notes, what is in the box, parts you have fitted</li>
+        <li>Photographs you take of your own gear</li>
+        <li>Measurements you take, and the rig you took them on</li>
+        <li>Which posts you have kept, and who you have blocked</li>
+      </ul>
+      <p>
+        This is held in a file inside the app on your device. If you delete Chain, it goes with it.
+      </p>
+
+      <h3>What is published, and only when you publish it</h3>
+      <p>Three things leave your device, and each one is an act you take deliberately:</p>
+      <p>
+        <b>A listing.</b> When you list something for sale, the listing is readable by everybody
+        using Chain. It carries the item, the price, the grade you claimed, your condition notes,
+        what is included, and the photographs you took for it. It carries a shortened form of the
+        serial rather than the whole number.
+      </p>
+      <p>
+        <b>A post.</b> When you post a photograph to the wire, the photograph, what you wrote, the
+        gear you tagged in it and the place on your profile are readable by everybody using Chain.
+      </p>
+      <p>
+        <b>A message.</b> When you message somebody about a listing, that conversation is stored so
+        both of you can read it.
+      </p>
+      <p>
+        Your profile goes with all three: the handle you chose, the place you typed, your one line,
+        and your picture if you took one.
+      </p>
+
+      <h3>What we can see</h3>
+      <p>
+        <b>We cannot see your collection.</b> Anything private is held on your device and, if you
+        are signed in to iCloud, in your own private iCloud container. Apple's design means the
+        operator of an app cannot read a user's private container. There is no key we are choosing
+        not to use.
+      </p>
+      <p>
+        <b>We can see what you publish</b>, in the same way any other person using Chain can:
+        listings, posts, and your profile. We can also read a message if it is reported to us,
+        which is the only circumstance in which we would.
+      </p>
+      <p>
+        <b>We can see reports you send us</b>, including what you said and which listing, post or
+        person it was about. Somebody who has been reported is not told who reported them.
+      </p>
+
+      <h3>The camera, and your photo library</h3>
+      <p>Chain asks for the camera and uses it for exactly one thing: photographing gear.</p>
+      <p>
+        <b>Chain has no access to your photo library and does not ask for any.</b> There is no
+        library picker anywhere in the app, including for your profile picture. Every photograph in
+        Chain was taken inside Chain, which is the point: a photograph taken here is evidence about
+        an object, and one chosen from a library is not.
+      </p>
+      <p>
+        <b>Photographs are checked on your device before they are kept.</b> Chain uses Apple's
+        Sensitive Content Analysis, which runs entirely on your device and sends nothing anywhere.
+        The result never leaves your phone and we never see it. This check only runs if you have
+        Sensitive Content Warning switched on in your own iOS settings; where you have not, no
+        check happens and Chain does not pretend otherwise.
+      </p>
+
+      <h3>Location</h3>
+      <p>
+        <b>Chain has no access to your location and never asks for it.</b> There is no location
+        code in the app.
+      </p>
+      <p>
+        The place shown on your profile and your listings is a town you typed yourself. You can
+        change it or remove it whenever you like, in Settings.
+      </p>
+
+      <h3>What Chain does not do</h3>
+      <ul class="points">
+        <li>No advertising, and no advertising identifiers</li>
+        <li>No analytics, no crash reporting to us, no usage tracking</li>
+        <li>No third party SDKs of any kind</li>
+        <li>No selling, renting or sharing of anything, to anybody, for any purpose</li>
+        <li>
+          No profile building, no inferring things about you, no recommendations based on what you
+          looked at
+        </li>
+        <li>
+          No like counts, follower counts or scores of any kind. This is a design decision rather
+          than a privacy one, but the effect is the same: Chain does not keep a tally about you
+        </li>
+      </ul>
+
+      <h3>Children</h3>
+      <p>Chain is rated 13 and over and is not designed for or directed at children.</p>
+
+      <h3>Changing or deleting your data</h3>
+      <p>
+        <b>Anything private:</b> delete the app. Everything it kept on your device goes with it.
+      </p>
+      <p>
+        <b>Anything you published:</b> email us and we will remove it. Listings, posts, messages
+        and your profile.
+      </p>
+      <p>
+        We would rather offer a button than an email address, and there will be one. Until there
+        is, this page describes what actually exists rather than what is planned.
+      </p>
+      <p>
+        <b>Requests are answered by a person, usually within a few days:</b>
+        <a href={`mailto:${email}`}>{email}</a>
+      </p>
+
+      <h3>Other people's data</h3>
+      <p>
+        If you photograph somebody else's gear, or write about them, the ordinary rules apply: do
+        not post what is not yours to post. Every listing, post, message and profile in Chain
+        carries a report control and a block control. Blocking somebody removes their listings and
+        posts from what you see immediately, and it is enforced where the data is stored rather
+        than merely hidden on screen.
+      </p>
+
+      <h3>Who we are</h3>
+      <p>
+        <b>Warren Labs</b>, Livingston, Montana.<br />
+        Email: <b><a href={`mailto:${email}`}>{email}</a></b><br />
+        Support: <b><a href="/support/">warrenlabs.com/support</a></b>
+      </p>
+      <p>Warren Labs is a brand of Free River Studios, LLC.</p>
+
+      <h3>Changes to this page</h3>
+      <p>
+        If what Chain does changes, this page changes with it, and the date at the top changes too.
+        We will not quietly broaden what we collect and leave the page as it was.
+      </p>
+    </div>
+  </section>
+  <Footer variant="home" />
+</Layout>
+
+<style>
+  .prose { max-width: 720px; }
+  .prose h3 { margin: 30px 0 8px; font-size: 1.15rem; }
+  .prose p { margin: 0 0 14px; line-height: 1.65; }
+  .byline { font-size: 0.92rem; opacity: 0.6; margin-bottom: 18px; }
+  .points { margin: 0 0 14px; padding-left: 20px; line-height: 1.65; }
+  .points li { margin: 0 0 8px; }
+</style>
