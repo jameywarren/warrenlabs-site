@@ -28,7 +28,16 @@ export default defineConfig({
       // emitting `<meta name="robots" content="noindex">` -- exactly the mixed signal this filter
       // exists to prevent. It sets its own <head> by hand instead of going through Layout.astro,
       // so it never took the `noindex` prop that would have made the contradiction obvious.
-      filter: (page) => !['/canjam', '/card', '/loaners/print'].some((p) => page.includes(p)),
+      //
+      // /proof/terms is here for a DIFFERENT reason, and it is temporary. The page is a DRAFT: it
+      // sets `noindex` from the `DRAFT` flag in src/pages/proof/terms.astro, so it has to be out
+      // of the sitemap for exactly as long as that flag is true, per the rule above. This file
+      // cannot read that flag, so the two are held together by comments instead. **REMOVE THIS
+      // ENTRY IN THE SAME COMMIT THAT SETS `DRAFT = false`** — a published Terms of Use that no
+      // crawler is told about is the wrong failure in the other direction, and Apple's Schedule 2
+      // section 3.8(b) is satisfied by the in-app link rather than by the sitemap either way.
+      filter: (page) =>
+        !['/canjam', '/card', '/loaners/print', '/proof/terms'].some((p) => page.includes(p)),
       // The hand-written pages live outside this Astro project, so list them explicitly.
       customPages: [
         'https://warrenlabs.com/',

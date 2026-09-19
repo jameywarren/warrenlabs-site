@@ -1,0 +1,561 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+
+// PROOF'S TERMS OF USE. The text below is NOT authored here. Its source of truth is
+// proof/docs/TERMS-OF-USE.md in the Proof repo, where it lives next to the code it describes, so
+// that a change to what the app does and a change to what this page claims can land in one commit.
+// That is the same arrangement chain/privacy.astro and caliper/privacy.astro use, and the reason
+// is the same: correcting the copy instead of the source is how a page and an app drift apart.
+// If something here looks wrong, fix docs/TERMS-OF-USE.md and re-render.
+//
+// WHY THIS PAGE EXISTS. Apple's Developer Program License Agreement, Schedule 2 section 3.8(b),
+// v126: "Links to Your Privacy Policy and Terms of Use must be accessible within Your Licensed
+// Application." Proof ships auto-renewable subscriptions, so it cannot be submitted without a
+// Terms of Use at a live URL that the app itself links to.
+//
+// IT MUST NOT POINT AT /terms/. That page is the PLUGIN line's terms and every load-bearing
+// sentence in it is false for Proof: it names FastSpring as the seller (Apple is), it describes a
+// .wllicense file (App Review guideline 3.1.1 forbids one), it says there is nothing to cancel
+// (Proof is primarily a subscription), it promises 14 days no questions asked (not ours to
+// promise on Apple's behalf), and it calls the line a public beta (Proof ships at 1.0.0).
+// Handing an App Review reviewer that document from inside Proof would hand them a contradiction
+// of the purchase they are reviewing. Hence a per-product path, /proof/terms/, which also scales
+// when the third product needs one.
+//
+// ------------------------------------------------------------------------------------------
+// DRAFT, AND WHAT THE FLAG BELOW CONTROLS.
+//
+// DRAFT=true does three things at once, deliberately, so they cannot come apart:
+//   1. renders the banner at the top of the page,
+//   2. sets `noindex` on the Layout, which also drops the canonical link,
+//   3. is PAIRED with an entry in the sitemap filter in astro.config.mjs.
+// (2) and (3) are a pair the way /canjam and /card are: a noindexed page listed in the sitemap
+// asks a crawler to fetch it and then tells it to forget what it found. astro.config.mjs cannot
+// read this flag, so the filter carries a comment naming this line. CHANGE BOTH OR NEITHER.
+//
+// WHAT HAS TO HAPPEN BEFORE DRAFT GOES FALSE:
+//   a. `updatesWindowStart` below stops being null — see the note on it. NEEDS JAMEY.
+//   b. A lawyer has read it. docs/TERMS-OF-USE.md section 16 lists the eight specific questions,
+//      in priority order, rather than "please review this".
+//   c. Jamey decides the standard-EULA question in docs/TERMS-OF-USE.md section 15 and fills in
+//      the License Agreement field in App Store Connect to match.
+//   d. `updated` below becomes the date of publication.
+// Only after the URL returns 200 does the in-app link get wired — docs/STOREKIT.md section 7.6
+// names the place. A Terms of Use link inside the app that 404s is worse than no link, because it
+// is a broken promise a reviewer will click.
+//
+// NOT REVIEWED BY A LAWYER. Every factual claim in it was checked against the Proof repo on
+// 2026-09-18: the free/paid seam against docs/FREE-TIER.md section 9, the three ways to pay and
+// the one-week trial against docs/DESIGN.md section 16.2a, and the "no data collected, no
+// tracking" claim against resources/PrivacyInfo.xcprivacy (NSPrivacyTracking false,
+// NSPrivacyCollectedDataTypes an empty array). Whether the document is *sufficient* as a contract
+// is exactly what (b) above is for.
+//
+// TWO SENTENCES THAT ARE DELIBERATELY NARROW. Do not "tidy" either one:
+//   * The section on what Proof's numbers are for disclaims regulatory, safety and compliance use
+//     while explicitly NOT disclaiming the product's own claim. Proof's whole thesis is that its
+//     numbers are honest about their own uncertainty; terms reading "these numbers mean nothing"
+//     would contradict the thing being sold. The wording draws a line between HONESTY and
+//     AUTHORITY, and both halves are load-bearing.
+//   * The data section names the two connections the app does make rather than claiming it makes
+//     none. "Proof makes no network connections" was in the first draft and is false: a
+//     subscription app talks to the App Store, and this very page is a web address the app opens.
+//     The same absolute has already been retracted once in resources/PrivacyInfo.xcprivacy.
+const DRAFT = true;
+
+// When the twelve months of updates that come with the one-time purchase start running.
+//
+// NULL ON PURPOSE, AND THIS IS THE ONE THING THAT BLOCKS PUBLICATION. docs/DESIGN.md section 16.2a
+// owns the promise and says only "current major version plus 12 months of updates". It does not
+// say whether the twelve months run from the date of purchase or from the release of the version
+// bought. A published legal document is the worst possible place to invent the missing half of
+// somebody else's fact, so the gap is rendered visibly instead of filled in. **NEEDS JAMEY**, and
+// it has to be fixed at the owner — docs/DESIGN.md — before it is copied down to here.
+//
+// Set it to a phrase that completes "counted ___", e.g. 'from the day you buy it' or 'from the
+// day the version you bought was released'.
+const updatesWindowStart = null;
+
+// The guard, rather than a comment asking nicely. Astro evaluates frontmatter at build time, so
+// this fails `npm run build` loudly instead of letting a finished-looking page ship with a hole in
+// a promise. The site's own documented failure mode is the silent one: a page that builds, pushes
+// and is simply wrong at the URL, with no error anywhere.
+if (!DRAFT && updatesWindowStart === null) {
+  throw new Error(
+    'proof/terms.astro: DRAFT is false but updatesWindowStart is still null. ' +
+      'docs/DESIGN.md section 16.2a has to say when the perpetual twelve months start before ' +
+      'this page can be published. See the note above updatesWindowStart.'
+  );
+}
+
+// While DRAFT, this is the drafting date and the page says so. On publication it becomes the
+// publication date and the footer reads "Last updated".
+const updated = '18 September 2026';
+const email = 'jamey@warrenlabs.com';
+---
+
+<Layout
+  title="Terms of Use · Proof · Warren Labs"
+  description="The terms for buying and using Proof. Apple is the seller, there is one tier with three ways to pay, and everything you measure stays on your device."
+  noindex={DRAFT}
+>
+  <Nav variant="home" />
+  <section class="sec">
+    <div class="wrap prose">
+      <span class="eyebrow">Proof</span>
+      <h2>Terms of Use</h2>
+      <p class="byline">
+        <b>Proof</b>, by Warren Labs.{' '}
+        {DRAFT ? <Fragment>Drafted {updated}. Not yet in force.</Fragment> : <Fragment>Last updated {updated}.</Fragment>}
+      </p>
+
+      {DRAFT && (
+        <div class="draftbar">
+          <b>This is a draft. It is not in force and it is not the terms of any sale.</b>
+          <span>
+            It has not been reviewed by a lawyer, and one question in it is still open — it is
+            marked, below, where it belongs. Nothing on this page binds anybody until that is
+            settled and this notice is gone.
+          </span>
+        </div>
+      )}
+
+      <p class="sec-lede">
+        You are buying a licence to use Proof. <b>Apple is the seller</b> and handles the money.
+        <b> Everything you measure stays on your device.</b> The rest of this page is the detail
+        behind those three sentences, written to be read rather than skimmed past.
+      </p>
+
+      <h3>Who you are buying from</h3>
+      <p>
+        Proof is made by <b>Warren Labs</b>, a trade name of <b>Free River Studios LLC</b>, a
+        Montana limited liability company operating from Livingston, Montana, United States. "We"
+        and "us" below mean Free River Studios LLC.
+      </p>
+      <p>
+        <b>Apple is the seller.</b> Proof is sold through the App Store, and Apple handles the
+        payment, the tax, the receipt and the refund. Your contract for the transaction is with
+        Apple and is governed by Apple's terms, which you accepted when you set up your Apple
+        Account. This page covers the software itself, and the relationship between you and us.
+        Both relationships are real and they cover different things.
+      </p>
+      <p>
+        These terms are Proof's. The Warren Labs audio plugins are sold somewhere else entirely,
+        under <a href="/terms/">their own terms</a>, and that page does not apply to anything you
+        buy in the App Store.
+      </p>
+
+      <h3>What you are buying</h3>
+      <p>
+        A <b>licence to use the software</b>, not the software itself and not its source code.
+      </p>
+      <p>
+        There is <b>one tier</b>. Everything Proof can do is in it. There is no professional
+        edition, no add-on and no feature you can unlock separately, and we do not intend to add
+        one.
+      </p>
+      <p>
+        There are three ways to pay for that one tier: a monthly subscription, a yearly
+        subscription, or a single purchase that does not renew. Prices are shown in the app and on
+        the App Store, and they are not repeated here — a price written in two places is a price
+        that will eventually disagree with itself.
+      </p>
+      <p>
+        <b>What the licence lets you do.</b> Use Proof on the devices associated with your Apple
+        Account, as Apple's own terms allow, including for paid commercial work, with no royalty,
+        no extra licence and no reporting. Proof is a <b>Universal Purchase</b>: one purchase
+        covers the Mac, iPad and iPhone versions.
+      </p>
+      <p>
+        <b>What it does not let you do.</b> Resell, rent, redistribute or sublicense it.
+        Reverse-engineer, decompile, or take it apart for use in another product.
+      </p>
+
+      <h3>What is free, and what is paid</h3>
+      <p>
+        Proof has a free half that needs no purchase and no account, and it is not a trial or a
+        teaser.
+      </p>
+      <ul class="points">
+        <li>
+          <b>Free, permanently:</b> the live instruments — the real-time analysers, the meters and
+          the signal generator — and <b>opening, checking and reading any Proof measurement
+          record</b>, including one somebody else made and sent you.
+        </li>
+        <li>
+          <b>Paid:</b> taking a measurement — the sweep, the noise-floor measurement it is held
+          against, the record that comes out of it, the library of records, comparing them, and
+          export.
+        </li>
+      </ul>
+      <p>
+        If your subscription ends, <b>you do not lose anything you measured</b>. You keep read
+        access to the records you have already written, along with everything in the free half. You
+        cannot take new measurements until you subscribe again. We do not hold your data hostage,
+        and there is no state of this app in which a measurement you paid to make becomes
+        unreadable.
+      </p>
+
+      <h3>The subscription, and how to cancel it</h3>
+      <p>
+        A subscription <b>renews automatically</b> at the end of each period — every month for the
+        monthly one, every year for the yearly one — and is charged to your Apple Account until you
+        cancel it.
+      </p>
+      <p>
+        <b>Apple owns cancellation, and we cannot do it for you.</b> Cancel in
+        <b> Settings &rsaquo; your name &rsaquo; Subscriptions</b> on an iPhone or iPad, or
+        <b> App Store &rsaquo; your account &rsaquo; Account Settings &rsaquo; Subscriptions</b> on
+        a Mac. The change takes effect at the end of the period you have already paid for; you keep
+        what you bought until then. Apple requires cancellation <b>at least 24 hours before</b> a
+        period ends for it to stop the next charge.
+      </p>
+      <p>
+        We cannot see your subscription, cannot cancel it, and cannot restart it. If you ask us to,
+        the only honest answer we have is this paragraph.
+      </p>
+
+      <h3>The free trial</h3>
+      <p>
+        The subscriptions carry a <b>one-week free trial</b>, offered through Apple.
+      </p>
+      <p>
+        Three things about it you should know before it starts, because they are Apple's rules
+        rather than ours and we would rather you met them here than at a charge you did not expect:
+      </p>
+      <ul class="points">
+        <li>
+          <b>When the week ends you are charged the full price of the subscription you chose</b>,
+          automatically, unless you cancel first. Cancel at least 24 hours before the week is up.
+        </li>
+        <li>
+          <b>There is one trial per subscription group, not one per product.</b> If you trial the
+          monthly and then switch to the yearly, there is no second trial; the yearly is billed in
+          full. The app will not offer you a trial you are not eligible for.
+        </li>
+        <li>
+          <b>Buying Proof outright carries no trial.</b> Apple's introductory offers exist only for
+          subscriptions that renew, and no wording of ours can change that.
+        </li>
+      </ul>
+      <p>
+        There is no countdown in the app, no "trial expired" screen, and no nag. Apple owns the
+        clock. The app only ever asks whether it is entitled right now.
+      </p>
+
+      <h3>Buying it outright</h3>
+      <p>
+        The single purchase does not renew, there is nothing to cancel, and it does not expire. It
+        covers <b>the current major version of Proof, plus twelve months of updates</b>{
+          updatesWindowStart ? <Fragment>, counted {updatesWindowStart}</Fragment> : null
+        }. After that the app you own keeps working, exactly as it is, for as long as your hardware
+        and operating system will run it. It simply stops receiving new versions unless you buy the
+        next major one.
+      </p>
+
+      {/* THE OPEN QUESTION. Rendered rather than quietly resolved, because docs/DESIGN.md section
+          16.2a — which owns the promise — does not say when the twelve months start, and this page
+          is not allowed to pick. See the note above `updatesWindowStart`. NEEDS JAMEY. */}
+      {updatesWindowStart === null && (
+        <p class="gap">
+          <b>One thing here is not settled yet, and we are not going to guess at it in a legal
+          document.</b> Whether those twelve months run from the day you buy Proof, or from the day
+          the version you bought was released, has not been decided. It will say so here, plainly,
+          before this page is in force.
+        </p>
+      )}
+
+      <p>
+        <b>There is no upgrade path from a subscription to buying it outright.</b> Apple offers
+        upgrades and credit only between subscriptions inside one group, and a single purchase is
+        in no group. If you have been subscribing and decide you would rather own it, you pay the
+        full price and nothing is credited. We would rather tell you that here than have you find
+        it out at the till. If that lands badly for you, write to us — any goodwill we extend is
+        our own bookkeeping, and we would rather do it than have you feel tricked.
+      </p>
+
+      <h3>Refunds</h3>
+      <p>
+        <b>Apple issues refunds for App Store purchases, and we cannot.</b> We never see the
+        transaction, there is no order number on our side to look up, and Apple gives developers no
+        way to refund one.
+      </p>
+      <p>
+        Ask Apple at <b>reportaproblem.apple.com</b>, signed in with the Apple Account you bought
+        with. Choose the purchase, pick a reason, submit. Apple usually decides within a couple of
+        days.
+      </p>
+      <p>
+        An App Store refund is Apple's decision, under Apple's terms and under whatever consumer
+        law applies where you live.
+      </p>
+      <p>
+        If you are in the UK or the EU, Apple publishes terms for your region, and they are what
+        govern this. The two we read — the UK's and Ireland's — each give you a
+        <b> fourteen-day right to withdraw</b> from an order, exercised through Apple and not
+        through us, and each states an exception to it:
+      </p>
+      <blockquote>
+        <p>
+          "You cannot cancel your order for the supply of Content if the delivery has started upon
+          your request and acknowledgement that you thereby lose your right of withdrawal."
+        </p>
+        <cite>
+          Apple Media Services Terms and Conditions (Ireland), read 18 September 2026. Apple's UK
+          page carries the same sentence, calling the same thing your cancellation right.
+        </cite>
+      </blockquote>
+      <p>
+        Whether installing Proof starts delivery in that sense is Apple's call and the law's, not
+        ours, and we are not going to tell you the answer we would prefer. Ask Apple. And{' '}
+        <a href="#statutory">your statutory rights</a> below stand whatever the answer is: nothing
+        on this page takes away a right the law gives you.
+      </p>
+      <p>
+        If Apple turns you down and you think that is wrong, write to us anyway. We cannot overturn
+        their decision and we are not going to pretend otherwise — but if Proof did not do what we
+        said it does, we want to know, and that is worth more to us than the sale.
+      </p>
+      <p>
+        Our general refund policy is at <a href="/refunds/">warrenlabs.com/refunds</a>, which
+        already explains this distinction for another App Store product.
+      </p>
+
+      <h3>What Proof's numbers mean, and what they are not for</h3>
+      <p>
+        <b>This section is the boundary of what Proof claims. It is not a retraction of it.</b>
+      </p>
+      <p>
+        <b>What Proof claims, and we stand behind it.</b> Every reading Proof prints is reported
+        against a noise-and-distortion floor that the instrument measured on the equipment in front
+        of it. A reading that is clear of that floor is printed with the number of digits the floor
+        entitles it to. A reading at or under the floor is printed as an inequality with no digits,
+        because the honest statement is "quieter than this instrument can hear". Most analysers
+        print a number there. Proof does not, and that refusal is the product. Nothing on this page
+        is an admission that Proof's numbers are vague, unreliable or not to be believed. They are
+        stated with their uncertainty attached, which is more than most tools in this class do.
+      </p>
+      <p>
+        <b>What that does not make Proof.</b> It is not an accredited, certified or traceable
+        instrument. We provide no calibration certificate and no traceability to a national
+        standard, and we hold no accreditation of any kind. Proof measures through hardware we did
+        not make, in a room we have not seen, operated by someone we cannot supervise. Where the
+        app supports calibration — sound pressure level can be calibrated against an acoustic
+        calibrator you supply — the accuracy of that calibration is the accuracy of your calibrator
+        and your microphone, not something we can warrant.
+      </p>
+      <p>
+        <b>So, plainly: do not use Proof as the instrument of record where the number itself
+        carries legal, regulatory or safety weight.</b> That includes, and is not limited to:
+      </p>
+      <ul class="points">
+        <li>
+          workplace or environmental noise-exposure compliance, and any measurement a regulator
+          will act on;
+        </li>
+        <li>product safety certification, type approval, or conformity assessment;</li>
+        <li>building-code or environmental-health acoustic compliance;</li>
+        <li>medical, audiological or hearing-health decisions of any kind;</li>
+        <li>
+          evidence in a dispute where the measurement itself is the thing being argued about.
+        </li>
+      </ul>
+      <p>
+        Those uses need an instrument with documented calibration and traceability, usually to a
+        defined class or type, operated to a published method. Proof is not one and does not claim
+        to be. The sound pressure level meter and the noise dosimeter report a measured quantity
+        and prescribe nothing; they are not a substitute for a class- or type-rated sound level
+        meter where one is required.
+      </p>
+      <p>
+        <b>About the records specifically.</b> A Proof record carries a content hash. That hash
+        proves the document has not been altered since it was written, and anyone can check it
+        without our software. It does <b>not</b> prove the equipment was set up correctly, that the
+        right thing was measured, or that the person holding it is who they say they are — and the
+        format makes no such claim. A record is a statement about what this instrument measured, on
+        this equipment, at that moment. Treat it as exactly that.
+      </p>
+      <p>
+        <b>The distinction we are drawing is between honesty and authority.</b> Proof is honest
+        about its own uncertainty. It is not an authority, and no amount of honesty makes it one.
+      </p>
+
+      <h3>Your records are yours</h3>
+      <p>
+        A Proof record is <b>your data</b>. You made it. These terms give us no claim on it of any
+        kind.
+      </p>
+      <p>
+        <b>Nothing you measure leaves your device.</b> Proof has <b>no account, no server of ours,
+        no analytics, no crash reporting and no telemetry</b>. Nothing you measure, and nothing
+        about how you use the app, is sent to us or to anyone else, because there is nowhere for it
+        to be sent: we operate no service for Proof to talk to. If you want a record to go
+        somewhere, you export it and send it yourself.
+      </p>
+      <p>There are two things the app reaches out for, and neither carries anything you measured:</p>
+      <ul class="points">
+        <li>
+          <b>The App Store</b>, to show you prices and to complete a purchase or a restore. That is
+          Apple's connection, on Apple's terms, and the transaction is between you and Apple.
+          Nothing about your measurements is in it. Checking whether you are entitled does not need
+          it: that reads a signed record Apple has already put on your device, which is why the app
+          keeps working on a bench with no internet.
+        </li>
+        <li>
+          <b>A link you tap.</b> Where the app offers a link to a web page — this document, or our
+          privacy policy — tapping it opens your browser. The app opens nothing you did not ask it
+          to.
+        </li>
+      </ul>
+      <p>
+        The privacy manifest that ships inside the app declares <b>no data collected and no
+        tracking</b>, and our App Store privacy answer is <b>Data Not Collected</b>. This page and
+        that manifest have to agree. If they ever disagree, the manifest is what is actually
+        running and this page is the thing that is wrong.
+      </p>
+      <p>
+        You may use, publish, sell, keep or destroy your records as you like. You need no
+        permission from us, you owe us no attribution, and there is no licence back to us hiding
+        anywhere in this document. The record format is documented and the rule for checking one is
+        plain text, deliberately, so that a record can be checked with a hash function and none of
+        our software at all — including in a future where we no longer exist.
+      </p>
+      <p>
+        <b>We cannot recover a record you lose. We never had it.</b> Back up your device.
+      </p>
+
+      <h3>Updates, and changes to the app</h3>
+      <p>
+        Updates within the version you bought are included. We may add, change or remove features
+        in an update, and we will not pretend otherwise here so that we can quietly change our
+        minds later.
+      </p>
+      <p>
+        What we will not do is take away the thing you paid for. If Proof's business model ever
+        changes, a licence already sold keeps working for the version it bought, and existing
+        customers will be told directly rather than by us editing this page.
+      </p>
+
+      <h3>What we don't promise</h3>
+      <p>
+        Proof is provided <b>as it is</b>. We do not warrant that it is free of defects, that it is
+        fit for any particular purpose, that its results are accurate for your equipment, or that
+        it will run uninterrupted. No software vendor can honestly promise those things, and a
+        measurement tool least of all.
+      </p>
+      <p>
+        That paragraph is a legal backstop, not a shrug. If Proof gives you a wrong answer, tell
+        us. We would rather fix the instrument than point at this section — an instrument whose
+        maker is not interested in its errors is not an instrument.
+      </p>
+
+      <h3>The limit on what we owe you</h3>
+      <p>
+        To the fullest extent the law allows, our total liability to you arising out of or relating
+        to Proof is limited to the amount you have paid for Proof.
+      </p>
+      <p>
+        We are not liable for indirect, incidental, special or consequential loss, including lost
+        profits, lost work, lost data, or loss arising from a decision you made on the basis of a
+        measurement. The section above on what Proof's numbers are for is the reason that last
+        clause is there, and it is why that section is written as plainly as it is.
+      </p>
+
+      <h3 id="statutory">Your statutory rights</h3>
+      <p>
+        Nothing in these terms removes rights the law gives you. If you are a consumer in the
+        European Union, the United Kingdom, or anywhere else with mandatory consumer protection,
+        those rights apply on top of this page and override anything here that conflicts with them.
+      </p>
+
+      <h3>Changes to these terms</h3>
+      <p>
+        If we change this page, the change applies to purchases made <b>after</b> the change. It
+        does not reach backwards into a licence you already hold. The date at the bottom is when it
+        was last touched.
+      </p>
+
+      <h3>Governing law</h3>
+      <p>
+        These terms are governed by the law of the State of Montana, United States, without regard
+        to its conflict-of-law rules. Your separate purchase contract with Apple is governed by
+        Apple's terms.
+      </p>
+
+      <h3>Contact</h3>
+      <p>
+        <a href={`mailto:${email}`}>{email}</a> — anything at all, including the awkward questions.
+        A real person reads it.
+      </p>
+
+      <p class="meta">
+        {DRAFT ? <Fragment>Drafted {updated} &middot; not in force</Fragment> : <Fragment>Last updated {updated}</Fragment>}{' '}
+        &middot; <a href="/proof/">Proof</a>{' '}
+        &middot; <a href="/privacy/">Privacy</a>{' '}
+        &middot; <a href="/refunds/">Refunds</a>
+      </p>
+    </div>
+  </section>
+  <Footer />
+</Layout>
+
+<style>
+  /* Follows terms.astro and chain/privacy.astro. .prose, .points and .byline are page-local
+     classes on this site rather than global ones, so a legal page that does not carry this block
+     renders with no measure and an unstyled list. */
+  .prose { max-width: 720px; }
+  .prose h3 { margin: 34px 0 8px; font-size: 1.15rem; }
+  .prose p { margin: 0 0 14px; line-height: 1.65; }
+  .prose b { color: var(--text); }
+  .prose a { color: var(--accent); }
+  .byline { font-size: 0.92rem; opacity: 0.6; margin-bottom: 18px; }
+  .points { margin: 0 0 14px; padding-left: 20px; line-height: 1.65; }
+  .points li { margin: 0 0 8px; }
+
+  blockquote {
+    margin: 0 0 14px;
+    padding: 16px 20px;
+    border-left: 2px solid var(--accent);
+    background: var(--surface);
+  }
+  blockquote p { margin: 0; font-size: 15px; }
+  blockquote cite {
+    display: block;
+    margin-top: 10px;
+    font-style: normal;
+    font-size: 12.5px;
+    color: var(--muted-2);
+  }
+
+  /* The draft notice. Amber is the line's signal colour and this is the one thing on the page
+     that is a signal: the document is not in force. It disappears with the DRAFT flag. */
+  .draftbar {
+    margin: 0 0 24px;
+    padding: 16px 20px;
+    border: 1px solid var(--accent-line);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--radius);
+    background: var(--surface);
+  }
+  .draftbar b { display: block; margin-bottom: 6px; color: var(--text); }
+  .draftbar span { display: block; font-size: 14px; line-height: 1.6; color: var(--muted); }
+
+  /* The one unanswered question, rendered where it belongs rather than resolved by guesswork. */
+  .gap {
+    padding: 16px 20px;
+    border-left: 2px solid var(--accent);
+    background: var(--surface);
+  }
+
+  .prose .meta {
+    margin-top: 34px;
+    padding-top: 16px;
+    border-top: 1px solid var(--line);
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    color: var(--muted-2);
+  }
+</style>

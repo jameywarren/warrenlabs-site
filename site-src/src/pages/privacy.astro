@@ -30,9 +30,26 @@ const updated = 'September 2026';
       </p>
 
       <h3>Proof (iPhone, iPad and Mac)</h3>
+      {/* CORRECTED 2026-09-18. This paragraph used to open "Proof makes no network connections."
+          That absolute cannot survive the product it describes: Proof sells subscriptions, and an
+          app that sells a subscription asks the App Store for its prices and for the purchase
+          itself. The same sentence had already been retracted once inside the app, in
+          proof/resources/PrivacyInfo.xcprivacy, whose header comment records that "There is no
+          network code in the binary" was false and why — `nm -u` on the shipping binary lists
+          NSURLSession, _socket and _connect, all pulled in by JUCE whether or not anything calls
+          them. What survives is the whole privacy-load-bearing half, and it stays true after the
+          store lands: no account, no server of ours, no analytics, no crash reporting, no
+          telemetry, and nothing measured leaving the device. DO NOT RESTORE THE ABSOLUTE.
+          The long form is at /proof/terms/, which has to keep agreeing with this. */}
       <p>
-        <b>Proof makes no network connections.</b> It has no analytics, no crash reporting and no
-        telemetry, and nothing you measure leaves your device unless you export it yourself.
+        <b>Proof has no account, no analytics, no crash reporting and no telemetry</b>, and nothing
+        you measure leaves your device unless you export it yourself. We operate no service for it
+        to send anything to.
+      </p>
+      <p>
+        Buying Proof, restoring a purchase, or seeing its prices goes through the <b>App Store</b>.
+        That connection is Apple's, on Apple's terms, and the transaction is between you and Apple.
+        Nothing about your measurements is in it.
       </p>
       <p>
         Proof asks for the <b>microphone</b> permission, and it needs it for an ordinary reason: on

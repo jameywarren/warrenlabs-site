@@ -22,7 +22,14 @@ import ProofFloorDiagram from '../components/ProofFloorDiagram.astro';
 //   1. NEVER write "the binary contains no networking code". proof/docs/SUBMISSION.md records that
 //      exact sentence as FALSE and corrects it: `nm -u` finds NSURLSession, _socket and _connect,
 //      and otool -L shows WebKit.framework, all pulled in by JUCE and the system frameworks
-//      regardless of our flags. The true claim describes BEHAVIOUR, and is the one used below.
+//      regardless of our flags.
+//      AMENDED 2026-09-18: this rule used to end "The true claim describes BEHAVIOUR, and is the
+//      one used below", and the sentence it blessed was "Proof makes no network connections".
+//      That is a behaviour claim AND an absolute, and the shipping product breaks it: Proof sells
+//      subscriptions, so it asks the App Store for prices and for the purchase. NEVER write any
+//      form of "Proof makes no network connections" either. What is true, and stays true, are the
+//      negatives: no account, no server of ours, no analytics, no crash reporting, no telemetry,
+//      and nothing you measure leaving the device.
 //   2. Three of nine lenses work. The app's own masthead prints "1 of 9 · 3 ready". LENSES below is
 //      transcribed from app/Lens.cpp — names and reasons are the app's words, not a paraphrase.
 //   3. No screenshots. Every render in proof/shots/ — the 11 correctly-sized store shots included —
@@ -398,10 +405,17 @@ const proofApp = {
       </p>
 
       <h3>Privacy</h3>
+      {/* CORRECTED 2026-09-18, and accuracy rule 1 at the top of this file changed with it. This
+          paragraph used to open "Proof makes no network connections." Rule 1 forbade the SYMBOL
+          claim and blessed this one as the behaviour claim, which was half right: the sentence is
+          about behaviour, and it is still an absolute that the shipping product breaks. Proof
+          sells subscriptions, so it asks the App Store for prices and for the purchase, and this
+          page now links to a terms page the app itself opens in a browser. The negatives below
+          are the part that is true and stays true. DO NOT RESTORE THE ABSOLUTE. */}
       <p>
-        <b>Proof makes no network connections.</b> It has no analytics, no crash reporting, no
-        telemetry and no account, and nothing you measure leaves your device unless you export it
-        yourself. The full policy is on the <a href="/privacy/">privacy page</a>.
+        <b>Proof has no account, no analytics, no crash reporting and no telemetry</b>, and nothing
+        you measure leaves your device unless you export it yourself. We operate no service for it
+        to send anything to. The full policy is on the <a href="/privacy/">privacy page</a>.
       </p>
 
       <h3>What it does not do yet</h3>
@@ -411,8 +425,16 @@ const proofApp = {
         waiting on. Each one says so in the app when you open it.
       </p>
 
+      {/* CORRECTED 2026-09-18. "Terms" here pointed at /terms/, which is the PLUGIN line's terms
+          and is false about Proof in every load-bearing sentence: it names FastSpring as the
+          seller (Apple is), it describes a .wllicense file (App Review guideline 3.1.1 forbids
+          one), it says there is nothing to cancel (Proof is primarily a subscription), and it
+          calls the line a public beta. This page is the App Store Connect Support URL, so that
+          link pointed a reviewer at a document contradicting the purchase under review.
+          /proof/terms/ lands in the same commit as this change; read the DRAFT flag at the top of
+          site-src/src/pages/proof/terms.astro before pushing either. */}
       <p class="meta">
-        Last updated {updated} &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/terms/">Terms</a>
+        Last updated {updated} &middot; <a href="/privacy/">Privacy</a> &middot; <a href="/proof/terms/">Terms</a>
       </p>
     </div>
   </section>
