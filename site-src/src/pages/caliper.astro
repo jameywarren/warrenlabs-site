@@ -1,0 +1,103 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+// Caliper's product page. Cited from both App Store listings as the marketing URL, and it is where
+// /caliper/privacy hangs off.
+//
+// WHAT THIS PAGE MUST NOT DO: claim a tier, a repeatability figure, or a number of rigs. Those are
+// owned elsewhere (caliper/docs/RIGS.md, the measurement pipeline docs) and an unmarked restatement
+// here is how every contradiction in this repo started. It describes what the app IS.
+//
+// PRICE: free, no paid tier, both routes, iOS included. Owner: caliper/docs/PRICING.md, 2026-09-18.
+const updated = '18 September 2026';
+---
+
+<Layout
+  title="Caliper · Warren Labs"
+  description="A headphone measurement app that tells you whether to believe the result. Free, for Mac and iPhone."
+>
+  <Nav variant="home" />
+
+  <section class="sec">
+    <div class="wrap prose">
+      <span class="eyebrow">Caliper</span>
+      <h2>A measurement you can believe</h2>
+
+      <p class="sec-lede">
+        Caliper measures a headphone on an acoustic fixture and tells you how much of what you are
+        looking at is real. Free, for Mac and iPhone.
+      </p>
+
+      <h3>The problem it solves</h3>
+      <p>
+        Any app can draw a curve. The hard part is knowing whether the same headphone, measured
+        again, would give you the same curve — because if it would not, the differences you are
+        reading belong to how it was sitting on the fixture, not to the headphone.
+      </p>
+      <p>
+        Most published headphone measurements are a single curve with no statement of uncertainty.
+        Caliper asks for a few captures instead of one and spends them working out its own error
+        budget, so every verdict it gives you is measured against a floor it actually established.
+      </p>
+
+      <h3>How it works</h3>
+      <p>
+        <b>The duplicate pair.</b> Two sweeps of one ear with nothing touched in between. Any
+        difference between them is the instrument and the room, not the headphone — which makes it
+        the smallest difference the run is entitled to call real. A run will not complete without
+        one.
+      </p>
+      <p>
+        <b>Seatings.</b> Take the headphone off, put it back on, measure again. The spread between
+        seatings is the honest uncertainty of the measurement, and it is usually larger than people
+        expect. How many you need is derived from how much yours actually disagree, not fixed by a
+        rule — an easy headphone may need one, a difficult one eight.
+      </p>
+      <p>
+        <b>A tier, computed and never asserted.</b> What a run earns depends on what it holds. The
+        app says what is missing and what to do next, and a capture taken in any order counts for
+        whatever it satisfies.
+      </p>
+
+      <h3>What it will not do</h3>
+      <ul class="points">
+        <li>
+          <b>It will not smooth a measurement unless you ask.</b> Smoothing is a display choice and
+          the stored data stays raw.
+        </li>
+        <li>
+          <b>It will not let you measure half-calibrated.</b> One capsule corrected and the other
+          not makes every left-versus-right difference an artefact of the calibration rather than
+          the headphone, so it refuses.
+        </li>
+        <li>
+          <b>It will not judge distortion it cannot see.</b> At low drive the harmonics sit in the
+          noise, so it says the signal-to-noise is too low to tell rather than blaming the driver.
+        </li>
+        <li>
+          <b>It will not publish synthesised data.</b> There is a simulated fixture for trying the
+          app without hardware; every capture it makes is stamped, and exporting a run that holds
+          one is refused.
+        </li>
+      </ul>
+
+      <h3>Price</h3>
+      <p>
+        <b>Free.</b> No paid tier, no subscription, no in-app purchase, on both Mac and iPhone.
+      </p>
+
+      <h3>Privacy</h3>
+      <p>
+        It collects nothing and sends nothing — the Mac App Store build requests no network
+        entitlement at all, so it cannot. <a href="/caliper/privacy">The privacy policy</a> says how
+        to check that rather than asking you to take our word.
+      </p>
+
+      <p class="byline">Last updated {updated}.</p>
+    </div>
+  </section>
+
+  <Footer />
+</Layout>

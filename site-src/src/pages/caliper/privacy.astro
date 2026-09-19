@@ -1,0 +1,118 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+
+// The text below is NOT authored here. Its source of truth is caliper/docs/privacy-policy.md in
+// the Caliper repo, where it lives next to the code it describes, so a change to what the app does
+// and a change to what this page claims can land in one commit. Every factual claim was checked
+// against Caliper 1.0.0 on 2026-09-18 — including, specifically:
+//
+//   * packaging/Caliper.entitlements contains app-sandbox, device.audio-input and
+//     files.user-selected.read-write, and NOTHING else. There is no network.client.
+//   * The binary carries no WebBrowserComponent symbols and no WKWebView strings
+//     (JUCE_WEB_BROWSER=0). WebKit shows in `otool -L` because JUCE's module system links the
+//     framework for juce_gui_extra regardless; nothing in Caliper can instantiate a web view.
+//
+// THE NETWORK CLAIM IS LOAD-BEARING AND IS TRUE BECAUSE OF THE ENTITLEMENTS FILE, not as a policy
+// choice. If a future version ever adds network.client — for a corpus upload, a licence check,
+// anything — this page and the source file must change in the SAME commit, or this becomes a false
+// claim in an App Store listing. Do not soften it and do not broaden it.
+//
+// This page is an App Store Connect requirement for Caliper (com.warrenlabs.caliper), on both the
+// Mac and iOS listings. It must stay reachable anonymously, with no password gate.
+//
+// NOT REVIEWED BY A LAWYER. It describes the app's behaviour accurately. Whether that is
+// *sufficient* for the GDPR, the CCPA or Montana law is open, and the source file says so too.
+const updated = '18 September 2026';
+---
+
+<Layout
+  title="Privacy · Caliper · Warren Labs"
+  description="How Caliper handles your data. It collects nothing and sends nothing: the Mac App Store build requests no network entitlement at all, so it cannot."
+>
+  <Nav variant="home" />
+  <section class="sec">
+    <div class="wrap prose">
+      <span class="eyebrow">Caliper</span>
+      <h2>Privacy</h2>
+      <p class="byline">
+        <b>Caliper</b>, by Warren Labs. Last updated {updated}.
+      </p>
+
+      <p class="sec-lede">
+        Caliper collects nothing and sends nothing. Your measurements are files on your own device.
+        That is not a promise about our intentions — it is a property of how the app is built, and
+        you can check it.
+      </p>
+
+      <h3>Why you can check it rather than trust it</h3>
+      <ul class="points">
+        <li>
+          <b>The Mac App Store build requests no network entitlement at all.</b> Its entitlements
+          file contains three things — the app sandbox, audio input, and read/write access to files
+          you pick in a system panel — and nothing else. An app without
+          <code>com.apple.security.network.client</code> cannot open an outbound connection. The
+          sandbox refuses it.
+        </li>
+        <li>
+          <b>There is no analytics library, no crash reporter and no telemetry</b> of any kind.
+        </li>
+        <li>
+          <b>The interface is native, not a web view.</b> There is no embedded browser that could
+          fetch anything on its own.
+        </li>
+      </ul>
+
+      <h3>What the app has access to, and why</h3>
+      <p>
+        <b>The microphone.</b> This is Caliper's purpose: it records the measurement capsules on
+        your acoustic fixture. Audio is analysed on your device and written to files you choose.
+      </p>
+      <p>
+        <b>Files you pick.</b> Calibration files you open, and the folder you save a measurement
+        into. Only what you select in a system panel.
+      </p>
+      <p>
+        <b>Its own container.</b> App settings, and a copy of each calibration file — so a stored
+        measurement cannot be invalidated later by the original being edited underneath it.
+      </p>
+      <p>Nothing here leaves the device.</p>
+
+      <h3>What Caliper does not do</h3>
+      <ul class="points">
+        <li>No account, no sign-in, no email address.</li>
+        <li>No advertising, no tracking, no third-party SDKs.</li>
+        <li>No collection of usage data, device identifiers, or location.</li>
+        <li>
+          No automatic upload of measurements. <b>If you share a measurement, you do it
+          deliberately</b>, with the system share sheet, to a destination you choose.
+        </li>
+      </ul>
+
+      <h3>Sharing is yours, and it ends our involvement</h3>
+      <p>
+        Caliper can export a measurement bundle or a graphic. Once you hand that to another app, a
+        message, or a website, that destination's privacy policy governs it and ours no longer
+        applies. We never see it and have no way to.
+      </p>
+
+      <h3>Children</h3>
+      <p>
+        Caliper is a measurement instrument for audio work. It is not directed at children, and it
+        collects no data from anyone, of any age.
+      </p>
+
+      <h3>Changes</h3>
+      <p>
+        Material changes will be reflected here with a new date. Because the app collects nothing,
+        the most likely change is a new capability — and if one ever transmits anything, it will say
+        so plainly here <i>before</i> it ships, not after.
+      </p>
+
+      <h3>Contact</h3>
+      <p><a href="mailto:jamey@warrenlabs.com">jamey@warrenlabs.com</a></p>
+    </div>
+  </section>
+  <Footer />
+</Layout>

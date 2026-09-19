@@ -42,6 +42,11 @@ const ROUTES = [
   // (io.sonictemple.chain). App Review fetches it anonymously. Drop this entry and the URL
   // 404s with no error anywhere, per the warning above, and Chain cannot be submitted.
   'chain',
+  // /caliper and /caliper/privacy — Caliper's marketing URL and the privacy URL App Store Connect
+  // requires, cited from BOTH listings (Mac and iOS, com.warrenlabs.caliper). App Review fetches
+  // the privacy URL anonymously. Drop this entry and both 404 with no error anywhere, per the
+  // warning above, and Caliper cannot be submitted.
+  'caliper',
   'loaners',   // + /loaners/print, the one-page leave-behind
   'tune',      // Attune's "Send to Device" WebHID page — source of truth is attune/companion/tune.html
   // The CanJam SoCal handout, at two URLs so report scans can be told from everything else. Both
