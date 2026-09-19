@@ -29,7 +29,7 @@ const updated = '18 September 2026';
 
 <Layout
   title="Privacy · Caliper · Warren Labs"
-  description="How Caliper handles your data. It collects nothing and sends nothing: the Mac App Store build requests no network entitlement at all, so it cannot."
+  description="How Caliper handles your data. Nothing is sent unless you press Submit: no account, no analytics, no telemetry, and no background upload."
 >
   <Nav variant="home" />
   <section class="sec">
@@ -41,28 +41,55 @@ const updated = '18 September 2026';
       </p>
 
       <p class="sec-lede">
-        Caliper collects nothing and sends nothing. Your measurements are files on your own device.
-        That is not a promise about our intentions — it is a property of how the app is built, and
-        you can check it.
+        Caliper sends nothing unless you press Submit. Your measurements are files on your own
+        device. There is no account, no analytics, no telemetry, and nothing is uploaded in the
+        background.
       </p>
 
-      <h3>Why you can check it rather than trust it</h3>
+      <h3>What changed, and when</h3>
+      <p>
+        <b>Until 18 September 2026 this page said Caliper requested no network capability at all</b>,
+        and leaned on that as a checkable fact rather than a promise. It now has one, so that you
+        can contribute a measurement from inside the app instead of exporting a file, opening a
+        browser, finding the file and uploading it by hand. The capability and this page changed in
+        the same commit, which is the rule the policy sets for itself.
+      </p>
+
+      <h3>What is still true, and still checkable</h3>
       <ul class="points">
         <li>
-          <b>The Mac App Store build requests no network entitlement at all.</b> Its entitlements
-          file contains three things — the app sandbox, audio input, and read/write access to files
-          you pick in a system panel — and nothing else. An app without
-          <code>com.apple.security.network.client</code> cannot open an outbound connection. The
-          sandbox refuses it.
+          <b>The network is used for exactly one thing: an upload you start.</b> There is no other
+          outbound request in the app — no analytics library, no crash reporter, no telemetry, no
+          licence check, no update check, no remote configuration.
         </li>
         <li>
-          <b>There is no analytics library, no crash reporter and no telemetry</b> of any kind.
+          <b>Nothing is sent automatically, ever.</b> Measuring, saving, exporting and verifying are
+          entirely local. A measurement leaves your device only when you choose
+          <b>Share to Warren Labs</b> and confirm what is being sent.
         </li>
         <li>
           <b>The interface is native, not a web view.</b> There is no embedded browser that could
           fetch anything on its own.
         </li>
       </ul>
+
+      <h3>What a submission sends, when you make one</h3>
+      <p>Only when you choose <b>Share to Warren Labs</b>, and only what the bundle contains:</p>
+      <ul class="points">
+        <li>The measured curves, and the impulse responses they were computed from</li>
+        <li>The rig, fixture and calibration serials, the analysis chain, and the tier the run earned</li>
+        <li>The metadata you typed — brand, model, unit, pads, jig, amp</li>
+        <li>The name or handle you give the submission</li>
+      </ul>
+      <p>
+        <b>It sends nothing from your device that is not in that bundle.</b> No contacts, no
+        identifiers, no location, no list of your other files. The app shows you the summary before
+        it sends, and the bundle is the same one Save Session writes — you can open it first.
+      </p>
+      <p>
+        A submitted measurement is published under a non-commercial licence, with attribution, and
+        you keep your copyright.
+      </p>
 
       <h3>What the app has access to, and why</h3>
       <p>
@@ -85,8 +112,9 @@ const updated = '18 September 2026';
         <li>No advertising, no tracking, no third-party SDKs.</li>
         <li>No collection of usage data, device identifiers, or location.</li>
         <li>
-          No automatic upload of measurements. <b>If you share a measurement, you do it
-          deliberately</b>, with the system share sheet, to a destination you choose.
+          No automatic upload of measurements, and no background sync. <b>If you submit a
+          measurement, you do it deliberately</b> — you press Submit, and you are shown what is
+          being sent first.
         </li>
       </ul>
 
