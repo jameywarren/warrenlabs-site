@@ -35,13 +35,23 @@ import Feedback from '../components/Feedback.astro';
 import { GRID_HZ } from '../data/curves.js';   // GRID_HZ only — the archive curves are no longer plotted
 import { REFERENCES } from '../data/targets.js';
 import { MEASUREMENTS } from '../data/measurements.js';
+import { CONTRIBUTED } from '../data/contributed.js';
 import WL_ASSETS from '../data/wl-assets.json';   // content-hashed paths, written by tools/vendor.mjs
 
 // ONE SOURCE. The multi-source shape is kept deliberately: MEASUREMENT-PIPELINE.md §4.1 says two
 // fixtures never share an axis, and enforcing that in the DATA MODEL rather than in a caption is
 // what makes it hard to violate by accident. If a second bench is ever added it slots in here.
 const ours = MEASUREMENTS.map((m) => ({ id: m.id, b: m.b, n: m.n, db: m.db }));
-const PAYLOAD = { grid: GRID_HZ, sources: { ours }, targets: REFERENCES };
+// Contributed rows travel in their OWN key, never merged into `ours`. `ours` is the set Attune
+// ships and the only one that is internally consistent on a single fixture; the moment the two
+// share a list, every downstream `if` is one missed condition away from presenting a stranger's
+// rig as ours. See docs/measurement-hosting.md §2e.
+const contributed = CONTRIBUTED.map((m) => ({
+  id: m.id, b: m.b, n: m.n, db: m.db,
+  by: m.by, tier: m.tier, unit: m.unit, rig: m.rig, rigSerial: m.rigSerial,
+  seatings: m.seatings, band: m.band,
+}));
+const PAYLOAD = { grid: GRID_HZ, sources: { ours }, contributed, targets: REFERENCES };
 
 // STRUCTURED DATA. schema.org/Dataset, so the CC BY-NC notice this page already renders for humans
 // is also machine-readable. A crawler could previously read the licence only as prose.
@@ -98,6 +108,12 @@ const MEASURED_LD = {
     <aside>
       <div class="pane">
         <input class="search" id="q" type="search" placeholder="Search…" autocomplete="off" aria-label="Search headphones" />
+        {contributed.length > 0 && (
+          <label class="src" id="contrib-t" title="Measurements other people sent us, taken on their own miniDSP EARS Pro. A different physical fixture from ours, so a difference between these curves is the headphone, the person, the rig and its calibration together.">
+            <input type="checkbox" id="contrib" />
+            <span>Include contributed ({contributed.length})</span>
+          </label>
+        )}
         <div class="list" id="list" role="listbox" aria-multiselectable="true"></div>
       </div>
     </aside>
@@ -151,13 +167,22 @@ const MEASURED_LD = {
                   <option value="0">None</option>
                 </select>
               </label>
-              {/* Seating-variance toggle removed 2026-08-05: the band was drawn from the HeadRoom
-                  archive's SD, and this page plots only our own EARS Pro curves.
+              {/* Seating-variance toggle, removed 2026-08-05 and RESTORED 2026-09-19.
 
-                  UPDATED 2026-08-24. RIG.md's day-one table IS filled in now, so the old restore
-                  condition is met and it is still the wrong thing to do. See SEATING_SD_KNOWN
-                  below: seating sd turned out to be per MODEL (5x range across three headphones),
-                  so one global band misstates every curve it is drawn over. */}
+                  It was removed because the band came from the HeadRoom archive's SD, on a rig
+                  that no longer exists. It stayed removed on 2026-08-24 for a better reason: the
+                  measurement showed seating sd is a property of the HEADPHONE, not the rig -- a 5x
+                  range across three headphones on one bench -- so a single global band overstates
+                  the good models and understates the bad ones.
+
+                  The condition written down then was "store a per-model seating sd per band
+                  alongside each curve, and draw each curve's own band." That now exists: Caliper
+                  measures it per run and per band, and it travels with the row. A curve carrying
+                  no band still draws none. */}
+              <label class="align" title="Draw each curve's own measured seating variance, where the measurement carries one. Curves without a measured band draw none — absence, not zero.">
+                <span>Band</span>
+                <input type="checkbox" id="band" />
+              </label>
                 </div>
               </div>
 
@@ -477,6 +502,21 @@ const MEASURED_LD = {
   .caption { flex: none; padding: 0 2px 12px; font-size: 12px; line-height: 1.55; color: var(--muted); max-width: 78ch; }
   .caption :global(b) { color: var(--text); font-weight: 500; }
 
+  /* The contributor's handle, beside the trace it belongs to. Quieter than the model name, because
+     it is provenance rather than the subject, but never hidden behind a hover. */
+  /* A contributed row in the list: the handle, and a dashed swatch matching its trace. */
+  .row :global(.row-by), .row .row-by {
+    margin-left: auto; font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.04em;
+    color: var(--muted-2); white-space: nowrap; padding-left: 8px;
+  }
+  .row.contrib .sw { border: 1px dashed var(--muted-2); background: none !important; }
+  .row.contrib.on .sw { border-style: dashed; }
+
+  .legend :global(.lg-by) {
+    font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.04em;
+    color: var(--muted-2); padding: 1px 6px; border: 1px solid var(--line);
+    border-radius: 999px; white-space: nowrap;
+  }
   .legend :global(.lg-band) { display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: var(--muted-2); }
   .legend :global(.lg-band i) { width: 13px; height: 9px; border-radius: 2px; background: rgba(232, 235, 237, 0.13); border: 1px solid rgba(232, 235, 237, 0.2); flex: none; }
 
@@ -602,14 +642,22 @@ const MEASURED_LD = {
   // The correct re-enable is NOT a one-liner: store a per-model seating sd per band alongside each
   // curve, and draw each curve's own band. Until that exists, no band. The plotting code is left
   // intact for whoever does it.
-  const SEATING_SD_KNOWN = false;
-  const SD_LO_HZ = 200, SD_LO = 0.37, SD_HI_HZ = 12000, SD_HI = 3.87;
-  const sdAt = (hz) => {
-    if (!SEATING_SD_KNOWN) return null;
-    if (hz < SD_LO_HZ) return null;
-    if (hz <= 1000) return SD_LO;
-    if (hz >= SD_HI_HZ) return SD_HI;
-    return SD_LO + (Math.log(hz / 1000) / Math.log(SD_HI_HZ / 1000)) * (SD_HI - SD_LO);
+  // RE-ENABLED 2026-09-19, on the terms the note above set: per curve, per band, or not at all.
+  //
+  // The two globals are gone. A curve draws a band only if ITS OWN measurement carries one, which
+  // Caliper produces per run and per band (BandSpread in caliper/engine/include/caliper/Stats.h).
+  // A curve without one draws nothing — absence, not zero, exactly as before.
+  //
+  // FOUR BANDS, DRAWN AS STEPS, not interpolated into a smooth ribbon. The measurement is four
+  // numbers over four ranges; drawing a curve through them would invent resolution the statistic
+  // does not have, and the step edges at 200 Hz, 2 kHz and 10 kHz are real boundaries — seal,
+  // control band, lateral placement, and the region the pipeline says to report but not trust.
+  const BANDS_BY_ID = new Map();          // id -> [{lo, hi, sd}], from the row's own record
+  const sdAt = (hz, id) => {
+    const bands = BANDS_BY_ID.get(id);
+    if (!bands || !bands.length) return null;
+    const b = bands.find((x) => hz >= x.lo && hz <= x.hi);
+    return b && b.sd > 0 ? b.sd : null;
   };
 
   const F0 = 20, F1 = 20000;
@@ -623,6 +671,11 @@ const MEASURED_LD = {
   // ---------- viewer ----------
   let MODELS = [], GRID = [], DB = new Map(), SMOOTH = new Map(), TARGETS = {};
   let SOURCES = {}, source = 'ours';   // 'ours' = Warren Labs, miniDSP EARS Pro. The only one.
+  // Contributed measurements are ADDITIVE and OFF by default. Additive because the comparison this
+  // page exists for - one headphone, several people, several units - only means anything on one
+  // axis. Off by default because a reader checking a curve against Attune's corpus needs our rig
+  // alone, and because a set that appeared on its own would be read as ours.
+  let CONTRIB = [], showContrib = false;
   let mode = 'overlay', showBand = false;
   let smoothOct = 12;          // 1/N octave; 0 = off
   let yScale = 30;             // 'auto' or a ±dB span. A LOCKED scale is what makes two exported
@@ -667,18 +720,29 @@ const MEASURED_LD = {
     DB.clear();
     SMOOTH.clear();
     alignCache.clear();
-    const list = SOURCES[which] || [];
-    MODELS = list.map((m) => ({ id: m.id, brand: m.b, name: m.n }));
+    const base = SOURCES[which] || [];
+    const list = showContrib ? base.concat(CONTRIB) : base;
+    BANDS_BY_ID.clear();
+    MODELS = list.map((m) => ({
+      id: m.id, brand: m.b, name: m.n,
+      by: m.by ?? null, tier: m.tier ?? null, unit: m.unit ?? null,
+      rig: m.rig ?? null, rigSerial: m.rigSerial ?? null, seatings: m.seatings ?? null,
+      contributed: !!m.by,
+    }));
     for (const m of list) {
       DB.set(m.id, m.db);
       SMOOTH.set(m.id, smoothCurve(m.db));
+      if (m.band && m.band.length) BANDS_BY_ID.set(m.id, m.band);
     }
   }
+  const modelOf = (id) => MODELS.find((m) => m.id === id) || null;
+  const isContributed = (id) => !!modelOf(id)?.contributed;
 
   function boot(a) {
     GRID = a.grid;
     TARGETS = a.targets || {};
     SOURCES = a.sources || {};
+    CONTRIB = a.contributed || [];
     loadSource('ours');
     // A shared link wins over the house default — arriving from a forum post must show the
     // comparison that was linked, not ours. Only fall back when there's nothing in the URL.
@@ -973,13 +1037,27 @@ const MEASURED_LD = {
       row.className = 'row' + (on ? ' on' : '') + (!on && full ? ' dis' : '');
       row.setAttribute('role', 'option');
       row.setAttribute('aria-selected', on ? 'true' : 'false');
-      row.title = m.brand + ' ' + m.name;
+      row.title = m.brand + ' ' + m.name + (m.contributed ? ' — measured by ' + m.by + ', on their own rig' : '');
       const sw = document.createElement('span');
       sw.className = 'sw';
       if (on) sw.style.background = colourOf(on);
       const nm = document.createElement('span');
       nm.className = 'nm'; nm.textContent = m.name;
       row.append(sw, nm);
+
+      // THE HANDLE BELONGS IN THE LIST, not only in the legend.
+      //
+      // With contributed rows on, the list showed two entries reading "HD 800" - ours and somebody
+      // else's - with nothing to tell them apart. The legend distinguishes them AFTER you pick,
+      // which is exactly one step too late: the list is where the choice is made, and an
+      // unlabelled duplicate is how a reader ends up citing a stranger's rig as ours.
+      if (m.contributed) {
+        row.classList.add('contrib');
+        const by = document.createElement('span');
+        by.className = 'row-by';
+        by.textContent = m.by;
+        row.appendChild(by);
+      }
       if (on || !full) row.addEventListener('click', () => toggle(m.id));
       frag.appendChild(row);
     }
@@ -1112,12 +1190,37 @@ const MEASURED_LD = {
       const el = document.createElement('div');
       el.className = 'lg';
       const i = document.createElement('i'); i.style.background = colourOf(s);
+      if (isContributed(s.id)) { i.style.background = 'none'; i.style.borderTop = '2.5px dashed ' + colourOf(s); i.style.height = '0'; }
       const t = document.createElement('span'); t.textContent = label(s.id);
       const x = document.createElement('button');
       x.className = 'x'; x.textContent = '×';
       x.setAttribute('aria-label', 'Remove ' + label(s.id));
       x.addEventListener('click', () => toggle(s.id));
-      el.append(i, t, x);
+      el.append(i, t);
+
+      // THE HANDLE GOES ON THE TRACE, not in a credits list.
+      //
+      // Nothing here is paid, so the contributor's name is the entire return on six seatings a
+      // side. It sits next to the tier because that is where the effort actually shows: a handle
+      // beside "Reference" is a visible statement about care and costs us nothing to print.
+      // Deliberately NOT a score - no counts, no ranking, no badge. The tier describes the
+      // MEASUREMENT; ranking people would invite volume, and volume is the one thing this corpus
+      // does not want. See docs/measurement-hosting.md §2e.
+      const m = modelOf(s.id);
+      if (m && m.contributed) {
+        const by = document.createElement('span');
+        by.className = 'lg-by';
+        by.textContent = m.by + (m.tier ? ' · ' + m.tier : '');
+        by.title = [
+          m.by ? 'Measured by ' + m.by : null,
+          m.unit ? 'unit ' + m.unit : null,
+          m.seatings ? m.seatings + ' seatings' : null,
+          m.rig ? 'on ' + m.rig + (m.rigSerial ? ' ' + m.rigSerial : '') : null,
+          'A different physical rig from ours — see the note below the plot.',
+        ].filter(Boolean).join(' · ');
+        el.appendChild(by);
+      }
+      el.appendChild(x);
       lg.appendChild(el);
     }
     if (targetId && TARGETS[targetId] && mode !== 'difference') {
@@ -1214,7 +1317,7 @@ const MEASURED_LD = {
           const d = curve(s.id);
           for (let i = 0; i < d.length; i++) {
             scan(d[i]);
-            if (showBand) { const sd = sdAt(GRID[i]); if (sd) { scan(d[i] + sd); scan(d[i] - sd); } }
+            if (showBand) { const sd = sdAt(GRID[i], s.id); if (sd) { scan(d[i] + sd); scan(d[i] - sd); } }
           }
         }
       }
@@ -1268,7 +1371,7 @@ const MEASURED_LD = {
         const d = curve(s.id);
         const up = [], dn = [];
         for (let i = 0; i < GRID.length; i++) {
-          const sd = sdAt(GRID[i]);
+          const sd = sdAt(GRID[i], s.id);
           if (sd == null) continue;
           up.push([X(GRID[i]), Y(d[i] + sd)]);
           dn.push([X(GRID[i]), Y(d[i] - sd)]);
@@ -1305,7 +1408,12 @@ const MEASURED_LD = {
       for (const s of active) {
         const d = curve(s.id);
         ctx.strokeStyle = colourOf(s);
+        // Dashed for somebody else's rig, and not as decoration: a toggle that has been switched
+        // on and then forgotten is indistinguishable from no toggle at all, so the distinction has
+        // to survive on the trace itself and into any screenshot taken of it.
+        ctx.setLineDash(isContributed(s.id) ? [7, 4] : []);
         strokeSpline(ctx, GRID.map((f, i) => [X(f), Y(d[i])]));
+        ctx.setLineDash([]);
       }
     }
 
@@ -1335,9 +1443,14 @@ const MEASURED_LD = {
       const v = dbAt(sel[1].id, hz) - dbAt(sel[0].id, hz);
       html += `<div class="tr"><i style="background:${SERIES[0]}"></i>correction<b>${v >= 0 ? '+' : ''}${v.toFixed(1)} dB</b></div>`;
     } else {
-      const sd = sdAt(hz);
-      for (const s of sel) html += `<div class="tr"><i style="background:${colourOf(s)}"></i>${label(s.id)}<b>${dbAt(s.id, hz).toFixed(1)} dB</b></div>`;
-      html += `<div class="tr" style="color:var(--muted-2);font-size:10px;margin-top:3px">${sd == null ? '± not characterized' : '±' + sd.toFixed(2) + ' dB seating'}</div>`;
+      // PER CURVE, because the seating spread is a property of the measurement and not of the
+      // plot: two curves under one crosshair can honestly carry very different bands, and one
+      // figure printed under both would be wrong for at least one of them.
+      for (const s of sel) {
+        const sd = sdAt(hz, s.id);
+        html += `<div class="tr"><i style="background:${colourOf(s)}"></i>${label(s.id)}<b>${dbAt(s.id, hz).toFixed(1)} dB</b>` +
+                `<span style="color:var(--muted-2);font-size:10px;margin-left:6px">${sd == null ? '' : '±' + sd.toFixed(2)}</span></div>`;
+      }
     }
     tip.innerHTML = html;
     tip.style.opacity = '1';
@@ -1362,6 +1475,19 @@ const MEASURED_LD = {
     showBand = e.target.checked;
     if ($('band-t')) $('band-t').classList.toggle('on', showBand);
     renderLegend(); renderCaption(); draw(); syncUrl();
+  });
+
+  // Contributed on/off. It RELOADS the source rather than filtering the draw, so a curve that is
+  // not shown is also not in the list, not in the URL and not in an export - "hidden" and "absent"
+  // being different things, and only one of them safe. Anything selected from the contributed set
+  // is dropped on the way out, or the page would keep drawing a curve the reader just switched off.
+  $('contrib')?.addEventListener('change', (e) => {
+    showContrib = e.target.checked;
+    if ($('contrib-t')) $('contrib-t').classList.toggle('on', showContrib);
+    if (!showContrib) sel = sel.filter((x) => !isContributed(x.id));
+    loadSource(source);
+    if (!showContrib) sel = sel.filter((x) => DB.has(x.id));
+    renderList(); renderLegend(); renderCaption(); draw(); syncUrl();
   });
   // Gear popover. Closes on outside click and Escape — a settings panel that traps you is worse
   // than one more toolbar row.

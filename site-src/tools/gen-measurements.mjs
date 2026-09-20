@@ -91,3 +91,70 @@ for (const [srcRel, outName, exportName, blurb] of [
   await writeFile(resolve(OUT, outName), head + '\n' + body);
   console.log(`  measured  ${srcRel} -> ${outName} (${rows.length})`);
 }
+
+// ---------------------------------------------------------------- contributed
+//
+// Measurements other people sent us, on the same MODEL of rig. A SEPARATE export from a SEPARATE
+// file, for the reason tools/measure/caliper_ingest.mjs spells out: warren-labs.dat is the corpus
+// Attune ships, and a contributed row reaching it would be compiled into the app against a
+// baseline it was never measured on. The split is structural; check_corpus_separation.mjs gates
+// this build on it.
+//
+// Optional by design. Most checkouts have no contributed.dat and the site builds exactly as before
+// — this emits an empty export rather than failing, because "nobody has contributed yet" is a
+// normal state and not a broken build.
+{
+  const datRel = 'earspro/contributed.dat';
+  const datPath = resolve(SRC, datRel);
+  const metaPath = resolve(SRC, 'earspro/contributed.json');
+  const rows = existsSync(datPath) ? parse(await readFile(datPath, 'utf8')) : [];
+  const meta = existsSync(metaPath) ? JSON.parse(await readFile(metaPath, 'utf8')) : { rows: {} };
+
+  // THE BAND TRAVELS WITH ITS OWN CURVE, per band, never as one global figure.
+  //
+  // graphs.astro has carried a disabled seating band since 2026-08-05 with the re-enable condition
+  // written into the source: "store a per-model seating sd per band alongside each curve, and draw
+  // each curve's own band." The reason it stayed off is that seating sd is a property of the
+  // HEADPHONE, not the rig — 0.059 dB on an HD 800 right against 0.316 dB on a PM-3 right, same
+  // bench, same control band — so one global band would overstate the good models and understate
+  // the bad ones. Caliper measures it per run, per band, which is exactly the missing input.
+  //
+  // sdDb rather than spreadDb: any range statistic widens with sample count, so a longer, better
+  // run would read as a worse one. See BandSpread in caliper/engine/include/caliper/Stats.h.
+  const out = rows.map((r) => {
+    const m = meta.rows?.[r.id] ?? {};
+    const band = (m.spread ?? [])
+      .filter((b) => Number.isFinite(b.lo) && Number.isFinite(b.hi))
+      .map((b) => ({ lo: b.lo, hi: b.hi, sd: Number(b.sdDb ?? 0) }));
+    return {
+      id: r.id, b: r.b, n: r.n, db: r.db,
+      by: m.measurer ?? null,
+      tier: m.tier ?? null,
+      unit: m.unit ?? null,
+      rig: m.rig?.fixture ?? null,
+      rigSerial: m.rig?.fixtureSerial ?? null,
+      seatings: m.seatings?.l ?? null,
+      band,
+    };
+  });
+
+  const head = `// GENERATED from warren-labs/measurements/corpus/${datRel} by tools/gen-measurements.mjs.
+// DO NOT HAND-EDIT — it is rewritten on every build.
+//
+// CONTRIBUTED MEASUREMENTS — other people's, on the same MODEL of miniDSP EARS Pro. NOT ours and
+// NOT Attune's corpus; see MEASUREMENTS in measurements.js for that.
+//
+// A spread across these rows contains four things at once: the headphone unit, the operator's
+// seating, the individual fixture, and its calibration. Two EARS Pro units are not one rig. That
+// is the point of this file rather than a flaw in it — the question being answered is how
+// reproducible a published headphone measurement is — and it carries one hard rule with it:
+// THIS MAY NEVER BE PRESENTED AS "THE RESPONSE OF THIS HEADPHONE". It is the reproducibility of a
+// measurement of it. See warren-labs/docs/measurement-hosting.md §2e.
+//
+// Each row carries its own per-band seating sd, its measurer, and the tier it earned, because all
+// three are needed to weigh it and none of them can be inferred from the curve.
+`;
+  const body = `export const CONTRIBUTED = ${JSON.stringify(out, null, 2)};\n`;
+  await writeFile(resolve(OUT, 'contributed.js'), head + '\n' + body);
+  console.log(`  contributed  ${rows.length ? datRel : '(none yet)'} -> contributed.js (${rows.length})`);
+}
