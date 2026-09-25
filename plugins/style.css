@@ -279,6 +279,10 @@ table.md code{white-space:nowrap}
   letter-spacing: -0.01em;
 }
 
+/* The beta promise (plugins.json "betaTerms"), under the Buy button of every beta and every offer
+   that contains one. Quiet on purpose: it qualifies the price, it is not a second call to action. */
+.beta-terms{ color:var(--dim); font-size:14px; margin:10px 0 0 }
+
 /* Light/dark toggle. Same markup, id and look as every other page on the site; /plugins was the
    one section without it, so a visitor who picked light elsewhere was stranded in dark here. */
 .wl-theme{width:32px;height:32px;flex:none;display:grid;place-items:center;margin-left:14px;
