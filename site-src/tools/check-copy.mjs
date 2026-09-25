@@ -26,7 +26,12 @@ import { join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
-const SKIP_DIRS = new Set(['.git', 'site-src', 'node_modules']);
+// '.claude' holds Claude Code's worktrees: untracked scratch copies of this repo that GitHub
+// Pages never serves. Without it this check reported 443 failures on 2026-09-25, every one inside
+// .claude/worktrees/, and refused a build whose actual pages were clean. The header above says
+// this runs over "exactly what GitHub Pages serves" -- an untracked worktree is not that, so
+// skipping it makes the check match its own contract rather than loosening it.
+const SKIP_DIRS = new Set(['.git', '.claude', 'site-src', 'node_modules']);
 const EM = /—|\\u2014|&mdash;|&#8212;|&#x2014;/gi;
 const GLYPH_ONLY = /^\s*(—|\\u2014|&mdash;|&#8212;|&#x2014;)\s*$/i;
 

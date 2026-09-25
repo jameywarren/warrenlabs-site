@@ -96,12 +96,12 @@ const proofApp = {
     <div class="wrap hero-grid">
       <div class="hero-copy">
         <span class="eyebrow">Coming soon to the App&nbsp;Store</span>
-        <h1>A measurement whose floor is unknown <em>is not a measurement.</em></h1>
+        <h1>Ten audio instruments, free. <em>And measurements you can hand over.</em></h1>
         <p class="lede">
-          Every analyzer prints numbers. <b>Proof prints the floor those numbers sit on</b>, and
-          refuses to show a digit it has not earned. It measures what your own interface
-          contributes (its noise and its distortion) before it measures anything
-          else, and then reports every reading against that.
+          RTA, oscilloscope, spectrogram, signal generator, SPL, LUFS and four more, running on
+          whatever input you already have. No account and no trial clock. Measuring is the paid
+          half, and what comes back is a file rather than a screenshot: <b>anyone can open it and
+          check it themselves</b>, free, on Mac, iPad or iPhone.
         </p>
         <div class="chips">
           <span class="chip">Mac</span><span class="chip">iPad</span><span class="chip">iPhone</span>
@@ -178,7 +178,7 @@ const proofApp = {
 
       <div class="pull">
         You can skip the bench measurement.<br />
-        <span>Nothing is disabled. Every reading is just marked <i>Indicative</i>, because there is no measured floor to hold it against.</span>
+        <span>Nothing is disabled. Every reading is just marked <i>Unverified</i>, because there is no measured floor to hold it against.</span>
       </div>
     </div>
   </section>
@@ -190,8 +190,8 @@ const proofApp = {
         <span class="eyebrow">Bounded numerics</span>
         <h2>Three readings, three different printings.</h2>
         <p class="sec-lede">
-          This is the part that makes Proof different, and it is not a feature you turn on. Where a
-          reading sits relative to the measured floor decides how it is allowed to be written down.
+          Where a reading sits relative to the measured floor decides how it is allowed to be
+          written down. There is no setting that turns it off.
         </p>
       </div>
 
@@ -247,7 +247,7 @@ const proofApp = {
 
       <div class="tier-grid">
         <div class="card tier">
-          <span class="tier-name mono">INDICATIVE</span>
+          <span class="tier-name mono">UNVERIFIED</span>
           <p>
             No measured floor, or a rig that cannot vouch for itself. The readings are still real
             work. They are just not bounded by anything. The built-in simulator is capped
@@ -255,14 +255,14 @@ const proofApp = {
           </p>
         </div>
         <div class="card tier">
-          <span class="tier-name mono">BOUNDED</span>
+          <span class="tier-name mono">FLOOR MEASURED</span>
           <p>
             A floor has been measured on this rig and the readings are held against it. This is the
             tier the app is built to reach on ordinary hardware.
           </p>
         </div>
         <div class="card tier">
-          <span class="tier-name mono">REFERENCE</span>
+          <span class="tier-name mono">CALIBRATED</span>
           <p>
             A reference channel and calibration on every active channel. Proof will tell you
             exactly which reasons are keeping a rig below this, one line each.
@@ -383,7 +383,7 @@ const proofApp = {
       </p>
       <p>
         You can skip that step. Nothing is disabled if you do: every capture still works and
-        every record still exports, but readings are marked <b>Indicative</b>, meaning there
+        every record still exports, but readings are marked <b>Unverified</b>, meaning there
         is no measured floor to hold them against. The bench measurement is re-runnable at any
         time.
       </p>
