@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Brace manual · Warren Labs</title><meta property="og:title" content="Brace manual · Warren Labs"><meta property="og:type" content="website"><meta property="og:site_name" content="Warren Labs"><meta name="description" content="Clean, FET and Opto, every control, the sidechain filter and external key, and a vocal worked through."><meta property="og:description" content="Clean, FET and Opto, every control, the sidechain filter and external key, and a vocal worked through."><meta name="twitter:description" content="Clean, FET and Opto, every control, the sidechain filter and external key, and a vocal worked through."><link rel="canonical" href="https://warrenlabs.com/plugins/guides/brace-manual.html"><meta property="og:url" content="https://warrenlabs.com/plugins/guides/brace-manual.html"><meta name="theme-color" content="#0c0d0f"><meta property="og:image" content="https://warrenlabs.com/assets/brand/og-card.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://warrenlabs.com/assets/brand/og-card.png"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_black_32.svg"><link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_white_32.svg" media="(prefers-color-scheme: dark)"><link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/png/wl-favicon_black_32.png"><link rel="apple-touch-icon" href="/assets/brand/png/wl-appicon_amber-graphite_180.png"><link rel="manifest" href="/site.webmanifest"><script async src="https://plausible.io/js/pa-7zF1GswBt5oYNLddNETeJ.js"></script><script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script><link rel="stylesheet" href="/wl/wl-tokens.3bea9dea.css"><script>(function(){try{var t=localStorage.getItem('wl-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script><link rel="stylesheet" href="../style.css?v=2c31a2dc"></head><body><header class="site"><div class="wrap head-in"><a class="logo-mark" href="../../"><svg class="wl-mark" viewBox="0 0 120 80" aria-hidden="true"><path d="M16 16 C20 38 28 62 39 62 C48 62 53 46 58 38 C63 30 70 30 76 38 C81 44 84 54 92 54 C99 54 103 46 106 40" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>WARREN&nbsp;LABS</span></a><nav class="site"><a href="/attune/">ATTUNE</a><a href="/proof/">PROOF</a><a href="/collections/headphones/">HEADPHONES</a><a href="/graphs/">MEASUREMENTS</a><a href="/method/">METHOD</a><a href="/measure/">SEND&nbsp;ONE&nbsp;IN</a><a href="/learn/">LEARN</a><a href="/loaners/">FOR&nbsp;MAKERS</a><a href="/#patch">PATCH&nbsp;IN</a><button class="wl-theme" id="wl-theme" aria-label="Switch between light and dark" title="Light / dark">&#9680;</button></nav></div></header><main class="wrap"><article class="prose"><h1>Brace — manual</h1>
+<p><strong>Compressor with three voices.</strong> Clean holds level without colour, FET grabs fast and adds some edge, Opto glides. One set of controls drives all three.</p>
+<p><em>Warren Labs · Trueness line · VST3 · AU · Standalone · macOS</em></p>
+<hr>
+<h2>What it&#x27;s for</h2>
+<p>Evening out a vocal, holding a bass steady, gluing a drum bus, or squashing a room mic in parallel. Brace is a feed-forward, stereo-linked compressor: it watches the louder of the two channels and turns both down by the same amount, so the stereo image never shifts.</p>
+<hr>
+<h2>The controls</h2>
+<h3>Model</h3>
+<table class="md">
+<thead><tr><th>Model</th><th>Character</th><th>Use it for</th></tr></thead>
+<tbody>
+<tr><td><strong>Clean</strong></td><td>Transparent, VCA-style. Does exactly what the controls say.</td><td>Buses, anything where you want control without colour.</td></tr>
+<tr><td><strong>FET</strong></td><td>Attack runs about twice as fast as the knob reads. Adds harmonic saturation to the compressed signal.</td><td>Drums, aggressive vocals, bass that needs to bite.</td></tr>
+<tr><td><strong>Opto</strong></td><td>Release starts slower and <strong>stretches the harder it works</strong>.</td><td>Vocals, bass, anything that should sound levelled rather than compressed.</td></tr>
+</tbody></table>
+<p>FET&#x27;s saturation adds colour, not level: below the threshold it matches Clean exactly, and the harder it compresses, the more it rounds the peaks. The models still differ in how much level they take off at the same settings, so set Makeup for each before you compare them.</p>
+<h3>Threshold</h3>
+<p>−60 to 0 dB, default −18 dB. The level where compression starts. Lower = more of the signal gets compressed.</p>
+<h3>Ratio</h3>
+<p>1:1 to 20:1, default 4:1. How hard signal above the threshold is squeezed: at 4:1, 4 dB over the threshold comes out 1 dB over. 1:1 does nothing. 2:1–4:1 is gentle levelling; 8:1 and up is limiting territory.</p>
+<h3>Attack</h3>
+<p>0.1–200 ms, default 10 ms. How fast it clamps down. <strong>Slower attack lets transients through</strong>, which is how you keep punch; faster catches them.</p>
+<h3>Release</h3>
+<p>5–1000 ms, default 120 ms. How fast it lets go. Too fast and it distorts low notes or flutters; too slow and it never recovers between phrases, and the whole track sinks.</p>
+<h3>Knee</h3>
+<p>0–24 dB, default 6 dB. How gradually compression begins around the threshold. 0 is a hard knee (abrupt, obvious); wider knees ease in and are harder to hear.</p>
+<h3>Makeup</h3>
+<p>−12 to +24 dB, default 0. Output gain after compression. <strong>Set it so bypass and processed are the same loudness</strong>, or every comparison you make is a comparison of volume.</p>
+<h3>Mix</h3>
+<p>0–100 %, default 100 %. Dry/wet blend. Below 100 % is parallel compression: heavy squash underneath, the original transients on top.</p>
+<h3>SC HPF</h3>
+<p>Off to 500 Hz, default off. A high-pass filter on what the compressor <strong>listens to</strong>, not on what you hear. Raise it to 80–150 Hz on a mix or drum bus and the kick stops pumping everything else.</p>
+<h3>RMS</h3>
+<p>Off by default (peak detection). On, the detector responds to average level rather than peaks: slower, smoother, more &quot;bus&quot; and less &quot;grab&quot;.</p>
+<h3>Ext SC</h3>
+<p>Keys the detector from the plugin&#x27;s <strong>sidechain input</strong> instead of the signal itself, for ducking (a bass that dips when the kick hits, music that dips under a voiceover). Route a signal to Brace&#x27;s sidechain in your host first. If the sidechain input is disabled in your host, Brace listens to its own input as usual; if it is enabled but nothing is playing into it, Brace has nothing to react to and will not compress.</p>
+<h3>Power</h3>
+<p>Bypass, with a click-free crossfade.</p>
+<hr>
+<h2>The display</h2>
+<ul>
+<li><strong>Transfer curve</strong>: input level across, output level up, drawn against a straight unity line (no compression) with the threshold marked. The bend is the threshold, the width of the bend is the knee, and the slope above it is the ratio. It redraws as you turn the controls.</li>
+<li><strong>GR meter</strong>: gain reduction in dB, live. This is the number to watch.</li>
+</ul>
+<hr>
+<h2>A worked example: a lead vocal that jumps around</h2>
+<ol>
+<li><strong>Model: Opto.</strong> Ratio 3:1, Attack 10 ms, Release 120 ms (the defaults are close).</li>
+<li>Play the loudest line and pull <strong>Threshold</strong> down until GR reads 4–6 dB on the peaks and close to 0 in the quiet parts.</li>
+<li>Listen to consonants. If the start of words sounds dulled, <strong>raise Attack</strong> until they come back.</li>
+<li>Raise <strong>Makeup</strong> until bypassing Brace doesn&#x27;t change the loudness. Now judge it.</li>
+<li>Still jumping? Lower Threshold a little more rather than raising Ratio. Two gentle stages (this, then a second Brace on Clean) usually beat one hard one.</li>
+</ol>
+<p>For a <strong>drum bus</strong>: Clean, Ratio 4:1, Attack 30 ms, Release 100 ms, SC HPF 100 Hz, and 2–3 dB of GR. For <strong>parallel crush</strong>: FET, Ratio 20:1, fast attack, then Mix down to 30–40 %.</p>
+<hr>
+<h2>Presets</h2>
+<p><code>PRESETS</code> saves and recalls every control. Files live in <code>~/Music/Warren Labs/Brace/Presets/</code>.</p>
+<h2>Licence</h2>
+<p>Drag the <code>.wllicense</code> file from your purchase onto the plugin window, or open the About panel (ⓘ, top right) and choose <strong>Import License</strong>.</p>
+<h2>Specifications</h2>
+<table class="md">
+<thead><tr><th></th><th></th></tr></thead>
+<tbody>
+<tr><td>Formats</td><td>VST3 · AU · Standalone</td></tr>
+<tr><td>Platform</td><td>macOS 11+, Universal (Apple Silicon + Intel)</td></tr>
+<tr><td>Channels</td><td>Mono, Stereo, plus an optional stereo sidechain input</td></tr>
+<tr><td>Latency</td><td>None</td></tr>
+<tr><td>Models</td><td>Clean · FET · Opto</td></tr>
+<tr><td>Detection</td><td>Stereo-linked, peak or RMS, optional sidechain high-pass</td></tr>
+</tbody></table>
+<hr>
+<p><em>Warren Labs — tools that tell the truth.</em> · <a href="https://warrenlabs.com">warrenlabs.com</a></p></article></main><footer class="site"><div class="wrap" style="display:flex;justify-content:space-between;width:100%;padding:0;flex-wrap:wrap;gap:12px"><span>Warren Labs. Tools that tell the truth.</span><span class="legal"><a href="/terms/">Terms</a> · <a href="/privacy/">Privacy</a> · <a href="/refunds/">Refunds</a></span><span class="mono">VST3 · AU · Standalone · macOS</span></div></footer><script>(function(){var b=document.getElementById('wl-theme');if(!b)return;var r=document.documentElement;var cur=function(){return r.getAttribute('data-theme')||'dark';};b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('wl-theme',n);}catch(e){}var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',n==='dark'?'#0c0d0f':'#f7f8f9');dispatchEvent(new CustomEvent('wl-theme-change',{detail:{theme:n}}));});})();</script></body></html>

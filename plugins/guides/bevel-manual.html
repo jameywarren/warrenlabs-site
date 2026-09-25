@@ -1,0 +1,86 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Bevel manual · Warren Labs</title><meta property="og:title" content="Bevel manual · Warren Labs"><meta property="og:type" content="website"><meta property="og:site_name" content="Warren Labs"><meta name="description" content="Editing six bands straight on the plot: drag, wheel, double-click and right-click, and the six filter types."><meta property="og:description" content="Editing six bands straight on the plot: drag, wheel, double-click and right-click, and the six filter types."><meta name="twitter:description" content="Editing six bands straight on the plot: drag, wheel, double-click and right-click, and the six filter types."><link rel="canonical" href="https://warrenlabs.com/plugins/guides/bevel-manual.html"><meta property="og:url" content="https://warrenlabs.com/plugins/guides/bevel-manual.html"><meta name="theme-color" content="#0c0d0f"><meta property="og:image" content="https://warrenlabs.com/assets/brand/og-card.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://warrenlabs.com/assets/brand/og-card.png"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_black_32.svg"><link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_white_32.svg" media="(prefers-color-scheme: dark)"><link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/png/wl-favicon_black_32.png"><link rel="apple-touch-icon" href="/assets/brand/png/wl-appicon_amber-graphite_180.png"><link rel="manifest" href="/site.webmanifest"><script async src="https://plausible.io/js/pa-7zF1GswBt5oYNLddNETeJ.js"></script><script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script><link rel="stylesheet" href="/wl/wl-tokens.3bea9dea.css"><script>(function(){try{var t=localStorage.getItem('wl-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script><link rel="stylesheet" href="../style.css?v=2c31a2dc"></head><body><header class="site"><div class="wrap head-in"><a class="logo-mark" href="../../"><svg class="wl-mark" viewBox="0 0 120 80" aria-hidden="true"><path d="M16 16 C20 38 28 62 39 62 C48 62 53 46 58 38 C63 30 70 30 76 38 C81 44 84 54 92 54 C99 54 103 46 106 40" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>WARREN&nbsp;LABS</span></a><nav class="site"><a href="/attune/">ATTUNE</a><a href="/proof/">PROOF</a><a href="/collections/headphones/">HEADPHONES</a><a href="/graphs/">MEASUREMENTS</a><a href="/method/">METHOD</a><a href="/measure/">SEND&nbsp;ONE&nbsp;IN</a><a href="/learn/">LEARN</a><a href="/loaners/">FOR&nbsp;MAKERS</a><a href="/#patch">PATCH&nbsp;IN</a><button class="wl-theme" id="wl-theme" aria-label="Switch between light and dark" title="Light / dark">&#9680;</button></nav></div></header><main class="wrap"><article class="prose"><h1>Bevel — manual</h1>
+<p><strong>Six-band parametric EQ with a real-time analyzer.</strong> Bevel shapes tonal balance without adding a sound of its own: what you hear is the move you made and nothing else.</p>
+<p><em>Warren Labs · Trueness line · VST3 · AU · Standalone · macOS</em></p>
+<hr>
+<h2>What it&#x27;s for</h2>
+<p>Everyday corrective and tonal EQ: clearing mud, taming a harsh band, adding air, rolling off rumble. Six bands cover almost every job, and every band can be any of six filter shapes.</p>
+<p>Bevel is minimum-phase: no pre-ringing and no latency. A bell or shelf at 0 dB is not &quot;nearly&quot; flat; it is bypassed exactly. With every band at 0 dB, as it opens, Bevel&#x27;s output is bit-for-bit identical to its input.</p>
+<hr>
+<h2>Working on the plot</h2>
+<p>There are no knobs. Every band is a numbered dot on the plot, and you edit it directly:</p>
+<table class="md">
+<thead><tr><th>Action</th><th>Does</th></tr></thead>
+<tbody>
+<tr><td><strong>Drag</strong> a dot</td><td>Frequency (left–right) and gain (up–down) together</td></tr>
+<tr><td><strong>Mouse wheel</strong> over a dot</td><td>Q, the band&#x27;s width. Up = narrower</td></tr>
+<tr><td><strong>Double-click</strong> a dot</td><td>Switches that band on or off. An off band is a hollow ring</td></tr>
+<tr><td><strong>Right-click</strong> a dot</td><td>Choose its filter type</td></tr>
+</tbody></table>
+<p>A hint along the bottom of the plot repeats this until you grab a dot.</p>
+<h3>The bands, as they start</h3>
+<table class="md">
+<thead><tr><th>Band</th><th>Type</th><th>Frequency</th><th>Q</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>Low Shelf</td><td>80 Hz</td><td>0.71</td></tr>
+<tr><td>2</td><td>Bell</td><td>240 Hz</td><td>1.0</td></tr>
+<tr><td>3</td><td>Bell</td><td>800 Hz</td><td>1.0</td></tr>
+<tr><td>4</td><td>Bell</td><td>2.5 kHz</td><td>1.0</td></tr>
+<tr><td>5</td><td>Bell</td><td>6 kHz</td><td>1.0</td></tr>
+<tr><td>6</td><td>High Shelf</td><td>12 kHz</td><td>0.71</td></tr>
+</tbody></table>
+<p>All six start switched on at 0 dB, which is the same as off.</p>
+<h3>Filter types (right-click)</h3>
+<ul>
+<li><strong>Bell</strong>: boost or cut around the frequency. Q sets the width.</li>
+<li><strong>Low Shelf / High Shelf</strong>: boost or cut everything below / above the frequency.</li>
+<li><strong>High Pass / Low Pass</strong>: remove everything below / above the frequency, at 12 dB per octave. Q sets the resonance at the corner: 0.71 is the smooth default, higher values add a bump.</li>
+<li><strong>Notch</strong>: a deep, narrow cut for a single problem frequency. Q sets the width.</li>
+</ul>
+<p><strong>High Pass, Low Pass and Notch have no gain.</strong> Dragging their dot up or down moves the dot but does not change the sound. The amber curve always shows what is actually being applied.</p>
+<h3>Ranges</h3>
+<p>Frequency 20 Hz–20 kHz · Gain ±18 dB · Q 0.1–10.</p>
+<h3>Power</h3>
+<p>Bypass, with a click-free crossfade.</p>
+<hr>
+<h2>The display</h2>
+<ul>
+<li><strong>Amber curve</strong>: the combined response of all six bands, the EQ actually being applied.</li>
+<li><strong>Dim spectrum behind it</strong>: a live analyzer of the signal passing through.</li>
+<li><strong>Dots</strong>: one per band. Filled when on, hollow when off, outlined when selected.</li>
+</ul>
+<hr>
+<h2>A worked example: a boomy acoustic guitar</h2>
+<ol>
+<li>Band 1: <strong>right-click → High Pass</strong>, drag it to about 80 Hz. The low rumble and mic handling noise go; the guitar itself shouldn&#x27;t change.</li>
+<li>Band 2: find the boom. Drag it up about 8 dB and sweep it left and right between 150 and 400 Hz. Where it sounds worst, stop.</li>
+<li>Now drag it <strong>down</strong> to about −4 dB at that frequency. Wheel up for a narrower Q if the cut takes body with it.</li>
+<li>Band 5: drag up 2 dB around 5–6 kHz for pick definition, if the part needs it.</li>
+<li>Toggle <strong>Power</strong>. Is the guitar clearer, or just quieter? Match levels before you decide. Cuts make things quieter, and quieter always sounds worse.</li>
+</ol>
+<p>The boost-and-sweep trick in step 2 is the fastest way to find a problem frequency. Just remember to turn it into a cut.</p>
+<hr>
+<h2>Tips</h2>
+<ul>
+<li><strong>Cut narrow, boost wide.</strong> Problems are usually narrow; flattering moves are usually broad.</li>
+<li>Double-click a band to hear it off and on without losing its setting.</li>
+<li>Bevel has no output gain. If a big boost pushes your level up, pull the fader or the next plugin down.</li>
+</ul>
+<hr>
+<h2>Presets</h2>
+<p><code>PRESETS</code> saves and recalls every band, types included. Files live in <code>~/Music/Warren Labs/Bevel/Presets/</code>.</p>
+<h2>Licence</h2>
+<p>Drag the <code>.wllicense</code> file from your purchase onto the plugin window, or open the About panel (ⓘ, top right) and choose <strong>Import License</strong>.</p>
+<h2>Specifications</h2>
+<table class="md">
+<thead><tr><th></th><th></th></tr></thead>
+<tbody>
+<tr><td>Formats</td><td>VST3 · AU · Standalone</td></tr>
+<tr><td>Platform</td><td>macOS 11+, Universal (Apple Silicon + Intel)</td></tr>
+<tr><td>Channels</td><td>Mono, Stereo</td></tr>
+<tr><td>Latency</td><td>None</td></tr>
+<tr><td>Bands</td><td>6, each Bell · Low Shelf · High Shelf · High Pass · Low Pass · Notch</td></tr>
+<tr><td>Ranges</td><td>20 Hz–20 kHz · ±18 dB · Q 0.1–10</td></tr>
+<tr><td>Phase</td><td>Minimum-phase (no pre-ringing)</td></tr>
+</tbody></table>
+<hr>
+<p><em>Warren Labs — tools that tell the truth.</em> · <a href="https://warrenlabs.com">warrenlabs.com</a></p></article></main><footer class="site"><div class="wrap" style="display:flex;justify-content:space-between;width:100%;padding:0;flex-wrap:wrap;gap:12px"><span>Warren Labs. Tools that tell the truth.</span><span class="legal"><a href="/terms/">Terms</a> · <a href="/privacy/">Privacy</a> · <a href="/refunds/">Refunds</a></span><span class="mono">VST3 · AU · Standalone · macOS</span></div></footer><script>(function(){var b=document.getElementById('wl-theme');if(!b)return;var r=document.documentElement;var cur=function(){return r.getAttribute('data-theme')||'dark';};b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('wl-theme',n);}catch(e){}var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',n==='dark'?'#0c0d0f':'#f7f8f9');dispatchEvent(new CustomEvent('wl-theme-change',{detail:{theme:n}}));});})();</script></body></html>

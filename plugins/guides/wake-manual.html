@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Wake manual · Warren Labs</title><meta property="og:title" content="Wake manual · Warren Labs"><meta property="og:type" content="website"><meta property="og:site_name" content="Warren Labs"><meta name="description" content="The algorithmic and convolution engines, the six synthesized spaces, loading your own IR, and a vocal plate."><meta property="og:description" content="The algorithmic and convolution engines, the six synthesized spaces, loading your own IR, and a vocal plate."><meta name="twitter:description" content="The algorithmic and convolution engines, the six synthesized spaces, loading your own IR, and a vocal plate."><link rel="canonical" href="https://warrenlabs.com/plugins/guides/wake-manual.html"><meta property="og:url" content="https://warrenlabs.com/plugins/guides/wake-manual.html"><meta name="theme-color" content="#0c0d0f"><meta property="og:image" content="https://warrenlabs.com/assets/brand/og-card.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://warrenlabs.com/assets/brand/og-card.png"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_black_32.svg"><link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_white_32.svg" media="(prefers-color-scheme: dark)"><link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/png/wl-favicon_black_32.png"><link rel="apple-touch-icon" href="/assets/brand/png/wl-appicon_amber-graphite_180.png"><link rel="manifest" href="/site.webmanifest"><script async src="https://plausible.io/js/pa-7zF1GswBt5oYNLddNETeJ.js"></script><script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script><link rel="stylesheet" href="/wl/wl-tokens.3bea9dea.css"><script>(function(){try{var t=localStorage.getItem('wl-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script><link rel="stylesheet" href="../style.css?v=2c31a2dc"></head><body><header class="site"><div class="wrap head-in"><a class="logo-mark" href="../../"><svg class="wl-mark" viewBox="0 0 120 80" aria-hidden="true"><path d="M16 16 C20 38 28 62 39 62 C48 62 53 46 58 38 C63 30 70 30 76 38 C81 44 84 54 92 54 C99 54 103 46 106 40" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>WARREN&nbsp;LABS</span></a><nav class="site"><a href="/attune/">ATTUNE</a><a href="/proof/">PROOF</a><a href="/collections/headphones/">HEADPHONES</a><a href="/graphs/">MEASUREMENTS</a><a href="/method/">METHOD</a><a href="/measure/">SEND&nbsp;ONE&nbsp;IN</a><a href="/learn/">LEARN</a><a href="/loaners/">FOR&nbsp;MAKERS</a><a href="/#patch">PATCH&nbsp;IN</a><button class="wl-theme" id="wl-theme" aria-label="Switch between light and dark" title="Light / dark">&#9680;</button></nav></div></header><main class="wrap"><article class="prose"><h1>Wake — manual</h1>
+<p><strong>Reverb, two ways.</strong> An algorithmic engine (a feedback delay network) that you shape with Size, Decay and Damp, and a convolution engine that plays an impulse response: one of six bundled spaces, or your own.</p>
+<p><em>Warren Labs · Character line · VST3 · AU · Standalone · macOS</em></p>
+<hr>
+<h2>What it&#x27;s for</h2>
+<p>Putting a sound in a space: a short room to glue a drum kit, a plate on a vocal, a long hall behind a pad. Pick the engine by what you want to control:</p>
+<ul>
+<li><strong>Algo</strong> when you want to <em>shape</em> the space: make it bigger, longer, darker, all continuously.</li>
+<li><strong>Conv</strong> when you want a fixed space played exactly: one of the bundled impulse responses, or one you captured or bought.</li>
+</ul>
+<hr>
+<h2>The controls</h2>
+<h3>Engine: Algo / Conv</h3>
+<p>Switches between the two engines. The controls below say which engine they belong to.</p>
+<h3>Size (Algo)</h3>
+<p>0–100 %, default 55 %. The dimensions of the modelled space: how far apart the reflections are and how dense the tail becomes. Small is a booth or a room; large is a hall.</p>
+<h3>Decay (Algo)</h3>
+<p>0–100 %, default 50 %. How long the tail lasts, from 0.2 s to 10 s (RT60, the time to fall 60 dB). The scale is squared, so the lower half of the knob covers the short, useful range in detail. The default is about 2.7 s. The screen shows the RT60 as you turn it.</p>
+<h3>Damp (Algo)</h3>
+<p>0–100 %, default 45 %. How fast high frequencies die in the tail. More damping sounds like a softer, more furnished space; less sounds like stone and glass.</p>
+<h3>Predelay (Algo)</h3>
+<p>0–200 ms, default 12 ms. A gap before the reverb starts. Even 20–40 ms keeps a vocal&#x27;s consonants clear of its own reverb, so the voice stays in front while the space stays big.</p>
+<h3>Mod (Algo)</h3>
+<p>0–100 %, default 25 %. Slow pitch movement inside the tail. It breaks up the metallic ringing that static reverbs develop on sustained notes. Push it for a chorused, lush tail; lower it for realism on percussive material.</p>
+<h3>Mix (both)</h3>
+<p>0–100 %, default 30 %. Dry/wet. On a send, set it to 100 %; on an insert, 10–30 % is typical. The dry signal is never delayed, so blending never combs.</p>
+<h3>Width (both)</h3>
+<p>0–100 %, default 100 %. Stereo spread of the reverb only. 0 % is a mono reverb (useful on a mono source you want to keep centred); 100 % is full width. The dry signal is untouched.</p>
+<h3>Space (Conv)</h3>
+<p>The bundled impulse response: <strong>Room, Chamber, Hall, Plate, Cathedral, Ambience</strong>. Default Hall.</p>
+<p><strong>These spaces are synthesized, not recorded.</strong> Each is generated from decorrelated noise shaped by a target decay time, a high-frequency roll-off and a few early reflections, then normalised. They behave like the spaces they are named after; they are not captures of real rooms.</p>
+<table class="md">
+<thead><tr><th>Space</th><th>Decay (RT60, approx.)</th><th>Character</th></tr></thead>
+<tbody>
+<tr><td>Ambience</td><td>0.35 s</td><td>Short, bright; body without an audible tail</td></tr>
+<tr><td>Room</td><td>0.7 s</td><td>A small room with clear early reflections</td></tr>
+<tr><td>Chamber</td><td>1.2 s</td><td>Denser and a little darker than Room</td></tr>
+<tr><td>Plate</td><td>1.6 s</td><td>Dense and bright, no distinct early reflections</td></tr>
+<tr><td>Hall</td><td>2.4 s</td><td>Longer, darker, widely spaced reflections</td></tr>
+<tr><td>Cathedral</td><td>4.6 s</td><td>Very long and dark</td></tr>
+</tbody></table>
+<h3>Load IR (Conv)</h3>
+<p>Loads your own impulse response: WAV, AIFF or FLAC, mono or stereo. It is normalised on load and remembered with your session by its file location, so if you move or delete the file, Wake falls back to the bundled space. Choose a bundled space from the menu to go back.</p>
+<p>To make your own, see <a href="https://warrenlabs.com/plugins/guides/ir-capture.html">Capturing your own reverb</a>.</p>
+<p><strong>In Conv, only Mix and Width act.</strong> Size, Decay, Damp, Predelay and Mod belong to the algorithmic engine, and the impulse response already contains its own size, decay and tone, so in Conv those five dim and read <code>—</code>. Their settings are kept for when you switch back to Algo.</p>
+<h3>Power</h3>
+<p>Bypass, with a click-free crossfade.</p>
+<hr>
+<h2>The display</h2>
+<ul>
+<li><strong>Algo</strong>: a drawing of what the engine is doing: the dry hit, the predelay gap, early reflections, then the tail decaying under its RT60 envelope, with the RT60 in the corner.</li>
+<li><strong>Conv</strong>: the loaded impulse response itself, drawn as its energy over time, with its name and length in the corner.</li>
+</ul>
+<hr>
+<h2>A worked example: a plate on a lead vocal</h2>
+<ol>
+<li>Put Wake on an <strong>effects send</strong>, not on the vocal itself, and set <strong>Mix 100 %</strong>.</li>
+<li><strong>Conv</strong>, <strong>Space: Plate</strong>. Send the vocal to it until you can hear the reverb in the gaps between lines, then back it off until you can only just hear it.</li>
+<li>Consonants blurring? Switch to <strong>Algo</strong>: Size 40 %, Decay 35 %, Damp 50 %, and set <strong>Predelay 30 ms</strong> to pull the voice back out in front.</li>
+<li>Tail sounding metallic on long notes? Raise <strong>Mod</strong>.</li>
+<li>Mute the send. If the vocal suddenly sounds dry and close, the reverb was doing its job at the right level.</li>
+</ol>
+<hr>
+<h2>Presets</h2>
+<p><code>PRESETS</code> saves and recalls every control, including the engine and bundled space. Files live in <code>~/Music/Warren Labs/Wake/Presets/</code>.</p>
+<h2>Licence</h2>
+<p>Drag the <code>.wllicense</code> file from your purchase onto the plugin window, or open the About panel (ⓘ, top right) and choose <strong>Import License</strong>.</p>
+<h2>Specifications</h2>
+<table class="md">
+<thead><tr><th></th><th></th></tr></thead>
+<tbody>
+<tr><td>Formats</td><td>VST3 · AU · Standalone</td></tr>
+<tr><td>Platform</td><td>macOS 11+, Universal (Apple Silicon + Intel)</td></tr>
+<tr><td>Channels</td><td>Mono, Stereo</td></tr>
+<tr><td>Latency</td><td>None</td></tr>
+<tr><td>Engines</td><td>Algorithmic (feedback delay network) · Convolution (zero-latency, partitioned)</td></tr>
+<tr><td>Bundled spaces</td><td>6, synthesized · user IRs: WAV / AIFF / FLAC</td></tr>
+</tbody></table>
+<hr>
+<p><em>Warren Labs — tools that tell the truth.</em> · <a href="https://warrenlabs.com">warrenlabs.com</a></p></article></main><footer class="site"><div class="wrap" style="display:flex;justify-content:space-between;width:100%;padding:0;flex-wrap:wrap;gap:12px"><span>Warren Labs. Tools that tell the truth.</span><span class="legal"><a href="/terms/">Terms</a> · <a href="/privacy/">Privacy</a> · <a href="/refunds/">Refunds</a></span><span class="mono">VST3 · AU · Standalone · macOS</span></div></footer><script>(function(){var b=document.getElementById('wl-theme');if(!b)return;var r=document.documentElement;var cur=function(){return r.getAttribute('data-theme')||'dark';};b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('wl-theme',n);}catch(e){}var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',n==='dark'?'#0c0d0f':'#f7f8f9');dispatchEvent(new CustomEvent('wl-theme-change',{detail:{theme:n}}));});})();</script></body></html>

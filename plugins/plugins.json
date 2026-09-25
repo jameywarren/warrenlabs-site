@@ -310,7 +310,64 @@
       "slug": "level-manual",
       "title": "Level manual",
       "source": "Level/MANUAL.md",
+      "plugin": "level",
       "summary": "What every control does, what Safe Gain actually guarantees, and what Level deliberately does not do."
+    },
+    {
+      "slug": "square-manual",
+      "title": "Square manual",
+      "source": "Square/MANUAL.md",
+      "plugin": "square",
+      "summary": "Setting a bass-mono crossover, reading the goniometer and correlation meter, and why Square is never quite a wire."
+    },
+    {
+      "slug": "bevel-manual",
+      "title": "Bevel manual",
+      "source": "Bevel/MANUAL.md",
+      "plugin": "bevel",
+      "summary": "Editing six bands straight on the plot: drag, wheel, double-click and right-click, and the six filter types."
+    },
+    {
+      "slug": "brace-manual",
+      "title": "Brace manual",
+      "source": "Brace/MANUAL.md",
+      "plugin": "brace",
+      "summary": "Clean, FET and Opto, every control, the sidechain filter and external key, and a vocal worked through."
+    },
+    {
+      "slug": "pare-manual",
+      "title": "Pare manual",
+      "source": "Pare/MANUAL.md",
+      "plugin": "pare",
+      "summary": "Focus modes, Depth and Threshold, the Delta monitor, and a ringing snare fixed step by step."
+    },
+    {
+      "slug": "scribe-manual",
+      "title": "Scribe manual",
+      "source": "Scribe/MANUAL.md",
+      "plugin": "scribe",
+      "summary": "Learning a reference and matching to it, the four translation voicings, and why a fresh Scribe does nothing."
+    },
+    {
+      "slug": "temper-manual",
+      "title": "Temper manual",
+      "source": "Temper/MANUAL.md",
+      "plugin": "temper",
+      "summary": "The six saturation models, Bias and the velcro gate, parallel drive, and a bass DI brought forward."
+    },
+    {
+      "slug": "ripple-manual",
+      "title": "Ripple manual",
+      "source": "Ripple/MANUAL.md",
+      "plugin": "ripple",
+      "summary": "Echo with tape and BBD character, ping-pong and sync, and the chorus, flanger and phaser modes."
+    },
+    {
+      "slug": "wake-manual",
+      "title": "Wake manual",
+      "source": "Wake/MANUAL.md",
+      "plugin": "wake",
+      "summary": "The algorithmic and convolution engines, the six synthesized spaces, loading your own IR, and a vocal plate."
     }
   ],
   "delivery": "https://lean-budgie-8375.warrenlabs.deno.net/download",

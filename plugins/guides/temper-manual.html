@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Temper manual · Warren Labs</title><meta property="og:title" content="Temper manual · Warren Labs"><meta property="og:type" content="website"><meta property="og:site_name" content="Warren Labs"><meta name="description" content="The six saturation models, Bias and the velcro gate, parallel drive, and a bass DI brought forward."><meta property="og:description" content="The six saturation models, Bias and the velcro gate, parallel drive, and a bass DI brought forward."><meta name="twitter:description" content="The six saturation models, Bias and the velcro gate, parallel drive, and a bass DI brought forward."><link rel="canonical" href="https://warrenlabs.com/plugins/guides/temper-manual.html"><meta property="og:url" content="https://warrenlabs.com/plugins/guides/temper-manual.html"><meta name="theme-color" content="#0c0d0f"><meta property="og:image" content="https://warrenlabs.com/assets/brand/og-card.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://warrenlabs.com/assets/brand/og-card.png"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_black_32.svg"><link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_white_32.svg" media="(prefers-color-scheme: dark)"><link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/png/wl-favicon_black_32.png"><link rel="apple-touch-icon" href="/assets/brand/png/wl-appicon_amber-graphite_180.png"><link rel="manifest" href="/site.webmanifest"><script async src="https://plausible.io/js/pa-7zF1GswBt5oYNLddNETeJ.js"></script><script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script><link rel="stylesheet" href="/wl/wl-tokens.3bea9dea.css"><script>(function(){try{var t=localStorage.getItem('wl-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script><link rel="stylesheet" href="../style.css?v=2c31a2dc"></head><body><header class="site"><div class="wrap head-in"><a class="logo-mark" href="../../"><svg class="wl-mark" viewBox="0 0 120 80" aria-hidden="true"><path d="M16 16 C20 38 28 62 39 62 C48 62 53 46 58 38 C63 30 70 30 76 38 C81 44 84 54 92 54 C99 54 103 46 106 40" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>WARREN&nbsp;LABS</span></a><nav class="site"><a href="/attune/">ATTUNE</a><a href="/proof/">PROOF</a><a href="/collections/headphones/">HEADPHONES</a><a href="/graphs/">MEASUREMENTS</a><a href="/method/">METHOD</a><a href="/measure/">SEND&nbsp;ONE&nbsp;IN</a><a href="/learn/">LEARN</a><a href="/loaners/">FOR&nbsp;MAKERS</a><a href="/#patch">PATCH&nbsp;IN</a><button class="wl-theme" id="wl-theme" aria-label="Switch between light and dark" title="Light / dark">&#9680;</button></nav></div></header><main class="wrap"><article class="prose"><h1>Temper — manual</h1>
+<p><strong>Saturation, drive and fuzz on one engine.</strong> Six models, from a gentle tube warmth to full fuzz, on a 4× oversampled waveshaper, with bias for even harmonics and a gate that makes the dirt sputter and die with the note.</p>
+<p><em>Warren Labs · Character line · VST3 · AU · Standalone · macOS</em></p>
+<hr>
+<h2>What it&#x27;s for</h2>
+<p>Adding harmonics on purpose: warmth on a bass DI, thickness on a vocal, grit on drums, drive on a synth, or a guitar-pedal fuzz. Temper is a colour tool. Unlike the Trueness line, it is meant to change the sound.</p>
+<p>The waveshaping runs at four times your session&#x27;s sample rate, which keeps the harsh, inharmonic aliasing that cheap distortion produces out of the audible band.</p>
+<hr>
+<h2>The controls</h2>
+<h3>Model</h3>
+<table class="md">
+<thead><tr><th>Model</th><th>Curve</th><th>Character</th></tr></thead>
+<tbody>
+<tr><td><strong>Tube</strong></td><td>Smooth, symmetric</td><td>Soft warmth, rounded peaks. The gentlest start.</td></tr>
+<tr><td><strong>Tape</strong></td><td>Softest knee</td><td>Gentle compression, the smoothest model.</td></tr>
+<tr><td><strong>Transformer</strong></td><td>Slightly firmer</td><td>Iron-core colour: firmer lows, a harder edge up top.</td></tr>
+<tr><td><strong>Diode</strong></td><td>Asymmetric, one side clips harder</td><td>Overdrive with built-in even harmonics.</td></tr>
+<tr><td><strong>Crunch</strong></td><td>Hard knee that clips flat</td><td>Amp-style crunch. The most obviously &quot;distorted&quot;.</td></tr>
+<tr><td><strong>Fuzz</strong></td><td>Very steep</td><td>Squared-off fuzz, even at low Drive.</td></tr>
+</tbody></table>
+<p>The on-screen <strong>transfer curve</strong> shows the selected model&#x27;s shape at your current settings: input across, output up. A straight diagonal would mean no distortion; the more it bends, the more harmonics you get.</p>
+<h3>Drive</h3>
+<p>0–60 dB, default 0. How hard the signal hits the curve. The first 15 dB are where the subtle settings live; everything past 30 dB is deliberately extreme. <strong>At Drive 0 the curve is still a curve:</strong> every model already shapes the signal a little, and Tape and Fuzz a lot. Use Power or Mix 0 % for a clean comparison.</p>
+<h3>Bias</h3>
+<p>0–100 %, default 0. Pushes the curve off-centre so the positive and negative halves of the wave distort differently, which adds <strong>even</strong> harmonics: the warmer, more &quot;tube&quot; part of distortion. The standing offset this would create is subtracted, so silence stays silence.</p>
+<h3>Tone</h3>
+<p>−100 to +100, default 0. A tilt applied after the saturation: left is darker (lows up, highs down), right is brighter, by up to 6 dB each way around 250 Hz and 3.5 kHz. Use it to tame fizz from heavy drive, or to brighten a saturated bass back into the mix.</p>
+<h3>Output</h3>
+<p>−24 to +12 dB, default 0. Level after the saturation. <strong>Driving harder makes things louder, and louder always sounds better</strong>, so turn Output down until bypass and processed match before you decide anything.</p>
+<h3>Mix</h3>
+<p>0–100 %, default 100 %. Dry/wet. Below 100 % is parallel saturation: the clean signal keeps its transients and the saturated copy adds density underneath. The dry path is delayed to line up with the oversampled wet path, so blending never combs.</p>
+<h3>Gate</h3>
+<p>0–100 %, default 0 (off). The <strong>velcro gate</strong>. It watches the clean input, and when a note decays below its threshold it chokes the distorted signal off. Low settings close slowly at a low threshold (−60 dBFS, about 90 ms); high settings close fast at a higher one (−22 dBFS, about 8 ms), so the fuzz sputters and cuts out as the note dies. On Fuzz and Crunch it also clears the hiss those models bring up between notes.</p>
+<h3>Power</h3>
+<p>Bypass, with a click-free crossfade.</p>
+<hr>
+<h2>A worked example: a bass DI that disappears on small speakers</h2>
+<ol>
+<li><strong>Model: Tube.</strong> Drive up to about 10 dB.</li>
+<li>Listen on small speakers, or switch Scribe to <strong>Phone</strong> after Temper. The harmonics Temper adds are what let a bass line read where the fundamental can&#x27;t be reproduced.</li>
+<li><strong>Bias</strong> up to 20–30 % for more even-harmonic warmth.</li>
+<li>If the top end starts to fizz, turn <strong>Tone</strong> left a little.</li>
+<li>Pull <strong>Output</strong> down until toggling Power doesn&#x27;t change the loudness. It should still sound more present, not just louder.</li>
+<li>Too much? <strong>Mix</strong> to 50–60 % keeps the clean low end and adds the harmonics on top.</li>
+</ol>
+<p>For <strong>parallel drum crush</strong>: Crunch, Drive 25 dB, Mix 25 %. For a <strong>dying fuzz</strong>: Fuzz, Drive 20 dB, Gate 60 %.</p>
+<hr>
+<h2>Presets</h2>
+<p><code>PRESETS</code> saves and recalls every control. Files live in <code>~/Music/Warren Labs/Temper/Presets/</code>.</p>
+<h2>Licence</h2>
+<p>Drag the <code>.wllicense</code> file from your purchase onto the plugin window, or open the About panel (ⓘ, top right) and choose <strong>Import License</strong>.</p>
+<h2>Specifications</h2>
+<table class="md">
+<thead><tr><th></th><th></th></tr></thead>
+<tbody>
+<tr><td>Formats</td><td>VST3 · AU · Standalone</td></tr>
+<tr><td>Platform</td><td>macOS 11+, Universal (Apple Silicon + Intel)</td></tr>
+<tr><td>Channels</td><td>Mono, Stereo</td></tr>
+<tr><td>Latency</td><td>A few samples (the oversampling filters), reported to your host for compensation</td></tr>
+<tr><td>Oversampling</td><td>4×, minimum-phase</td></tr>
+<tr><td>Models</td><td>Tube · Tape · Transformer · Diode · Crunch · Fuzz</td></tr>
+</tbody></table>
+<hr>
+<p><em>Warren Labs — tools that tell the truth.</em> · <a href="https://warrenlabs.com">warrenlabs.com</a></p></article></main><footer class="site"><div class="wrap" style="display:flex;justify-content:space-between;width:100%;padding:0;flex-wrap:wrap;gap:12px"><span>Warren Labs. Tools that tell the truth.</span><span class="legal"><a href="/terms/">Terms</a> · <a href="/privacy/">Privacy</a> · <a href="/refunds/">Refunds</a></span><span class="mono">VST3 · AU · Standalone · macOS</span></div></footer><script>(function(){var b=document.getElementById('wl-theme');if(!b)return;var r=document.documentElement;var cur=function(){return r.getAttribute('data-theme')||'dark';};b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('wl-theme',n);}catch(e){}var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',n==='dark'?'#0c0d0f':'#f7f8f9');dispatchEvent(new CustomEvent('wl-theme-change',{detail:{theme:n}}));});})();</script></body></html>

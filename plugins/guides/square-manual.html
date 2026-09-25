@@ -1,0 +1,65 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Square manual · Warren Labs</title><meta property="og:title" content="Square manual · Warren Labs"><meta property="og:type" content="website"><meta property="og:site_name" content="Warren Labs"><meta name="description" content="Setting a bass-mono crossover, reading the goniometer and correlation meter, and why Square is never quite a wire."><meta property="og:description" content="Setting a bass-mono crossover, reading the goniometer and correlation meter, and why Square is never quite a wire."><meta name="twitter:description" content="Setting a bass-mono crossover, reading the goniometer and correlation meter, and why Square is never quite a wire."><link rel="canonical" href="https://warrenlabs.com/plugins/guides/square-manual.html"><meta property="og:url" content="https://warrenlabs.com/plugins/guides/square-manual.html"><meta name="theme-color" content="#0c0d0f"><meta property="og:image" content="https://warrenlabs.com/assets/brand/og-card.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://warrenlabs.com/assets/brand/og-card.png"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_black_32.svg"><link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_white_32.svg" media="(prefers-color-scheme: dark)"><link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/png/wl-favicon_black_32.png"><link rel="apple-touch-icon" href="/assets/brand/png/wl-appicon_amber-graphite_180.png"><link rel="manifest" href="/site.webmanifest"><script async src="https://plausible.io/js/pa-7zF1GswBt5oYNLddNETeJ.js"></script><script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script><link rel="stylesheet" href="/wl/wl-tokens.3bea9dea.css"><script>(function(){try{var t=localStorage.getItem('wl-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script><link rel="stylesheet" href="../style.css?v=2c31a2dc"></head><body><header class="site"><div class="wrap head-in"><a class="logo-mark" href="../../"><svg class="wl-mark" viewBox="0 0 120 80" aria-hidden="true"><path d="M16 16 C20 38 28 62 39 62 C48 62 53 46 58 38 C63 30 70 30 76 38 C81 44 84 54 92 54 C99 54 103 46 106 40" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>WARREN&nbsp;LABS</span></a><nav class="site"><a href="/attune/">ATTUNE</a><a href="/proof/">PROOF</a><a href="/collections/headphones/">HEADPHONES</a><a href="/graphs/">MEASUREMENTS</a><a href="/method/">METHOD</a><a href="/measure/">SEND&nbsp;ONE&nbsp;IN</a><a href="/learn/">LEARN</a><a href="/loaners/">FOR&nbsp;MAKERS</a><a href="/#patch">PATCH&nbsp;IN</a><button class="wl-theme" id="wl-theme" aria-label="Switch between light and dark" title="Light / dark">&#9680;</button></nav></div></header><main class="wrap"><article class="prose"><h1>Square — manual</h1>
+<p><strong>Mono-compatibility and phase metering.</strong> Square sums your low end to mono below a crossover you choose, lets you hear exactly what that touches, and shows you the stereo field so you can see what a mono playback system will do to your mix.</p>
+<p><em>Warren Labs · Trueness line · VST3 · AU · Standalone · macOS</em></p>
+<hr>
+<h2>What it&#x27;s for</h2>
+<p>Stereo bass is a liability. Club systems, vinyl cutting, phone speakers and anything playing in mono all sum left and right, and low-frequency energy that is out of phase between the channels cancels when they do. The kick that was huge in your headphones goes thin on the PA.</p>
+<p>Square splits the signal at a crossover frequency. Below it, <strong>Bass Mono</strong> makes left and right identical, so there is nothing left to cancel. Above it, the stereo image is untouched. The goniometer and correlation meter show you the result as it happens.</p>
+<p>It works on a mix bus, a stereo bass or synth, or a drum overhead pair. Two of its switches, Mono and Solo Low, are <strong>checks</strong>: you engage them, listen, and switch them off again.</p>
+<hr>
+<h2>The controls</h2>
+<h3>Crossover</h3>
+<p>The split frequency, 40–300 Hz on a log taper, default 120 Hz. Everything below it is what Bass Mono and Solo Low act on. The split is a Linkwitz–Riley crossover, so the two bands add back together at a flat level.</p>
+<p>The Crossover readout on the screen tells you whether the control is doing anything: bright while Bass Mono is on, plain while only Solo Low is, and dim when neither is engaged.</p>
+<p><strong>Where to set it.</strong> 100–150 Hz covers the kick and bass fundamental on most material. Go lower (60–80 Hz) if you want to keep some width in the low mids. Go higher only for vinyl or a club system, and listen for the image narrowing as you do.</p>
+<h3>Bass Mono</h3>
+<p>Sums everything below the crossover to mono. <strong>On by default.</strong> This is the feature; the switches below exist to check it.</p>
+<h3>Mono</h3>
+<p>Folds the whole output to mono, so you hear what a mono system hears. If something vanishes or turns hollow, it has phase trouble.</p>
+<h3>Solo Low</h3>
+<p>Plays only the band below the crossover, so you can hear exactly what Bass Mono is acting on. Use it to set the crossover: raise it until the solo starts to include things you want to stay stereo, then back off.</p>
+<p>Solo Low and Mono combine. The screen&#x27;s <strong>Monitor</strong> readout names what you are hearing: Stereo, Mono, Low Solo, or Low Solo · Mono.</p>
+<h3>Power</h3>
+<p>Bypass, with a click-free crossfade.</p>
+<hr>
+<h2>The display</h2>
+<ul>
+<li><strong>Goniometer</strong> (the diamond): left/right plotted as mid/side. A vertical line is pure mono; a horizontal line is pure side (left and right out of phase); a round cloud is a wide, healthy stereo image. When any switch is engaged, a dim ghost of the <strong>unprocessed</strong> input sits behind the live trace, so you can see what Square changed.</li>
+<li><strong>Correlation</strong> (the rail, −1 to +1): +1 is mono, 0 is unrelated channels, below 0 means the channels are fighting each other and will cancel in mono. The bright marker is the current value; the dim tick is the <strong>lowest recent value</strong>, held so a brief dip doesn&#x27;t escape you.</li>
+</ul>
+<p>A mix that hovers between +0.3 and +0.9 is normal. Brief dips toward 0 are fine. A mix that sits below 0 has a problem Square can only partly fix: find the source.</p>
+<hr>
+<h2>A worked example: getting a mix ready for a club system</h2>
+<ol>
+<li>Insert Square last on the mix bus. Bass Mono is already on at 120 Hz.</li>
+<li>Switch <strong>Solo Low</strong> on. You should hear kick and bass fundamentals only. If you can hear snare body or the lower octave of a pad, lower the crossover until you can&#x27;t.</li>
+<li>Switch <strong>Solo Low</strong> off and <strong>Mono</strong> on. Play the loudest section. The low end should hold up; if it drops noticeably with Bass Mono off and returns with it on, Square is doing its job.</li>
+<li>Switch <strong>Mono</strong> off. Watch the correlation dim tick through the whole song. If it never goes below 0, you&#x27;re done.</li>
+<li>Compare against bypass at matched level. The top end should sound identical; only the low end&#x27;s width has changed.</li>
+</ol>
+<hr>
+<h2>Things to know</h2>
+<ul>
+<li><strong>Square is not a wire, even with every switch off.</strong> The crossover always runs, and recombining two crossover bands restores level exactly but shifts phase around the crossover frequency. That is inaudible on its own, but it means Square with nothing engaged does not null against the original. Use Power when you need a true bypass.</li>
+<li><strong>It does not add width.</strong> Square only removes stereo information; it never creates any.</li>
+<li>Mono and Solo Low are checks. Leaving one on by accident will ruin a bounce, and the Monitor readout is there so that is hard to do.</li>
+</ul>
+<hr>
+<h2>Presets</h2>
+<p><code>PRESETS</code> saves and recalls every control. Files live in <code>~/Music/Warren Labs/Square/Presets/</code>.</p>
+<h2>Licence</h2>
+<p>Drag the <code>.wllicense</code> file from your purchase onto the plugin window, or open the About panel (ⓘ, top right) and choose <strong>Import License</strong>.</p>
+<h2>Specifications</h2>
+<table class="md">
+<thead><tr><th></th><th></th></tr></thead>
+<tbody>
+<tr><td>Formats</td><td>VST3 · AU · Standalone</td></tr>
+<tr><td>Platform</td><td>macOS 11+, Universal (Apple Silicon + Intel)</td></tr>
+<tr><td>Channels</td><td>Mono, Stereo</td></tr>
+<tr><td>Latency</td><td>None</td></tr>
+<tr><td>Controls</td><td>Crossover · Bass Mono · Mono · Solo Low</td></tr>
+<tr><td>Crossover</td><td>Linkwitz–Riley, 40–300 Hz</td></tr>
+<tr><td>Metering</td><td>Goniometer (mid/side) · correlation with min-hold</td></tr>
+</tbody></table>
+<hr>
+<p><em>Warren Labs — tools that tell the truth.</em> · <a href="https://warrenlabs.com">warrenlabs.com</a></p></article></main><footer class="site"><div class="wrap" style="display:flex;justify-content:space-between;width:100%;padding:0;flex-wrap:wrap;gap:12px"><span>Warren Labs. Tools that tell the truth.</span><span class="legal"><a href="/terms/">Terms</a> · <a href="/privacy/">Privacy</a> · <a href="/refunds/">Refunds</a></span><span class="mono">VST3 · AU · Standalone · macOS</span></div></footer><script>(function(){var b=document.getElementById('wl-theme');if(!b)return;var r=document.documentElement;var cur=function(){return r.getAttribute('data-theme')||'dark';};b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('wl-theme',n);}catch(e){}var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',n==='dark'?'#0c0d0f':'#f7f8f9');dispatchEvent(new CustomEvent('wl-theme-change',{detail:{theme:n}}));});})();</script></body></html>

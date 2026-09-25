@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Scribe manual · Warren Labs</title><meta property="og:title" content="Scribe manual · Warren Labs"><meta property="og:type" content="website"><meta property="og:site_name" content="Warren Labs"><meta name="description" content="Learning a reference and matching to it, the four translation voicings, and why a fresh Scribe does nothing."><meta property="og:description" content="Learning a reference and matching to it, the four translation voicings, and why a fresh Scribe does nothing."><meta name="twitter:description" content="Learning a reference and matching to it, the four translation voicings, and why a fresh Scribe does nothing."><link rel="canonical" href="https://warrenlabs.com/plugins/guides/scribe-manual.html"><meta property="og:url" content="https://warrenlabs.com/plugins/guides/scribe-manual.html"><meta name="theme-color" content="#0c0d0f"><meta property="og:image" content="https://warrenlabs.com/assets/brand/og-card.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://warrenlabs.com/assets/brand/og-card.png"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_black_32.svg"><link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_white_32.svg" media="(prefers-color-scheme: dark)"><link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/png/wl-favicon_black_32.png"><link rel="apple-touch-icon" href="/assets/brand/png/wl-appicon_amber-graphite_180.png"><link rel="manifest" href="/site.webmanifest"><script async src="https://plausible.io/js/pa-7zF1GswBt5oYNLddNETeJ.js"></script><script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script><link rel="stylesheet" href="/wl/wl-tokens.3bea9dea.css"><script>(function(){try{var t=localStorage.getItem('wl-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script><link rel="stylesheet" href="../style.css?v=2c31a2dc"></head><body><header class="site"><div class="wrap head-in"><a class="logo-mark" href="../../"><svg class="wl-mark" viewBox="0 0 120 80" aria-hidden="true"><path d="M16 16 C20 38 28 62 39 62 C48 62 53 46 58 38 C63 30 70 30 76 38 C81 44 84 54 92 54 C99 54 103 46 106 40" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>WARREN&nbsp;LABS</span></a><nav class="site"><a href="/attune/">ATTUNE</a><a href="/proof/">PROOF</a><a href="/collections/headphones/">HEADPHONES</a><a href="/graphs/">MEASUREMENTS</a><a href="/method/">METHOD</a><a href="/measure/">SEND&nbsp;ONE&nbsp;IN</a><a href="/learn/">LEARN</a><a href="/loaners/">FOR&nbsp;MAKERS</a><a href="/#patch">PATCH&nbsp;IN</a><button class="wl-theme" id="wl-theme" aria-label="Switch between light and dark" title="Light / dark">&#9680;</button></nav></div></header><main class="wrap"><article class="prose"><h1>Scribe — manual</h1>
+<p><strong>Matching EQ and translation check.</strong> Scribe learns the tonal balance of a reference and pulls your material toward it, broadly and musically. Switch mode and the same plugin plays your mix the way a phone, earbuds, a laptop or a car would.</p>
+<p><em>Warren Labs · Trueness line · VST3 · AU · Standalone · macOS</em></p>
+<hr>
+<h2>What it&#x27;s for</h2>
+<p>Two questions that are really one: <em>how does my tonal balance compare to something else?</em></p>
+<ul>
+<li><strong>Match</strong> answers it against a record you trust. Play the reference, let Scribe learn it, then play your mix. Scribe works out where yours is heavier or lighter, band by band, and nudges it toward the reference.</li>
+<li><strong>Audition</strong> answers it against the places your mix will actually be heard.</li>
+</ul>
+<p>Scribe is a <strong>tonal fit, not surgical EQ</strong>. It measures in 20 broad, overlapping bands from 30 Hz to 16 kHz, so it moves balance (too much low mid, not enough air) and leaves individual notes and resonances alone. For those, use Bevel or Pare.</p>
+<p><strong>Until you teach it a reference, Match does nothing.</strong> A fresh Scribe is a wire: the output is the input, bit for bit, and the screen reads <code>NO REFERENCE: HOLD LEARN</code>. The Match controls (Amount, Tilt, Smoothing, Mix, Freeze, Clear) stay dimmed, reading <code>—</code>, until a reference is learned. Learn is the one control that is live from the start.</p>
+<hr>
+<h2>The controls</h2>
+<h3>Mode</h3>
+<p><strong>Match</strong>, or one of four audition voicings: <strong>Phone</strong>, <strong>Earbuds</strong>, <strong>Laptop</strong>, <strong>Car</strong>.</p>
+<h3>Learn</h3>
+<p>Hold it on while the reference plays, then switch it off. That&#x27;s the capture. While Learn is on, Scribe passes audio through untouched so you hear the reference as it is. It averages over a couple of seconds at a time, so give it at least 20–30 seconds of the part of the reference that matters (the chorus, not the intro).</p>
+<p>The learned reference is <strong>saved with your session</strong>. It is not part of a saved preset.</p>
+<h3>Clear</h3>
+<p>Discards the learned reference. Match goes back to doing nothing until you learn another.</p>
+<h3>Amount</h3>
+<p>0–100 %, default 60 %. How far toward the reference Scribe pulls. <strong>Around 80 % is a full match; 100 % goes slightly past it.</strong> Most of the time, 30–60 % is the useful range: you want the reference&#x27;s balance, not its exact curve. No band is ever moved more than 15 dB.</p>
+<p>In the audition modes, Amount blends the voicing in instead: 0 % is your mix, 100 % is the full caricature.</p>
+<h3>Tilt</h3>
+<p>−6 to +6 dB per octave, pivoting at 1 kHz, default 0. Leans the target darker or brighter on top of the reference. Match only.</p>
+<h3>Smoothing</h3>
+<p>0–100, default 50. Spreads each band&#x27;s correction across its neighbours, up to four bands either side. Higher is broader and gentler; lower follows the reference&#x27;s shape more closely. Match only.</p>
+<h3>Freeze</h3>
+<p>Stops Scribe re-measuring your material. The correction it has at that moment becomes a fixed EQ. Without Freeze, Scribe keeps listening and adjusts as the song changes, which is usually what you want on a whole mix and not what you want on a part that changes arrangement. Match only.</p>
+<h3>Mix</h3>
+<p>0–100 %, default 100 %. Dry/wet blend in Match. In the audition modes Amount does that job, so Mix dims and reads <code>—</code> there.</p>
+<h3>Power</h3>
+<p>Bypass, with a click-free crossfade.</p>
+<hr>
+<h2>The audition voicings</h2>
+<p>These are <strong>caricatures</strong>, voiced to exaggerate what each kind of playback does. They are not measurements of any particular device.</p>
+<table class="md">
+<thead><tr><th>Mode</th><th>What it does</th><th>Listen for</th></tr></thead>
+<tbody>
+<tr><td><strong>Phone</strong></td><td>No lows, no highs, a boxy midrange bump</td><td>Does the bass line still read? Does the vocal?</td></tr>
+<tr><td><strong>Earbuds</strong></td><td>Fairly full, a presence lift, a little low-mid dip</td><td>Harshness in the upper mids</td></tr>
+<tr><td><strong>Laptop</strong></td><td>No bass, a tinny upper-mid lift</td><td>Whether the kick and bass disappear completely</td></tr>
+<tr><td><strong>Car</strong></td><td>Boomy lows, scooped low mids, soft top</td><td>Low-end build-up; whether the mix turns to mud</td></tr>
+</tbody></table>
+<p>Audition modes are for <strong>listening only</strong>. Switch back to Match, or bypass Scribe, before you bounce.</p>
+<hr>
+<h2>The display</h2>
+<ul>
+<li><strong>Dim spectrum</strong>: your material, live.</li>
+<li><strong>Amber curve</strong>: the correction being applied right now, per band. Flat at 0 dB until a reference is learned.</li>
+<li><strong>Faint line</strong>: the learned reference&#x27;s shape, when there is one.</li>
+<li><strong>Dashed line</strong>: the tilt, when there is a reference.</li>
+<li><strong>Top right</strong>: <code>NO REFERENCE: HOLD LEARN</code>, <code>LEARNING REFERENCE…</code> or <code>MATCHING REFERENCE</code>.</li>
+<li>In audition modes the plot shows the voicing curve instead, with a wider dB scale.</li>
+</ul>
+<hr>
+<h2>A worked example: matching a mix to a reference record</h2>
+<ol>
+<li>Put Scribe on your mix bus, last. Import the reference into the session on a track routed <strong>through the same bus</strong>, and level-match it roughly with your mix.</li>
+<li>Solo the reference. Switch <strong>Learn</strong> on, play 30 seconds of its chorus, switch <strong>Learn</strong> off. The screen now reads <code>MATCHING REFERENCE</code> and shows the reference&#x27;s shape.</li>
+<li>Mute the reference and play the same section of your mix. The amber curve shows where your balance differs.</li>
+<li>Start at <strong>Amount 40 %</strong>. Toggle <strong>Power</strong> at matched level. If the mix is closer to the reference but still sounds like your mix, you&#x27;re in the right place.</li>
+<li>If the correction is too busy, raise <strong>Smoothing</strong>. If you like the balance but want it a shade brighter, nudge <strong>Tilt</strong> up.</li>
+<li>Then check it travels: <strong>Phone</strong>, then <strong>Car</strong>. Fix anything they reveal at the source, not with Scribe.</li>
+</ol>
+<hr>
+<h2>Presets</h2>
+<p><code>PRESETS</code> saves and recalls every control. It does not store the learned reference. Files live in <code>~/Music/Warren Labs/Scribe/Presets/</code>.</p>
+<h2>Licence</h2>
+<p>Drag the <code>.wllicense</code> file from your purchase onto the plugin window, or open the About panel (ⓘ, top right) and choose <strong>Import License</strong>.</p>
+<h2>Specifications</h2>
+<table class="md">
+<thead><tr><th></th><th></th></tr></thead>
+<tbody>
+<tr><td>Formats</td><td>VST3 · AU · Standalone</td></tr>
+<tr><td>Platform</td><td>macOS 11+, Universal (Apple Silicon + Intel)</td></tr>
+<tr><td>Channels</td><td>Mono, Stereo</td></tr>
+<tr><td>Latency</td><td>None</td></tr>
+<tr><td>Match</td><td>20 log-spaced bands, 30 Hz–16 kHz · ±15 dB maximum per band</td></tr>
+<tr><td>Audition</td><td>Phone · Earbuds · Laptop · Car</td></tr>
+</tbody></table>
+<hr>
+<p><em>Warren Labs — tools that tell the truth.</em> · <a href="https://warrenlabs.com">warrenlabs.com</a></p></article></main><footer class="site"><div class="wrap" style="display:flex;justify-content:space-between;width:100%;padding:0;flex-wrap:wrap;gap:12px"><span>Warren Labs. Tools that tell the truth.</span><span class="legal"><a href="/terms/">Terms</a> · <a href="/privacy/">Privacy</a> · <a href="/refunds/">Refunds</a></span><span class="mono">VST3 · AU · Standalone · macOS</span></div></footer><script>(function(){var b=document.getElementById('wl-theme');if(!b)return;var r=document.documentElement;var cur=function(){return r.getAttribute('data-theme')||'dark';};b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('wl-theme',n);}catch(e){}var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',n==='dark'?'#0c0d0f':'#f7f8f9');dispatchEvent(new CustomEvent('wl-theme-change',{detail:{theme:n}}));});})();</script></body></html>

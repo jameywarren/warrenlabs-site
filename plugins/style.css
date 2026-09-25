@@ -156,7 +156,8 @@ ul.features li::before{content:"›"; color:var(--shot-accent,var(--acc)); margi
   padding:1px 5px; border-radius:5px; color:var(--acc)}
 .prose pre{background:var(--well); border:1px solid var(--line); border-radius:9px; padding:14px 16px; overflow:auto}
 .prose pre code{background:none; border:0; padding:0; color:var(--ink)}
-.prose ul{padding-left:20px} .prose li{margin:4px 0}
+.prose ul,.prose ol{padding-left:20px} .prose li{margin:4px 0}
+.detail .manual-link{margin:18px 0 0; color:var(--dim)}
 
 /* Header fit, measured 2026-09-01, and this renderer was the worst of the three: the row
    overflowed its own column from about 950px all the way down to the 560px wrap below, because

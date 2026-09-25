@@ -1,0 +1,76 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ripple manual · Warren Labs</title><meta property="og:title" content="Ripple manual · Warren Labs"><meta property="og:type" content="website"><meta property="og:site_name" content="Warren Labs"><meta name="description" content="Echo with tape and BBD character, ping-pong and sync, and the chorus, flanger and phaser modes."><meta property="og:description" content="Echo with tape and BBD character, ping-pong and sync, and the chorus, flanger and phaser modes."><meta name="twitter:description" content="Echo with tape and BBD character, ping-pong and sync, and the chorus, flanger and phaser modes."><link rel="canonical" href="https://warrenlabs.com/plugins/guides/ripple-manual.html"><meta property="og:url" content="https://warrenlabs.com/plugins/guides/ripple-manual.html"><meta name="theme-color" content="#0c0d0f"><meta property="og:image" content="https://warrenlabs.com/assets/brand/og-card.png"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://warrenlabs.com/assets/brand/og-card.png"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_black_32.svg"><link rel="icon" type="image/svg+xml" href="/assets/brand/svg/wl-favicon_white_32.svg" media="(prefers-color-scheme: dark)"><link rel="icon" type="image/png" sizes="32x32" href="/assets/brand/png/wl-favicon_black_32.png"><link rel="apple-touch-icon" href="/assets/brand/png/wl-appicon_amber-graphite_180.png"><link rel="manifest" href="/site.webmanifest"><script async src="https://plausible.io/js/pa-7zF1GswBt5oYNLddNETeJ.js"></script><script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script><link rel="stylesheet" href="/wl/wl-tokens.3bea9dea.css"><script>(function(){try{var t=localStorage.getItem('wl-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script><link rel="stylesheet" href="../style.css?v=2c31a2dc"></head><body><header class="site"><div class="wrap head-in"><a class="logo-mark" href="../../"><svg class="wl-mark" viewBox="0 0 120 80" aria-hidden="true"><path d="M16 16 C20 38 28 62 39 62 C48 62 53 46 58 38 C63 30 70 30 76 38 C81 44 84 54 92 54 C99 54 103 46 106 40" fill="none" stroke="currentColor" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"></path></svg><span>WARREN&nbsp;LABS</span></a><nav class="site"><a href="/attune/">ATTUNE</a><a href="/proof/">PROOF</a><a href="/collections/headphones/">HEADPHONES</a><a href="/graphs/">MEASUREMENTS</a><a href="/method/">METHOD</a><a href="/measure/">SEND&nbsp;ONE&nbsp;IN</a><a href="/learn/">LEARN</a><a href="/loaners/">FOR&nbsp;MAKERS</a><a href="/#patch">PATCH&nbsp;IN</a><button class="wl-theme" id="wl-theme" aria-label="Switch between light and dark" title="Light / dark">&#9680;</button></nav></div></header><main class="wrap"><article class="prose"><h1>Ripple — manual</h1>
+<p><strong>Echo, chorus, flanger and phaser on one delay core.</strong> A modulated stereo echo with tape and bucket-brigade character, ping-pong and tempo sync, plus three motion effects. The controls on the plate change with the mode, so every knob you see is one that does something.</p>
+<p><em>Warren Labs · Character line · VST3 · AU · Standalone · macOS</em></p>
+<hr>
+<h2>What it&#x27;s for</h2>
+<p><strong>Echo</strong> is a delay: slapback on a vocal, dotted-eighth repeats on a guitar, dub throws on a snare. <strong>Chorus</strong>, <strong>Flanger</strong> and <strong>Phaser</strong> are the motion effects: width and shimmer, jet-plane sweeps, and a swirling notch sweep.</p>
+<p>They share an interpolated-delay core but not their controls. Echo&#x27;s <strong>Time</strong> and the motion modes&#x27; <strong>Rate</strong> are different jobs, so instead of relabelling one knob, Ripple swaps which knobs are on the plate when you change mode. Feedback and Mix stay put because they mean the same thing everywhere.</p>
+<hr>
+<h2>The controls</h2>
+<h3>Mode</h3>
+<p><strong>Echo · Chorus · Flanger · Phaser</strong>, along the bottom of the plate.</p>
+<h3>Echo mode</h3>
+<table class="md">
+<thead><tr><th>Control</th><th>Range</th><th>Does</th></tr></thead>
+<tbody>
+<tr><td><strong>Time</strong></td><td>20 ms–2 s (default 350 ms)</td><td>The gap between repeats. Changing it glides, like a tape machine changing speed, so you hear a pitch bend rather than a click.</td></tr>
+<tr><td><strong>Feedback</strong></td><td>0–100 % (default 40 %)</td><td>How much of each repeat feeds the next. More means more repeats. Capped short of runaway, so even 100 % dies away eventually.</td></tr>
+<tr><td><strong>Tone</strong></td><td>0–100 (default 60)</td><td>A low-pass inside the feedback loop, from 1 kHz to 16 kHz. Each repeat is darker than the last; lower settings darken faster.</td></tr>
+<tr><td><strong>Mod</strong></td><td>0–100 (default 25)</td><td>Slow wow and flutter on the delay time, up to about 6 ms. A little is tape; a lot is seasick.</td></tr>
+<tr><td><strong>Mix</strong></td><td>0–100 % (default 35 %)</td><td>Dry/wet. At 100 % you hear only the repeats.</td></tr>
+</tbody></table>
+<p><strong>Character</strong> (Echo only): <strong>Clean</strong> repeats are exact copies. <strong>Tape</strong> saturates each pass through the loop, so repeats soften and compress as they decay. <strong>BBD</strong>, the bucket-brigade chips of analog delay pedals, saturates harder and runs darker.</p>
+<p><strong>Ping-Pong</strong> (Echo only): repeats alternate left, right, left. Ripple feeds the loop from one side with a mono sum of your input, so the bounce works on a centred vocal or snare, not only on something already panned. The dry signal keeps its original stereo image.</p>
+<h3>Chorus, Flanger and Phaser modes</h3>
+<table class="md">
+<thead><tr><th>Control</th><th>Range</th><th>Does</th></tr></thead>
+<tbody>
+<tr><td><strong>Rate</strong></td><td>0.05–10 Hz (default 0.6 Hz)</td><td>Speed of the sweep.</td></tr>
+<tr><td><strong>Feedback</strong></td><td>0–100 % (default 40 %)</td><td><strong>Flanger and Phaser only.</strong> Resonance: sharper, more metallic peaks. Greyed out and reading <code>—</code> in Chorus, which has no feedback path.</td></tr>
+<tr><td><strong>Depth</strong></td><td>0–100 % (default 40 %)</td><td>How far the sweep travels.</td></tr>
+<tr><td><strong>Width</strong></td><td>0–100 % (default 70 %)</td><td>Offsets the right channel&#x27;s sweep against the left, up to half a cycle. 0 is mono movement; high values spread it across the stereo field.</td></tr>
+<tr><td><strong>Mix</strong></td><td>0–100 % (default 35 %)</td><td>Dry/wet.</td></tr>
+</tbody></table>
+<ul>
+<li><strong>Chorus</strong>: a 12 ms delay swept ±8 ms. Thickening and width, no resonance.</li>
+<li><strong>Flanger</strong>: a 2 ms delay swept ±2 ms, with Feedback for the jet sweep.</li>
+<li><strong>Phaser</strong>: six all-pass stages swept from 300 Hz up to as high as 3 kHz at full Depth. Smoother and less metallic than the flanger.</li>
+</ul>
+<h3>Sync and Division</h3>
+<p>With <strong>Sync</strong> on, the host tempo sets the timing and <strong>Division</strong> picks the note value: 1/1 to 1/32, with dotted (.) and triplet (T) options. In Echo it sets the delay time (overriding Time); in the motion modes it sets one full sweep per division (overriding Rate). The Time or Rate readout shows the division while Sync is on. With no host tempo, Ripple assumes 120 BPM.</p>
+<h3>Power</h3>
+<p>Bypass, with a click-free crossfade.</p>
+<hr>
+<h2>The display</h2>
+<ul>
+<li><strong>Echo</strong>: the <strong>echo train</strong> across a two-second window. The dry hit is at zero, then each repeat is a line whose height shows how loud it is: the dry at 1 − Mix, the first repeat at Mix, and each one after that smaller by Feedback. Turn Feedback up and the train gets longer; shorten Time and the lines crowd together. With Sync on it follows the tempo, and the corner shows the division and the time it works out to.</li>
+<li><strong>Chorus, Flanger, Phaser</strong>: the <strong>sweep</strong>, two full cycles whatever the Rate. The bright line is the left channel and the dim one is the right, offset by Width. Depth sets how tall the sweep is, and the corner says what is being swept (for example <code>12 ± 3.2 ms</code>, or <code>300 Hz – 753 Hz</code> for the phaser) and at what rate.</li>
+</ul>
+<hr>
+<h2>A worked example: a vocal slapback, then a ping-pong throw</h2>
+<ol>
+<li><strong>Mode: Echo</strong>, <strong>Character: Tape</strong>. Time about 110 ms, Feedback 10 %, Mix 20 %. That is a classic slapback: one soft repeat that thickens the voice without sounding like an echo.</li>
+<li>Too obvious? Lower <strong>Mix</strong> before you touch anything else.</li>
+<li>For a throw on the last word of a line, put a second Ripple on a send: Echo, <strong>Ping-Pong</strong> on, <strong>Sync</strong> on, <strong>Division 1/8.</strong> (dotted eighth), Feedback 45 %, Tone 40, Mix 100 %.</li>
+<li>Automate the send up for that one word and back down after. The repeats bounce left and right and darken as they go.</li>
+</ol>
+<p>For a <strong>chorused clean guitar</strong>: Chorus, Rate 0.8 Hz, Depth 40 %, Width 80 %, Mix 40 %.</p>
+<hr>
+<h2>Presets</h2>
+<p><code>PRESETS</code> saves and recalls every control, including the mode. Files live in <code>~/Music/Warren Labs/Ripple/Presets/</code>.</p>
+<h2>Licence</h2>
+<p>Drag the <code>.wllicense</code> file from your purchase onto the plugin window, or open the About panel (ⓘ, top right) and choose <strong>Import License</strong>.</p>
+<h2>Specifications</h2>
+<table class="md">
+<thead><tr><th></th><th></th></tr></thead>
+<tbody>
+<tr><td>Formats</td><td>VST3 · AU · Standalone</td></tr>
+<tr><td>Platform</td><td>macOS 11+, Universal (Apple Silicon + Intel)</td></tr>
+<tr><td>Channels</td><td>Mono, Stereo (ping-pong needs stereo)</td></tr>
+<tr><td>Latency</td><td>None</td></tr>
+<tr><td>Modes</td><td>Echo · Chorus · Flanger · Phaser</td></tr>
+<tr><td>Echo</td><td>20 ms–2 s · Clean / Tape / BBD · ping-pong · tempo sync</td></tr>
+<tr><td>Interpolation</td><td>3rd-order Lagrange (clean sweeps, no zipper)</td></tr>
+</tbody></table>
+<hr>
+<p><em>Warren Labs — tools that tell the truth.</em> · <a href="https://warrenlabs.com">warrenlabs.com</a></p></article></main><footer class="site"><div class="wrap" style="display:flex;justify-content:space-between;width:100%;padding:0;flex-wrap:wrap;gap:12px"><span>Warren Labs. Tools that tell the truth.</span><span class="legal"><a href="/terms/">Terms</a> · <a href="/privacy/">Privacy</a> · <a href="/refunds/">Refunds</a></span><span class="mono">VST3 · AU · Standalone · macOS</span></div></footer><script>(function(){var b=document.getElementById('wl-theme');if(!b)return;var r=document.documentElement;var cur=function(){return r.getAttribute('data-theme')||'dark';};b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';r.setAttribute('data-theme',n);try{localStorage.setItem('wl-theme',n);}catch(e){}var m=document.querySelector('meta[name="theme-color"]');if(m)m.setAttribute('content',n==='dark'?'#0c0d0f':'#f7f8f9');dispatchEvent(new CustomEvent('wl-theme-change',{detail:{theme:n}}));});})();</script></body></html>
