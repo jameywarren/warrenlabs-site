@@ -294,7 +294,7 @@
         {
           "file": "wake-ui-1-main.png",
           "alt": "Wake's faceplate: impulse response display with RT60 readout, Hall preset, and the algorithmic/convolution toggle",
-          "caption": "The impulse response, drawn. ALGO runs the FDN; CONV plays a captured space, and you can load your own IR."
+          "caption": "The impulse response, drawn. ALGO runs the FDN; CONV plays one of six built-in synthesized spaces, or an IR you load yourself."
         }
       ]
     }
@@ -337,7 +337,7 @@
       "name": "The Character Collection",
       "line": "Character",
       "tagline": "Heat, motion, and space.",
-      "blurb": "Three colour tools, each covering a whole corner: six saturation models from tube warmth to full fuzz, echo plus chorus/flanger/phaser on one delay core, and a reverb that runs both an FDN and real captured spaces.",
+      "blurb": "Three colour tools, each covering a whole corner: six saturation models from tube warmth to full fuzz, echo plus chorus/flanger/phaser on one delay core, and a reverb that runs both an FDN and convolution, with synthesized spaces built in and room for your own IRs.",
       "members": [
         "temper",
         "ripple",
