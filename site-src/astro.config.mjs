@@ -8,6 +8,12 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   output: 'static',
   site: 'https://warrenlabs.com',
+  // Astro 7 changed the default to 'jsx', which applies React's whitespace rules: any whitespace
+  // that contains a line break and touches an element is deleted. Every page here is written as
+  // wrapped prose, so a link or <b> that starts or ends a source line lost the space beside it
+  // ("Email<a>jamey@warrenlabs.com</a>with your order number"). `true` is the pre-7 behaviour:
+  // it collapses whitespace but keeps one space wherever the rendering needs it.
+  compressHTML: true,
   integrations: [
     sitemap({
       // CORRECTED 2026-08-24. This comment used to read "/graphs and /measure are built but NOT
