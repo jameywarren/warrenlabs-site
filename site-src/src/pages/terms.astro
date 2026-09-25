@@ -8,6 +8,8 @@ const updated = 'September 2026';
 // Copies, not sources (2026-09-24). Which plug-ins are betas, and "every update through 1.0", come
 // from warren-labs/web/plugins.json (each plug-in's `status`, and `betaTerms`). Level selling as a
 // full product is recorded in warren-labs/Level/docs/RELEASE-READINESS.md. Change those first.
+// The trial is warren-labs/wl-ui/Source/WLLicenseGate.h. This page describes it without numbers
+// and links to /plugins/downloads/ for them, so changing the timing does not make it false.
 ---
 
 <Layout
@@ -78,6 +80,12 @@ const updated = 'September 2026';
       <p>
         This is deliberate. Software you paid for should not depend on our servers still being there
         in ten years, and it does not.
+      </p>
+      <p>
+        Without a licence file, a plugin runs in full as a free trial, and after that the sound
+        drops out briefly at regular intervals until one is installed. The trial is tracked on your
+        machine, not on a server, so it does not phone home either. The exact timing is on
+        the <a href="/plugins/downloads/">downloads page</a>.
       </p>
 
       <h3>Beta software, and we mean it</h3>
