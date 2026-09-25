@@ -38,7 +38,7 @@ const description =
 
 const RIG = [
   ['Fixture', 'miniDSP EARS Pro, both capsules, per-unit calibration at 1/24 octave.'],
-  ['Coupler', 'IEC 60318-4 — the ear-simulator standard the industry rigs use.'],
+  ['Coupler', 'IEC 60318-4, the ear-simulator standard the industry rigs use.'],
   ['Analog gain', '0 dB, and it stays there. Moving it invalidates the calibration files.'],
   ['Sample rate', '48 kHz.'],
   ['Drive', 'The fixture&rsquo;s own headphone output, set once at 94 dB SPL and never touched between left and right.'],
@@ -47,7 +47,7 @@ const RIG = [
 ];
 
 const BANDS = [
-  ['20&ndash;200 Hz', 'Seal. How forgiving the headphone is about fit. Below 100 Hz the coupler is outside its verified range &mdash; see the limits.'],
+  ['20&ndash;200 Hz', 'Seal. How forgiving the headphone is about fit. Below 100 Hz the coupler is outside its verified range. See the limits.'],
   ['200 Hz&ndash;2 kHz', 'The control band. Scatter here should be near zero. If it isn&rsquo;t, our measurement is wrong and we go again.'],
   ['2&ndash;10 kHz', 'Placement on the pinna. How fussy the headphone is about alignment.'],
   ['Above 10 kHz', 'Reported, and outside the standard&rsquo;s simulated range. Read it gently.'],
@@ -75,8 +75,8 @@ const jsonLd = [
     <span class="eyebrow">The bench</span>
     <h1>How we measure a headphone.</h1>
     <p class="lede">
-      Every graph on this site came out of the procedure below. We are publishing it in full &mdash;
-      the rig, the seating rule, the capture count, and the repeatability numbers off our own bench &mdash;
+      Every graph on this site came out of the procedure below. We are publishing it in full:
+      the rig, the seating rule, the capture count, and the repeatability numbers off our own bench,
       so you can decide what our measurements are worth instead of taking our word for it.
     </p>
 
@@ -101,8 +101,8 @@ const jsonLd = [
       </p>
       <p>
         That is a departure from the usual practice, and the departure is on purpose. The convention
-        headphone reviewing settled on &mdash; five placements per side, deliberately randomised, then
-        averaged &mdash; was designed to answer a different question: where does a careless user end up?
+        headphone reviewing settled on (five placements per side, deliberately randomised, then
+        averaged) was designed to answer a different question: where does a careless user end up?
         That is a fair question. It is also one nobody asks about their own headphones, because nobody
         listens at a random seating. You fiddle until it sounds right, and then you listen for three
         hours at that position.
@@ -185,7 +185,7 @@ const jsonLd = [
         published here whether or not they flatter us.
       </p>
       <p>
-        <b>The instrument contributes 0.002 dB</b> through the midrange &mdash; thirty captures with
+        <b>The instrument contributes 0.002 dB</b> through the midrange: thirty captures with
         nothing touched between them, both capsules agreeing. So the instrument is never the thing
         that limits a measurement here. Seating is.
       </p>
@@ -264,7 +264,7 @@ const jsonLd = [
       <p>
         The rig itself gets the same treatment. Capsule serial numbers, calibration files, gain
         setting, drive level. Every one of those is part of the measurement, and a change to any of
-        them means measurements taken either side of it are not comparable &mdash; which we say out
+        them means measurements taken either side of it are not comparable, which we say out
         loud when it happens.
       </p>
       <p>

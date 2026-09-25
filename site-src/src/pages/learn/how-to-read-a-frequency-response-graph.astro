@@ -9,17 +9,17 @@ const SITE = 'https://warrenlabs.com';
 const url = `${SITE}/learn/how-to-read-a-frequency-response-graph`;
 const title = 'How to read a frequency-response graph';
 const description =
-  'A frequency-response graph shows how loud a headphone plays each pitch, bass to treble. Here is how to read the axes, the peaks and dips, and what the graph can and cannot tell you — without the mysticism.';
+  'A frequency-response graph shows how loud a headphone plays each pitch, bass to treble. Here is how to read the axes, the peaks and dips, and what the graph can and cannot tell you, without the mysticism.';
 
 // Visible FAQ and FAQPage schema are built from one source so they can never drift apart.
 const faq: [string, string][] = [
   [
     'What is a good frequency response for headphones?',
-    'There is no single “good” curve — it depends on your taste and the target you compare against. Many people prefer something close to a gentle downward tilt from bass to treble, but flatter-measuring is not automatically better. The graph tells you the character; whether you like it is the real question.',
+    'There is no single “good” curve: it depends on your taste and the target you compare against. Many people prefer something close to a gentle downward tilt from bass to treble, but flatter-measuring is not automatically better. The graph tells you the character; whether you like it is the real question.',
   ],
   [
     'Why isn’t a headphone’s frequency response flat?',
-    'Two reasons. Real headphones have peaks and dips from their physical design, and the measurement includes the response of the ear and the rig — so a headphone that sounds neutral does not measure as a flat line. That is why curves are read against a target, not against a ruler.',
+    'Two reasons. Real headphones have peaks and dips from their physical design, and the measurement includes the response of the ear and the rig, so a headphone that sounds neutral does not measure as a flat line. That is why curves are read against a target, not against a ruler.',
   ],
   [
     'What does a bump around 3 kHz mean?',
@@ -27,7 +27,7 @@ const faq: [string, string][] = [
   ],
   [
     'Can you tell if a headphone is bright or bassy from the graph?',
-    'Yes — that is exactly what a frequency-response graph shows well. More energy on the left is more bass; a lift in the upper mids and treble reads as brighter. Tonal balance is the graph’s home turf.',
+    'Yes. That is exactly what a frequency-response graph shows well. More energy on the left is more bass; a lift in the upper mids and treble reads as brighter. Tonal balance is the graph’s home turf.',
   ],
   [
     'What can’t a frequency-response graph tell you?',
@@ -81,16 +81,16 @@ const jsonLd = [
       <div class="answer-k">Short answer</div>
       <p>
         A frequency-response graph shows <b>how loud a headphone plays each pitch</b>, from deep bass on the left to
-        high treble on the right. The <em>shape</em> tells you the tonal character &mdash; where it is warm, neutral,
+        high treble on the right. The <em>shape</em> tells you the tonal character: where it is warm, neutral,
         or bright. A flat line is not the goal, and the graph does not tell you everything. Here is how to read one.
       </p>
     </div>
 
     <h2>What the two axes are</h2>
     <p>
-      The horizontal axis is <b>frequency</b> &mdash; pitch, in hertz (Hz), from 20&nbsp;Hz (the lowest bass you can
+      The horizontal axis is <b>frequency</b>: pitch, in hertz (Hz), from 20&nbsp;Hz (the lowest bass you can
       feel) to 20,000&nbsp;Hz (the top of human hearing). It is spaced logarithmically, so each equal step is a
-      doubling &mdash; 100, 200, 400, 800 &mdash; because that is how we hear pitch. The vertical axis is <b>level</b>
+      doubling (100, 200, 400, 800), because that is how we hear pitch. The vertical axis is <b>level</b>
       in decibels (dB): how loud the headphone plays that pitch relative to the rest. Higher on the graph means more of
       that region; lower means less. That is the whole language.
     </p>
@@ -110,13 +110,13 @@ const jsonLd = [
     <p>
       This trips up almost everyone: a headphone that sounds neutral does <em>not</em> measure as a flat horizontal
       line. The measurement includes the response of the artificial ear and the rig it is measured on, and your own
-      ear adds its own shape too. So instead of comparing a curve to a ruler, we compare it to a <b>target curve</b>
-      &mdash; a shape that has been found to sound neutral or preferred (diffuse-field, Harman, or a house curve). A
+      ear adds its own shape too. So instead of comparing a curve to a ruler, we compare it to a <b>target curve</b>:
+      a shape that has been found to sound neutral or preferred (diffuse-field, Harman, or a house curve). A
       headphone that tracks the target sounds balanced; deviations from it are what you actually hear.
     </p>
     <p>
-      In practice a pleasant tuning is usually a gentle <em>downward tilt</em> &mdash; a little more bass than treble
-      &mdash; not a flat line and not a wild zig-zag.
+      In practice a pleasant tuning is usually a gentle <em>downward tilt</em> (a little more bass than treble),
+      not a flat line and not a wild zig-zag.
     </p>
 
     <h2>Peaks and dips: reading the shape</h2>
@@ -124,7 +124,7 @@ const jsonLd = [
       Once you stop expecting flat, the shape reads simply. A <b>bump</b> means more energy there (a bass bump = warmer;
       a presence bump = more forward; a treble bump = brighter). A <b>dip</b> means less (a mid dip = scooped or
       distant; a treble dip = smoother, darker). Narrow spikes above about 5&nbsp;kHz are the least trustworthy part of
-      any measurement &mdash; see the limits below &mdash; so read the broad trends first and treat the fine wiggles up
+      any measurement (see the limits below), so read the broad trends first and treat the fine wiggles up
       top as directional, not exact.
     </p>
 
@@ -135,7 +135,7 @@ const jsonLd = [
     </p>
     <ul>
       <li><b>The rig matters.</b> Different measurement rigs give different curves for the same headphone, especially in the treble. Compare curves measured on the <em>same</em> rig, and note which rig you are looking at.</li>
-      <li><b>Seating varies.</b> How the headphone sits on the fixture (and on your head) shifts the response — a little in the mids, a lot above 10&nbsp;kHz. Fine treble detail off a single curve is not settled fact.</li>
+      <li><b>Seating varies.</b> How the headphone sits on the fixture (and on your head) shifts the response: a little in the mids, a lot above 10&nbsp;kHz. Fine treble detail off a single curve is not settled fact.</li>
       <li><b>Open-backs read bass-light on some fixtures</b> because the seal leaks. That can be the measurement, not the headphone.</li>
     </ul>
     <p>
@@ -145,15 +145,15 @@ const jsonLd = [
 
     <h2>What a graph can’t tell you</h2>
     <p>
-      Tonal balance is the graph’s home turf. Soundstage, imaging, detail, distortion, and comfort are not &mdash;
-      those need other measurements or your own ears. So use the curve for what it is great at (is this bright or warm,
+      Tonal balance is the graph’s home turf. Soundstage, imaging, detail, distortion, and comfort are not.
+      Those need other measurements or your own ears. So use the curve for what it is great at (is this bright or warm,
       forward or laid-back?) and do not ask it to settle questions it was never measuring.
     </p>
 
     <div class="funnel">
       <p>
         And here is the honest catch: <b>a graph is a line, and listening is personal</b>. Two people reading the same
-        curve want different things from it. That is why we built <b>Attune</b> &mdash; instead of guessing from the
+        curve want different things from it. That is why we built <b>Attune</b>: instead of guessing from the
         graph, you audition tunings blind and loudness-matched on your own music, and keep the shape you would actually
         pick by ear.
       </p>
@@ -163,7 +163,7 @@ const jsonLd = [
     <h2>The honest bottom line</h2>
     <p>
       Read the axes, read the broad shape against a target, and trust the bass and mids more than the fine treble.
-      The graph will reliably tell you a headphone’s tonal balance &mdash; warm or bright, forward or relaxed &mdash;
+      The graph will reliably tell you a headphone’s tonal balance (warm or bright, forward or relaxed)
       and almost nothing about the rest. For the rest, you have to listen.
     </p>
 

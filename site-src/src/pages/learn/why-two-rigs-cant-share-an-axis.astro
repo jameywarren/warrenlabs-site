@@ -8,7 +8,7 @@ const SITE = 'https://warrenlabs.com';
 const url = `${SITE}/learn/why-two-rigs-cant-share-an-axis`;
 const title = 'Why you can’t compare measurements from two different rigs';
 const description =
-  'A frequency-response curve describes a headphone and the fixture it was measured on. Two rigs give different numbers for the same headphone — so a curve without a rig label tells you less than you think, and curves from different rigs must never go on one axis.';
+  'A frequency-response curve describes a headphone and the fixture it was measured on. Two rigs give different numbers for the same headphone, so a curve without a rig label tells you less than you think, and curves from different rigs must never go on one axis.';
 
 const faq: [string, string][] = [
   [
@@ -21,7 +21,7 @@ const faq: [string, string][] = [
   ],
   [
     'Does compensating to a target make measurements comparable?',
-    'No, and this is the trap. Compensation makes two curves look like they belong on the same axis by flattening them toward a common shape. The underlying fixture differences are still in there — they are now just harder to see.',
+    'No, and this is the trap. Compensation makes two curves look like they belong on the same axis by flattening them toward a common shape. The underlying fixture differences are still in there. They are now just harder to see.',
   ],
   [
     'What can you compare across rigs?',
@@ -29,7 +29,7 @@ const faq: [string, string][] = [
   ],
   [
     'Which rig does Warren Labs measure on?',
-    'A miniDSP EARS Pro, commissioned 3 August 2026, is our bench and the baseline for everything we publish. We also hold a HeadRoom Corporation archive on a Head Acoustics HMS II.3 from around 2010–2013, which we keep as a research reference and no longer publish as measurements — a rule we applied to ourselves before recommending it to anyone.',
+    'A miniDSP EARS Pro, commissioned 3 August 2026, is our bench and the baseline for everything we publish. We also hold a HeadRoom Corporation archive on a Head Acoustics HMS II.3 from around 2010–2013, which we keep as a research reference and no longer publish as measurements: a rule we applied to ourselves before recommending it to anyone.',
   ],
 ];
 
@@ -80,7 +80,7 @@ const jsonLd = [
       <p>
         A frequency-response curve is not a property of the headphone alone. It is a property of
         <b>the headphone and the fixture it was measured on</b>. Two rigs will hand you two different curves for the
-        same pair, and neither is wrong. So a curve with no rig label tells you less than it appears to &mdash; and
+        same pair, and neither is wrong. So a curve with no rig label tells you less than it appears to, and
         curves from two rigs must <b>never</b> be put on one axis, subtracted, averaged, or counted in a single
         &ldquo;N headphones measured&rdquo; number.
       </p>
@@ -95,13 +95,13 @@ const jsonLd = [
       loads the driver differently in the bass.
     </p>
     <p>
-      None of that is error. It is the rig doing exactly what it was built to do &mdash; it just means the number you
+      None of that is error. It is the rig doing exactly what it was built to do. It just means the number you
       read off the graph describes a <em>system</em>, and the headphone is only half of it. This is the same reason a
       curve never looks like a flat line even when a headphone sounds neutral, which is the starting point for
       <a href="/learn/target-curves-explained">target curves</a>.
     </p>
 
-    <h2>Where rigs disagree &mdash; and where they mostly don&rsquo;t</h2>
+    <h2>Where rigs disagree, and where they mostly don&rsquo;t</h2>
     <p>
       The disagreement is not spread evenly across the spectrum, and knowing where it lives is most of the skill.
     </p>
@@ -123,7 +123,7 @@ const jsonLd = [
     </p>
     <p>
       It goes finer than rig-to-rig, too. On our own bench the two microphone capsules are individually calibrated and
-      genuinely differ &mdash; at 20 kHz one reads +0.37 dB and the other +0.75 dB. Load the wrong calibration file for
+      genuinely differ: at 20 kHz one reads +0.37 dB and the other +0.75 dB. Load the wrong calibration file for
       a channel and you get a curve that looks completely plausible and is wrong in exactly the octave nobody checks.
     </p>
 
@@ -148,27 +148,27 @@ const jsonLd = [
       We hold an archive of 319 headphones measured at HeadRoom Corporation on a Head Acoustics HMS II.3, roughly
       2010&ndash;2013. It is a real historical record and it is genuinely ours to publish. We published it for a
       while. In August 2026 we stopped, because it does not meet the standard we hold our own bench to: one unit per
-      model, a head that no longer exists, no per-curve measurer, and &mdash; the one that decided it &mdash; <b>no
+      model, a head that no longer exists, no per-curve measurer, and (the one that decided it) <b>no
       record of how the headphone was seated.</b> A curve whose seating you cannot describe is a curve you cannot
       defend, however good the fixture was.
     </p>
     <p>
       The <b>bench</b> is a miniDSP EARS Pro, commissioned 3 August 2026, with per-capsule calibration and a fixed
       gain setting that is itself part of the calibration. Its corpus starts at six headphones and grows one session
-      at a time. Small, and honestly labelled as small &mdash; which we think is worth more than a large number
+      at a time. Small, and honestly labelled as small, which we think is worth more than a large number
       measured to a standard we can&rsquo;t describe.
     </p>
     <p>
       The rule that governs both: <b>two fixtures never share an axis.</b> Not summed, not averaged, not added into
       one headline count. Every record we keep carries a mandatory rig identifier, because a curve without its
-      coordinate system is not a measurement &mdash; it is a picture of one. The temptation to merge an old archive
+      coordinate system is not a measurement. It is a picture of one. The temptation to merge an old archive
       and a new bench into one impressive number is exactly the temptation this rule exists to defeat, and the
       cheapest way to resist it turned out to be not publishing the old one at all.
     </p>
 
     <h2>What you can and can&rsquo;t do across rigs</h2>
     <p>
-      <b>Reasonable:</b> reading broad shape and direction &mdash; bass-forward or bass-light, roughly where a large
+      <b>Reasonable:</b> reading broad shape and direction: bass-forward or bass-light, roughly where a large
       peak sits, whether a headphone is warm or bright. Comparing two headphones to each other <em>when both were
       measured on the same rig</em>. Using a graph from any rig as a rough sanity check on what you are hearing.
     </p>
@@ -186,8 +186,8 @@ const jsonLd = [
     <div class="funnel">
       <p>
         This is also why <b>Attune</b> voice-matches only within a single baseline. When the curve you have and the
-        curve you want were measured on the same rig, the fixture appears in both and cancels exactly in the difference
-        &mdash; the rig stops mattering the moment you stop crossing it. Cross baselines and that cancellation quietly
+        curve you want were measured on the same rig, the fixture appears in both and cancels exactly in the difference:
+        the rig stops mattering the moment you stop crossing it. Cross baselines and that cancellation quietly
         stops being true, so we don&rsquo;t.
       </p>
       <Button href="/attune" variant="primary">See how Attune matches a curve</Button>
@@ -197,7 +197,7 @@ const jsonLd = [
     <p>
       Ask which rig before you ask what the curve says. Compare within a rig, trust the midband most, treat the top
       octave as indicative rather than exact, and be suspicious of any tidy comparison that does not name its fixtures.
-      A measurement without its coordinate system is not more objective than listening &mdash; it just looks like it is.
+      A measurement without its coordinate system is not more objective than listening. It just looks like it is.
     </p>
 
     <h2>Common questions</h2>

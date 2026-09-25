@@ -179,7 +179,7 @@ const MEASURED_LD = {
                   alongside each curve, and draw each curve's own band." That now exists: Caliper
                   measures it per run and per band, and it travels with the row. A curve carrying
                   no band still draws none. */}
-              <label class="align" title="Draw each curve's own measured seating variance, where the measurement carries one. Curves without a measured band draw none — absence, not zero.">
+              <label class="align" title="Draw each curve's own measured seating variance, where the measurement carries one. Curves without a measured band draw none: absence, not zero.">
                 <span>Band</span>
                 <input type="checkbox" id="band" />
               </label>
@@ -211,7 +211,7 @@ const MEASURED_LD = {
             </p>
             <p>
               The summary below is the short version. <a href="/method">The full method is
-              published</a> &mdash; the rig, the seating rule, all 19 captures a side, and where we
+              published</a>: the rig, the seating rule, all 19 captures a side, and where we
               stop trusting our own graphs.
             </p>
           </div>
@@ -1037,7 +1037,7 @@ const MEASURED_LD = {
       row.className = 'row' + (on ? ' on' : '') + (!on && full ? ' dis' : '');
       row.setAttribute('role', 'option');
       row.setAttribute('aria-selected', on ? 'true' : 'false');
-      row.title = m.brand + ' ' + m.name + (m.contributed ? ' — measured by ' + m.by + ', on their own rig' : '');
+      row.title = m.brand + ' ' + m.name + (m.contributed ? ' (measured by ' + m.by + ', on their own rig)' : '');
       const sw = document.createElement('span');
       sw.className = 'sw';
       if (on) sw.style.background = colourOf(on);
@@ -1216,7 +1216,7 @@ const MEASURED_LD = {
           m.unit ? 'unit ' + m.unit : null,
           m.seatings ? m.seatings + ' seatings' : null,
           m.rig ? 'on ' + m.rig + (m.rigSerial ? ' ' + m.rigSerial : '') : null,
-          'A different physical rig from ours — see the note below the plot.',
+          'A different physical rig from ours. See the note below the plot.',
         ].filter(Boolean).join(' · ');
         el.appendChild(by);
       }

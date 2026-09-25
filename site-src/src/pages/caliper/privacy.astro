@@ -43,7 +43,7 @@ const updated = '18 September 2026';
 
       <p class="sec-lede">
         Caliper collects nothing and sends nothing. Your measurements are files on your own device.
-        That is not a promise about our intentions — it is a property of how the app is built, and
+        That is not a promise about our intentions. It is a property of how the app is built, and
         you can check it.
       </p>
 
@@ -51,8 +51,8 @@ const updated = '18 September 2026';
       <ul class="points">
         <li>
           <b>The Mac App Store build requests no network entitlement at all.</b> Its entitlements
-          file contains three things — the app sandbox, audio input, and read/write access to files
-          you pick in a system panel — and nothing else. An app without
+          file contains three things (the app sandbox, audio input, and read/write access to files
+          you pick in a system panel) and nothing else. An app without
           <code>com.apple.security.network.client</code> cannot open an outbound connection. The
           sandbox refuses it.
         </li>
@@ -69,10 +69,10 @@ const updated = '18 September 2026';
       <p>
         It is built and it is <b>not in 1.0</b>, because the service it uploads to does not exist
         yet. When it ships it will need the network entitlement, and this page will change in the
-        same release — never after it.
+        same release, never after it.
       </p>
       <p>
-        When it does: it will send only the measurement bundle — the curves, the impulse responses
+        When it does: it will send only the measurement bundle: the curves, the impulse responses
         behind them, the rig and calibration serials, and the session metadata you typed. It will
         show you that summary before sending, nothing will be sent automatically, and a submitted
         measurement will be published under a non-commercial licence with attribution, with you
@@ -106,7 +106,7 @@ const updated = '18 September 2026';
       <h3>Changes</h3>
       <p>
         Material changes will be reflected here with a new date. Because the app collects nothing,
-        the most likely change is a new capability — and if one ever transmits anything, it will say
+        the most likely change is a new capability, and if one ever transmits anything, it will say
         so plainly here <i>before</i> it ships, not after.
       </p>
 

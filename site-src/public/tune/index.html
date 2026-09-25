@@ -157,7 +157,7 @@ const setStatus = (el, msg, cls='') => { el.className = 'status ' + cls; el.text
 // devices; NARROW this to devicePEQ's known vendor/product IDs so users only see supported dongles.
 // ---------------------------------------------------------------------------------------------
 $('connect').addEventListener('click', async () => {
-  if (!('hid' in navigator)) { setStatus($('dev-status'), 'WebHID unavailable — use Chrome or Edge.', 'err'); return; }
+  if (!('hid' in navigator)) { setStatus($('dev-status'), 'WebHID unavailable. Use Chrome or Edge.', 'err'); return; }
   try {
     // Vendor-scoped, not filters:[] — an unfiltered picker lists every HID device on the machine
     // (keyboards, mice) and invites choosing something we will then try to write EQ into.
@@ -200,7 +200,7 @@ $('connect').addEventListener('click', async () => {
 const DEVICE_NOTES = {
   qudelix: 'Using the Qudelix app\u2019s 20-band EQ? Switch it back to User EQ to hear this. ' +
            '20-band is a separate mode that turns User EQ off. Your curve still arrives and is stored ' +
-           'in User EQ \u2014 it just does nothing until you switch back.',
+           'in User EQ. It just does nothing until you switch back.',
 };
 
 function showDeviceNote() {
@@ -265,7 +265,7 @@ function refresh() {
   // honesty note when the device forced changes
   $('clamp-note').textContent = (bands.length && (dropped > 0 || c.name.includes('Moondrop')))
     ? `Note: ${c.name} supports ${c.maxBands} ${c.types.join('/')} bands, ${c.minFc}–${c.maxFc} Hz, ${c.minGain}…+${c.maxGain} dB.` +
-      (dropped>0 ? ` ${dropped} band(s) outside its range were dropped — the loaded tuning is approximated.` : '')
+      (dropped>0 ? ` ${dropped} band(s) outside its range were dropped, so the loaded tuning is approximated.` : '')
     : '';
 
   $('send').disabled = !(hidDevice && parsedBands.length);
@@ -404,7 +404,7 @@ async function writeToDevice(dev, key, bands, preamp) {
   // FiiO / Walkplay / Moondrop still need their handlers ported — same shape, different framing.
   log(`WOULD SEND to ${DEVICES[key].name}: preamp ${preamp} dB, ${bands.length} bands`);
   bands.forEach((b,i)=>log(`  band ${i+1}: ${b.type} Fc=${b.fc} gain=${b.gain} Q=${b.q}`));
-  throw new Error(`${DEVICES[key].name} handler not ported yet — Qudelix works today`);
+  throw new Error(`${DEVICES[key].name} handler not ported yet. Qudelix works today`);
 }
 
 $('send').addEventListener('click', async () => {

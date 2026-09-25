@@ -8,7 +8,7 @@ const SITE = 'https://warrenlabs.com';
 const url = `${SITE}/learn/do-i-need-a-headphone-amp`;
 const title = 'Do you need a headphone amp?';
 const description =
-  'Short answer: usually not. Most headphones and nearly all IEMs run clean off a phone dongle or laptop. You need an amp when a headphone is high-impedance or low-sensitivity — here is how to tell.';
+  'Short answer: usually not. Most headphones and nearly all IEMs run clean off a phone dongle or laptop. You need an amp when a headphone is high-impedance or low-sensitivity. Here is how to tell.';
 
 // Visible FAQ and FAQPage schema are built from one source so they can never drift apart.
 const faq: [string, string][] = [
@@ -18,7 +18,7 @@ const faq: [string, string][] = [
   ],
   [
     'Do I need an amp for IEMs?',
-    'Almost never. In-ears are sensitive and low-impedance, so a good dongle is usually ideal — and some amps will actually hiss with them.',
+    'Almost never. In-ears are sensitive and low-impedance, so a good dongle is usually ideal, and some amps will actually hiss with them.',
   ],
   [
     'Is a DAC the same as an amp?',
@@ -26,7 +26,7 @@ const faq: [string, string][] = [
   ],
   [
     'Will an amp make my headphones louder and better?',
-    'Louder and cleaner, if they were power-starved. “Better” only in the sense of removing distortion or weak bass caused by a lack of power — not by adding detail that was never there.',
+    'Louder and cleaner, if they were power-starved. “Better” only in the sense of removing distortion or weak bass caused by a lack of power, not by adding detail that was never there.',
   ],
   [
     'My headphones are 32 ohms. Do I need an amp?',
@@ -79,8 +79,8 @@ const jsonLd = [
     <div class="answer">
       <div class="answer-k">Short answer</div>
       <p>
-        Most of the time, <b>no</b>. If your headphones are low-impedance and reasonably sensitive &mdash; which
-        covers the majority of consumer headphones and nearly all IEMs &mdash; a modern phone dongle, laptop, or DAC
+        Most of the time, <b>no</b>. If your headphones are low-impedance and reasonably sensitive (which
+        covers the majority of consumer headphones and nearly all IEMs), a modern phone dongle, laptop, or DAC
         output already drives them loud and clean. You need a dedicated amp when a specific headphone is <b>hard to
         drive</b>: high impedance (roughly 150&nbsp;&ohm; and up), low sensitivity, or both. Here is how to tell which
         one you have.
@@ -89,7 +89,7 @@ const jsonLd = [
 
     <h2>What a headphone amp actually does</h2>
     <p>
-      An amplifier does one job: it takes a small audio signal and makes it bigger &mdash; enough voltage and current
+      An amplifier does one job: it takes a small audio signal and makes it bigger: enough voltage and current
       to move the driver in your headphones to the loudness you want, without running out of headroom or distorting.
       That is it. It is not a tone control, it is not a &ldquo;detail&rdquo; machine, and past the point where your
       headphones are comfortably loud and clean, a bigger amp does not keep making them better. Most of the mythology
@@ -101,7 +101,7 @@ const jsonLd = [
     <p>
       <b>Impedance</b> (in ohms, &ohm;) is how much the headphone resists the current driving it. Low-impedance
       headphones (16&ndash;80&nbsp;&ohm;) are easy to drive and happy off almost anything. High-impedance headphones
-      (250&ndash;600&nbsp;&ohm;) need more voltage to reach the same loudness &mdash; that is where a dedicated amp
+      (250&ndash;600&nbsp;&ohm;) need more voltage to reach the same loudness, and that is where a dedicated amp
       earns its place.
     </p>
     <p>
@@ -112,7 +112,7 @@ const jsonLd = [
       You care about the <em>combination</em>. A 300&nbsp;&ohm; Sennheiser HD&nbsp;650 is the classic
       &ldquo;needs an amp&rdquo; headphone: high impedance, moderate sensitivity, so a phone can technically play it
       but runs out of clean headroom before it is satisfyingly loud. A 32&nbsp;&ohm;, high-sensitivity portable is the
-      opposite &mdash; loud and clean off a dongle.
+      opposite: loud and clean off a dongle.
     </p>
 
     <h2>When you don&rsquo;t need an amp</h2>
@@ -126,14 +126,14 @@ const jsonLd = [
       <li>Your headphones are 80&nbsp;&ohm; or below and reasonably sensitive.</li>
       <li>You drive them from a modern USB-C dongle, a recent laptop, or a DAC that already plays cleanly loud.</li>
     </ul>
-    <p>If it is already loud and clean, the money is better spent elsewhere &mdash; or not spent.</p>
+    <p>If it is already loud and clean, the money is better spent elsewhere, or not spent.</p>
 
     <h2>When you do need one</h2>
     <ul>
-      <li>Your headphones are high-impedance (roughly 150&nbsp;&ohm;+). The 250&ndash;600&nbsp;&ohm; classics &mdash; HD&nbsp;600 / 650 / 800, older Beyerdynamics, the AKG K-series &mdash; genuinely benefit.</li>
+      <li>Your headphones are high-impedance (roughly 150&nbsp;&ohm;+). The 250&ndash;600&nbsp;&ohm; classics (HD&nbsp;600 / 650 / 800, older Beyerdynamics, the AKG K-series) genuinely benefit.</li>
       <li>They are low-sensitivity planar magnetics that ask for current, not just voltage.</li>
       <li>You turn your source most of the way up and it is still not loud enough, or it distorts and goes thin when you push it.</li>
-      <li>You hear hiss, or a weak, flabby bottom end at listening volume &mdash; signs the output cannot control the driver.</li>
+      <li>You hear hiss, or a weak, flabby bottom end at listening volume: signs the output cannot control the driver.</li>
     </ul>
 
     <h2>How to tell if your headphones are starved</h2>
@@ -148,13 +148,13 @@ const jsonLd = [
     <h2>What an amp will <em>not</em> fix</h2>
     <p>
       This is the part that saves you the most money. An amp changes how <em>loud</em> and how <em>clean</em>, not how
-      the headphone is <em>voiced</em>. If you do not like the tonal balance &mdash; too bright, not enough bass,
-      shouty mids &mdash; no amp will fix that, because that is tuning, not power.
+      the headphone is <em>voiced</em>. If you do not like the tonal balance (too bright, not enough bass,
+      shouty mids), no amp will fix that, because that is tuning, not power.
     </p>
     <div class="funnel">
       <p>
         That distinction is exactly why we built <b>Attune</b>. If your headphones are loud and clean but you wish
-        they sounded <em>different</em>, the tool you want is not an amp &mdash; it is EQ, done by ear on your own
+        they sounded <em>different</em>, the tool you want is not an amp. It is EQ, done by ear on your own
         music. Attune lets you audition tunings blind and loudness-matched, and keep the one you would pick with your
         eyes closed.
       </p>
@@ -163,7 +163,7 @@ const jsonLd = [
 
     <h2>The honest bottom line</h2>
     <p>
-      Buy the amp when a specific, hard-to-drive headphone needs it &mdash; you will know, because it is either not
+      Buy the amp when a specific, hard-to-drive headphone needs it. You will know, because it is either not
       loud or not clean. Do not buy one hoping to unlock something that is not about power. And if what you actually
       want is a <em>different sound</em>, that is a tuning question, and it is free to answer.
     </p>

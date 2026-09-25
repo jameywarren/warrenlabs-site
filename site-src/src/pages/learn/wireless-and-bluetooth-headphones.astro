@@ -8,12 +8,12 @@ const SITE = 'https://warrenlabs.com';
 const url = `${SITE}/learn/wireless-and-bluetooth-headphones`;
 const title = 'Wireless & Bluetooth: what you actually give up';
 const description =
-  'Modern Bluetooth is good enough that the codec is rarely the weak link — tuning, latency, and battery matter more. Here is what going wireless actually costs you, and what the codec wars get wrong.';
+  'Modern Bluetooth is good enough that the codec is rarely the weak link: tuning, latency, and battery matter more. Here is what going wireless actually costs you, and what the codec wars get wrong.';
 
 const faq: [string, string][] = [
   [
     'Is Bluetooth audio worse than wired?',
-    'Less than the internet thinks. A good modern codec at a healthy bitrate is audibly close to wired for most listening. What you actually give up is latency, battery dependence, and control over the DAC/amp — not, usually, obvious sound quality.',
+    'Less than the internet thinks. A good modern codec at a healthy bitrate is audibly close to wired for most listening. What you actually give up is latency, battery dependence, and control over the DAC/amp, not (usually) obvious sound quality.',
   ],
   [
     'Which Bluetooth codec is best?',
@@ -29,7 +29,7 @@ const faq: [string, string][] = [
   ],
   [
     'Do wireless headphones have a DAC and amp?',
-    'Yes — they have to. The DAC and amp are built into the headphone and run off its battery. That is the real trade: you cannot change or upgrade that chain the way you can with a wired headphone.',
+    'Yes, they have to. The DAC and amp are built into the headphone and run off its battery. That is the real trade: you cannot change or upgrade that chain the way you can with a wired headphone.',
   ],
 ];
 
@@ -80,15 +80,15 @@ const jsonLd = [
       <p>
         Modern Bluetooth is good enough that the <b>codec is rarely the weak link</b>. What you actually give up going
         wireless is <b>latency</b>, <b>battery dependence</b>, and <b>control over the DAC and amp</b> (they now live
-        inside the headphone). The tuning of the headphone still matters far more than the codec &mdash; the
+        inside the headphone). The tuning of the headphone still matters far more than the codec. The
         codec wars are mostly noise.
       </p>
     </div>
 
     <h2>How Bluetooth audio works</h2>
     <p>
-      Bluetooth cannot carry a full uncompressed stream, so it uses a <b>codec</b> &mdash; SBC, AAC, aptX, LDAC and
-      friends &mdash; to compress the audio, send it, and rebuild it in the headphone. Each trades bitrate, latency,
+      Bluetooth cannot carry a full uncompressed stream, so it uses a <b>codec</b> (SBC, AAC, aptX, LDAC and
+      friends) to compress the audio, send it, and rebuild it in the headphone. Each trades bitrate, latency,
       and compatibility differently. The headline fear is that this compression wrecks quality; in practice, at a
       healthy bitrate on a good codec, it is close to inaudible for normal listening.
     </p>
@@ -96,7 +96,7 @@ const jsonLd = [
     <h2>What you actually give up</h2>
     <ul>
       <li><b>Latency.</b> Wireless adds delay. Fine for music; a problem for gaming and video unless you use a low-latency mode or a dedicated dongle.</li>
-      <li><b>The DAC and amp move inside the headphone</b>, running off its battery. You inherit whatever chain the maker chose and cannot change it — the opposite of the wired freedom to swap sources.</li>
+      <li><b>The DAC and amp move inside the headphone</b>, running off its battery. You inherit whatever chain the maker chose and cannot change it. That is the opposite of the wired freedom to swap sources.</li>
       <li><b>Battery and lifespan.</b> A dead battery is a dead headphone, and batteries age. Wired headphones just work, indefinitely.</li>
       <li><b>Connection reliability.</b> Occasional dropouts, pairing quirks, and codec negotiation you do not control.</li>
     </ul>
@@ -111,7 +111,7 @@ const jsonLd = [
     <h2>A note on noise cancelling</h2>
     <p>
       Active noise cancelling is a wireless-era feature, and it is genuinely useful for travel and offices. Know that
-      the ANC processing usually shifts the tuning a little &mdash; sometimes between ANC-on and ANC-off &mdash; so a
+      the ANC processing usually shifts the tuning a little (sometimes between ANC-on and ANC-off), so a
       noise-cancelling headphone is really two slightly different tunings in one. Judge it in the mode you will
       actually use.
     </p>
@@ -119,7 +119,7 @@ const jsonLd = [
     <div class="funnel">
       <p>
         The through-line of everything above: how a headphone is <em>tuned</em> matters more than whether it is
-        wireless. That is the part we obsess over &mdash; honest <a href="/attune">measurements</a>
+        wireless. That is the part we obsess over: honest <a href="/attune">measurements</a>
         and, for wired headphones and IEMs, tuning them to your taste with <b>Attune</b>.
       </p>
       <Button href="/attune" variant="primary">Explore Attune</Button>
@@ -127,7 +127,7 @@ const jsonLd = [
 
     <h2>The honest bottom line</h2>
     <p>
-      Go wireless for the convenience &mdash; it is real and it is fine. Just buy it for the tuning, the comfort, and
+      Go wireless for the convenience. It is real and it is fine. Just buy it for the tuning, the comfort, and
       the features (ANC, battery, latency) rather than the codec on the box. And keep a wired option around for gaming,
       video, and the day the battery dies.
     </p>

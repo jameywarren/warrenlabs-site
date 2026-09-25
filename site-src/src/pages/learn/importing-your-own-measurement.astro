@@ -7,17 +7,17 @@ const SITE = 'https://warrenlabs.com';
 const url = `${SITE}/learn/importing-your-own-measurement`;
 const title = 'How to import your own headphone measurement';
 const description =
-  'Attune ships measurements for a handful of headphones. If yours is not one of them, you can import a measurement you find online — free. Here is where to get one, which file to pick, and the one mistake that quietly ruins the result.';
+  'Attune ships measurements for a handful of headphones. If yours is not one of them, you can import a measurement you find online, free. Here is where to get one, which file to pick, and the one mistake that quietly ruins the result.';
 
 // Visible FAQ and FAQPage schema are built from one source so they can never drift apart.
 const faq: [string, string][] = [
   [
     'Where do I find a measurement file for my headphones?',
-    'The two big free sources are the squig.link network of measurement databases and the AutoEQ project on GitHub. Both cover thousands of models. Search for your exact model, then download the raw frequency-response file — usually a .txt or .csv of frequency and decibel pairs.',
+    'The two big free sources are the squig.link network of measurement databases and the AutoEQ project on GitHub. Both cover thousands of models. Search for your exact model, then download the raw frequency-response file, usually a .txt or .csv of frequency and decibel pairs.',
   ],
   [
     'What file format does Attune accept?',
-    'A plain text or CSV file of frequency and level pairs — one pair per line, frequency in hertz and level in decibels, separated by a comma, tab, or spaces. That is the format AutoEQ and the squig sites export, so in practice you download and import without editing anything.',
+    'A plain text or CSV file of frequency and level pairs: one pair per line, frequency in hertz and level in decibels, separated by a comma, tab, or spaces. That is the format AutoEQ and the squig sites export, so in practice you download and import without editing anything.',
   ],
   [
     'What is the difference between raw and compensated?',
@@ -90,7 +90,7 @@ const jsonLd = [
     <p>
       Attune ships with measurements we made ourselves, on our own fixture. That list is deliberately short and grows
       one headphone at a time, because every entry is a real measurement rather than a number copied from someone
-      else. If you own something we have not measured yet, importing is how you use the app today &mdash; and it is
+      else. If you own something we have not measured yet, importing is how you use the app today, and it is
       free, permanently. It is not a Pro feature and never was.
     </p>
 
@@ -98,11 +98,11 @@ const jsonLd = [
     <p>Two free sources cover most of what exists:</p>
     <ul>
       <li>
-        <b>squig.link</b> &mdash; a network of independent measurement databases. Find the site that covers your
+        <b>squig.link</b>: a network of independent measurement databases. Find the site that covers your
         brand, search the model, and download its raw data.
       </li>
       <li>
-        <b>AutoEQ</b> &mdash; a large open repository on GitHub with thousands of models, each in a folder containing
+        <b>AutoEQ</b>: a large open repository on GitHub with thousands of models, each in a folder containing
         a raw response file.
       </li>
     </ul>
@@ -111,7 +111,7 @@ const jsonLd = [
       else here: it came off their rig, not ours.
     </p>
 
-    <h2>Which file to pick &mdash; the mistake worth avoiding</h2>
+    <h2>Which file to pick: the mistake worth avoiding</h2>
     <p>
       Most databases offer the same headphone two ways: a <b>raw</b> curve and a <b>compensated</b> one. Compensated
       means a target curve has already been subtracted, so the graph shows how far the headphone sits from that target
@@ -119,7 +119,7 @@ const jsonLd = [
     </p>
     <p>
       <b>Attune wants raw.</b> It applies your target itself. Give it a curve that already has a target baked in and
-      the target gets counted twice &mdash; and the result of that is the genuinely dangerous part: it does not look
+      the target gets counted twice, and the result of that is the genuinely dangerous part: it does not look
       broken. You get a tuning that seems reasonable, sounds off in a way you cannot name, and gives you no hint why.
     </p>
     <p>How to tell them apart:</p>
@@ -144,8 +144,8 @@ const jsonLd = [
     </p>
     <p>In practice that means:</p>
     <ul>
-      <li><b>Bass and midrange tonal balance</b> &mdash; trust it. Rigs mostly agree here.</li>
-      <li><b>Fine treble detail</b> &mdash; do not. Above roughly 8&nbsp;kHz, rigs disagree by several decibels, and
+      <li><b>Bass and midrange tonal balance</b>: trust it. Rigs mostly agree here.</li>
+      <li><b>Fine treble detail</b>: do not. Above roughly 8&nbsp;kHz, rigs disagree by several decibels, and
         no amount of careful listening will fix data that started out different.</li>
       <li><b>Coupler family matters.</b> Curves from 711-style couplers transfer to our fixture better than curves
         from a 5128, because ours shares the same coupler standard.</li>
@@ -159,7 +159,7 @@ const jsonLd = [
     </p>
     <p>
       That is the honest ceiling on imported data, and it is why we offer a
-      <a href="/measure">mail-in measurement service</a> &mdash; your actual unit, on our fixture, cancelling cleanly
+      <a href="/measure">mail-in measurement service</a>: your actual unit, on our fixture, cancelling cleanly
       against our targets. Most people will never need it. If you are chasing the last decibel, it is the only way to
       get there.
     </p>

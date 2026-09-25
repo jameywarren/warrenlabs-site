@@ -53,7 +53,7 @@ const LENSES = [
     items: [
       { name: 'Harmonic spectrum', why: 'Each harmonic against the floor it stands on.' },
       { name: 'THD vs frequency', why: 'Distortion swept, with the floor drawn underneath as a region.' },
-      { name: 'Frequency response', why: 'Bounded by the noise spectrum rather than the distortion floor — a level is not a ratio.' },
+      { name: 'Frequency response', why: 'Bounded by the noise spectrum rather than the distortion floor: a level is not a ratio.' },
     ],
   },
   {
@@ -61,9 +61,9 @@ const LENSES = [
     note: 'Each of these says so when you open it, rather than drawing something that looks like an answer.',
     items: [
       { name: 'Impulse response', why: 'Nothing writes an impulse into a record yet.' },
-      { name: 'ETC', why: 'Needs an acoustic capture — a microphone and a room.' },
+      { name: 'ETC', why: 'Needs an acoustic capture: a microphone and a room.' },
       { name: 'RT60', why: 'Needs an acoustic capture, and a tail long enough to hold the decay.' },
-      { name: 'Waterfall / CSD', why: 'Needs an acoustic capture — decay over time needs something that decays.' },
+      { name: 'Waterfall / CSD', why: 'Needs an acoustic capture: decay over time needs something that decays.' },
       { name: 'THD vs level', why: 'Needs a series of sweeps at several drive levels, each with its own floor.' },
       { name: 'Impedance', why: 'Needs a sense-resistor jig, and a rig with a reference channel.' },
     ],
@@ -100,7 +100,7 @@ const proofApp = {
         <p class="lede">
           Every analyzer prints numbers. <b>Proof prints the floor those numbers sit on</b>, and
           refuses to show a digit it has not earned. It measures what your own interface
-          contributes &mdash; its noise and its distortion &mdash; before it measures anything
+          contributes (its noise and its distortion) before it measures anything
           else, and then reports every reading against that.
         </p>
         <div class="chips">
@@ -112,8 +112,8 @@ const proofApp = {
           <Button href="#support" variant="ghost" size="lg">Support</Button>
         </div>
         <p class="hero-note">
-          <span class="dot"></span> Not released yet. There is no download and no price &mdash;
-          when there is, it will be here.
+          <span class="dot"></span> Not released yet. There is no download and no price.
+          When there is, it will be here.
         </p>
       </div>
 
@@ -153,7 +153,7 @@ const proofApp = {
           <h3>Measure the instrument first</h3>
           <p>
             Patch output 1 back into input 1 and Proof measures that loop before it measures
-            anything else. What it learns is the floor &mdash; and it is re-runnable whenever the
+            anything else. What it learns is the floor, and it is re-runnable whenever the
             rig changes.
           </p>
         </div>
@@ -162,7 +162,7 @@ const proofApp = {
           <h3>A floor is a shape, not a line</h3>
           <p>
             No converter has a flat one. Proof draws it as a region under the curves, across
-            frequency, because that is what it actually is &mdash; and a single number for it would
+            frequency, because that is what it actually is, and a single number for it would
             be a fiction.
           </p>
         </div>
@@ -178,7 +178,7 @@ const proofApp = {
 
       <div class="pull">
         You can skip the bench measurement.<br />
-        <span>Nothing is disabled &mdash; every reading is just marked <i>Indicative</i>, because there is no measured floor to hold it against.</span>
+        <span>Nothing is disabled. Every reading is just marked <i>Indicative</i>, because there is no measured floor to hold it against.</span>
       </div>
     </div>
   </section>
@@ -211,7 +211,7 @@ const proofApp = {
         <div class="rt-row marginal" role="row">
           <span role="cell" class="rt-where"><b class="tag">Marginal</b> Close to the floor</span>
           <span role="cell" class="rt-how mono">&minus;119 &hellip; &minus;108 dB</span>
-          <span role="cell" class="rt-why">A range, <b>never a plus-or-minus</b> &mdash; a floor can only push a reading up, so the uncertainty is one-sided and writing it as symmetric would be a lie about its shape.</span>
+          <span role="cell" class="rt-why">A range, <b>never a plus-or-minus</b>: a floor can only push a reading up, so the uncertainty is one-sided and writing it as symmetric would be a lie about its shape.</span>
         </div>
 
         <div class="rt-row bound" role="row">
@@ -226,7 +226,7 @@ const proofApp = {
         <p>
           There is no setting for how many digits to show. The number of figures comes from
           headroom: <b>four figures means the instrument is entitled to four.</b> When the headroom
-          is not there, the digits are not there either &mdash; which is the same rule as the table
+          is not there, the digits are not there either, which is the same rule as the table
           above, applied one decimal place at a time.
         </p>
       </div>
@@ -250,7 +250,7 @@ const proofApp = {
           <span class="tier-name mono">INDICATIVE</span>
           <p>
             No measured floor, or a rig that cannot vouch for itself. The readings are still real
-            work &mdash; they are just not bounded by anything. The built-in simulator is capped
+            work. They are just not bounded by anything. The built-in simulator is capped
             here permanently, because a modelled rig has perfect provenance of nothing.
           </p>
         </div>
@@ -353,7 +353,7 @@ const proofApp = {
       <p class="willnot">
         Proof will not print a number it cannot justify. It will not draw a floor it has not
         measured. It will not report phase or arrival time on a rig running two uncorrected clocks,
-        because those are not reportable there &mdash; and it says so rather than adding a caveat
+        because those are not reportable there, and it says so rather than adding a caveat
         underneath.
       </p>
     </div>
@@ -365,13 +365,13 @@ const proofApp = {
   <section id="support" class="band">
     <div class="wrap prose">
       <span class="eyebrow">Support</span>
-      <h2>Proof &mdash; help</h2>
+      <h2>Proof help</h2>
 
       <h3>Getting help</h3>
       <p>
         Email <a href="mailto:jamey@warrenlabs.com">jamey@warrenlabs.com</a>. It reaches a person.
         If you are reporting something that looks wrong, the most useful thing you can send is the
-        measurement record itself &mdash; Proof writes every capture as a readable text file you
+        measurement record itself. Proof writes every capture as a readable text file you
         can open, check and share.
       </p>
 
@@ -382,8 +382,8 @@ const proofApp = {
         loop, and everything you measure afterwards is reported against what it learned.
       </p>
       <p>
-        You can skip that step. Nothing is disabled if you do &mdash; every capture still works and
-        every record still exports &mdash; but readings are marked <b>Indicative</b>, meaning there
+        You can skip that step. Nothing is disabled if you do: every capture still works and
+        every record still exports, but readings are marked <b>Indicative</b>, meaning there
         is no measured floor to hold them against. The bench measurement is re-runnable at any
         time.
       </p>
@@ -391,7 +391,7 @@ const proofApp = {
       <h3>Microphone access</h3>
       <p>
         Proof needs the microphone permission to read any audio input at all, including a USB or
-        Thunderbolt interface &mdash; on iOS every input arrives through the same permission. If
+        Thunderbolt interface. On iOS every input arrives through the same permission. If
         Proof says it cannot see an input, the switch is
         in <b>Settings &rsaquo; Privacy &amp; Security &rsaquo; Microphone &rsaquo; Proof</b>.
       </p>
@@ -420,7 +420,7 @@ const proofApp = {
 
       <h3>What it does not do yet</h3>
       <p>
-        Three of the nine lenses work today &mdash; harmonic spectrum, frequency response and THD
+        Three of the nine lenses work today: harmonic spectrum, frequency response and THD
         against frequency. <a href="#lenses">The list above</a> says what each of the others is
         waiting on. Each one says so in the app when you open it.
       </p>
@@ -449,8 +449,8 @@ const proofApp = {
     <div class="wrap">
       <h2>Coming soon to the App Store.</h2>
       <p>
-        Mac, iPad and iPhone. If you measure things and you want to know when it lands, say so
-        &mdash; it goes to a person, not a list broker.
+        Mac, iPad and iPhone. If you measure things and you want to know when it lands, say so.
+        It goes to a person, not a list broker.
       </p>
       <Button href="mailto:jamey@warrenlabs.com?subject=Proof" variant="primary" size="lg">
         jamey@warrenlabs.com
