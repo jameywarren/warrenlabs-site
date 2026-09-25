@@ -41,8 +41,9 @@ and is loaded only on that page.
 The rack sits at a 12° tilt. House style: `makerphones` is always lowercase one word, and there
 are **no em dashes in any copy** (Jamey, 2026-09-25). Use a colon, comma, full stop or
 parentheses. Only code is exempt, such as the dimmed `—` readout a plug-in draws. The full rule
-is in the monorepo's `CLAUDE.md`, and `tools/gen_site.py` there refuses to generate or publish
-`/plugins` with one. Nothing checks the Astro or hand-written pages yet.
+is in the monorepo's `CLAUDE.md`. Two checks enforce it: `tools/gen_site.py` in the monorepo
+refuses to generate or publish `/plugins` with one, and `npm run build` here ends with
+`site-src/tools/check-copy.mjs`, which fails on one anywhere else in the published site.
 
 ## Measurement provenance
 

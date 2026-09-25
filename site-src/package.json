@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "node tools/vendor.mjs && node tools/gen-measurements.mjs && node tools/gen-demo-curves.mjs && astro dev",
-    "build": "node ../../tools/measure/check_corpus_separation.mjs && node tools/vendor.mjs && node tools/gen-measurements.mjs && node tools/gen-demo-curves.mjs && astro build && node tools/sync.mjs && node tools/sync-chrome.mjs",
+    "build": "node ../../tools/measure/check_corpus_separation.mjs && node tools/vendor.mjs && node tools/gen-measurements.mjs && node tools/gen-demo-curves.mjs && astro build && node tools/sync.mjs && node tools/sync-chrome.mjs && node tools/check-copy.mjs",
     "preview": "astro preview",
     "astro": "astro",
     "vendor": "node tools/vendor.mjs"
