@@ -38,8 +38,11 @@ is the line-wide mono: `wl-ui` embeds it and every native plugin faceplate uses 
 matches the apps. Instrument Serif appears in exactly one place, the Attune wordmark on `/attune`,
 and is loaded only on that page.
 
-The rack sits at a 12° tilt. House style: no em dashes in marketing copy, and `makerphones` is
-always lowercase one word.
+The rack sits at a 12° tilt. House style: `makerphones` is always lowercase one word, and there
+are **no em dashes in any copy** (Jamey, 2026-09-25). Use a colon, comma, full stop or
+parentheses. Only code is exempt, such as the dimmed `—` readout a plug-in draws. The full rule
+is in the monorepo's `CLAUDE.md`, and `tools/gen_site.py` there refuses to generate or publish
+`/plugins` with one. Nothing checks the Astro or hand-written pages yet.
 
 ## Measurement provenance
 
