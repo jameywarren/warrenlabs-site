@@ -284,6 +284,10 @@ table.md code{white-space:nowrap}
    that contains one. Quiet on purpose: it qualifies the price, it is not a second call to action. */
 .beta-terms{ color:var(--dim); font-size:14px; margin:10px 0 0 }
 
+/* The trial terms under every plug-in's own button (gen_site.py trial_note, 2026-09-26). Same
+   quiet voice as the beta line: it answers "can I try it first", it is not a second button. */
+.trial-terms{ color:var(--dim); font-size:14px; margin:12px 0 0; max-width:64ch }
+
 /* Light/dark toggle. Same markup, id and look as every other page on the site; /plugins was the
    one section without it, so a visitor who picked light elsewhere was stranded in dark here. */
 .wl-theme{width:32px;height:32px;flex:none;display:grid;place-items:center;margin-left:14px;
