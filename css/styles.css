@@ -315,14 +315,20 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
    720px, so from roughly 720 to 1180 the wordmark and the first nav link sat touching with zero
    gap. Three steps now: relax, squeeze, drawer. Ported verbatim from Nav.astro except that the
    drawer trigger there is one media block and here it is two, because this file's 720px block
-   carries a lot of non-header rules that should stay at 720. */
-@media (max-width: 1260px) {
+   carries a lot of non-header rules that should stay at 720.
+
+   2026-09-26: the three steps are 1340 / 1200 / 1000, the same as Nav.astro. Nav.astro moved out
+   to those on 2026-09-11 when PROOF made nine items, and this file was left at 1260 / 1120 / 940,
+   so the homepage header had the wordmark and the first nav link TOUCHING (0px, measured) at
+   1261-1299, 1121-1150 and 960-970 while every Astro page was fine. Measured in a browser after
+   the move, with the nav as of 2026-09-26: 13px at full size and at 1001, the tightest points. */
+@media (max-width: 1340px) {
   .head-in { padding: 0 32px; }
   nav { gap: 22px; }
 }
 /* Last stop before the drawer: type down a step, gaps tightened. Buys back ~150px, which is what
-   it takes to still fit at 940. */
-@media (max-width: 1120px) {
+   it takes to still fit at 1001. */
+@media (max-width: 1200px) {
   .head-in { padding: 0 24px; }
   nav { gap: 15px; }
   nav a { font-size: 11.5px; letter-spacing: 0.09em; }
@@ -331,7 +337,7 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   .logo-mark { gap: 9px; }
   .logo-mark span { font-size: 13px; letter-spacing: 0.14em; }
 }
-@media (max-width: 940px) {
+@media (max-width: 1000px) {
   .head-in { padding: 0 20px; }
   .logo-mark { gap: 8px; }
   .wl-mark { width: 34px; }
@@ -345,7 +351,10 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
     max-height: 0; overflow: hidden;
     transition: max-height 0.32s cubic-bezier(.2,.8,.3,1);
   }
-  header.nav-open nav { max-height: 240px; }
+  /* Taller than the nine rows need (455px measured at 375 wide). At 240px the open menu showed
+     four links and clipped the other five, the store button last among them, with no way to
+     scroll to them because the list is overflow: hidden. */
+  header.nav-open nav { max-height: 600px; }
   /* Undo the 1040px squeeze: in the drawer each link is a full-width row, so the tightened
      tracking would read as a mistake rather than as economy. */
   nav a { font-size: 12px; letter-spacing: 0.16em; color: var(--ink); padding: 17px 20px; border-top: 1px solid var(--line); }
@@ -429,9 +438,12 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
 .also-head .k { font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 0.26em; color: var(--dim); }
 .also-head .sub { color: var(--faint); font-size: 14px; }
 .also-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+/* text-decoration: these were <button>s once and are <a>s now, so every word in every card took the
+   browser's link underline (live until 2026-09-26). color and font were already reset for the
+   same reason. */
 .also-card { text-align: left; background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
   padding: 18px; cursor: pointer; display: flex; flex-direction: column; gap: 5px; font: inherit; color: inherit;
-  transition: border-color 0.15s, transform 0.15s; }
+  text-decoration: none; transition: border-color 0.15s, transform 0.15s; }
 .also-card:hover { border-color: color-mix(in oklab, var(--acc) 35%, var(--line)); transform: translateY(-2px); }
 .also-card .led { margin-bottom: 8px; }
 .also-card h4 { font-family: var(--font-display); font-weight: var(--disp-weight); text-transform: var(--disp-tt);
@@ -579,6 +591,16 @@ h1.lc, h2.lc, h3.lc, h4.lc, span.lc, .lc { text-transform: lowercase; }
    .h1-lede at 0,0,1,0 loses and the sentence renders at 172px. Match the specificity. */
 .hero h1.h1-lede { font-size: clamp(34px, 4.6vw, 58px); line-height: 1.05; letter-spacing: -0.022em;
   text-transform: none; font-weight: 600; margin: 0 0 14px; max-width: 17ch; text-wrap: balance; }
+/* The one-sentence identity above the h1 (2026-09-26). Body type and dim, so it reads as who is
+   speaking and does not compete with the offer under it. */
+.hero-id { font-size: 17px; line-height: 1.5; color: var(--dim); margin: 0 0 18px; max-width: 60ch; text-wrap: pretty; }
+/* On a phone it costs three lines above the h1, and docs/homepage-redesign.md §6.1 requires the App
+   Store button on the first screen at 375x812. A step smaller, and the hero gives back 20px of top
+   padding: the button's bottom edge measured 731px (674 before the line existed). */
+@media (max-width: 720px) {
+  .hero { padding-top: 24px; }
+  .hero-id { font-size: 15px; line-height: 1.45; margin-bottom: 12px; }
+}
 .hero-status { font-size: 12px; letter-spacing: 0.13em; color: var(--acc); margin: 0 0 26px; }
 .hero-byline { font-size: 15.5px; color: var(--faint); margin: 0 0 26px; max-width: 56ch; }
 .hero-fine { font-size: 14px; color: var(--faint); margin: 14px 0 0; }
@@ -633,6 +655,8 @@ ol.method a { color: var(--ink); text-decoration-color: var(--acc); text-underli
 .plug-state { margin: 20px 0 0; padding: 16px 20px; border: 1px solid var(--line); border-radius: 4px;
   background: var(--bg2); font-size: 15px; color: var(--dim); }
 .plug-state b { color: var(--ink); }
+.plug-state a { color: var(--ink); text-decoration-color: var(--acc); text-underline-offset: 3px; }
+.plug-state a:hover { color: var(--acc); }
 
 @media (max-width: 900px) {
   .steps { grid-template-columns: 1fr; gap: 26px; }
@@ -644,7 +668,10 @@ ol.method a { color: var(--ink); text-decoration-color: var(--acc); text-underli
 }
 
 /* the book, with its cover back */
-.also-card.bookcard { display: grid; grid-template-columns: 84px 1fr; gap: 18px; align-items: start; }
+/* grid-column: five cards since Caliper joined (2026-09-26), so the book, last, takes its row whole
+   rather than leaving half of it empty. */
+.also-card.bookcard { display: grid; grid-template-columns: 84px 1fr; gap: 18px; align-items: start;
+  grid-column: 1 / -1; }
 .bookcard-cover { width: 84px; height: auto; border-radius: 3px; display: block;
   box-shadow: 0 2px 10px rgba(0,0,0,.35); }
 .bookcard-body { display: block; }

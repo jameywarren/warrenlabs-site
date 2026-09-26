@@ -32,7 +32,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <script async src="https://plausible.io/js/pa-7zF1GswBt5oYNLddNETeJ.js"></script>
 <script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script>
 <!-- wl:head:end -->
-<link rel="stylesheet" href="css/styles.css?v=de0d09f3">
+<link rel="stylesheet" href="css/styles.css?v=0f987542">
 </head>
 <body>
 
@@ -46,7 +46,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <span>WARREN&nbsp;LABS</span>
     </div>
     <nav id="primary-nav">
-      <a href="/attune/">ATTUNE</a><a href="/proof/">PROOF</a><a href="/collections/headphones/">HEADPHONES</a><a href="/graphs/">MEASUREMENTS</a><a href="/method/">METHOD</a><a href="/measure/">SEND ONE IN</a><a href="/learn/">LEARN</a><a href="/loaners/">FOR MAKERS</a><a class="cta" href="/#patch">PATCH IN</a>
+      <a href="/attune/">ATTUNE</a><a href="/caliper/">CALIPER</a><a href="/collections/headphones/">HEADPHONES</a><a href="/graphs/">MEASUREMENTS</a><a href="/method/">METHOD</a><a href="/measure/">SEND ONE IN</a><a href="/learn/">LEARN</a><a href="/loaners/">FOR MAKERS</a><a class="cta" href="/plugins/">PLUGINS</a>
     </nav>
     <button class="wl-theme" id="wl-theme" aria-label="Switch between light and dark" title="Light / dark">◐</button>
     <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="primary-nav">
@@ -57,6 +57,11 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <!-- wl:header:end -->
 
 <section class="hero wrap">
+  <!-- Who this is, before what to download. The 2026-09-25 review found the page had no
+       one-sentence identity: the h1 and the main button are Attune's, which is right for the
+       offer and wrong as the only thing a stranger learns. warren-labs docs/review-2026-09-25.md
+       section 5.2. -->
+  <p class="hero-id">Warren Labs is Jamey Warren&rsquo;s audio lab in Montana: I measure headphones and build tools for people who listen, measure and mix.</p>
   <h1 class="display h1-lede">Tune your headphones by ear.</h1>
   <p class="hero-status mono">FREE &middot; ON THE APP STORE FOR MAC, IPHONE AND IPAD</p>
   <div class="hero-sub">
@@ -178,8 +183,10 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <h2 class="display">Tools that tell the truth.</h2>
       <p class="sub">Nine plugins on one shared DSP library, built alongside the measurement work. Level is the same correction engine Attune runs on, as a plugin for your DAW.</p>
     </div>
-    <!-- Price and STATE are separate fields on purpose. When the store opens, the chip becomes a
-         buy link and the note below is deleted — no layout change. See docs/homepage-redesign.md §8. -->
+    <!-- Price and STATE are separate fields on purpose. The store opened 2026-09-22, so the note
+         below says how the line is sold instead of saying it cannot be bought. Still open from
+         docs/homepage-redesign.md §8.4: buy links on the chips, and real plugin imagery. The
+         Whole Lab blurb copies wholeLab.tagline in warren-labs web/plugins.json. -->
     <div class="plines">
       <a class="pline" href="/plugins/level/">
         <span class="pl-nm">Level</span><span class="pl-pr mono">$29</span>
@@ -199,10 +206,10 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <a class="pline" href="/plugins/#bundle">
         <span class="pl-nm">The Whole Lab</span><span class="pl-pr mono">$79</span>
         <span class="pl-st mono">PUBLIC BETA</span>
-        <span class="pl-bl">Every Warren Labs plugin, one install.</span>
+        <span class="pl-bl">The Trueness and Character lines, one install.</span>
       </a>
     </div>
-    <p class="plug-state"><b>Paid public beta.</b> The store is open. Level sells on its own; the other eight come in the three bundles above.</p>
+    <p class="plug-state"><b>The store is open.</b> Level is a full release and sells on its own; the other eight are paid betas, sold in the bundles above. You can try any of them free before you buy, from the <a href="/plugins/downloads/">downloads page</a>.</p>
   </div>
 </section>
 
@@ -214,6 +221,12 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
     <a class="also-card" href="https://makerphones.com/" target="_blank" rel="noopener">
       <h3>makerphones</h3>
       <p>Everything I learn about building headphones, given away. A free build manual, open design files, and a pair you print, tune and service yourself.</p>
+    </a>
+    <!-- Caliper is released (2026-09-19) and until 2026-09-26 no page linked to it. Its price is
+         owned by the caliper repo, docs/PRICING.md. -->
+    <a class="also-card" href="/caliper/">
+      <h3>Caliper</h3>
+      <p>Headphone measurement for Mac and iPhone. It measures a headphone on an acoustic fixture and tells you how much of the curve is real. Free on the App&nbsp;Store.</p>
     </a>
     <a class="also-card" href="/proof">
       <h3>Proof</h3>
@@ -258,7 +271,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <!-- wl:footer:start -->
 <footer>
   <div class="foot-in">
-    <div class="foot-links"><a href="/">The lab</a><a href="/attune/">Attune</a><a href="/proof/">Proof</a><a href="/collections/headphones/">Headphones</a><a href="/graphs/">Measurements</a><a href="/method/">How we measure</a><a href="/learn/">Learn</a><a href="/plugins/">Plugins</a><a href="/plugins/guides/">Guides</a><a href="/loaners/">For manufacturers</a><a href="/support/">Support</a><a href="/#patch">Contact</a><a href="/terms/">Terms</a><a href="/privacy/">Privacy</a><a href="/refunds/">Refunds</a></div>
+    <div class="foot-links"><a href="/">The lab</a><a href="/attune/">Attune</a><a href="/caliper/">Caliper</a><a href="/changes/">Changes</a><a href="/proof/">Proof</a><a href="/collections/headphones/">Headphones</a><a href="/graphs/">Measurements</a><a href="/method/">How we measure</a><a href="/learn/">Learn</a><a href="/plugins/">Plugins</a><a href="/plugins/guides/">Guides</a><a href="/loaners/">For manufacturers</a><a href="/support/">Support</a><a href="/#patch">Contact</a><a href="/terms/">Terms</a><a href="/privacy/">Privacy</a><a href="/refunds/">Refunds</a></div>
     <div class="foot-meta"><span>WARREN LABS · JAMEY WARREN</span><span>BUILT IN LIVINGSTON, MONTANA</span></div>
   </div>
 </footer>

@@ -259,7 +259,16 @@ const { variant = 'home' } = Astro.props;
      worst case is NOT at the widest width: the container is capped at 1320, so every width above
      1341 renders identically and 18px is the permanent full-size gap. That gap is tighter than the
      32px rhythm between nav items, which is the first thing to spend width on if a TENTH item ever
-     lands — and at that point measure again rather than extrapolating from these numbers. */
+     lands — and at that point measure again rather than extrapolating from these numbers.
+
+     RE-MEASURED 2026-09-26, still nine items but CALIPER for PROOF and PLUGINS for PATCH IN, which
+     is about 5px wider. Same probe, here and on the homepage (css/styles.css now has these same
+     breakpoints, which it had missed on 2026-09-11):
+
+       >=1341   gap 13px     1340  gap 81px     1201  gap 22px     1200  gap 112px
+        1030   gap 27px     1001  gap 13px     1000  drawer       overflow 0 everywhere
+
+     Tightest point 13px, at full size and at 1001. There is no room for a tenth item. */
   @media (max-width: 1340px) {
     .wl-head-in {
       padding: 0 32px;
@@ -325,8 +334,11 @@ const { variant = 'home' } = Astro.props;
       overflow: hidden;
       transition: max-height 0.32s cubic-bezier(0.2, 0.8, 0.3, 1);
     }
+    /* Taller than the nine rows need (482px measured at 375 wide, 2026-09-26). At 340px the
+       open menu clipped the last three links, the store button among them, and overflow: hidden
+       left no way to scroll to them. css/styles.css has the same rule for the homepage. */
     .wl-head.nav-open nav {
-      max-height: 340px;
+      max-height: 600px;
     }
     nav a {
       color: var(--text);
