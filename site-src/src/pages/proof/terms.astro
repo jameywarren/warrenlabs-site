@@ -12,13 +12,22 @@ import Footer from '../../components/Footer.astro';
 //
 // WHY THIS PAGE EXISTS. Apple's Developer Program License Agreement, Schedule 2 section 3.8(b),
 // v126: "Links to Your Privacy Policy and Terms of Use must be accessible within Your Licensed
-// Application." Proof ships auto-renewable subscriptions, so it cannot be submitted without a
-// Terms of Use at a live URL that the app itself links to.
+// Application." So Proof cannot be submitted without a Terms of Use at a live URL that the app
+// itself links to.
+//
+// THE ORIGINAL REASON GIVEN HERE WAS "Proof ships auto-renewable subscriptions", AND IT IS GONE.
+// The subscriptions were retired on 2026-09-25 (one non-consumable at $79; the price and the shape
+// are owned by docs/DESIGN.md section 16.2b) and deleted in App Store Connect. The REQUIREMENT is
+// unchanged, because 3.8(b) is about a Licensed Application and not about how it is billed. Worth
+// recording rather than quietly editing: the requirement outlived the reason this file gave for it,
+// which is what a premise written next to a rule is for.
 //
 // IT MUST NOT POINT AT /terms/. That page is the PLUGIN line's terms and every load-bearing
 // sentence in it is false for Proof: it names FastSpring as the seller (Apple is), it describes a
 // .wllicense file (App Review guideline 3.1.1 forbids one), it says there is nothing to cancel
-// (Proof is primarily a subscription), it promises 14 days no questions asked (not ours to
+// (true of Proof now too, but for the opposite reason: /terms/ means a licence with no renewal
+// to stop, and Proof means Apple took a single payment), it promises 14 days no questions asked
+// (not ours to
 // promise on Apple's behalf), and it calls the line a public beta (Proof ships at 1.0.0).
 // Handing an App Review reviewer that document from inside Proof would hand them a contradiction
 // of the purchase they are reviewing. Hence a per-product path, /proof/terms/, which also scales
@@ -60,8 +69,9 @@ import Footer from '../../components/Footer.astro';
 //     would contradict the thing being sold. The wording draws a line between HONESTY and
 //     AUTHORITY, and both halves are load-bearing.
 //   * The data section names the two connections the app does make rather than claiming it makes
-//     none. "Proof makes no network connections" was in the first draft and is false: a
-//     subscription app talks to the App Store, and this very page is a web address the app opens.
+//     none. "Proof makes no network connections" was in the first draft and is false: an app with
+//     an in-app purchase talks to the App Store, and this very page is a web address the app
+//     opens. Retiring the subscriptions did not make the absolute true.
 //     The same absolute has already been retracted once in resources/PrivacyInfo.xcprivacy.
 const DRAFT = true;
 
@@ -98,7 +108,7 @@ const email = 'jamey@warrenlabs.com';
 
 <Layout
   title="Terms of Use · Proof · Warren Labs"
-  description="The terms for buying and using Proof. Apple is the seller, there is one tier with three ways to pay, and everything you measure stays on your device."
+  description="The terms for buying and using Proof. Apple is the seller, there is one purchase and no subscription, and everything you measure stays on your device."
   noindex={DRAFT}
 >
   <Nav variant="home" />
@@ -157,10 +167,10 @@ const email = 'jamey@warrenlabs.com';
         one.
       </p>
       <p>
-        There are three ways to pay for that one tier: a monthly subscription, a yearly
-        subscription, or a single purchase that does not renew. Prices are shown in the app and on
-        the App Store, and they are not repeated here: a price written in two places is a price
-        that will eventually disagree with itself.
+        You pay for it <b>once</b>. There is no subscription, nothing renews, and there is no
+        second thing to buy later. The price is shown in the app and on the App Store, and it is
+        not repeated here: a price written in two places is a price that will eventually disagree
+        with itself.
       </p>
       <p>
         <b>What the licence lets you do.</b> Use Proof on the devices associated with your Apple
@@ -191,63 +201,34 @@ const email = 'jamey@warrenlabs.com';
         </li>
       </ul>
       <p>
-        If your subscription ends, <b>you do not lose anything you measured</b>. You keep read
-        access to the records you have already written, along with everything in the free half. You
-        cannot take new measurements until you subscribe again. We do not hold your data hostage,
-        and there is no state of this app in which a measurement you paid to make becomes
-        unreadable.
+        <b>You do not lose anything you measured</b>, ever. The purchase does not expire, so
+        there is no lapse to describe here, and even the free half can open, check and read every
+        record you have written. We do not hold your data hostage, and there is no state of this
+        app in which a measurement you made becomes unreadable.
       </p>
 
-      <h3>The subscription, and how to cancel it</h3>
+      <h3>There is nothing to cancel, and no trial to miss</h3>
       <p>
-        A subscription <b>renews automatically</b> at the end of each period (every month for the
-        monthly one, every year for the yearly one) and is charged to your Apple Account until you
-        cancel it.
+        <b>Proof is not a subscription.</b> Nothing renews, nothing is charged to you a second
+        time, and there is no date you have to get ahead of. If you are looking for the paragraph
+        that tells you how to cancel before you are billed again, there isn't one, because there is
+        no next bill.
       </p>
       <p>
-        <b>Apple owns cancellation, and we cannot do it for you.</b> Cancel in
-        <b> Settings &rsaquo; your name &rsaquo; Subscriptions</b> on an iPhone or iPad, or
-        <b> App Store &rsaquo; your account &rsaquo; Account Settings &rsaquo; Subscriptions</b> on
-        a Mac. The change takes effect at the end of the period you have already paid for; you keep
-        what you bought until then. Apple requires cancellation <b>at least 24 hours before</b> a
-        period ends for it to stop the next charge.
+        <b>There is no timed free trial either, and that is deliberate.</b> A week is long enough
+        to form an impression of an instrument and not long enough to trust one. So the free half
+        of Proof is not a countdown: the live instruments and reading records are free for as long
+        as you keep the app, and you can go on using them without ever buying anything. That is the
+        trial, and it does not end.
       </p>
       <p>
-        We cannot see your subscription, cannot cancel it, and cannot restart it. If you ask us to,
-        the only honest answer we have is this paragraph.
-      </p>
-
-      <h3>The free trial</h3>
-      <p>
-        The subscriptions carry a <b>one-week free trial</b>, offered through Apple.
-      </p>
-      <p>
-        Three things about it you should know before it starts, because they are Apple's rules
-        rather than ours and we would rather you met them here than at a charge you did not expect:
-      </p>
-      <ul class="points">
-        <li>
-          <b>When the week ends you are charged the full price of the subscription you chose</b>,
-          automatically, unless you cancel first. Cancel at least 24 hours before the week is up.
-        </li>
-        <li>
-          <b>There is one trial per subscription group, not one per product.</b> If you trial the
-          monthly and then switch to the yearly, there is no second trial; the yearly is billed in
-          full. The app will not offer you a trial you are not eligible for.
-        </li>
-        <li>
-          <b>Buying Proof outright carries no trial.</b> Apple's introductory offers exist only for
-          subscriptions that renew, and no wording of ours can change that.
-        </li>
-      </ul>
-      <p>
-        There is no countdown in the app, no "trial expired" screen, and no nag. Apple owns the
-        clock. The app only ever asks whether it is entitled right now.
+        Which means there is no countdown in the app, no "trial expired" screen and no nag. The app
+        only ever asks whether it is entitled right now.
       </p>
 
-      <h3>Buying it outright</h3>
+      <h3>What the purchase covers</h3>
       <p>
-        The single purchase does not renew, there is nothing to cancel, and it does not expire. It
+        The purchase does not renew, there is nothing to cancel, and it does not expire. It
         covers <b>the current major version of Proof, plus twelve months of updates</b>{
           updatesWindowStart ? <Fragment>, counted {updatesWindowStart}</Fragment> : null
         }. After that the app you own keeps working, exactly as it is, for as long as your hardware
@@ -266,15 +247,6 @@ const email = 'jamey@warrenlabs.com';
           before this page is in force.
         </p>
       )}
-
-      <p>
-        <b>There is no upgrade path from a subscription to buying it outright.</b> Apple offers
-        upgrades and credit only between subscriptions inside one group, and a single purchase is
-        in no group. If you have been subscribing and decide you would rather own it, you pay the
-        full price and nothing is credited. We would rather tell you that here than have you find
-        it out at the till. If that lands badly for you, write to us. Any goodwill we extend is
-        our own bookkeeping, and we would rather do it than have you feel tricked.
-      </p>
 
       <h3>Refunds</h3>
       <p>
