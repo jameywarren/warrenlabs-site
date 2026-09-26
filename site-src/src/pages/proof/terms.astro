@@ -45,7 +45,10 @@ import Footer from '../../components/Footer.astro';
 // read this flag, so the filter carries a comment naming this line. CHANGE BOTH OR NEITHER.
 //
 // WHAT HAS TO HAPPEN BEFORE DRAFT GOES FALSE:
-//   a. `updatesWindowStart` below stops being null — see the note on it. NEEDS JAMEY.
+//   a. DONE, and it turned out not to be a question. This used to read "`updatesWindowStart`
+//      stops being null. NEEDS JAMEY." The twelve-month updates window belonged to the retired
+//      $199 perpetual; docs/DESIGN.md section 16.2b replaced that offer on 2026-09-25 and carries
+//      no window at all. Nothing is waiting on Jamey here. See the note further down.
 //   b. A lawyer has read it. docs/TERMS-OF-USE.md section 16 lists the eight specific questions,
 //      in priority order, rather than "please review this".
 //   c. Jamey decides the standard-EULA question in docs/TERMS-OF-USE.md section 15 and fills in
@@ -75,31 +78,33 @@ import Footer from '../../components/Footer.astro';
 //     The same absolute has already been retracted once in resources/PrivacyInfo.xcprivacy.
 const DRAFT = true;
 
-// When the twelve months of updates that come with the one-time purchase start running.
+// THE TWELVE-MONTH UPDATES WINDOW IS GONE, AND THIS CONSTANT WITH IT.
 //
-// NULL ON PURPOSE, AND THIS IS THE ONE THING THAT BLOCKS PUBLICATION. docs/DESIGN.md section 16.2a
-// owns the promise and says only "current major version plus 12 months of updates". It does not
-// say whether the twelve months run from the date of purchase or from the release of the version
-// bought. A published legal document is the worst possible place to invent the missing half of
-// somebody else's fact, so the gap is rendered visibly instead of filled in. **NEEDS JAMEY**, and
-// it has to be fixed at the owner — docs/DESIGN.md — before it is copied down to here.
+// It used to hold "when the twelve months of updates start running", was null, and BLOCKED
+// PUBLICATION of this page. Both halves of that were stale by the time anyone read them:
 //
-// Set it to a phrase that completes "counted ___", e.g. 'from the day you buy it' or 'from the
-// day the version you bought was released'.
-const updatesWindowStart = null;
+//   1. The question it was waiting on was SETTLED on 2026-09-19, six days before the pricing
+//      change. docs/DESIGN.md section 16.2a: "From the DATE OF PURCHASE." Jamey, in that entry:
+//      "if you buy a yearly subscription you get updates to whatever the app provides in that
+//      year, it's not complicated."
+//   2. More to the point, the clause belonged to the $199 PERPETUAL in the three-tier model,
+//      where twelve months of updates was what distinguished buying outright from subscribing.
+//      Section 16.2b superseded that on 2026-09-25 with "Free app. One unlock. $79. No
+//      subscription, no trial." It carries no updates window, because with no subscription to be
+//      distinguished FROM there is nothing for one to do.
+//
+// So this page no longer states a horizon on updates. It cannot: section 16.2b owns the offer and
+// does not establish one, and inventing a limit is the same error as inventing a start date. What
+// a future major version costs is a live question with no answer yet, and the page says that
+// plainly rather than implying either answer.
+//
+// The build-time guard that used to sit here is gone too. It was enforcing a dependency on a
+// section that now opens with "HISTORY. Do not quote these numbers."
 
 // The guard, rather than a comment asking nicely. Astro evaluates frontmatter at build time, so
 // this fails `npm run build` loudly instead of letting a finished-looking page ship with a hole in
 // a promise. The site's own documented failure mode is the silent one: a page that builds, pushes
 // and is simply wrong at the URL, with no error anywhere.
-if (!DRAFT && updatesWindowStart === null) {
-  throw new Error(
-    'proof/terms.astro: DRAFT is false but updatesWindowStart is still null. ' +
-      'docs/DESIGN.md section 16.2a has to say when the perpetual twelve months start before ' +
-      'this page can be published. See the note above updatesWindowStart.'
-  );
-}
-
 // While DRAFT, this is the drafting date and the page says so. On publication it becomes the
 // publication date and the footer reads "Last updated".
 const updated = '18 September 2026';
@@ -228,25 +233,16 @@ const email = 'jamey@warrenlabs.com';
 
       <h3>What the purchase covers</h3>
       <p>
-        The purchase does not renew, there is nothing to cancel, and it does not expire. It
-        covers <b>the current major version of Proof, plus twelve months of updates</b>{
-          updatesWindowStart ? <Fragment>, counted {updatesWindowStart}</Fragment> : null
-        }. After that the app you own keeps working, exactly as it is, for as long as your hardware
-        and operating system will run it. It simply stops receiving new versions unless you buy the
-        next major one.
+        <b>Proof 1.0, and you own it.</b> The purchase does not renew, there is nothing to cancel,
+        and it does not expire. The app keeps working for as long as your hardware and operating
+        system will run it, whatever we do afterwards.
       </p>
-
-      {/* THE OPEN QUESTION. Rendered rather than quietly resolved, because docs/DESIGN.md section
-          16.2a — which owns the promise — does not say when the twelve months start, and this page
-          is not allowed to pick. See the note above `updatesWindowStart`. NEEDS JAMEY. */}
-      {updatesWindowStart === null && (
-        <p class="gap">
-          <b>One thing here is not settled yet, and we are not going to guess at it in a legal
-          document.</b> Whether those twelve months run from the day you buy Proof, or from the day
-          the version you bought was released, has not been decided. It will say so here, plainly,
-          before this page is in force.
-        </p>
-      )}
+      <p>
+        <b>What a future major version will cost, we have not decided.</b> It might be free to you,
+        it might be a separate purchase. Rather than write a number we would have to take back, we
+        are telling you it is open. Updates to the version you bought are not in question: those
+        are just us fixing and improving what you already have.
+      </p>
 
       <h3>Refunds</h3>
       <p>
