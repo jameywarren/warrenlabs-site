@@ -1,5 +1,5 @@
 {
-  "_comment": "Source of truth for warrenlabs.com plugin landing pages. tools/gen_site.py renders web/<slug>/index.html + web/index.html from this. tools/new_plugin.sh appends an entry on scaffold. Fluency/foundation builds (e.g. Curve, Press codenames) are intentionally NOT listed. Only shipping lane products get public pages. Names marked 'pending' are working names not yet vetted; pages are staging until the name locks.",
+  "_comment": "Source of truth for warrenlabs.com plugin landing pages. tools/gen_site.py renders web/<slug>/index.html + web/index.html from this. tools/new_plugin.sh appends an entry on scaffold. Fluency/foundation builds (e.g. Curve, Press codenames) are intentionally NOT listed. Only shipping lane products get public pages. Names marked 'pending' are working names not yet vetted; pages are staging until the name locks. 'draft': true keeps an entry out of everything public: gen_site.py renders no page for it, publishes a plugins.json without it, and the delivery webhook (which reads that published file) never sees it. Delete the key to launch. 'wholeLab.members' is the Whole Lab licence and installer: a plugin not listed there is sold only on its own (Tone Farm, 2026-09-25).",
   "plugins": [
     {
       "slug": "level",
@@ -410,8 +410,19 @@
   "wholeLab": {
     "slug": "bundle",
     "name": "The Whole Lab",
-    "tagline": "Every Warren Labs plugin, one install.",
+    "tagline": "The Trueness and Character lines, one install.",
     "blurb": "Every Warren Labs plugin in one install: the Trueness and Character lines together, on one shared engine.",
+    "members": [
+      "level",
+      "square",
+      "scribe",
+      "pare",
+      "bevel",
+      "brace",
+      "temper",
+      "ripple",
+      "wake"
+    ],
     "price": 79,
     "buyUrl": "https://warrenlabs.onfastspring.com/bundle",
     "download": "https://github.com/jameywarren/warrenlabs-site/releases/download/bundle-2026-09-24/WholeLab-2026-09-24.zip"

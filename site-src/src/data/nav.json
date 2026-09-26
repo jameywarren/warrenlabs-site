@@ -1,13 +1,14 @@
 {
   "_comment": "Canonical header/footer for warrenlabs.com. Read by nav.js (Astro) and by tools/gen_site.py in the monorepo (the /plugins pages). Edit here only.",
+  "_navComment": "2026-09-26, from the 2026-09-25 review (warren-labs docs/review-2026-09-25.md section 5.2). CALIPER took PROOF's slot: Caliper is on the App Store and was linked from nowhere, while Proof is not released yet and keeps its footer link. PLUGINS is the highlighted button now that the store takes money (homepage-redesign.md section 8.4 said to revisit this the day buyUrl was filled in). PATCH IN left the header to make room; Contact in the footer and the homepage #patch section still reach it. The header is full: nine items leave 13px between the wordmark and the first link at the tightest widths (measured, recorded in Nav.astro), so a tenth item means removing one or re-measuring every breakpoint in Nav.astro, css/styles.css and the monorepo's web/style.css.",
   "nav": [
     {
       "href": "/attune/",
       "label": "ATTUNE"
     },
     {
-      "href": "/proof/",
-      "label": "PROOF"
+      "href": "/caliper/",
+      "label": "CALIPER"
     },
     {
       "href": "/collections/headphones/",
@@ -34,8 +35,8 @@
       "label": "FOR MAKERS"
     },
     {
-      "href": "/#patch",
-      "label": "PATCH IN",
+      "href": "/plugins/",
+      "label": "PLUGINS",
       "cta": true
     }
   ],
@@ -53,6 +54,14 @@
     {
       "href": "/attune/",
       "label": "Attune"
+    },
+    {
+      "href": "/caliper/",
+      "label": "Caliper"
+    },
+    {
+      "href": "/changes/",
+      "label": "Changes"
     },
     {
       "href": "/proof/",
