@@ -35,10 +35,10 @@
   ⚠️ HTTPS or localhost ONLY, plus a user gesture. A file:// copy will NOT work — so the offline
   booth fallback needs a local server or a cached PWA, not a saved .html. Solve this in A1.
 
-  Host statically (e.g. warrenlabs.com/tune).
+  Host statically (e.g. warrenlabs.com/tune). TWO FILES: this page imports ./fit.js, so vendor both.
 
   WHAT'S REAL vs STUBBED HERE
-  REAL:    WebHID connect, AutoEq `ParametricEq.txt` parsing, per-device constraint clamp, the UI.
+  REAL:    WebHID connect, AutoEq `ParametricEq.txt` parsing, per-device refit (fit.js), the UI.
   STUBBED: the per-device HID write (`writeToDevice`). Those report formats are the reverse-engineered
            protocols in jeromeof/devicePEQ (0BSD) — PORT them, don't reinvent. Marked below.
 
@@ -121,21 +121,20 @@
     <div id="log" style="margin-top:12px"></div>
   </div>
 
-<script>
+<script type="module">
 'use strict';
+import { parsePeq, planForDevice, padToSlots } from './fit.js';
 
 // ---------------------------------------------------------------------------------------------
 // Per-device constraints. Seed values from the research (docs/hardware-output-stage.md); the real
 // source of truth is devicePEQ's peqConstraintsConfig.json — vendor it and replace this map.
 // ---------------------------------------------------------------------------------------------
 const DEVICES = {
-  // 10, NOT 20 — settled against the protocol, after I got it wrong twice.
-  //   The marketing "20-band" is 10 bands PER CHANNEL. devicePEQ's handler writes with
-  //   CH_MASK_BOTH (0x03), i.e. the same value to L and R, so the usable count for one curve is 10.
-  //   Its own default is `maxFilters || 10`, and the protocol's USR_EQ_BAND is 10.
-  //   The genuine 20-band group (`b20`, group 2) is 5K Plus / V2 firmware — a different device.
-  //   Attune wants stereo-linked anyway: voice-match produces ONE curve for both ears, so the
-  //   L/R-independent capability buys us nothing and 10 is the real budget.
+  // 10, NOT 20 — settled against the protocol and the unit (docs/hardware-output-stage.md).
+  //   User EQ is 10 bands, the protocol's USR_EQ_BAND and devicePEQ's `maxFilters || 10`, and it is
+  //   the only group we can write. The write sets CH_MASK_BOTH (0x03); there is no L/R split.
+  //   The Qudelix app's 20-band mode is real and on this unit, but it is a separate facility: manual
+  //   entry only, and turning it on switches User EQ off. It adds nothing to the budget here.
   // Getting this wrong is silent: fit 20, push 10, lose half with nothing on screen saying so.
   qudelix : { name:'Qudelix-5K',        maxBands:10, minFc:20,  maxFc:20000, minGain:-12, maxGain:12, types:['PK','LSQ','HSQ'] },
   fiio    : { name:'FiiO (KA/BTR/K)',   maxBands:10, minFc:20,  maxFc:20000, minGain:-12, maxGain:12, types:['PK','LS','HS','LP','HP','BP','NO'] },
@@ -146,7 +145,7 @@ const DEVICES = {
 
 let hidDevice = null;
 let deviceKey = 'generic';
-let parsedBands = [];
+let plan = null;   // what Send will write: planForDevice()'s result for this file on this device
 
 const $ = id => document.getElementById(id);
 const log = m => { $('log').textContent += m + '\n'; $('log').scrollTop = $('log').scrollHeight; };
@@ -197,10 +196,17 @@ $('connect').addEventListener('click', async () => {
 // The wording matters. The curve is NOT lost: it is stored in User EQ and reappears the moment you
 // switch back (verified on the unit). Writing while 20-band is on also does NOT knock the device
 // out of that mode — also verified, so we must not imply the page will fix it for you.
+//
+// THE APP DOES NOT REFRESH (Jamey, 2026-11-10, firmware 3.2.8). After a USB send the Qudelix iOS app
+// keeps drawing the old curve; toggling User EQ off and on does not refresh it, only closing and
+// reopening the app does. The send itself had landed. Without this line a correct send reads as a
+// failed one, which is exactly how it read on the bench.
 const DEVICE_NOTES = {
   qudelix: 'Using the Qudelix app\u2019s 20-band EQ? Switch it back to User EQ to hear this. ' +
            '20-band is a separate mode that turns User EQ off. Your curve still arrives and is stored ' +
-           'in User EQ. It just does nothing until you switch back.',
+           'in User EQ. It just does nothing until you switch back. ' +
+           'Is the Qudelix app open? It keeps showing the old EQ after a send: close it and reopen it ' +
+           'to see the new one.',
 };
 
 function showDeviceNote() {
@@ -218,57 +224,67 @@ function identifyDevice(dev) {
 }
 
 // ---------------------------------------------------------------------------------------------
-// 2 · Parse AutoEq ParametricEq.txt (REAL). Format Attune's "Export PEQ" (roadmap A1) will emit:
+// 2 · Parse AutoEq ParametricEq.txt and plan the write (REAL, in fit.js). Format Attune's export emits:
 //   Preamp: -6.0 dB
-//   Filter 1: ON PK Fc 105 Hz Gain -3.2 dB Q 0.70
+//   Filter 01: ON PK Fc 105.0 Hz Gain -3.20 dB Q 0.700
+//   Filter 02: ON LSC Fc 120.0 Hz Gain 2.00 dB Q 0.630
+// This used to clamp and truncate here: the first N lines survived, and an export now holds up to 21,
+// with tone and Fine Tune LAST, so those were what went. A shelf also became a peak, because the
+// file's LSC was checked against a device list that spells it LSQ.
 // ---------------------------------------------------------------------------------------------
-function parsePeq(text) {
-  const bands = [];
-  let preamp = 0;
-  for (const line of text.split(/\r?\n/)) {
-    const pre = line.match(/Preamp:\s*(-?[\d.]+)\s*dB/i);
-    if (pre) { preamp = parseFloat(pre[1]); continue; }
-    const m = line.match(/Filter\s+\d+:\s+ON\s+(\w+)\s+Fc\s+([\d.]+)\s*Hz\s+Gain\s+(-?[\d.]+)\s*dB\s+Q\s+([\d.]+)/i);
-    if (m) bands.push({ type:m[1].toUpperCase(), fc:+m[2], gain:+m[3], q:+m[4] });
-  }
-  return { preamp, bands };
-}
+const bandRows = rows => `
+    <table><thead><tr><th>#</th><th>Type</th><th>Fc (Hz)</th><th>Gain (dB)</th><th>Q</th></tr></thead>
+    <tbody>${rows.map((b,i)=>`<tr><td>${i+1}</td><td>${b.type}</td><td>${b.fc}</td><td>${b.gain}</td><td>${b.q}</td></tr>`).join('')}</tbody></table>`;
 
-// Clamp/refit parsed bands to the connected device's limits (REAL, simple version). A production
-// refit would re-optimize gains when bands are dropped; this clamps + truncates and reports it.
-function clampToDevice(bands, c) {
-  const clamped = bands
-    .filter(b => b.fc >= c.minFc && b.fc <= c.maxFc)
-    .slice(0, c.maxBands)
-    .map(b => ({
-      type: c.types.includes(b.type) ? b.type : 'PK',
-      fc:   Math.min(c.maxFc, Math.max(c.minFc, b.fc)),
-      gain: Math.min(c.maxGain, Math.max(c.minGain, b.gain)),
-      q:    b.q,
-    }));
-  const dropped = bands.length - clamped.length;
-  return { clamped, dropped };
+const hzLabel = f => f >= 1000 ? `${(f/1000).toFixed(1)} kHz` : `${Math.round(f)} Hz`;
+
+// Everything the plan changed gets said. A write nobody can check by ear has only this to go on.
+function planNotes(p, c) {
+  const notes = [];
+  if (p.overBudget)
+    notes.push(`This file has ${p.fileCount} filters and ${c.name} holds ${c.maxBands}. The whole curve, tone and Fine Tune included, was refitted to the ${p.bands.length} bands shown.`);
+  if (p.shelvesCut)
+    notes.push(`${c.name} has no shelf filter, so ${p.shelvesCut} shelf band(s) in this file cannot be expressed as shelves. The curve was refitted with peaks, which only approximate them.`);
+  if (p.outOfRange)
+    notes.push(`${p.outOfRange} filter(s) fall outside what ${c.name} allows (${c.minFc} to ${c.maxFc} Hz, ${c.minGain} to +${c.maxGain} dB), so the curve was refitted inside its limits.`);
+  if (p.ignored.length)
+    notes.push(`Not written: ${p.ignored.length} filter(s) of a type or value this page cannot use (${[...new Set(p.ignored.map(b => b.type))].join(', ')}).`);
+  if (p.unread)
+    notes.push(`Not written: ${p.unread} ON line(s) this page could not read. Check the file.`);
+  if (c.name.includes('Moondrop') && !p.outOfRange)
+    notes.push(`${c.name} supports ${c.maxBands} ${c.types.join('/')} bands, ${c.minFc} to ${c.maxFc} Hz, ${c.minGain} to +${c.maxGain} dB.`);
+  return notes.join(' ');
 }
 
 function refresh() {
-  const { preamp, bands } = parsePeq($('peq').value);
+  const parsed = parsePeq($('peq').value);
+
+  // No device yet means no limits to plan against: show the file as read. Planning against "generic"
+  // would warn about a peak-only device nobody has plugged in.
+  if (!hidDevice) {
+    plan = null;
+    $('bands').innerHTML = parsed.bands.length
+      ? bandRows(parsed.bands) + `<p class="status">${parsed.bands.length} filters in this file. Connect a device to see what it will hold.</p>`
+      : '<p class="status">No valid filters parsed yet.</p>';
+    $('clamp-note').textContent = parsed.unread ? `${parsed.unread} ON line(s) could not be read. Check the file.` : '';
+    $('send').disabled = true;
+    return;
+  }
+
   const c = DEVICES[deviceKey];
-  const { clamped, dropped } = clampToDevice(bands, c);
-  parsedBands = clamped;
+  plan = planForDevice(parsed, c);
 
-  // preview table
-  $('bands').innerHTML = clamped.length ? `
-    <table><thead><tr><th>#</th><th>Type</th><th>Fc (Hz)</th><th>Gain (dB)</th><th>Q</th></tr></thead>
-    <tbody>${clamped.map((b,i)=>`<tr><td>${i+1}</td><td>${b.type}</td><td>${b.fc}</td><td>${b.gain}</td><td>${b.q}</td></tr>`).join('')}</tbody></table>
-    <p class="status">Preamp ${preamp} dB · ${clamped.length}/${c.maxBands} bands</p>` : '<p class="status">No valid filters parsed yet.</p>';
+  $('bands').innerHTML = plan.bands.length
+    ? bandRows(plan.bands) +
+      `<p class="status">Preamp ${plan.preampDb} dB, set from the bands written (file said ${plan.filePreampDb} dB) · ${plan.bands.length}/${c.maxBands} bands</p>` +
+      `<p class="status">Written vs file: ${plan.rms.toFixed(2)} dB RMS, ${plan.peak.toFixed(2)} dB at worst${plan.peak >= 0.005 ? ` (${hzLabel(plan.peakHz)})` : ''}</p>`
+    : plan.flat
+      ? `<p class="status">This file is flat. Send sets every band on the device, and the preamp, to 0 dB.</p>`
+      : '<p class="status">No valid filters parsed yet.</p>';
 
-  // honesty note when the device forced changes
-  $('clamp-note').textContent = (bands.length && (dropped > 0 || c.name.includes('Moondrop')))
-    ? `Note: ${c.name} supports ${c.maxBands} ${c.types.join('/')} bands, ${c.minFc}–${c.maxFc} Hz, ${c.minGain}…+${c.maxGain} dB.` +
-      (dropped>0 ? ` ${dropped} band(s) outside its range were dropped, so the loaded tuning is approximated.` : '')
-    : '';
+  $('clamp-note').textContent = planNotes(plan, c);
 
-  $('send').disabled = !(hidDevice && parsedBands.length);
+  $('send').disabled = !plan.bands.length && !plan.flat;
 }
 
 $('peq').addEventListener('input', refresh);
@@ -400,7 +416,7 @@ async function writeQudelix(dev, bands, preamp, saveSlot) {
 // <<< qudelix-protocol
 
 async function writeToDevice(dev, key, bands, preamp) {
-  if (key === 'qudelix') return writeQudelix(dev, bands, preamp, 0);
+  if (key === 'qudelix') return writeQudelix(dev, padToSlots(bands, DEVICES.qudelix.maxBands), preamp, 0);
   // FiiO / Walkplay / Moondrop still need their handlers ported — same shape, different framing.
   log(`WOULD SEND to ${DEVICES[key].name}: preamp ${preamp} dB, ${bands.length} bands`);
   bands.forEach((b,i)=>log(`  band ${i+1}: ${b.type} Fc=${b.fc} gain=${b.gain} Q=${b.q}`));
@@ -408,14 +424,14 @@ async function writeToDevice(dev, key, bands, preamp) {
 }
 
 $('send').addEventListener('click', async () => {
-  if (!hidDevice || !parsedBands.length) return;
-  const { preamp } = parsePeq($('peq').value);
+  if (!hidDevice || !plan || (!plan.bands.length && !plan.flat)) return;
   // Observed on hardware 2026-08-14: with the Qudelix in 20-band mode this write took 12.5 s
   // instead of the usual ~0.2 s — the device backpressures every packet. A bare 'Sending…'
   // that hangs for 12 s reads as a broken page, so set the expectation up front.
   setStatus($('send-status'), 'Sending… (can take ~15 s on some devices)');
   try {
-    await writeToDevice(hidDevice, deviceKey, parsedBands, preamp);
+    log(`written vs file: ${plan.rms.toFixed(2)} dB RMS, ${plan.peak.toFixed(2)} dB at worst`);
+    await writeToDevice(hidDevice, deviceKey, plan.bands, plan.preampDb);
     setStatus($('send-status'), 'Sent + saved to device.', 'ok');
   } catch (e) { setStatus($('send-status'), e.message, 'err'); }
 });
