@@ -3,6 +3,10 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 
+// HOLD (branch attune-1-1-privacy, 2026-11-10): do not merge this into main before Attune 1.1.0 is
+// released. The branch carries the built privacy/index.html, so merging and pushing publishes it, and
+// the live app still sends nothing (worksheet B1). Order and open items: attune/docs/privacy-1.1.0.md
+// §7 and its PENDING JAMEY list. At the release merge, delete this HOLD note and set the month below.
 // Set to the month Attune 1.1.0 is released, the day this page is published with it.
 const updated = 'November 2026';
 ---
@@ -18,9 +22,10 @@ const updated = 'November 2026';
       <h2>Privacy Policy</h2>
       <p class="sec-lede">
         <b>We never collect anything without asking, and we never collect who you are or what you
-        listen to.</b> The Attune app sends us something only if you press its Request this headphone
-        button, and then only the headphone name you typed, the app version and your platform. This
-        website stores an email address only if you choose to give us one.
+        listen to.</b> The Attune app contacts our server only if you press its Request this headphone
+        button. That request carries the headphone name you typed, the app version and your platform,
+        plus the network details every internet request carries, described below. This website
+        stores an email address only if you choose to give us one.
       </p>
 
       <h3>What we will never collect</h3>
@@ -72,11 +77,15 @@ const updated = 'November 2026';
           that makes it true: the app's one request (attune Source/WebViewShell.cpp,
           nativeRequestHeadphone) and what the server keeps (warren-labs tools/delivery,
           headphone-request.mjs and main.js). Change the code and that file first, then this page.
-          Do not publish before Attune 1.1.0 is released: until then the live app sends nothing. */}
+          Do not publish before Attune 1.1.0 is released: until then the live app sends nothing.
+          PENDING JAMEY 1 (Decision 6: label purpose Analytics or Other): this section avoids the word
+          "analytics" for Attune, so it holds under either answer. Version and platform are sent
+          whatever he decides about declaring them, so the page names them either way. */}
       <h3>Attune (Mac, iPhone and iPad)</h3>
       <p>
-        <b>Attune has no account, no sign-in, no analytics, no crash reporting and no tracking, and
-        it sends us nothing unless you press the one button described below.</b> It runs on your
+        <b>Attune has no account, no sign-in, no tracking and no crash reporting of its own. Nothing in
+        it reports how you use it, and it sends us nothing unless you press the one button described
+        below.</b> It runs on your
         device. Audio files you choose are read locally only to play them. Your music library, your
         file paths and your listening never leave your device, and your tunings leave only if you
         export or send them yourself.
@@ -91,15 +100,20 @@ const updated = 'November 2026';
         There is no email address, no account and no device identifier in it. Please type only the
         headphone's name, because we keep what you type.
       </p>
-      {/* PENDING JAMEY: the Deno Deploy check in attune/docs/privacy-1.1.0.md. Our code never reads
+      {/* PENDING JAMEY 2: the Deno Deploy check in attune/docs/privacy-1.1.0.md. Our code never reads
           the IP address or the request headers, and the sentences below say only that. If the Deno
           dashboard shows that the platform keeps them in its own logs, say so here, with how long,
-          before publishing. */}
+          before publishing. "We do not tie requests to you" also depends on it: a kept IP address
+          with a time can be matched to the first-request email, which ties a name to an address.
+          PENDING JAMEY 7: "None of it expires on its own" is what the code does today (no expiry on
+          the records or the daily counts; the email stays until deleted). If Jamey sets a retention
+          period, put the period here instead. */}
       <p>
         For each model we keep the name as it was first typed, how many times it has been requested,
         and the dates of the first and latest request, plus a total count for each day. The first
         request for a model is also emailed to us with its app version and platform, through
-        <b>Resend</b>. The server runs on <b>Deno Deploy</b>. Like any request over the internet, it
+        <b>Resend</b>. None of it expires on its own: we keep it until we delete it. The server runs
+        on <b>Deno Deploy</b>. Like any request over the internet, it
         also carries your IP address, so that the answer can reach you, and the standard details your
         device adds to every web request (the app's name and build, the system version and your
         language setting). Our code does not read or store any of that, and we do not tie requests to
@@ -112,6 +126,13 @@ const updated = 'November 2026';
         Buying Attune Pro, restoring it, or seeing its price goes through the <b>App Store</b>. Attune
         may also show Apple's standard prompt to rate the app. Both are Apple's, on Apple's terms, and
         what you do in them goes to Apple, not through us. Your music and your tunings are not in it.
+      </p>
+      <p>
+        Apple also shows us figures it collects itself: App Store numbers such as how often Attune's
+        page is viewed and how often it is downloaded and, from people who have turned on sharing with
+        app developers in their device's analytics settings, crash reports and usage totals. That is
+        Apple's setting and Apple's data, collected by Apple, not by anything in Attune, and none of
+        it names you to us.
       </p>
 
       <h3>Feedback, through your own email</h3>
@@ -145,6 +166,10 @@ const updated = 'November 2026';
         feedback form attaches the page you were on, your window size and your browser version,
         shown to you before you send, and email is optional there.
       </p>
+      {/* PENDING JAMEY 6 (attune docs/RELEASE-PLAN-next.md, Decision 11: Plausible lapsed; replace,
+          pay or remove). Not changed on this branch because it is not decided. This page is re-dated
+          for the Attune 1.1.0 release, so settle this paragraph before that publish: if Plausible is
+          not counting visits by then, "We count visits with Plausible" is false. */}
       <p>
         We count visits with <b>Plausible</b>, and it is worth saying exactly what that does and
         does not do. It records the page, the referring site, rough country, and device type. It
