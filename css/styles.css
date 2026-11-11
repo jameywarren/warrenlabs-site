@@ -342,6 +342,10 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   .ov-grid { grid-template-columns: 1fr; gap: 32px; }
   .offer { grid-template-columns: 1fr; gap: 28px; }
   .offer-side { border-left: none; border-top: 1px solid var(--line); padding: 24px 0 0; }
+  /* The cable canvas hangs into the .wrap gutter. The desktop -60px matches the 60px gutter; at
+     this width the gutter is 32px, so -60px ran 28px past the viewport and the page scrolled
+     sideways from 721px to 1080px. */
+  #pbayCv { left: -32px; width: calc(100% + 64px); }
 }
 @media (max-width: 720px) {
   :root { --h1: clamp(60px, 18vw, 104px); }

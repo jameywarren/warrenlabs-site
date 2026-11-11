@@ -9,13 +9,15 @@
 // Plain ESM with no Vite-only syntax: tools/sync-chrome.mjs imports it in plain Node.
 // No em dashes: every string goes straight onto a page.
 
+/** What a unit that is not on the requested list costs to measure. Typed once, here. */
+const OFF_LIST_PRICE = '$89';
+
 export const MEASURE = {
-  /** What a unit that is not on the requested list costs to measure. */
-  offListPrice: '$89',
+  offListPrice: OFF_LIST_PRICE,
 
   /** Short lane labels, for a spec table. */
   onListLane: 'Free, both ways',
-  offListLane: '$89, postage on you',
+  offListLane: `${OFF_LIST_PRICE}, postage on you`,
 
   /** The turnaround as a reader says it, and what it means. Keep the two in agreement. */
   turnaround: 'About a week',
