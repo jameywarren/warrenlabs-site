@@ -3,12 +3,14 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 
-const updated = 'September 2026';
+// Published 2026-11-10 on Jamey's go-ahead, with Attune 1.1.0 submitted for review on automatic
+// release, so the page is live before the app that makes it true. Open items: attune/docs/privacy-1.1.0.md.
+const updated = 'November 2026';
 ---
 
 <Layout
   title="Privacy · Warren Labs"
-  description="How Warren Labs and the Attune macOS app handle your data. We never collect anything without asking, and we never collect who you are or what you listen to."
+  description="How Warren Labs and the Attune app handle your data. We never collect anything without asking, and we never collect who you are or what you listen to."
 >
   <Nav variant="home" />
   <section class="sec">
@@ -17,8 +19,10 @@ const updated = 'September 2026';
       <h2>Privacy Policy</h2>
       <p class="sec-lede">
         <b>We never collect anything without asking, and we never collect who you are or what you
-        listen to.</b> Right now the Attune app collects nothing at all, and this website stores an
-        email address only if you choose to give us one.
+        listen to.</b> The Attune app contacts our server only if you press its Request this headphone
+        button. That request carries the headphone name you typed, the app version and your platform,
+        plus the network details every internet request carries, described below. This website
+        stores an email address only if you choose to give us one.
       </p>
 
       <h3>What we will never collect</h3>
@@ -66,20 +70,72 @@ const updated = 'September 2026';
         it, or export it, and we never receive a copy.
       </p>
 
-      <h3>Attune (the macOS app)</h3>
+      {/* Attune 1.1.0. Every fact below is checked in attune/docs/privacy-1.1.0.md against the code
+          that makes it true: the app's one request (attune Source/WebViewShell.cpp,
+          nativeRequestHeadphone) and what the server keeps (warren-labs tools/delivery,
+          headphone-request.mjs and main.js). Change the code and that file first, then this page.
+          App Privacy label (decided 2026-11-10): Data Not Linked to You, User Content and Other Data,
+          purpose Analytics, no tracking. This section avoids the word "analytics" for Attune on
+          purpose; it names exactly what is sent instead. */}
+      <h3>Attune (Mac, iPhone and iPad)</h3>
       <p>
-        <b>Attune currently collects, stores, transmits, and shares nothing.</b> It runs
-        entirely on your Mac, has no network access, and contains no analytics, telemetry, or
-        tracking of any kind. Audio files you choose are read locally only to play them. Nothing
-        about your music library, your listening, or your tunings ever leaves your device.
+        <b>Attune has no account, no sign-in, no tracking and no crash reporting of its own. Nothing in
+        it reports how you use it, and it sends us nothing unless you press the one button described
+        below.</b> It runs on your
+        device. Audio files you choose are read locally only to play them. Your music library, your
+        file paths and your listening never leave your device, and your tunings leave only if you
+        export or send them yourself.
       </p>
 
-      <h3>The one thing that can leave</h3>
+      <h3>Request this headphone</h3>
       <p>
-        Something you send yourself. If you use <b>Have feedback?</b>, the app writes a message and
-        opens it in <em>your</em> mail client, with the technical context it attaches (app version,
-        macOS version, output device, which headphone pair is loaded) shown to you in the window
-        before you send it. You send it; we don't.
+        If we have not measured your headphone, you can type its name and press <b>Request this
+        headphone</b>. <b>Only when you press it</b>, Attune sends our server three things: the name
+        you typed, the app version, and whether you are on a Mac or on iOS. Nothing is sent as you
+        type, nothing is sent in the background, and if you never press it, nothing is sent at all.
+        There is no email address, no account and no device identifier in it. Please type only the
+        headphone's name, because we keep what you type.
+      </p>
+      {/* Deno Deploy checked 2026-11-10 (attune/docs/privacy-1.1.0.md item 2): its traces keep only
+          method, status and URL, for one day, and no client IP, so "we do not tie requests to you"
+          holds. If that changes, say so here. Still open: "None of it expires on its own" is what the
+          code does today (no expiry on the records or the daily counts; the email stays until
+          deleted). If a retention period is set, put the period here instead. */}
+      <p>
+        For each model we keep the name as it was first typed, how many times it has been requested,
+        and the dates of the first and latest request, plus a total count for each day. The first
+        request for a model is also emailed to us with its app version and platform, through
+        <b>Resend</b>. None of it expires on its own: we keep it until we delete it. The server runs
+        on <b>Deno Deploy</b>. Like any request over the internet, it
+        also carries your IP address, so that the answer can reach you, and the standard details your
+        device adds to every web request (the app's name and build, the system version and your
+        language setting). Our code does not read or store any of that, and we do not tie requests to
+        you. That also means we cannot find your request afterward, or reply to it. We use the counts
+        to decide what to measure next.
+      </p>
+
+      <h3>Apple's parts</h3>
+      <p>
+        Buying Attune Pro, restoring it, or seeing its price goes through the <b>App Store</b>. Attune
+        may also show Apple's standard prompt to rate the app. Both are Apple's, on Apple's terms, and
+        what you do in them goes to Apple, not through us. Your music and your tunings are not in it.
+      </p>
+      <p>
+        Apple also shows us figures it collects itself: App Store numbers such as how often Attune's
+        page is viewed and how often it is downloaded and, from people who have turned on sharing with
+        app developers in their device's analytics settings, crash reports and usage totals. That is
+        Apple's setting and Apple's data, collected by Apple, not by anything in Attune, and none of
+        it names you to us.
+      </p>
+
+      <h3>Feedback, through your own email</h3>
+      <p>
+        Something you send yourself, and it is always optional. If you use <b>Have feedback?</b>, or
+        Attune invites you to write to us, the app writes a message and opens it in <em>your</em> mail
+        app, with the technical context it attaches (app version, operating system version, output
+        device, which headphone pair is loaded) shown to you in the window before you send it. It goes
+        through your own email account, so we see your address and what you wrote, as with any email
+        you send us. You send it; Attune doesn't.
       </p>
 
       <h3>If that ever changes</h3>
@@ -103,6 +159,8 @@ const updated = 'September 2026';
         feedback form attaches the page you were on, your window size and your browser version,
         shown to you before you send, and email is optional there.
       </p>
+      {/* Plausible (2026-11-10): Jamey: still on, may pay later; keep this paragraph. If Plausible
+          stops counting visits, "We count visits with Plausible" becomes false: change it then. */}
       <p>
         We count visits with <b>Plausible</b>, and it is worth saying exactly what that does and
         does not do. It records the page, the referring site, rough country, and device type. It
