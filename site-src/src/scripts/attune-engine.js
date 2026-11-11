@@ -203,7 +203,7 @@ if (!window.AttuneShared) {
   // ---- file-loop audio engine ----------------------------------------------
   // The "hear it" demo plays a short, loudness-matched music loop (public/audio/,
   // CC BY 4.0 — see public/audio/CREDITS.md) through the same four BiquadFilters the
-  // graph drives, so the Stock/Matched difference is audible on real material rather
+  // graph drives, so the Stock/Tuned difference is audible on real material rather
   // than a synth pad. Default is the cinematic loop; switch with setTrack(url).
   // label = the vibe the visitor picks; title/artist/credit = the CC-BY attribution
   // (also in public/audio/CREDITS.md). Keep the credit visible wherever these play.

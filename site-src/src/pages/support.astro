@@ -72,8 +72,8 @@ const email = 'jamey@warrenlabs.com';
         <summary>How do I get started?</summary>
         <div class="answer">
           <p>
-            Pick <strong>your headphone</strong> from the bar at the top, choose what to aim at,
-            then flip between <strong>Stock</strong> and <strong>Matched</strong>. Same track, same
+            Choose <strong>your headphone</strong>, pick what to tune to under <strong>Tune to</strong>,
+            then flip between <strong>Stock</strong> and <strong>Tuned</strong>. Same track, same
             loudness, only the tuning changes. When you're ready, use <strong>Find your sound</strong>
             to tune to your own taste.
           </p>
@@ -115,14 +115,14 @@ const email = 'jamey@warrenlabs.com';
         <div class="answer">
           <p>
             Free, permanently, and not a trial: tuning your headphone, every target, Find your
-            sound, the full EQ for both ears together, importing your own measurements, and one
-            saved sound kept for good. No account, no card.
+            sound, tone shaping, Fix by ear, the full parametric EQ for both ears together, importing
+            your own measurements, and one saved sound kept for good. No account, no card.
           </p>
           <p>
             <strong>Attune Pro is a single purchase, $19.99 in the US</strong>, no subscription. It adds
             unlimited saved sounds; EQ export as a standard AutoEq file, so a tuning found here can
-            travel to your phone, DAP or dongle; and, from Attune 1.1.0, separate left and right EQ
-            bands. It's a Universal Purchase, so buying
+            travel to your phone, DAP or dongle, with your tone and EQ bands included; and separate
+            left and right EQ bands. It's a Universal Purchase, so buying
             it on the Mac unlocks it on iPhone and iPad, and the other way round.
           </p>
           <p>
@@ -140,12 +140,15 @@ const email = 'jamey@warrenlabs.com';
             the corpus grows as we measure.
           </p>
           <p>
-            If yours isn't there, you have two options that work today.
-            <strong>Import your own measurement</strong> in CSV, AutoEq or squig format and Attune
-            will voice-match to it exactly as it would to a bundled one: we take the difference
-            between the two and correct for it, loudness-matched. That path is free. Or
+            If yours isn't there, choose <strong>Mine isn't here</strong>. You can
+            <strong>shape the tone by ear</strong> (Warmer, Brighter, Less sharp, and Fix by ear);
+            this changes the tone but cannot correct the headphone, because we have no measurement
+            of it. You can also <strong>import your own measurement</strong> in CSV, AutoEq or squig
+            format and Attune will voice-match to it exactly as it would to a bundled one: we take
+            the difference between the two and correct for it, loudness-matched. That path is free.
+            Or press <strong>Request this headphone</strong> to tell us what to measure next, or
             <strong>send us the headphone</strong>: we measure it on our rig, publish the result
-            either way, and add it. Email us the exact make and model and we'll put it on the list.
+            either way, and add it.
           </p>
         </div>
       </details>
@@ -172,16 +175,17 @@ const email = 'jamey@warrenlabs.com';
         <summary>Why is the graph empty when I open it?</summary>
         <div class="answer">
           <p>
-            Because nothing is selected yet, and that's deliberate. The correction is computed from
-            a real measured response, so until Attune knows which headphones you own there's nothing
-            honest to draw. Pick your pair from the bar at the top and the graph and the Stock /
-            Matched comparison come alive immediately.
+            Because no headphone is chosen yet, and that's deliberate. The correction is computed
+            from a real measured response, so until Attune knows which headphones you own there's
+            nothing honest to draw. Choose yours under <strong>Your headphone</strong>, or pick
+            <strong>Mine isn't here</strong> to shape the tone by ear. The graph and the Stock and
+            Tuned comparison come alive immediately.
           </p>
         </div>
       </details>
 
       <details>
-        <summary>Why does Matched sound quieter?</summary>
+        <summary>Why does Tuned sound quieter?</summary>
         <div class="answer">
           <p>
             It doesn't. Both sides are set to the same loudness on purpose, and we measured the
@@ -190,7 +194,7 @@ const email = 'jamey@warrenlabs.com';
           <p>
             That matching is the whole point of the comparison. Anything even slightly louder sounds
             better for the first few seconds, every time, to everyone. Without level matching you
-            aren't comparing tunings, you're just finding out which one is louder. If Matched feels
+            aren't comparing tunings, you're just finding out which one is louder. If Tuned feels
             quieter, what you're hearing is usually a bass or treble shift, not a level shift.
           </p>
         </div>
@@ -213,7 +217,7 @@ const email = 'jamey@warrenlabs.com';
         <div class="answer">
           <p>
             Attune has <strong>no account and no sign-in</strong>. Your music, your listening and
-            your tunings stay on your device. From version 1.1.0 it contacts our server only if you
+            your tunings stay on your device. It contacts our server only if you
             press <strong>Request this headphone</strong>, and then it sends just the name you typed,
             the app version and your platform.
           </p>
@@ -232,7 +236,7 @@ const email = 'jamey@warrenlabs.com';
           <p>
             <strong>No difference:</strong> check that a headphone is selected, that the correct
             <strong>output device</strong> is chosen inside Attune, and that a track is playing.
-            Then remember the Stock and Matched comparison is
+            Then remember the Stock and Tuned comparison is
             <strong>loudness-matched on purpose</strong>. Listen for a change in <em>tone</em>, not
             a jump in level. Some pairs and some targets are a small correction, and a small
             correction is a small difference.
