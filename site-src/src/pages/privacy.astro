@@ -3,11 +3,8 @@ import Layout from '../layouts/Layout.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 
-// HOLD (branch attune-1-1-privacy, 2026-11-10): do not merge this into main before Attune 1.1.0 is
-// released. The branch carries the built privacy/index.html, so merging and pushing publishes it, and
-// the live app still sends nothing (worksheet B1). Order and open items: attune/docs/privacy-1.1.0.md
-// §7 and its PENDING JAMEY list. At the release merge, delete this HOLD note and set the month below.
-// Set to the month Attune 1.1.0 is released, the day this page is published with it.
+// Published 2026-11-10 on Jamey's go-ahead, with Attune 1.1.0 submitted for review on automatic
+// release, so the page is live before the app that makes it true. Open items: attune/docs/privacy-1.1.0.md.
 const updated = 'November 2026';
 ---
 
@@ -77,10 +74,9 @@ const updated = 'November 2026';
           that makes it true: the app's one request (attune Source/WebViewShell.cpp,
           nativeRequestHeadphone) and what the server keeps (warren-labs tools/delivery,
           headphone-request.mjs and main.js). Change the code and that file first, then this page.
-          Do not publish before Attune 1.1.0 is released: until then the live app sends nothing.
-          PENDING JAMEY 1 (Decision 6: label purpose Analytics or Other): this section avoids the word
-          "analytics" for Attune, so it holds under either answer. Version and platform are sent
-          whatever he decides about declaring them, so the page names them either way. */}
+          App Privacy label (decided 2026-11-10): Data Not Linked to You, User Content and Other Data,
+          purpose Analytics, no tracking. This section avoids the word "analytics" for Attune on
+          purpose; it names exactly what is sent instead. */}
       <h3>Attune (Mac, iPhone and iPad)</h3>
       <p>
         <b>Attune has no account, no sign-in, no tracking and no crash reporting of its own. Nothing in
@@ -100,14 +96,11 @@ const updated = 'November 2026';
         There is no email address, no account and no device identifier in it. Please type only the
         headphone's name, because we keep what you type.
       </p>
-      {/* PENDING JAMEY 2: the Deno Deploy check in attune/docs/privacy-1.1.0.md. Our code never reads
-          the IP address or the request headers, and the sentences below say only that. If the Deno
-          dashboard shows that the platform keeps them in its own logs, say so here, with how long,
-          before publishing. "We do not tie requests to you" also depends on it: a kept IP address
-          with a time can be matched to the first-request email, which ties a name to an address.
-          PENDING JAMEY 7: "None of it expires on its own" is what the code does today (no expiry on
-          the records or the daily counts; the email stays until deleted). If Jamey sets a retention
-          period, put the period here instead. */}
+      {/* Deno Deploy checked 2026-11-10 (attune/docs/privacy-1.1.0.md item 2): its traces keep only
+          method, status and URL, for one day, and no client IP, so "we do not tie requests to you"
+          holds. If that changes, say so here. Still open: "None of it expires on its own" is what the
+          code does today (no expiry on the records or the daily counts; the email stays until
+          deleted). If a retention period is set, put the period here instead. */}
       <p>
         For each model we keep the name as it was first typed, how many times it has been requested,
         and the dates of the first and latest request, plus a total count for each day. The first
@@ -166,10 +159,8 @@ const updated = 'November 2026';
         feedback form attaches the page you were on, your window size and your browser version,
         shown to you before you send, and email is optional there.
       </p>
-      {/* PENDING JAMEY 6 (attune docs/RELEASE-PLAN-next.md, Decision 11: Plausible lapsed; replace,
-          pay or remove). Not changed on this branch because it is not decided. This page is re-dated
-          for the Attune 1.1.0 release, so settle this paragraph before that publish: if Plausible is
-          not counting visits by then, "We count visits with Plausible" is false. */}
+      {/* Plausible (2026-11-10): Jamey: still on, may pay later; keep this paragraph. If Plausible
+          stops counting visits, "We count visits with Plausible" becomes false: change it then. */}
       <p>
         We count visits with <b>Plausible</b>, and it is worth saying exactly what that does and
         does not do. It records the page, the referring site, rough country, and device type. It
