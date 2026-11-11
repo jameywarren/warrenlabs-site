@@ -102,7 +102,7 @@ function listen() {
         ${meta(attune)}
         <h2 class="dc-name display" id="listen-h">Attune</h2>
         <p class="dc-sub">Tune your headphones by ear.</p>
-        <p class="dc-body">Attune plays your own music, loudness matched, and asks which of two tunings you like better. About a dozen answers later you have a personal EQ curve for the pair on your head. One saved sound is free and stays free. Pro is a one-time unlock, not a subscription.</p>
+        <p class="dc-body">Attune plays your own music, loudness matched, and asks which of two tunings you like better, so you find your sound by ear. Or hear another headphone&rsquo;s tuning on the pair you own, then shape the rest with a parametric EQ or Fix by ear. One saved sound is free and stays free. Pro is a one-time unlock, not a subscription.</p>
         <div class="dc-cta"><a class="btn primary" href="${esc(APP_STORE)}" target="_blank" rel="noopener">${esc(ATTUNE.ctaLabel)} ${ext}</a><span class="dc-plat mono">${up(ATTUNE.platformLine)}</span></div>
       </article>
       <p class="door-links mono"><a href="/attune/">HOW ATTUNE WORKS ${arrow}</a><a href="/collections/headphones/">HEADPHONES ${arrow}</a><a href="/graphs/">MEASUREMENTS ${arrow}</a></p>
