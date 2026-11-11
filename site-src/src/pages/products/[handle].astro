@@ -61,7 +61,7 @@ if (CORPUS.includes(hp.handle)) {
   const target = hp.handle === 'sennheiser-hd-800' ? 'sennheiser-hd-650' : 'sennheiser-hd-800';
   faqs.push([
     `Can I make the ${full} sound like another headphone?`,
-    `Tonally, yes, toward any other headphone we have measured: ${joinAnd(others)}. In Attune, choose the ${hp.name}, choose Another headphone as the target, and pick one. Attune corrects for the difference between the two measurements, loudness-matched, so you hear that headphone’s balance of bass, mids and treble on yours. It does not copy resolution, soundstage or distortion.`,
+    `Closer in tonal balance, toward any other headphone we have measured: ${joinAnd(others)}. It is an audition, not the real thing. In Attune, choose the ${hp.name}, choose Another headphone as the target, and pick one. Attune corrects for the difference between the two measurements as taken on our rig, loudness-matched, so you hear that headphone’s balance of bass, mids and treble on yours. How your pair sits and seals on your head still changes what you hear, and EQ does not copy resolution, soundstage or distortion.`,
     `/attune/?yours=${hp.curveId}&target=${target}`,
   ]);
 }
