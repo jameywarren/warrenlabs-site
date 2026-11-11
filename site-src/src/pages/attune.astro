@@ -15,37 +15,96 @@ import AttuneVoiceMatchDemo from '../components/AttuneVoiceMatchDemo.astro';
 // so. Do not hard-code "Mac App Store" or a system requirement into this page again.
 import { APP_STORE, ATTUNE, IOS_LIVE } from '../data/attune.js';
 
+// $19.99 copied from warren-labs/docs/PRICING.md (amendment 2026-11-08), 2026-11-11. It is also
+// hand-typed in the Pro card below; change both with it.
+// No aggregateRating or review: we have none of our own, and App Store ratings may not be
+// re-marked up here as if they were ours.
+// No softwareVersion: one more version copy to go stale.
+// featureList is copied word for word from the visible Free and Pro lists further down. Change
+// them together.
 const attuneApp = {
   '@type': 'SoftwareApplication',
+  '@id': 'https://warrenlabs.com/attune/#app',
   name: 'Attune',
   alternateName: 'Attune: Headphone EQ',
+  url: 'https://warrenlabs.com/attune/',
+  sameAs: [APP_STORE],
+  installUrl: APP_STORE,
   applicationCategory: 'MultimediaApplication',
   operatingSystem: ATTUNE.operatingSystem,
-  offers: {
-    '@type': 'AggregateOffer',
-    priceCurrency: 'USD',
-    lowPrice: '0',
-    highPrice: '19.99',
-    offerCount: 2,
-  },
+  processorRequirements: 'Apple Silicon (M1 or later) on Mac',
+  offers: [
+    { '@type': 'Offer', name: 'Attune', price: '0', priceCurrency: 'USD', url: APP_STORE, availability: 'https://schema.org/InStock' },
+    { '@type': 'Offer', name: 'Attune Pro (one-time in-app purchase)', price: '19.99', priceCurrency: 'USD', url: APP_STORE },
+  ],
+  featureList: [
+    'Blind, loudness-matched A/B on your own music',
+    'Find your sound and voice match',
+    'A parametric EQ: up to six bands, peak or shelf with adjustable Q, both ears together',
+    'Fix by ear: a probe tone finds what sticks out or sounds missing',
+    'Six headphones, all measured in-house on our own rig',
+    'Import your own measurements (CSV, AutoEq, squig), free, always',
+    'Separate left and right EQ bands, and probing one ear at a time',
+    'EQ export as a standard AutoEq file, including your tone and EQ bands: phone, DAP or dongle',
+  ],
+  // The five shots in the strip below, in its order.
+  screenshot: ['01-your-sound', '02-another-headphone', '03-precise-eq', '04-find-your-sound', '05-attune-pro'].map(
+    (s) => `https://warrenlabs.com/assets/attune/${s}.png`,
+  ),
   description: `Headphone EQ you judge by ear, for ${ATTUNE.metaPlatforms}: blind, loudness-matched A/B on music files you own, with a parametric EQ and tone shaping.`,
-  brand: { '@type': 'Brand', name: 'Warren Labs' },
+  author: { '@id': 'https://warrenlabs.com/#organization' },
   publisher: { '@id': 'https://warrenlabs.com/#organization' },
-  // Attune's own mark, not the lab's. The Organization node in Layout.astro still points at the W.
   image: 'https://warrenlabs.com/assets/attune/og-attune.png',
-  logo: 'https://warrenlabs.com/assets/attune/attune-appicon.svg',
+};
+// "Questions people ask": one source for the visible section and the FAQPage node, the pattern
+// learn/do-i-need-a-headphone-amp.astro uses, so the two cannot drift. Plain text only, because
+// the same string is the schema answer. Facts checked 2026-11-11 against this page, support.astro
+// and the Attune web UI (web/index.html: the Tune to row is Warren Labs, Another headphone, Your
+// sound; the corpus is the six in the Whose measurements section).
+const faq: [string, string][] = [
+  [
+    'Can Attune make my headphones sound like an HD 800?',
+    'Tonally, yes, if we have measured both headphones. Choose your headphone, choose Another headphone as the target, and pick the Sennheiser HD 800. Attune corrects for the difference between the two measurements, loudness-matched, so you hear the HD 800’s balance of bass, mids and treble on the pair you own. It cannot copy the HD 800’s resolution, soundstage or distortion. EQ moves tonal balance and nothing else.',
+  ],
+  [
+    'Does Attune EQ everything on my Mac or iPhone?',
+    'No. Attune tunes what it plays: its demo track and your own music files (WAV, AIFF, FLAC, ALAC, AAC, MP3). It cannot tune Spotify or Apple Music. To take a tuning everywhere, Attune Pro exports it as a standard AutoEq file for your phone, DAP or dongle, and you can load it onto a DSP dongle at warrenlabs.com/tune.',
+  ],
+  [
+    'Which headphones has Attune measured?',
+    'Six, all measured on our own rig: Sennheiser HD 800 and HD 650, OPPO PM-3, FiiO FT1, and Grado SR60x and RS1x. For any other headphone, import your own measurement (CSV, AutoEq, squig), free, shape the tone by ear (which does not correct the headphone), or send us the pair.',
+  ],
+  [
+    'Does Attune use the Harman target?',
+    'No. You tune to the Warren Labs house target, to a diffuse-field neutral reference, to another headphone we measured, or to your own result from Find your sound.',
+  ],
+  [
+    'Can I use Attune with AutoEq files?',
+    'Both ways. Import an AutoEq-format measurement free, and with Pro export your tuning as a standard AutoEq file, tone and EQ bands included.',
+  ],
+];
+
+const faqPage = {
+  '@type': 'FAQPage',
+  mainEntity: faq.map(([q, a]) => ({
+    '@type': 'Question',
+    name: q,
+    acceptedAnswer: { '@type': 'Answer', text: a },
+  })),
 };
 ---
 
 <Layout
-  title="Attune · Find your sound"
-  description={`Attune is a Warren Labs headphone EQ for ${ATTUNE.metaPlatforms} that you judge by ear: blind, loudness-matched, on music files you own. Best with headphones we have measured. Free on the ${ATTUNE.storeName}.`}
+  title={`Attune: Headphone EQ for ${ATTUNE.metaPlatforms} · Warren Labs`}
+  description={`Headphone EQ for ${ATTUNE.metaPlatforms} that you judge by ear: blind, loudness-matched, on music you own. Free on the ${ATTUNE.storeName}.`}
   signup="attune"
-  jsonLd={attuneApp}
+  jsonLd={[attuneApp, faqPage]}
   wordmark
   favicon="attune"
   image="/assets/attune/og-attune.png"
 >
+  {/* Smart App Banner: Safari on iPhone and iPad offers Attune's App Store listing in place. */}
+  <meta slot="head" name="apple-itunes-app" content="app-id=6792873303" />
   <Nav variant="attune" />
 
   <!-- ===================== HERO ===================== -->
@@ -64,7 +123,7 @@ const attuneApp = {
         <span class="eyebrow">{ATTUNE.storeLine}</span>
         <h1>Find <em>your</em> sound.</h1>
         <p class="lede">
-          Hear your headphones the way <b style="color:var(--text)">you</b> want, or with another headphone's
+          Attune is a headphone EQ app for {ATTUNE.metaPlatforms}. Hear your headphones the way <b style="color:var(--text)">you</b> want, or with another headphone's
           tuning on the pair you own. Then actually listen and choose. The audition is <b
             style="color:var(--text)">free</b>, no subscription.
         </p>
@@ -461,6 +520,27 @@ const attuneApp = {
     </div>
   </section>
 
+  <!-- ===================== QUESTIONS =====================
+       Rendered from the faq array in the frontmatter, which also feeds the FAQPage node. -->
+  <section id="questions" class="band">
+    <div class="wrap sec">
+      <div class="sec-head">
+        <span class="eyebrow">Questions people ask</span>
+        <h2>Straight answers.</h2>
+      </div>
+      <div class="faq">
+        {
+          faq.map(([q, a]) => (
+            <div class="faq-item">
+              <h3>{q}</h3>
+              <p>{a}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== GET STARTED CTA ===================== -->
   <section id="get" class="cta cta-section band">
     <div class="wrap">
@@ -493,6 +573,11 @@ const attuneApp = {
 </script>
 
 <style>
+  /* Questions people ask: the /learn FAQ look (global.css .doc .faq), scoped here. */
+  .faq { margin-top: 28px; max-width: 760px; }
+  .faq-item { border-top: 1px solid var(--line-soft); padding: 20px 0 4px; }
+  .faq-item h3 { font-size: 17px; font-weight: 600; margin: 0; color: var(--text); }
+  .faq-item p { margin: 8px 0 0; font-size: 16px; color: var(--muted); }
   .handoff {
     margin-top: 16px; padding: 11px 14px; border-left: 2px solid var(--accent);
     background: var(--accent-dim); border-radius: 0 8px 8px 0;

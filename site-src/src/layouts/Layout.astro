@@ -212,6 +212,8 @@ const ld = { '@context': 'https://schema.org', '@graph': [organization, person, 
     <meta name="twitter:image" content={ogImage} />
 
     <script type="application/ld+json" set:html={JSON.stringify(ld)} />
+    {/* Page-specific head tags, e.g. the Smart App Banner on /attune: <meta slot="head" ... /> */}
+    <slot name="head" />
   </head>
   <body>
     <slot />

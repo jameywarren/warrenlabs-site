@@ -49,6 +49,23 @@ const relatedLive = hp.related.filter(([h]) => {
   return r && MEASURED.has(r.curveId ?? h);
 });
 
+// Voice match FAQ, only for the six headphones Attune ships (its corpus; see the Whose
+// measurements section of /attune). Generated so the list of "the other five" cannot fall out of
+// step with the corpus, and appended to hp.faqs so it reaches the visible FAQ and the FAQPage
+// alike. The third element is a link the visible FAQ shows and the schema leaves out.
+const CORPUS = ['sennheiser-hd-800', 'sennheiser-hd-650', 'oppo-pm-3', 'fiio-ft1', 'grado-sr60x', 'grado-rs1x'];
+const joinAnd = (xs: string[]) => (xs.length < 2 ? xs.join('') : `${xs.slice(0, -1).join(', ')} and ${xs[xs.length - 1]}`);
+const faqs: [string, string, string?][] = [...hp.faqs];
+if (CORPUS.includes(hp.handle)) {
+  const others = CORPUS.filter((h) => h !== hp.handle).map((h) => `${BY_HANDLE[h].brand} ${BY_HANDLE[h].name}`);
+  const target = hp.handle === 'sennheiser-hd-800' ? 'sennheiser-hd-650' : 'sennheiser-hd-800';
+  faqs.push([
+    `Can I make the ${full} sound like another headphone?`,
+    `Tonally, yes, toward any other headphone we have measured: ${joinAnd(others)}. In Attune, choose the ${hp.name}, choose Another headphone as the target, and pick one. Attune corrects for the difference between the two measurements, loudness-matched, so you hear that headphone’s balance of bass, mids and treble on yours. It does not copy resolution, soundstage or distortion.`,
+    `/attune/?yours=${hp.curveId}&target=${target}`,
+  ]);
+}
+
 const title = `${full}: frequency response and an honest take · Warren Labs`;
 const description = `${full} measured frequency response, specs, and a plain-English take: ${hp.signature.toLowerCase()}. ${hp.type}, ${hp.impedance}. See how it measures and tune it to your taste in Attune.`;
 
@@ -80,7 +97,7 @@ const jsonLd = [
   },
   {
     '@type': 'FAQPage',
-    mainEntity: hp.faqs.map(([q, a]) => ({
+    mainEntity: faqs.map(([q, a]) => ({
       '@type': 'Question',
       name: q,
       acceptedAnswer: { '@type': 'Answer', text: a },
@@ -164,10 +181,11 @@ const jsonLd = [
       <h2 class="sec-h">Common questions</h2>
       <p class="sec-lede">Straight answers, the same ones our measurements support.</p>
       <div class="faq">
-        {hp.faqs.map(([q, a]) => (
+        {faqs.map(([q, a, href]) => (
           <div class="qa">
             <h3>{q}</h3>
             <p>{a}</p>
+            {href && <p class="qa-link"><a href={href}>Hear it in Attune &rarr;</a></p>}
           </div>
         ))}
       </div>
@@ -505,6 +523,9 @@ const jsonLd = [
     font-size: 14.5px;
     line-height: 1.6;
     max-width: 74ch;
+  }
+  .qa p.qa-link {
+    margin-top: 8px;
   }
   .rel {
     display: grid;
