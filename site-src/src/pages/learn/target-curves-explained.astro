@@ -4,8 +4,8 @@ import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import Button from '../../components/Button.astro';
 
-const SITE = 'https://warrenlabs.com';
-const url = `${SITE}/learn/target-curves-explained`;
+import { SITE, abs } from '../../data/url.js';
+const url = abs('/learn/target-curves-explained');
 const title = 'Target curves: Harman, diffuse-field, and a house curve';
 const description =
   'A target curve is the “ideal” shape a headphone is measured against, because a flat line doesn’t sound neutral. Here’s what diffuse-field, Harman, and house curves actually are, and why none of them is objectively “correct.”';
@@ -38,10 +38,12 @@ const jsonLd = [
     '@type': 'Article',
     headline: title,
     description,
-    author: { '@type': 'Person', name: 'Jamey Warren' },
+    author: { '@id': `${SITE}/#jamey` },
     publisher: { '@id': `${SITE}/#organization` },
+    image: `${SITE}/assets/brand/og-card.png`,
     datePublished: '2026-07-20',
-    dateModified: '2026-07-20',
+    // Bump only on a content change (wording a reader sees), never for punctuation or markup.
+    dateModified: '2026-11-08',
     mainEntityOfPage: url,
     inLanguage: 'en',
   },
@@ -57,7 +59,7 @@ const jsonLd = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
-      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: abs('/learn') },
       { '@type': 'ListItem', position: 3, name: title, item: url },
     ],
   },
@@ -69,7 +71,7 @@ const jsonLd = [
 
   <article class="doc">
     <nav class="crumb" aria-label="Breadcrumb">
-      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Target curves</span>
+      <a href="/">Home</a><span>/</span><a href="/learn/">Learn</a><span>/</span><span aria-current="page">Target curves</span>
     </nav>
 
     <span class="eyebrow">Learn &middot; Measurement &amp; tuning</span>
@@ -92,7 +94,7 @@ const jsonLd = [
       on the graph would actually sound thin and harsh. Instead of comparing a curve to a ruler, we compare it to a
       <b>target</b>: a shape that has been found to sound neutral or preferred. How far a headphone deviates from the
       target is what you actually hear. (If that is new, start with
-      <a href="/learn/how-to-read-a-frequency-response-graph">how to read a graph</a>.)
+      <a href="/learn/how-to-read-a-frequency-response-graph/">how to read a graph</a>.)
     </p>
 
     <h2>Diffuse-field: the neutral reference</h2>
@@ -142,7 +144,7 @@ const jsonLd = [
         blind, loudness-matched comparison on your own music and let <em>your</em> preferred curve build itself.
         Then you can see how it compares to diffuse-field or a house curve, rather than assuming one is right.
       </p>
-      <Button href="/attune" variant="primary">Find your own target in Attune</Button>
+      <Button href="/attune/" variant="primary">Find your own target in Attune</Button>
     </div>
 
     <h2>The honest bottom line</h2>
@@ -165,10 +167,10 @@ const jsonLd = [
     </div>
 
     <div class="related">
-      <a href="/learn/how-to-read-a-frequency-response-graph">How to read a graph &rarr;</a>
-      <a href="/collections/headphones">Browse the measurements &rarr;</a>
-      <a href="/attune">What Attune does &rarr;</a>
-      <a href="/learn">Back to Learn &rarr;</a>
+      <a href="/learn/how-to-read-a-frequency-response-graph/">How to read a graph &rarr;</a>
+      <a href="/collections/headphones/">Browse the measurements &rarr;</a>
+      <a href="/attune/">What Attune does &rarr;</a>
+      <a href="/learn/">Back to Learn &rarr;</a>
     </div>
   </article>
 

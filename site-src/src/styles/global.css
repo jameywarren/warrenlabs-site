@@ -128,7 +128,11 @@ section {
   margin: 0 auto;
   text-align: center;
 }
-h2 {
+/* .as-h2: a page's <h1> drawn as a section heading. Several pages (support, caliper, the legal
+   pages) open on an h2-sized heading and had no h1 at all; promoting the element without this
+   class would have resized them. */
+h2,
+h1.as-h2 {
   font-family: var(--serif);
   font-size: clamp(29px, 3.6vw, 42px);
   line-height: 1.08;

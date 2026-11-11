@@ -11,8 +11,8 @@ import { MEASUREMENTS } from '../../data/measurements.js';
 const MEASURED = new Set(MEASUREMENTS.map((m) => m.id));
 const LIVE = HEADPHONES.filter((h) => MEASURED.has(h.curveId));
 
-const SITE = 'https://warrenlabs.com';
-const url = `${SITE}/collections/headphones`;
+import { SITE, abs } from '../../data/url.js';
+const url = abs('/collections/headphones');
 const description =
   'Frequency-response measurements for reference headphones, made on our own bench: seated for best fit, one real seating, limits named. More get added as they are measured.';
 
@@ -30,7 +30,7 @@ const jsonLd = [
       '@type': 'ListItem',
       position: i + 1,
       name: `${h.brand} ${h.name}`,
-      url: `${SITE}/products/${h.handle}`,
+      url: abs(`/products/${h.handle}`),
     })),
   },
 ];
@@ -50,13 +50,13 @@ const jsonLd = [
       Every headphone on this page was measured on our own bench, seated deliberately for the best fit,
       published as one real seating rather than a blend, with its limits named. The list is short on purpose:
       it only holds what we have actually measured, and it grows one headphone at a time.
-      <a href="/measure">Send one in</a> and it joins them.
+      <a href="/measure/">Send one in</a> and it joins them.
     </p>
 
     <div class="grid">
       {
         LIVE.map((h) => (
-          <a class="card" href={`/products/${h.handle}`}>
+          <a class="card" href={`/products/${h.handle}/`}>
             <span class="kind">{h.tier}</span>
             <h2>
               {h.brand} {h.name}
@@ -78,7 +78,7 @@ const jsonLd = [
         <p>Every measurement here is a starting point. Attune lets you audition a tuning on your own music and keep the one you'd pick with your eyes closed.</p>
       </div>
       <div class="cta-btns">
-        <Button href="/attune" variant="primary">Get Attune, free</Button>
+        <Button href="/attune/" variant="primary">Get Attune, free</Button>
       </div>
     </div>
   </main>

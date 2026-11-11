@@ -4,8 +4,8 @@ import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import Button from '../../components/Button.astro';
 
-const SITE = 'https://warrenlabs.com';
-const url = `${SITE}/learn/buying-used-headphones`;
+import { SITE, abs } from '../../data/url.js';
+const url = abs('/learn/buying-used-headphones');
 const title = 'Buying used headphones without getting burned';
 const description =
   'Used is where the value and the discontinued classics live, but check the channel balance, pads, cable, and seller first. A quick pre-purchase checklist so a great deal doesn’t turn into a repair.';
@@ -38,10 +38,12 @@ const jsonLd = [
     '@type': 'Article',
     headline: title,
     description,
-    author: { '@type': 'Person', name: 'Jamey Warren' },
+    author: { '@id': `${SITE}/#jamey` },
     publisher: { '@id': `${SITE}/#organization` },
+    image: `${SITE}/assets/brand/og-card.png`,
     datePublished: '2026-07-20',
-    dateModified: '2026-07-20',
+    // Bump only on a content change (wording a reader sees), never for punctuation or markup.
+    dateModified: '2026-11-11',
     mainEntityOfPage: url,
     inLanguage: 'en',
   },
@@ -57,7 +59,7 @@ const jsonLd = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
-      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: abs('/learn') },
       { '@type': 'ListItem', position: 3, name: title, item: url },
     ],
   },
@@ -69,7 +71,7 @@ const jsonLd = [
 
   <article class="doc">
     <nav class="crumb" aria-label="Breadcrumb">
-      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Buying used</span>
+      <a href="/">Home</a><span>/</span><a href="/learn/">Learn</a><span>/</span><span aria-current="page">Buying used</span>
     </nav>
 
     <span class="eyebrow">Learn &middot; Listening</span>
@@ -111,10 +113,10 @@ const jsonLd = [
     <div class="funnel">
       <p>
         Once you&rsquo;ve landed a good used pair, two things finish the job: find out how your
-        actual unit <a href="/measure">measures</a>, and tune it to your taste with <b>Attune</b>,
+        actual unit <a href="/measure/">measures</a>, and tune it to your taste with <b>Attune</b>,
         because a classic with fresh pads and the right EQ can beat something far newer.
       </p>
-      <Button href="/attune" variant="primary">Explore Attune</Button>
+      <Button href="/attune/" variant="primary">Explore Attune</Button>
     </div>
 
     <h2>The honest bottom line</h2>
@@ -137,10 +139,10 @@ const jsonLd = [
     </div>
 
     <div class="related">
-      <a href="/learn/choosing-your-first-serious-headphone">Choosing your first serious headphone &rarr;</a>
-      <a href="/collections/headphones">Browse the measurements &rarr;</a>
-      <a href="/learn/what-headphone-impedance-means">Will it be hard to drive? &rarr;</a>
-      <a href="/learn">Back to Learn &rarr;</a>
+      <a href="/learn/choosing-your-first-serious-headphone/">Choosing your first serious headphone &rarr;</a>
+      <a href="/collections/headphones/">Browse the measurements &rarr;</a>
+      <a href="/learn/what-headphone-impedance-means/">Will it be hard to drive? &rarr;</a>
+      <a href="/learn/">Back to Learn &rarr;</a>
     </div>
   </article>
 

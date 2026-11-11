@@ -3,8 +3,8 @@ import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 
-const SITE = 'https://warrenlabs.com';
-const url = `${SITE}/learn/importing-your-own-measurement`;
+import { SITE, abs } from '../../data/url.js';
+const url = abs('/learn/importing-your-own-measurement');
 const title = 'How to import your own headphone measurement';
 const description =
   'Attune ships measurements for a handful of headphones. If yours is not one of them, you can import a measurement you find online, free. Here is where to get one, which file to pick, and the one mistake that quietly ruins the result.';
@@ -38,10 +38,12 @@ const jsonLd = [
     '@type': 'Article',
     headline: title,
     description,
-    author: { '@type': 'Person', name: 'Jamey Warren' },
+    author: { '@id': `${SITE}/#jamey` },
     publisher: { '@id': `${SITE}/#organization` },
+    image: `${SITE}/assets/brand/og-card.png`,
     datePublished: '2026-08-12',
-    dateModified: '2026-08-12',
+    // Bump only on a content change (wording a reader sees), never for punctuation or markup.
+    dateModified: '2026-11-11',
     mainEntityOfPage: url,
     inLanguage: 'en',
   },
@@ -57,7 +59,7 @@ const jsonLd = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
-      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: abs('/learn') },
       { '@type': 'ListItem', position: 3, name: title, item: url },
     ],
   },
@@ -69,7 +71,7 @@ const jsonLd = [
 
   <article class="doc">
     <nav class="crumb" aria-label="Breadcrumb">
-      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Importing a measurement</span>
+      <a href="/">Home</a><span>/</span><a href="/learn/">Learn</a><span>/</span><span aria-current="page">Importing a measurement</span>
     </nav>
 
     <span class="eyebrow">Learn &middot; Measurement &amp; tuning</span>
@@ -159,7 +161,7 @@ const jsonLd = [
     </p>
     <p>
       That is the honest ceiling on imported data, and it is why we offer a
-      <a href="/measure">mail-in measurement service</a>: your actual unit, on our fixture, cancelling cleanly
+      <a href="/measure/">mail-in measurement service</a>: your actual unit, on our fixture, cancelling cleanly
       against our targets. Most people will never need it. If you are chasing the last decibel, it is the only way to
       get there.
     </p>
@@ -184,10 +186,10 @@ const jsonLd = [
     </div>
 
     <div class="related">
-      <a href="/learn/why-two-rigs-cant-share-an-axis">Why two rigs can&rsquo;t share an axis &rarr;</a>
-      <a href="/learn/target-curves-explained">Target curves explained &rarr;</a>
-      <a href="/attune">Get Attune &rarr;</a>
-      <a href="/learn">Back to Learn &rarr;</a>
+      <a href="/learn/why-two-rigs-cant-share-an-axis/">Why two rigs can&rsquo;t share an axis &rarr;</a>
+      <a href="/learn/target-curves-explained/">Target curves explained &rarr;</a>
+      <a href="/attune/">Get Attune &rarr;</a>
+      <a href="/learn/">Back to Learn &rarr;</a>
     </div>
   </article>
 

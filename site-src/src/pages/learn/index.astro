@@ -4,133 +4,133 @@ import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import Button from '../../components/Button.astro';
 
-const SITE = 'https://warrenlabs.com';
-const url = `${SITE}/learn`;
+import { SITE, abs } from '../../data/url.js';
+const url = abs('/learn');
 const description =
   'Evergreen guides to how headphones and the gear around them actually work: decisive, honest, no mysticism. Written by someone who spent a career measuring headphones.';
 
 const published = [
   {
-    href: '/learn/importing-your-own-measurement',
+    href: '/learn/importing-your-own-measurement/',
     section: 'Measurement & tuning',
     title: 'How to import your own headphone measurement',
     teaser:
       'Where to find a measurement file, which one to pick, and the raw-versus-compensated mistake that quietly ruins the result.',
   },
   {
-    href: '/learn/how-to-read-a-frequency-response-graph',
+    href: '/learn/how-to-read-a-frequency-response-graph/',
     section: 'Measurement & tuning',
     title: 'How to read a frequency-response graph',
     teaser:
       'What the axes mean, how to read the peaks and dips against a target, and what a graph can and can’t tell you, without the mysticism.',
   },
   {
-    href: '/learn/do-i-need-a-headphone-amp',
+    href: '/learn/do-i-need-a-headphone-amp/',
     section: 'Understanding the gear',
     title: 'Do you need a headphone amp?',
     teaser:
       'Usually not. Most headphones and nearly all IEMs run clean off a dongle. Here is how to tell when you actually need one.',
   },
   {
-    href: '/learn/open-back-vs-closed-back-headphones',
+    href: '/learn/open-back-vs-closed-back-headphones/',
     section: 'Understanding the gear',
     title: 'Open-back vs closed-back headphones',
     teaser:
       'One sounds more spacious; the other isolates and hits harder. Neither is “better”. How to choose by where and around whom you listen.',
   },
   {
-    href: '/learn/what-headphone-impedance-means',
+    href: '/learn/what-headphone-impedance-means/',
     section: 'Understanding the gear',
     title: 'What headphone impedance means (and when to care)',
     teaser:
       'Impedance and sensitivity together decide whether a headphone is “hard to drive”. How to read both, and when the specs don’t matter at all.',
   },
   {
-    href: '/learn/target-curves-explained',
+    href: '/learn/target-curves-explained/',
     section: 'Measurement & tuning',
     title: 'Target curves: Harman, diffuse-field, and a house curve',
     teaser:
       'Why flat doesn’t sound neutral, what each target actually represents, and why none of them is objectively “correct.”',
   },
   {
-    href: '/learn/why-two-rigs-cant-share-an-axis',
+    href: '/learn/why-two-rigs-cant-share-an-axis/',
     section: 'Measurement & tuning',
     title: 'Why you can’t compare measurements from two different rigs',
     teaser:
       'A curve describes the headphone and the bench it was measured on. Where rigs disagree, why compensation hides it, and the one rule we hold ourselves to.',
   },
   {
-    href: '/learn/what-a-dac-is',
+    href: '/learn/what-a-dac-is/',
     section: 'Understanding the gear',
     title: 'What a DAC is (and when you actually need one)',
     teaser:
       'You already own a DAC. When an external one actually helps, and why it’s not the fidelity upgrade it’s sold as.',
   },
   {
-    href: '/learn/wireless-and-bluetooth-headphones',
+    href: '/learn/wireless-and-bluetooth-headphones/',
     section: 'Understanding the gear',
     title: 'Wireless & Bluetooth: what you actually give up',
     teaser:
       'Latency, battery, and control over the DAC, not, usually, obvious sound quality. Why the codec wars are mostly noise.',
   },
   {
-    href: '/learn/what-cables-can-and-cant-do',
+    href: '/learn/what-cables-can-and-cant-do/',
     section: 'Understanding the gear',
     title: 'What cables can (and can’t) do',
     teaser:
       'Build, length, connectors, and microphonics are real; “warmth” and “blacker backgrounds” from a pricey cable are not. The honest line.',
   },
   {
-    href: '/learn/iems-vs-over-ear-headphones',
+    href: '/learn/iems-vs-over-ear-headphones/',
     section: 'Understanding the gear',
     title: 'IEMs vs over-ear headphones',
     teaser:
       'In-ears seal and isolate; over-ears are roomier and comfier for long sessions. How to choose by isolation, comfort, and fit.',
   },
   {
-    href: '/learn/why-level-matching-changes-everything',
+    href: '/learn/why-level-matching-changes-everything/',
     section: 'Measurement & tuning',
     title: 'Why level-matching changes everything',
     teaser:
       'Louder always sounds “better,” so unmatched comparisons are rigged. The single most important, and most skipped, discipline in audio.',
   },
   {
-    href: '/learn/what-eq-can-and-cant-do',
+    href: '/learn/what-eq-can-and-cant-do/',
     section: 'Measurement & tuning',
     title: 'What EQ can and can’t do',
     teaser:
       'The biggest cheap upgrade you’re not using, and why it doesn’t “ruin” sound. What it changes (tone) and what it can’t (physics).',
   },
   {
-    href: '/learn/how-to-listen-for-tonal-balance',
+    href: '/learn/how-to-listen-for-tonal-balance/',
     section: 'Listening',
     title: 'How to listen for tonal balance',
     teaser:
       'You don’t need golden ears. You need a method: familiar tracks, matched levels, and listening by region instead of for “detail.”',
   },
   {
-    href: '/learn/choosing-your-first-serious-headphone',
+    href: '/learn/choosing-your-first-serious-headphone/',
     section: 'Listening',
     title: 'Choosing your first serious headphone',
     teaser:
       'Decide three things: where you listen, what drives it, and the sound you like, and the field narrows itself. A framework, not a ranked list.',
   },
   {
-    href: '/learn/headphone-driver-types',
+    href: '/learn/headphone-driver-types/',
     section: 'Understanding the gear',
     title: 'Driver types: dynamic, planar, and electrostatic',
     teaser:
       'What each driver technology actually changes about the sound, and why the tuning still matters more than the label.',
   },
   {
-    href: '/learn/does-headphone-burn-in-do-anything',
+    href: '/learn/does-headphone-burn-in-do-anything/',
     section: 'Measurement & tuning',
     title: 'Does headphone burn-in do anything?',
     teaser:
       'Mostly a myth for modern headphones. The measurements barely budge. What you hear is your ears adapting. The evidence-based take.',
   },
   {
-    href: '/learn/buying-used-headphones',
+    href: '/learn/buying-used-headphones/',
     section: 'Listening',
     title: 'Buying used headphones without getting burned',
     teaser:
@@ -217,8 +217,8 @@ const grouped = SECTIONS.map((section) => ({
         <p>Attune turns a measurement into something you can actually listen to. Free, no subscription.</p>
       </div>
       <div class="learn-cta-btns">
-        <Button href="/attune" variant="primary">Get Attune, free</Button>
-        <Button href="/attune" variant="ghost" data-signup data-intent="notify">Get the occasional update</Button>
+        <Button href="/attune/" variant="primary">Get Attune, free</Button>
+        <Button href="/attune/" variant="ghost" data-signup data-intent="notify">Get the occasional update</Button>
       </div>
     </div>
   </section>

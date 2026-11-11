@@ -70,19 +70,17 @@ const LENSES = [
   },
 ];
 
+// Minimal on purpose. Add offers, sameAs and operatingSystem when Proof has a live listing and a
+// decided price (proof/docs/FREE-TIER.md). Until then any of them would be a claim, not an
+// omission: an offer of zero says "free", and an OS list says "shipping".
 const proofApp = {
   '@type': 'SoftwareApplication',
+  '@id': 'https://warrenlabs.com/proof/#app',
   name: 'Proof',
+  url: 'https://warrenlabs.com/proof/',
   applicationCategory: 'MultimediaApplication',
-  operatingSystem: 'macOS, iPadOS, iOS',
-  description:
-    'An audio measurement instrument that measures its own noise and distortion first, then reports every reading against that floor. For Mac, iPad and iPhone.',
-  brand: { '@type': 'Brand', name: 'Warren Labs' },
   publisher: { '@id': 'https://warrenlabs.com/#organization' },
-  // No `offers` node. Pricing is undecided (proof/docs/FREE-TIER.md) and an offer with a price of
-  // zero would be a claim, not an omission.
-};
----
+};---
 
 <Layout
   title="Proof · Measure, with a known floor"

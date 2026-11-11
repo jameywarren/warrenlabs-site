@@ -1,6 +1,38 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { readdirSync, readFileSync } from 'node:fs';
+import { join, relative, sep } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+// The repo root, which GitHub Pages serves. /plugins (gen_site.py in the monorepo) and /changes
+// (hand-written) are published from there, not built by Astro, so Astro cannot discover them.
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
+
+// Every published .html under the given root directories, as sitemap URLs. Until 2026-11-11 this
+// was a hand-kept list, and it drifted exactly the way tools/sync.mjs ROUTES warns about: the
+// downloads page, eight plug-in manuals and both Changes legal pages shipped unlisted. Reading the
+// tree at config time means a new gen_site page is listed the day it is published.
+//   - index.html maps to its directory URL with a trailing slash, matching its canonical.
+//   - A page carrying `name="robots" content="noindex` is skipped, per the rule in the filter
+//     comment below: never advertise a page that asks not to be indexed.
+function generatedPages(dirs) {
+  const out = [];
+  const walk = (dir) => {
+    for (const e of readdirSync(dir, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
+      const p = join(dir, e.name);
+      if (e.isDirectory()) walk(p);
+      else if (e.name.endsWith('.html')) {
+        if (/name="robots"\s+content="noindex/i.test(readFileSync(p, 'utf8'))) continue;
+        const rel = relative(ROOT, p).split(sep).join('/');
+        out.push('https://warrenlabs.com/' + rel.replace(/(^|\/)index\.html$/, '$1'));
+      }
+    }
+  };
+  for (const d of dirs) walk(join(ROOT, d));
+  return out;
+}
+
 
 // The migrated Sonic Temple content, built as part of warrenlabs.com.
 // `npm run build` emits to dist/; tools/sync.mjs then copies the published routes into the repo
@@ -44,32 +76,19 @@ export default defineConfig({
       // section 3.8(b) is satisfied by the in-app link rather than by the sitemap either way.
       filter: (page) =>
         !['/canjam', '/card', '/loaners/print', '/proof/terms'].some((p) => page.includes(p)),
-      // The hand-written pages live outside this Astro project, so list them explicitly.
-      customPages: [
+      // The pages that live outside this Astro project. /, /changes/ and /tune/ are listed by
+      // hand; everything else under /plugins and /changes is found on disk (see generatedPages).
+      // A Set, because the scan also finds /changes/ (changes/index.html).
+      customPages: [...new Set([
         'https://warrenlabs.com/',
-        'https://warrenlabs.com/plugins/',
         'https://warrenlabs.com/changes/',
-        // The nine plugin pages and the guides index. gen_site.py in the monorepo renders these,
-        // so Astro cannot discover them -- they were shipping unlisted while /plugins/ itself was
-        // listed. Adding a plugin means adding it here, same trap as tools/sync.mjs ROUTES.
-        'https://warrenlabs.com/plugins/guides/',
-        'https://warrenlabs.com/plugins/guides/ir-capture.html',
-        'https://warrenlabs.com/plugins/guides/level-manual.html',
-        'https://warrenlabs.com/plugins/bevel/',
-        'https://warrenlabs.com/plugins/brace/',
-        'https://warrenlabs.com/plugins/level/',
-        'https://warrenlabs.com/plugins/pare/',
-        'https://warrenlabs.com/plugins/ripple/',
-        'https://warrenlabs.com/plugins/scribe/',
-        'https://warrenlabs.com/plugins/square/',
-        'https://warrenlabs.com/plugins/temper/',
-        'https://warrenlabs.com/plugins/wake/',
         // /tune is Attune's WebHID companion, vendored from attune/companion/tune.html into
         // public/. Astro does not route it, so it never reached the sitemap -- yet it is
         // indexable, linked from /support, and a real destination for someone searching for
         // how to get a tuning onto a dongle.
         'https://warrenlabs.com/tune/',
-      ],
+        ...generatedPages(['plugins', 'changes']),
+      ])],
     }),
   ],
 });

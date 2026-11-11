@@ -5,8 +5,8 @@ import Footer from '../../components/Footer.astro';
 import Button from '../../components/Button.astro';
 import DriveabilityDiagram from '../../components/DriveabilityDiagram.astro';
 
-const SITE = 'https://warrenlabs.com';
-const url = `${SITE}/learn/what-headphone-impedance-means`;
+import { SITE, abs } from '../../data/url.js';
+const url = abs('/learn/what-headphone-impedance-means');
 const title = 'What headphone impedance means (and when to care)';
 const description =
   'Impedance (in ohms) and sensitivity together decide whether a headphone is “hard to drive.” Here is what each number means, when a high-impedance headphone actually needs more power, and when the specs do not matter at all.';
@@ -39,10 +39,12 @@ const jsonLd = [
     '@type': 'Article',
     headline: title,
     description,
-    author: { '@type': 'Person', name: 'Jamey Warren' },
+    author: { '@id': `${SITE}/#jamey` },
     publisher: { '@id': `${SITE}/#organization` },
+    image: `${SITE}/assets/brand/og-card.png`,
     datePublished: '2026-07-20',
-    dateModified: '2026-07-20',
+    // Bump only on a content change (wording a reader sees), never for punctuation or markup.
+    dateModified: '2026-08-05',
     mainEntityOfPage: url,
     inLanguage: 'en',
   },
@@ -58,7 +60,7 @@ const jsonLd = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
-      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: abs('/learn') },
       { '@type': 'ListItem', position: 3, name: title, item: url },
     ],
   },
@@ -70,7 +72,7 @@ const jsonLd = [
 
   <article class="doc">
     <nav class="crumb" aria-label="Breadcrumb">
-      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Impedance</span>
+      <a href="/">Home</a><span>/</span><a href="/learn/">Learn</a><span>/</span><span aria-current="page">Impedance</span>
     </nav>
 
     <span class="eyebrow">Learn &middot; Understanding the gear</span>
@@ -150,7 +152,7 @@ const jsonLd = [
         is loud and clean but you wish it sounded <em>different</em> (warmer, brighter, more bass), that
         is a tuning question, not a power one. <b>Attune</b> is how you answer it, by ear, on your own music.
       </p>
-      <Button href="/attune" variant="primary">Explore Attune</Button>
+      <Button href="/attune/" variant="primary">Explore Attune</Button>
     </div>
 
     <h2>The honest bottom line</h2>
@@ -173,10 +175,10 @@ const jsonLd = [
     </div>
 
     <div class="related">
-      <a href="/learn/do-i-need-a-headphone-amp">Do you need a headphone amp? &rarr;</a>
-      <a href="/learn/how-to-read-a-frequency-response-graph">How to read a graph &rarr;</a>
-      <a href="/collections/headphones">Browse the measurements &rarr;</a>
-      <a href="/learn">Back to Learn &rarr;</a>
+      <a href="/learn/do-i-need-a-headphone-amp/">Do you need a headphone amp? &rarr;</a>
+      <a href="/learn/how-to-read-a-frequency-response-graph/">How to read a graph &rarr;</a>
+      <a href="/collections/headphones/">Browse the measurements &rarr;</a>
+      <a href="/learn/">Back to Learn &rarr;</a>
     </div>
   </article>
 

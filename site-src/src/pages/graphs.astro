@@ -119,6 +119,7 @@ const MEASURED_LD = {
     </aside>
 
     <div class="gwrap">
+      <h1 class="g-title">Headphone measurements</h1>
       <div class="bar">
         <div class="seg" role="tablist" aria-label="View mode">
           <button id="m-ov" class="on" role="tab" aria-selected="true">Overlay</button>
@@ -210,7 +211,7 @@ const MEASURED_LD = {
               are measuring from scratch rather than inheriting somebody else&rsquo;s numbers.
             </p>
             <p>
-              The summary below is the short version. <a href="/method">The full method is
+              The summary below is the short version. <a href="/method/">The full method is
               published</a>: the rig, the seating rule, all 19 captures a side, and where we
               stop trusting our own graphs.
             </p>
@@ -386,6 +387,11 @@ const MEASURED_LD = {
   .list :global(.empty) { padding: 20px 4px; color: var(--muted-2); font-size: 12.5px; line-height: 1.5; }
 
   .gwrap { display: flex; flex-direction: column; min-height: 0; padding: 16px 20px 0; }
+  /* The page's one <h1>. It had none; this is the instrument's label, not a hero. */
+  .g-title {
+    flex: none; margin: 0 0 10px; font-family: var(--mono); font-size: 10px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted);
+  }
   .bar { display: flex; align-items: center; gap: 8px; flex: none; padding-bottom: 12px; flex-wrap: wrap; }
   .seg { display: flex; background: var(--surface); border: 1px solid var(--line); border-radius: 9px; padding: 2px; gap: 2px; }
   .seg button {
@@ -1076,7 +1082,7 @@ const MEASURED_LD = {
         '</b> in this link ' + (unresolved.length > 1 ? "aren't" : "isn't") +
         ' in the Warren Labs set: <span class="mono">' + unresolved.join(', ') + '</span>. ' +
         'We publish a headphone here once we have measured it ourselves. ' +
-        '<a href="/measure">Send one in</a> and it gets added.';
+        '<a href="/measure/">Send one in</a> and it gets added.';
     } else {
       warn.style.display = 'none';
     }
@@ -1153,7 +1159,7 @@ const MEASURED_LD = {
         // connection in the line. Carries the pair so the landing page can name it.
         const hear = document.createElement('a');
         hear.className = 'hear';
-        hear.href = `/attune?yours=${encodeURIComponent(sel[0].id)}&target=${encodeURIComponent(sel[1].id)}`;
+        hear.href = `/attune/?yours=${encodeURIComponent(sel[0].id)}&target=${encodeURIComponent(sel[1].id)}`;
         hear.textContent = 'Hear this →';
         hear.title = `Voice-match ${label(sel[0].id)} to ${label(sel[1].id)} in Attune`;
         note.appendChild(hear);

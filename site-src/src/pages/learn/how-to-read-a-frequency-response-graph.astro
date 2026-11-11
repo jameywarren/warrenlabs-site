@@ -5,8 +5,8 @@ import Footer from '../../components/Footer.astro';
 import Button from '../../components/Button.astro';
 import FrRegionsDiagram from '../../components/FrRegionsDiagram.astro';
 
-const SITE = 'https://warrenlabs.com';
-const url = `${SITE}/learn/how-to-read-a-frequency-response-graph`;
+import { SITE, abs } from '../../data/url.js';
+const url = abs('/learn/how-to-read-a-frequency-response-graph');
 const title = 'How to read a frequency-response graph';
 const description =
   'A frequency-response graph shows how loud a headphone plays each pitch, bass to treble. Here is how to read the axes, the peaks and dips, and what the graph can and cannot tell you, without the mysticism.';
@@ -40,10 +40,12 @@ const jsonLd = [
     '@type': 'Article',
     headline: title,
     description,
-    author: { '@type': 'Person', name: 'Jamey Warren' },
+    author: { '@id': `${SITE}/#jamey` },
     publisher: { '@id': `${SITE}/#organization` },
+    image: `${SITE}/assets/brand/og-card.png`,
     datePublished: '2026-07-17',
-    dateModified: '2026-07-17',
+    // Bump only on a content change (wording a reader sees), never for punctuation or markup.
+    dateModified: '2026-11-11',
     mainEntityOfPage: url,
     inLanguage: 'en',
   },
@@ -59,7 +61,7 @@ const jsonLd = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
-      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: abs('/learn') },
       { '@type': 'ListItem', position: 3, name: title, item: url },
     ],
   },
@@ -71,7 +73,7 @@ const jsonLd = [
 
   <article class="doc">
     <nav class="crumb" aria-label="Breadcrumb">
-      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Reading a graph</span>
+      <a href="/">Home</a><span>/</span><a href="/learn/">Learn</a><span>/</span><span aria-current="page">Reading a graph</span>
     </nav>
 
     <span class="eyebrow">Learn &middot; Measurement &amp; tuning</span>
@@ -139,7 +141,7 @@ const jsonLd = [
       <li><b>Open-backs read bass-light on some fixtures</b> because the seal leaks. That can be the measurement, not the headphone.</li>
     </ul>
     <p>
-      This is why every graph in <a href="/graphs">our measurements</a> names its rig and its limits. A
+      This is why every graph in <a href="/graphs/">our measurements</a> names its rig and its limits. A
       curve with its limits stated is worth trusting; a curve presented as gospel is not.
     </p>
 
@@ -157,7 +159,7 @@ const jsonLd = [
         graph, you audition tunings blind and loudness-matched on your own music, and keep the shape you would actually
         pick by ear.
       </p>
-      <Button href="/attune" variant="primary">Hear a graph, don’t just read it</Button>
+      <Button href="/attune/" variant="primary">Hear a graph, don’t just read it</Button>
     </div>
 
     <h2>The honest bottom line</h2>
@@ -180,10 +182,10 @@ const jsonLd = [
     </div>
 
     <div class="related">
-      <a href="/graphs">Browse our measurements &rarr;</a>
-      <a href="/learn/do-i-need-a-headphone-amp">Do you need a headphone amp? &rarr;</a>
-      <a href="/attune">What Attune does &rarr;</a>
-      <a href="/learn">Back to Learn &rarr;</a>
+      <a href="/graphs/">Browse our measurements &rarr;</a>
+      <a href="/learn/do-i-need-a-headphone-amp/">Do you need a headphone amp? &rarr;</a>
+      <a href="/attune/">What Attune does &rarr;</a>
+      <a href="/learn/">Back to Learn &rarr;</a>
     </div>
   </article>
 

@@ -74,7 +74,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <div class="hero-cta ctawrap">
         <canvas id="scope" height="220" aria-hidden="true"></canvas>
         <a class="btn primary" href="https://apps.apple.com/app/attune-headphone-eq/id6792873303" target="_blank" rel="noopener">Download on the App Store <span aria-hidden="true">&#8599;</span></a>
-        <a class="btn ghost" href="/attune">How it works</a>
+        <a class="btn ghost" href="/attune/">How it works</a>
       </div>
       <p class="hero-fine">Free. No account, no card.</p>
       <p class="hero-aside mono">Building a headphone? Lend me one and I&rsquo;ll measure it. <a href="/loaners/">FOR MAKERS &rarr;</a></p>
@@ -98,7 +98,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
     <div class="steps">
       <div class="step">
         <span class="step-n mono">01 &middot; PICK YOUR HEADPHONE</span>
-        <p>Every headphone in Attune was measured on my own rig. If yours isn&rsquo;t there yet, you can import a measurement you already have (CSV, AutoEq or squig) for free, or <a href="/measure">send your pair in</a> and I&rsquo;ll measure it.</p>
+        <p>Every headphone in Attune was measured on my own rig. If yours isn&rsquo;t there yet, you can import a measurement you already have (CSV, AutoEq or squig) for free, or <a href="/measure/">send your pair in</a> and I&rsquo;ll measure it.</p>
       </div>
       <div class="step">
         <span class="step-n mono">02 &middot; ANSWER A OR B</span>
@@ -136,7 +136,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
     </li>
     <li>
       <b>Published raw, flattering or not.</b>
-      <p>Every measurement I take goes up at full resolution under CC BY-NC 4.0, with the rig and the date on it. <a href="/graphs">See the measurements</a>.</p>
+      <p>Every measurement I take goes up at full resolution under CC BY-NC 4.0, with the rig and the date on it. <a href="/graphs/">See the measurements</a>.</p>
     </li>
   </ol>
 </section>
@@ -148,7 +148,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <h2 class="display">Send me your pair.</h2>
       <p class="sub">Every correction you can buy is built from somebody else&rsquo;s sample of your model. Send me yours and you get the curve of the pair actually in your hands. I publish it either way, flattering or not.</p>
     </div>
-    <a class="offer" href="/measure">
+    <a class="offer" href="/measure/">
       <div class="offer-main">
         <div class="offer-k mono">SEND ONE IN</div>
         <h3 class="display">Your unit, on my rig</h3>
@@ -164,7 +164,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
     </a>
 
     <div class="k mono ladder-k">YOU MAKE HEADPHONES</div>
-    <a class="offer-alt" href="/loaners">
+    <a class="offer-alt" href="/loaners/">
       <span class="oa-k mono">FREE &middot; LOAN ME A HEADPHONE</span>
       <span class="oa-main"><b>Send me the headphone. I&rsquo;ll send you back the data.</b>
         Lend me one retail unit for two weeks. I measure it on a documented rig and return the raw file for your own use, with no conditions attached. You cover shipping out, and I insure and pay the return.</span>
@@ -228,11 +228,11 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
       <h3>Caliper</h3>
       <p>Headphone measurement for Mac and iPhone. It measures a headphone on an acoustic fixture and tells you how much of the curve is real. Free on the App&nbsp;Store.</p>
     </a>
-    <a class="also-card" href="/proof">
+    <a class="also-card" href="/proof/">
       <h3>Proof</h3>
       <p>An audio measurement instrument for Mac, iPad and iPhone. It measures its own noise and distortion first, then reports every reading against that floor. Coming soon to the App&nbsp;Store.</p>
     </a>
-    <a class="also-card" href="/graphs">
+    <a class="also-card" href="/graphs/">
       <h3>The measurements</h3>
       <p>Every first-party measurement published raw and at full resolution under CC BY-NC 4.0. Flattering or not.</p>
     </a>
@@ -301,6 +301,8 @@ b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';
      which the page already links but nothing declared.
      No Product/Offer here on purpose: the eight bundle-only plugins have no individual
      price, and an Offer without one is an incomplete offer that Google flags. -->
+<!-- Keep the Organization and Person nodes identical to Layout.astro (site-src/src/layouts). The
+     Attune node is a reference only: price and OS live on /attune, not in hand-written HTML. -->
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -309,15 +311,15 @@ b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';
    "@type": "Organization",
    "@id": "https://warrenlabs.com/#organization",
    "name": "Warren Labs",
+   "legalName": "Free River Studios LLC",
    "url": "https://warrenlabs.com",
    "logo": "https://warrenlabs.com/assets/brand/png/wl-mark_amber_512.png",
    "description": "Audio product work by Jamey Warren: headphones, amps, DACs, DSP, and the software around them.",
    "founder": {
-    "@type": "Person",
-    "@id": "https://warrenlabs.com/#jamey",
-    "name": "Jamey Warren"
+    "@id": "https://warrenlabs.com/#jamey"
    },
    "sameAs": [
+    "https://apps.apple.com/us/developer/warren-labs/id6792763836",
     "https://github.com/jameywarren",
     "https://www.linkedin.com/in/jameywarren"
    ]
@@ -357,6 +359,19 @@ b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';
    "url": "https://www.amazon.com/dp/B0H6XWXM4C",
    "bookFormat": "https://schema.org/EBook",
    "inLanguage": "en"
+  },
+  {
+   "@type": "SoftwareApplication",
+   "@id": "https://warrenlabs.com/attune/#app",
+   "name": "Attune",
+   "url": "https://warrenlabs.com/attune/",
+   "sameAs": [
+    "https://apps.apple.com/app/attune-headphone-eq/id6792873303"
+   ],
+   "applicationCategory": "MultimediaApplication",
+   "publisher": {
+    "@id": "https://warrenlabs.com/#organization"
+   }
   }
  ]
 }

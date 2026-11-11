@@ -33,8 +33,8 @@ export function getStaticPaths() {
 }
 
 const { hp } = Astro.props;
-const SITE = 'https://warrenlabs.com';
-const url = `${SITE}/products/${hp.handle}`;
+import { SITE, abs } from '../../data/url.js';
+const url = abs(`/products/${hp.handle}`);
 const full = `${hp.brand} ${hp.name}`;
 
 const ourMeasurement = MEASUREMENTS.find((m) => m.id === hp.curveId);
@@ -53,18 +53,28 @@ const title = `${full}: frequency response and an honest take · Warren Labs`;
 const description = `${full} measured frequency response, specs, and a plain-English take: ${hp.signature.toLowerCase()}. ${hp.type}, ${hp.impedance}. See how it measures and tune it to your taste in Attune.`;
 
 const jsonLd = [
+  // A page ABOUT a headphone, not an offer of one: we sell none of these, so a top-level Product
+  // with no offers, review or rating is an incomplete product listing to a crawler. No review or
+  // rating goes here either; we have none of our own to mark up.
   {
-    '@type': 'Product',
-    name: full,
-    brand: { '@type': 'Brand', name: hp.brand },
-    category: 'Headphones',
+    '@type': 'WebPage',
+    '@id': url,
+    name: title,
     description: hp.deck,
+    about: {
+      '@type': 'Product',
+      name: full,
+      brand: { '@type': 'Brand', name: hp.brand },
+      category: 'Headphones',
+    },
+    isPartOf: { '@id': `${SITE}/#website` },
+    publisher: { '@id': `${SITE}/#organization` },
   },
   {
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
-      { '@type': 'ListItem', position: 2, name: 'Headphones', item: `${SITE}/collections/headphones` },
+      { '@type': 'ListItem', position: 2, name: 'Headphones', item: abs('/collections/headphones') },
       { '@type': 'ListItem', position: 3, name: full, item: url },
     ],
   },
@@ -84,7 +94,7 @@ const jsonLd = [
 
   <main class="wrap pdp">
     <nav class="crumb" aria-label="Breadcrumb">
-      <a href="/">Home</a><span>/</span><a href="/collections/headphones">Headphones</a><span>/</span><span aria-current="page">{full}</span>
+      <a href="/">Home</a><span>/</span><a href="/collections/headphones/">Headphones</a><span>/</span><span aria-current="page">{full}</span>
     </nav>
 
     <header class="head">
@@ -126,7 +136,7 @@ const jsonLd = [
         </div>
 
         <div class="funnel">
-          <Button href="/attune" variant="primary" size="lg">Hear it tuned to your taste in Attune</Button>
+          <Button href="/attune/" variant="primary" size="lg">Hear it tuned to your taste in Attune</Button>
           <span class="hint">Free &middot; {ATTUNE.metaPlatforms}</span>
         </div>
       </div>
@@ -137,7 +147,7 @@ const jsonLd = [
       <div class="prov-body">
         <p>
           {fx.limits} Do not read fine treble detail as settled.
-          <a href="/learn">How we measure &rarr;</a>
+          <a href="/learn/">How we measure &rarr;</a>
         </p>
         {hp.caveat && <p class="caveat"><b>On this measurement:</b> {hp.caveat}</p>}
       </div>
@@ -145,9 +155,9 @@ const jsonLd = [
 
     <div class="learn-row">
       <span class="learn-row-k">New to this?</span>
-      <a href="/learn/how-to-read-a-frequency-response-graph">How to read this graph</a>
-      <a href="/learn/what-headphone-impedance-means">What impedance means</a>
-      <a href="/learn/do-i-need-a-headphone-amp">Do you need an amp?</a>
+      <a href="/learn/how-to-read-a-frequency-response-graph/">How to read this graph</a>
+      <a href="/learn/what-headphone-impedance-means/">What impedance means</a>
+      <a href="/learn/do-i-need-a-headphone-amp/">Do you need an amp?</a>
     </div>
 
     <section class="sec">
@@ -171,7 +181,7 @@ const jsonLd = [
           {relatedLive.map(([h, kind, note]) => {
             const r = BY_HANDLE[h];
             return (
-              <a class="rcard" href={`/products/${h}`}>
+              <a class="rcard" href={`/products/${h}/`}>
                 <span class="rk">{kind}</span>
                 <h3>{r ? `${r.brand} ${r.name}` : h}</h3>
                 <p>{note}</p>

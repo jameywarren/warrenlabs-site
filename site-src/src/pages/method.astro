@@ -31,7 +31,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
 
-const SITE = 'https://warrenlabs.com';
+import { SITE, abs } from '../data/url.js';
 const description =
   'How Warren Labs measures a headphone: the rig, the seating rule, the 19 captures per side, and ' +
   'the repeatability figures that came off our own bench. Published in full so you can check it.';
@@ -58,7 +58,7 @@ const jsonLd = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
-      { '@type': 'ListItem', position: 2, name: 'How we measure', item: `${SITE}/method` },
+      { '@type': 'ListItem', position: 2, name: 'How we measure', item: abs('/method') },
     ],
   },
 ];
@@ -285,8 +285,8 @@ const jsonLd = [
         different coordinate system, and no honest way to merge them.
       </p>
       <div class="cta-row tight">
-        <Button href="/learn/why-two-rigs-cant-share-an-axis" variant="ghost">Why that matters</Button>
-        <Button href="/learn/how-to-read-a-frequency-response-graph" variant="ghost">How to read the graph</Button>
+        <Button href="/learn/why-two-rigs-cant-share-an-axis/" variant="ghost">Why that matters</Button>
+        <Button href="/learn/how-to-read-a-frequency-response-graph/" variant="ghost">How to read the graph</Button>
       </div>
     </section>
 
@@ -299,8 +299,8 @@ const jsonLd = [
         </p>
       </div>
       <div class="cta-btns">
-        <Button href="/measure" variant="primary">Send one in</Button>
-        <Button href="/graphs" variant="ghost">See the measurements</Button>
+        <Button href="/measure/" variant="primary">Send one in</Button>
+        <Button href="/graphs/" variant="ghost">See the measurements</Button>
       </div>
     </div>
   </main>

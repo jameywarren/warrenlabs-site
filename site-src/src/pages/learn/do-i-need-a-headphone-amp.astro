@@ -4,8 +4,8 @@ import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import Button from '../../components/Button.astro';
 
-const SITE = 'https://warrenlabs.com';
-const url = `${SITE}/learn/do-i-need-a-headphone-amp`;
+import { SITE, abs } from '../../data/url.js';
+const url = abs('/learn/do-i-need-a-headphone-amp');
 const title = 'Do you need a headphone amp?';
 const description =
   'Short answer: usually not. Most headphones and nearly all IEMs run clean off a phone dongle or laptop. You need an amp when a headphone is high-impedance or low-sensitivity. Here is how to tell.';
@@ -39,10 +39,12 @@ const jsonLd = [
     '@type': 'Article',
     headline: title,
     description,
-    author: { '@type': 'Person', name: 'Jamey Warren' },
+    author: { '@id': `${SITE}/#jamey` },
     publisher: { '@id': `${SITE}/#organization` },
+    image: `${SITE}/assets/brand/og-card.png`,
     datePublished: '2026-07-17',
-    dateModified: '2026-07-17',
+    // Bump only on a content change (wording a reader sees), never for punctuation or markup.
+    dateModified: '2026-11-11',
     mainEntityOfPage: url,
     inLanguage: 'en',
   },
@@ -58,7 +60,7 @@ const jsonLd = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
-      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: abs('/learn') },
       { '@type': 'ListItem', position: 3, name: title, item: url },
     ],
   },
@@ -70,7 +72,7 @@ const jsonLd = [
 
   <article class="doc">
     <nav class="crumb" aria-label="Breadcrumb">
-      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Headphone amps</span>
+      <a href="/">Home</a><span>/</span><a href="/learn/">Learn</a><span>/</span><span aria-current="page">Headphone amps</span>
     </nav>
 
     <span class="eyebrow">Learn &middot; Understanding the gear</span>
@@ -158,7 +160,7 @@ const jsonLd = [
         music. Attune lets you audition tunings blind and loudness-matched, and keep the one you would pick with your
         eyes closed.
       </p>
-      <Button href="/attune" variant="primary">Explore Attune</Button>
+      <Button href="/attune/" variant="primary">Explore Attune</Button>
     </div>
 
     <h2>The honest bottom line</h2>
@@ -181,9 +183,9 @@ const jsonLd = [
     </div>
 
     <div class="related">
-      <a href="/graphs">Browse our measurements &rarr;</a>
-      <a href="/attune">What Attune does &rarr;</a>
-      <a href="/learn">Back to Learn &rarr;</a>
+      <a href="/graphs/">Browse our measurements &rarr;</a>
+      <a href="/attune/">What Attune does &rarr;</a>
+      <a href="/learn/">Back to Learn &rarr;</a>
     </div>
   </article>
 

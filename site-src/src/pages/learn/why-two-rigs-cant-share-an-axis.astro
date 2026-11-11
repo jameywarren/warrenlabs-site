@@ -4,8 +4,8 @@ import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import Button from '../../components/Button.astro';
 
-const SITE = 'https://warrenlabs.com';
-const url = `${SITE}/learn/why-two-rigs-cant-share-an-axis`;
+import { SITE, abs } from '../../data/url.js';
+const url = abs('/learn/why-two-rigs-cant-share-an-axis');
 const title = 'Why you can’t compare measurements from two different rigs';
 const description =
   'A frequency-response curve describes a headphone and the fixture it was measured on. Two rigs give different numbers for the same headphone, so a curve without a rig label tells you less than you think, and curves from different rigs must never go on one axis.';
@@ -38,10 +38,12 @@ const jsonLd = [
     '@type': 'Article',
     headline: title,
     description,
-    author: { '@type': 'Person', name: 'Jamey Warren' },
+    author: { '@id': `${SITE}/#jamey` },
     publisher: { '@id': `${SITE}/#organization` },
+    image: `${SITE}/assets/brand/og-card.png`,
     datePublished: '2026-08-04',
-    dateModified: '2026-08-04',
+    // Bump only on a content change (wording a reader sees), never for punctuation or markup.
+    dateModified: '2026-08-05',
     mainEntityOfPage: url,
     inLanguage: 'en',
   },
@@ -57,7 +59,7 @@ const jsonLd = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
-      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: abs('/learn') },
       { '@type': 'ListItem', position: 3, name: title, item: url },
     ],
   },
@@ -69,7 +71,7 @@ const jsonLd = [
 
   <article class="doc">
     <nav class="crumb" aria-label="Breadcrumb">
-      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Two rigs, one axis</span>
+      <a href="/">Home</a><span>/</span><a href="/learn/">Learn</a><span>/</span><span aria-current="page">Two rigs, one axis</span>
     </nav>
 
     <span class="eyebrow">Learn &middot; Measurement &amp; tuning</span>
@@ -98,7 +100,7 @@ const jsonLd = [
       None of that is error. It is the rig doing exactly what it was built to do. It just means the number you
       read off the graph describes a <em>system</em>, and the headphone is only half of it. This is the same reason a
       curve never looks like a flat line even when a headphone sounds neutral, which is the starting point for
-      <a href="/learn/target-curves-explained">target curves</a>.
+      <a href="/learn/target-curves-explained/">target curves</a>.
     </p>
 
     <h2>Where rigs disagree, and where they mostly don&rsquo;t</h2>
@@ -190,7 +192,7 @@ const jsonLd = [
         the rig stops mattering the moment you stop crossing it. Cross baselines and that cancellation quietly
         stops being true, so we don&rsquo;t.
       </p>
-      <Button href="/attune" variant="primary">See how Attune matches a curve</Button>
+      <Button href="/attune/" variant="primary">See how Attune matches a curve</Button>
     </div>
 
     <h2>The honest bottom line</h2>
@@ -213,10 +215,10 @@ const jsonLd = [
     </div>
 
     <div class="related">
-      <a href="/learn/how-to-read-a-frequency-response-graph">How to read a graph &rarr;</a>
-      <a href="/learn/target-curves-explained">Target curves explained &rarr;</a>
-      <a href="/measure">Send a headphone in &rarr;</a>
-      <a href="/learn">Back to Learn &rarr;</a>
+      <a href="/learn/how-to-read-a-frequency-response-graph/">How to read a graph &rarr;</a>
+      <a href="/learn/target-curves-explained/">Target curves explained &rarr;</a>
+      <a href="/measure/">Send a headphone in &rarr;</a>
+      <a href="/learn/">Back to Learn &rarr;</a>
     </div>
   </article>
 

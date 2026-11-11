@@ -5,8 +5,8 @@ import Footer from '../../components/Footer.astro';
 import Button from '../../components/Button.astro';
 import EarPlacementDiagram from '../../components/EarPlacementDiagram.astro';
 
-const SITE = 'https://warrenlabs.com';
-const url = `${SITE}/learn/iems-vs-over-ear-headphones`;
+import { SITE, abs } from '../../data/url.js';
+const url = abs('/learn/iems-vs-over-ear-headphones');
 const title = 'IEMs vs over-ear headphones';
 const description =
   'In-ear monitors seal in your ear canal for maximal isolation and portability; over-ear headphones are bigger, often more spacious and comfortable for long sessions. Neither is “better.” Here is how to choose by isolation, comfort, and fit.';
@@ -39,10 +39,12 @@ const jsonLd = [
     '@type': 'Article',
     headline: title,
     description,
-    author: { '@type': 'Person', name: 'Jamey Warren' },
+    author: { '@id': `${SITE}/#jamey` },
     publisher: { '@id': `${SITE}/#organization` },
+    image: `${SITE}/assets/brand/og-card.png`,
     datePublished: '2026-07-20',
-    dateModified: '2026-07-20',
+    // Bump only on a content change (wording a reader sees), never for punctuation or markup.
+    dateModified: '2026-11-11',
     mainEntityOfPage: url,
     inLanguage: 'en',
   },
@@ -58,7 +60,7 @@ const jsonLd = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
-      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: abs('/learn') },
       { '@type': 'ListItem', position: 3, name: title, item: url },
     ],
   },
@@ -70,7 +72,7 @@ const jsonLd = [
 
   <article class="doc">
     <nav class="crumb" aria-label="Breadcrumb">
-      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">IEMs vs over-ear</span>
+      <a href="/">Home</a><span>/</span><a href="/learn/">Learn</a><span>/</span><span aria-current="page">IEMs vs over-ear</span>
     </nav>
 
     <span class="eyebrow">Learn &middot; Understanding the gear</span>
@@ -106,9 +108,9 @@ const jsonLd = [
     <h2>Over-ear: comfort and space</h2>
     <ul>
       <li>Usually <b>more comfortable for hours</b>, with less dependence on a perfect seal.</li>
-      <li>A <b>larger, more out-of-head</b> presentation, especially open-back (see <a href="/learn/open-back-vs-closed-back-headphones">open vs closed</a>).</li>
+      <li>A <b>larger, more out-of-head</b> presentation, especially open-back (see <a href="/learn/open-back-vs-closed-back-headphones/">open vs closed</a>).</li>
       <li>You choose your isolation: <b>closed</b> for quiet-in/quiet-out, <b>open</b> for space at the cost of leakage.</li>
-      <li>More likely to want real <a href="/learn/what-headphone-impedance-means">power</a> than a sensitive IEM.</li>
+      <li>More likely to want real <a href="/learn/what-headphone-impedance-means/">power</a> than a sensitive IEM.</li>
     </ul>
 
     <h2>How to choose by situation</h2>
@@ -123,9 +125,9 @@ const jsonLd = [
       <p>
         One thing both formats share: tonal balance is what you notice first, and it is <em>tunable</em>. Whether
         you land on an IEM or an over-ear, <b>Attune</b> lets you tune a wired one to your taste, and
-        <a href="/graphs">our measurements</a> show how the pairs we have measured compare before you buy.
+        <a href="/graphs/">our measurements</a> show how the pairs we have measured compare before you buy.
       </p>
-      <Button href="/attune" variant="primary">Explore Attune</Button>
+      <Button href="/attune/" variant="primary">Explore Attune</Button>
     </div>
 
     <h2>The honest bottom line</h2>
@@ -148,10 +150,10 @@ const jsonLd = [
     </div>
 
     <div class="related">
-      <a href="/learn/open-back-vs-closed-back-headphones">Open vs closed &rarr;</a>
-      <a href="/learn/what-headphone-impedance-means">What impedance means &rarr;</a>
-      <a href="/collections/headphones">Browse the measurements &rarr;</a>
-      <a href="/learn">Back to Learn &rarr;</a>
+      <a href="/learn/open-back-vs-closed-back-headphones/">Open vs closed &rarr;</a>
+      <a href="/learn/what-headphone-impedance-means/">What impedance means &rarr;</a>
+      <a href="/collections/headphones/">Browse the measurements &rarr;</a>
+      <a href="/learn/">Back to Learn &rarr;</a>
     </div>
   </article>
 

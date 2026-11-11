@@ -5,8 +5,8 @@ import Footer from '../../components/Footer.astro';
 import Button from '../../components/Button.astro';
 import ListenByRegionDiagram from '../../components/ListenByRegionDiagram.astro';
 
-const SITE = 'https://warrenlabs.com';
-const url = `${SITE}/learn/how-to-listen-for-tonal-balance`;
+import { SITE, abs } from '../../data/url.js';
+const url = abs('/learn/how-to-listen-for-tonal-balance');
 const title = 'How to listen for tonal balance';
 const description =
   'You don’t need golden ears to hear how a headphone is voiced. You need a method: familiar tracks, matched levels, and knowing which regions to listen to. Here is how to train attentive listening without the mysticism.';
@@ -39,10 +39,12 @@ const jsonLd = [
     '@type': 'Article',
     headline: title,
     description,
-    author: { '@type': 'Person', name: 'Jamey Warren' },
+    author: { '@id': `${SITE}/#jamey` },
     publisher: { '@id': `${SITE}/#organization` },
+    image: `${SITE}/assets/brand/og-card.png`,
     datePublished: '2026-07-20',
-    dateModified: '2026-07-20',
+    // Bump only on a content change (wording a reader sees), never for punctuation or markup.
+    dateModified: '2026-11-08',
     mainEntityOfPage: url,
     inLanguage: 'en',
   },
@@ -58,7 +60,7 @@ const jsonLd = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
-      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: abs('/learn') },
       { '@type': 'ListItem', position: 3, name: title, item: url },
     ],
   },
@@ -70,7 +72,7 @@ const jsonLd = [
 
   <article class="doc">
     <nav class="crumb" aria-label="Breadcrumb">
-      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Listening</span>
+      <a href="/">Home</a><span>/</span><a href="/learn/">Learn</a><span>/</span><span aria-current="page">Listening</span>
     </nav>
 
     <span class="eyebrow">Learn &middot; Listening</span>
@@ -113,12 +115,12 @@ const jsonLd = [
     <ListenByRegionDiagram />
     <p>
       Naming the region is more useful than reaching for &ldquo;detail&rdquo; or &ldquo;musicality,&rdquo; and
-      it connects straight to <a href="/learn/how-to-read-a-frequency-response-graph">the graph</a>.
+      it connects straight to <a href="/learn/how-to-read-a-frequency-response-graph/">the graph</a>.
     </p>
 
     <h2>Remove the things that fool you</h2>
     <ul>
-      <li><b>Match levels.</b> The louder option always sounds better (<a href="/learn/why-level-matching-changes-everything">here is why</a>). Match them, or you are just hearing volume.</li>
+      <li><b>Match levels.</b> The louder option always sounds better (<a href="/learn/why-level-matching-changes-everything/">here is why</a>). Match them, or you are just hearing volume.</li>
       <li><b>Switch quickly and take breaks.</b> Auditory memory is short and your ears <em>adapt</em> to a tuning within minutes, so fast comparisons and short sessions beat long ones.</li>
       <li><b>Trust your reaction, then find the words.</b> Notice what you feel first, then locate it by region. Don&rsquo;t reverse-engineer the consensus opinion.</li>
     </ul>
@@ -129,7 +131,7 @@ const jsonLd = [
         you: a blind, loudness-matched A/B on your own music that turns &ldquo;I think I like this&rdquo; into a curve
         you would actually pick with your eyes closed.
       </p>
-      <Button href="/attune" variant="primary">Try Find your sound in Attune</Button>
+      <Button href="/attune/" variant="primary">Try Find your sound in Attune</Button>
     </div>
 
     <h2>The honest bottom line</h2>
@@ -152,10 +154,10 @@ const jsonLd = [
     </div>
 
     <div class="related">
-      <a href="/learn/how-to-read-a-frequency-response-graph">How to read a graph &rarr;</a>
-      <a href="/learn/why-level-matching-changes-everything">Why level-matching matters &rarr;</a>
-      <a href="/learn/choosing-your-first-serious-headphone">Choosing your first serious headphone &rarr;</a>
-      <a href="/learn">Back to Learn &rarr;</a>
+      <a href="/learn/how-to-read-a-frequency-response-graph/">How to read a graph &rarr;</a>
+      <a href="/learn/why-level-matching-changes-everything/">Why level-matching matters &rarr;</a>
+      <a href="/learn/choosing-your-first-serious-headphone/">Choosing your first serious headphone &rarr;</a>
+      <a href="/learn/">Back to Learn &rarr;</a>
     </div>
   </article>
 

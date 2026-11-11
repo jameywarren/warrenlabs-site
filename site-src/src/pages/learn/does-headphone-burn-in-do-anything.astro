@@ -4,8 +4,8 @@ import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import Button from '../../components/Button.astro';
 
-const SITE = 'https://warrenlabs.com';
-const url = `${SITE}/learn/does-headphone-burn-in-do-anything`;
+import { SITE, abs } from '../../data/url.js';
+const url = abs('/learn/does-headphone-burn-in-do-anything');
 const title = 'Does headphone burn-in do anything?';
 const description =
   'For almost every modern headphone, no measurable change: driver break-in is tiny to nonexistent. What people hear is mostly their own ears adapting, plus expectation. Here is the honest, evidence-based take.';
@@ -38,9 +38,11 @@ const jsonLd = [
     '@type': 'Article',
     headline: title,
     description,
-    author: { '@type': 'Person', name: 'Jamey Warren' },
+    author: { '@id': `${SITE}/#jamey` },
     publisher: { '@id': `${SITE}/#organization` },
+    image: `${SITE}/assets/brand/og-card.png`,
     datePublished: '2026-07-20',
+    // Bump only on a content change (wording a reader sees), never for punctuation or markup.
     dateModified: '2026-07-20',
     mainEntityOfPage: url,
     inLanguage: 'en',
@@ -57,7 +59,7 @@ const jsonLd = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
-      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: abs('/learn') },
       { '@type': 'ListItem', position: 3, name: title, item: url },
     ],
   },
@@ -69,7 +71,7 @@ const jsonLd = [
 
   <article class="doc">
     <nav class="crumb" aria-label="Breadcrumb">
-      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Burn-in</span>
+      <a href="/">Home</a><span>/</span><a href="/learn/">Learn</a><span>/</span><span aria-current="page">Burn-in</span>
     </nav>
 
     <span class="eyebrow">Learn &middot; Measurement &amp; tuning</span>
@@ -105,7 +107,7 @@ const jsonLd = [
     <p>The experience is real even when the driver isn&rsquo;t changing. A few things explain it:</p>
     <ul>
       <li><b>Your ears and brain adapt.</b> Over minutes and days you normalize to a tuning (a bright headphone stops seeming as bright), and that adaptation gets credited to the gear.</li>
-      <li><b>Expectation.</b> You were told it would open up, so it does. This is exactly why <a href="/learn/why-level-matching-changes-everything">blind, level-matched comparison</a> exists.</li>
+      <li><b>Expectation.</b> You were told it would open up, so it does. This is exactly why <a href="/learn/why-level-matching-changes-everything/">blind, level-matched comparison</a> exists.</li>
       <li><b>Fit and seal drift.</b> How the pads sit changes the bass and treble more than any burn-in ever could.</li>
       <li><b>Pad wear over months</b> is a real, slow change, but that is aging pads, not a driver breaking in.</li>
     </ul>
@@ -123,7 +125,7 @@ const jsonLd = [
         hundred hours for it to change on its own. It won&rsquo;t. Change the <em>tuning</em>, by ear and
         level-matched, with <b>Attune</b>.
       </p>
-      <Button href="/attune" variant="primary">Explore Attune</Button>
+      <Button href="/attune/" variant="primary">Explore Attune</Button>
     </div>
 
     <h2>The honest bottom line</h2>
@@ -146,10 +148,10 @@ const jsonLd = [
     </div>
 
     <div class="related">
-      <a href="/learn/why-level-matching-changes-everything">Why level-matching matters &rarr;</a>
-      <a href="/learn/what-eq-can-and-cant-do">What EQ can and can’t do &rarr;</a>
-      <a href="/learn/how-to-read-a-frequency-response-graph">How to read a graph &rarr;</a>
-      <a href="/learn">Back to Learn &rarr;</a>
+      <a href="/learn/why-level-matching-changes-everything/">Why level-matching matters &rarr;</a>
+      <a href="/learn/what-eq-can-and-cant-do/">What EQ can and can’t do &rarr;</a>
+      <a href="/learn/how-to-read-a-frequency-response-graph/">How to read a graph &rarr;</a>
+      <a href="/learn/">Back to Learn &rarr;</a>
     </div>
   </article>
 

@@ -4,8 +4,8 @@ import Nav from '../../components/Nav.astro';
 import Footer from '../../components/Footer.astro';
 import Button from '../../components/Button.astro';
 
-const SITE = 'https://warrenlabs.com';
-const url = `${SITE}/learn/what-cables-can-and-cant-do`;
+import { SITE, abs } from '../../data/url.js';
+const url = abs('/learn/what-cables-can-and-cant-do');
 const title = 'What cables can (and can’t) do';
 const description =
   'A cable’s job is to carry the signal reliably. Build quality, length, connectors, and microphonics are real; “warmth,” “blacker backgrounds,” and “liquid mids” from a pricey cable are not. Here is the honest line, from someone who has measured a lot of them.';
@@ -38,9 +38,11 @@ const jsonLd = [
     '@type': 'Article',
     headline: title,
     description,
-    author: { '@type': 'Person', name: 'Jamey Warren' },
+    author: { '@id': `${SITE}/#jamey` },
     publisher: { '@id': `${SITE}/#organization` },
+    image: `${SITE}/assets/brand/og-card.png`,
     datePublished: '2026-07-20',
+    // Bump only on a content change (wording a reader sees), never for punctuation or markup.
     dateModified: '2026-07-20',
     mainEntityOfPage: url,
     inLanguage: 'en',
@@ -57,7 +59,7 @@ const jsonLd = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
-      { '@type': 'ListItem', position: 2, name: 'Learn', item: `${SITE}/learn` },
+      { '@type': 'ListItem', position: 2, name: 'Learn', item: abs('/learn') },
       { '@type': 'ListItem', position: 3, name: title, item: url },
     ],
   },
@@ -69,7 +71,7 @@ const jsonLd = [
 
   <article class="doc">
     <nav class="crumb" aria-label="Breadcrumb">
-      <a href="/">Home</a><span>/</span><a href="/learn">Learn</a><span>/</span><span aria-current="page">Cables</span>
+      <a href="/">Home</a><span>/</span><a href="/learn/">Learn</a><span>/</span><span aria-current="page">Cables</span>
     </nav>
 
     <span class="eyebrow">Learn &middot; Understanding the gear</span>
@@ -120,7 +122,7 @@ const jsonLd = [
         that is a real, answerable want. The tool for it is <b>EQ</b>, not copper. <b>Attune</b> lets you
         actually hear the change, level-matched, before you commit to it.
       </p>
-      <Button href="/attune" variant="primary">Explore Attune</Button>
+      <Button href="/attune/" variant="primary">Explore Attune</Button>
     </div>
 
     <h2>The honest bottom line</h2>
@@ -143,10 +145,10 @@ const jsonLd = [
     </div>
 
     <div class="related">
-      <a href="/learn/do-i-need-a-headphone-amp">Do you need a headphone amp? &rarr;</a>
-      <a href="/learn/what-a-dac-is">What a DAC is &rarr;</a>
-      <a href="/learn/how-to-read-a-frequency-response-graph">How to read a graph &rarr;</a>
-      <a href="/learn">Back to Learn &rarr;</a>
+      <a href="/learn/do-i-need-a-headphone-amp/">Do you need a headphone amp? &rarr;</a>
+      <a href="/learn/what-a-dac-is/">What a DAC is &rarr;</a>
+      <a href="/learn/how-to-read-a-frequency-response-graph/">How to read a graph &rarr;</a>
+      <a href="/learn/">Back to Learn &rarr;</a>
     </div>
   </article>
 

@@ -51,15 +51,37 @@ const canonical = new URL(Astro.url.pathname, SITE).href;
 const ogImage = new URL(image ?? '/assets/brand/og-card.png', SITE).href;
 const endpoint = FORMSPREE[signup] ?? '';
 
+// Keep identical to the Organization and Person nodes in the hand-written root index.html, and to
+// the Organization gen_site.py emits on /plugins. Three copies of one entity that disagree read to
+// a crawler as three entities.
+// legalName: as the Terms page names the seller (terms.astro, "a trade name of Free River Studios
+// LLC") and as the App Store lists it (sellerName FREE RIVER STUDIOS LLC). BRANDS.md writes
+// "Free River Studios, LLC"; the comma is the only difference.
 const organization = {
   '@type': 'Organization',
   '@id': `${SITE}/#organization`,
   name: 'Warren Labs',
+  legalName: 'Free River Studios LLC',
   url: SITE,
   logo: `${SITE}/assets/brand/png/wl-mark_amber_512.png`,
   description:
     'Audio product work by Jamey Warren: headphones, amps, DACs, DSP, and the software around them.',
-  founder: { '@type': 'Person', name: 'Jamey Warren' },
+  founder: { '@id': `${SITE}/#jamey` },
+  sameAs: [
+    'https://apps.apple.com/us/developer/warren-labs/id6792763836',
+    'https://github.com/jameywarren',
+    'https://www.linkedin.com/in/jameywarren',
+  ],
+};
+
+const person = {
+  '@type': 'Person',
+  '@id': `${SITE}/#jamey`,
+  name: 'Jamey Warren',
+  url: SITE,
+  jobTitle: 'Audio product consultant',
+  worksFor: { '@id': `${SITE}/#organization` },
+  sameAs: ['https://github.com/jameywarren', 'https://www.linkedin.com/in/jameywarren'],
 };
 
 const website = {
@@ -72,7 +94,7 @@ const website = {
 };
 
 const extra = Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : [];
-const ld = { '@context': 'https://schema.org', '@graph': [organization, website, ...extra] };
+const ld = { '@context': 'https://schema.org', '@graph': [organization, person, website, ...extra] };
 ---
 
 <!doctype html>
@@ -139,6 +161,7 @@ const ld = { '@context': 'https://schema.org', '@graph': [organization, website,
       <script is:inline set:html={"window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()"} />
     )}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Archivo:wght@400;500;600&display=swap"
       rel="stylesheet"

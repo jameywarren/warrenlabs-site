@@ -6,8 +6,8 @@ import Button from '../components/Button.astro';
 import { FORMSPREE } from '../data/config.js';
 import { WANTED } from '../data/wanted.js';
 
-const SITE = 'https://warrenlabs.com';
-const url = `${SITE}/measure`;
+import { SITE, abs } from '../data/url.js';
+const url = abs('/measure');
 const title = 'Send us your headphones to measure';
 const description =
   'Mail in your headphones and we measure them on our rig, seated for best fit, published as one real seating. You get your unit’s exact curve back, and the model gets a credited page here. Insured both ways, back in about a week.';
@@ -116,7 +116,7 @@ const steps: [string, string][] = [
           <h3>Your unit&rsquo;s exact curve</h3>
           <p>
             Not &ldquo;the&rdquo; HD&nbsp;650, <b>yours</b>. Unit variation is real, and knowing how
-            your specific pair measures is exactly what <a href="/attune">Attune</a> turns into a personal
+            your specific pair measures is exactly what <a href="/attune/">Attune</a> turns into a personal
             tuning.
           </p>
         </div>
@@ -145,7 +145,7 @@ const steps: [string, string][] = [
         </div>
       </div>
       <p class="rig-note">
-        <b>How this stays honest.</b> Coverage is not for sale, and <a href="/method">the method
+        <b>How this stays honest.</b> Coverage is not for sale, and <a href="/method/">the method
         is published in full</a>, so you can check any result against the procedure that produced it.
       </p>
     </div>
@@ -204,7 +204,7 @@ const steps: [string, string][] = [
         seated deliberately for the best fit and labeled that way. What we publish is one real seating,
         never a blend of several. One unit is one unit, not the whole model, which is exactly why
         measuring <em>your</em> pair is worth doing.
-        <a href="/learn/how-to-read-a-frequency-response-graph">How to read the graph &rarr;</a>
+        <a href="/learn/how-to-read-a-frequency-response-graph/">How to read the graph &rarr;</a>
       </p>
     </div>
   </section>
@@ -364,9 +364,9 @@ const steps: [string, string][] = [
       </div>
 
       <div class="related">
-        <a href="/collections/headphones">Browse the measurements &rarr;</a>
-        <a href="/attune">What Attune does &rarr;</a>
-        <a href="/learn">Learn the basics &rarr;</a>
+        <a href="/collections/headphones/">Browse the measurements &rarr;</a>
+        <a href="/attune/">What Attune does &rarr;</a>
+        <a href="/learn/">Learn the basics &rarr;</a>
       </div>
     </div>
   </section>

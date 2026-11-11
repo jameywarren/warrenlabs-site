@@ -57,5 +57,5 @@ export const ATTUNE = {
   metaPlatforms: IOS_LIVE ? 'Mac, iPhone and iPad' : 'Mac, with iPhone and iPad in review',
 
   /** schema.org operatingSystem. */
-  operatingSystem: IOS_LIVE ? 'macOS 12, iOS 16' : 'macOS 12',
+  operatingSystem: IOS_LIVE ? 'macOS 12, iOS 16, iPadOS 16' : 'macOS 12',
 };

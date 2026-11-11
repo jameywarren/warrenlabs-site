@@ -12,19 +12,37 @@ import Footer from '../components/Footer.astro';
 //
 // PRICE: free, no paid tier, both routes, iOS included. Owner: caliper/docs/PRICING.md, 2026-09-18.
 const updated = '19 September 2026';
+
+const STORE = 'https://apps.apple.com/app/caliper-headphone-measurement/id6813610070';
+const caliperApp = {
+  '@type': 'SoftwareApplication',
+  '@id': 'https://warrenlabs.com/caliper/#app',
+  name: 'Caliper',
+  alternateName: 'Caliper: Headphone Measurement',
+  url: 'https://warrenlabs.com/caliper/',
+  sameAs: [STORE],
+  installUrl: STORE,
+  applicationCategory: 'MultimediaApplication',
+  // OS: copy of caliper/docs/LISTING.md ("Minimum OS: iOS 15, macOS 11"), 2026-11-11. No iPadOS.
+  operatingSystem: 'macOS 11, iOS 15',
+  // price: copy of caliper/docs/PRICING.md ("Caliper is free"), 2026-11-11.
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+  publisher: { '@id': 'https://warrenlabs.com/#organization' },
+};
 ---
 
 <Layout
   title="Caliper · Warren Labs"
   description="A headphone measurement app that tells you whether to believe the result. Free, for Mac and iPhone."
   image="/assets/caliper/og-caliper.png"
+  jsonLd={caliperApp}
 >
   <Nav variant="home" />
 
   <section class="sec">
     <div class="wrap prose">
       <span class="eyebrow">Caliper</span>
-      <h2>A measurement you can believe</h2>
+      <h1 class="as-h2">A measurement you can believe</h1>
 
       <p class="sec-lede">
         Caliper measures a headphone on an acoustic fixture and tells you how much of what you are
@@ -33,7 +51,7 @@ const updated = '19 September 2026';
 
       <p>
         <b><a href="https://apps.apple.com/app/caliper-headphone-measurement/id6813610070">Download
-        Caliper on the App Store</a></b>: free, and one purchase covers Mac and iPhone.
+        Caliper on the App Store</a></b>: free, and one download covers Mac and iPhone.
       </p>
 
       <h3>The problem it solves</h3>
@@ -98,7 +116,7 @@ const updated = '19 September 2026';
       <p>
         No account, no analytics, no telemetry, and nothing uploaded in the background. The one
         thing Caliper ever sends is a measurement you choose to submit, and it shows you what is
-        being sent first. <a href="/caliper/privacy">The privacy policy</a> is specific about it.
+        being sent first. <a href="/caliper/privacy/">The privacy policy</a> is specific about it.
       </p>
 
       <p class="byline">Last updated {updated}.</p>

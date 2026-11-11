@@ -17,7 +17,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
 
-const SITE = 'https://warrenlabs.com';
+import { SITE, abs } from '../data/url.js';
 const description =
   'Warren Labs measures headphones on a documented bench and returns the raw data to the manufacturer. ' +
   'Loan us a unit for two weeks: you cover shipping out, we insure and pay the return, and you get the ' +
@@ -37,7 +37,7 @@ const jsonLd = [
     '@type': 'BreadcrumbList',
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
-      { '@type': 'ListItem', position: 2, name: 'For manufacturers', item: `${SITE}/loaners` },
+      { '@type': 'ListItem', position: 2, name: 'For manufacturers', item: abs('/loaners') },
     ],
   },
 ];
@@ -70,7 +70,7 @@ const jsonLd = [
 
     <div class="cta-row">
       <Button href="mailto:jamey@warrenlabs.com?subject=Headphone%20loan" variant="primary">Email us about a loan</Button>
-      <Button href="/graphs" variant="ghost">See a measurement first</Button>
+      <Button href="/graphs/" variant="ghost">See a measurement first</Button>
     </div>
 
     <section class="sec">
@@ -113,8 +113,8 @@ const jsonLd = [
         Both channels are measured and kept. Nothing is smoothed into looking better than it is.
       </p>
       <div class="cta-row tight">
-        <Button href="/method" variant="primary">Read the method</Button>
-        <Button href="/learn/why-two-rigs-cant-share-an-axis" variant="ghost">How we think about rigs</Button>
+        <Button href="/method/" variant="primary">Read the method</Button>
+        <Button href="/learn/why-two-rigs-cant-share-an-axis/" variant="ghost">How we think about rigs</Button>
       </div>
     </section>
 

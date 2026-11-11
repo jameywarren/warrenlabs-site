@@ -10,6 +10,7 @@ GitHub Pages serves static files, so everything here is committed HTML. It comes
 | Rendered by | Pages |
 |---|---|
 | Hand-written HTML in this repo | `/`, `/design-review/`, `/404.html`, `/changes/` |
+| Hand-written text in this repo | `/robots.txt`, `/llms.txt` (a link-first map of the site for language models: links only, no prices, versions or counts, so it cannot go stale) |
 | Astro, in `site-src/` | `/attune`, `/learn` + 16 articles, `/products/*` (40), `/collections/headphones`, `/graphs`, `/measure`, `/support`, `/privacy` |
 
 A third renderer lives in the monorepo: `tools/gen_site.py` generates `/plugins` and rsyncs it here.
