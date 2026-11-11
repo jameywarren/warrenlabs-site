@@ -5,6 +5,7 @@ import Footer from '../../components/Footer.astro';
 import Button from '../../components/Button.astro';
 import ProductGraph from '../../components/ProductGraph.astro';
 import { HEADPHONES, BY_HANDLE } from '../../data/headphones.js';
+import { ATTUNE } from '../../data/attune.js';
 import { MEASUREMENTS } from '../../data/measurements.js';
 import { fixtureOf } from '../../data/fixtures.js';
 
@@ -126,7 +127,7 @@ const jsonLd = [
 
         <div class="funnel">
           <Button href="/attune" variant="primary" size="lg">Hear it tuned to your taste in Attune</Button>
-          <span class="hint">Free &middot; macOS</span>
+          <span class="hint">Free &middot; {ATTUNE.metaPlatforms}</span>
         </div>
       </div>
     </div>

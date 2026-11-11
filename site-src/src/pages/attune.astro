@@ -18,6 +18,7 @@ import { APP_STORE, ATTUNE, IOS_LIVE } from '../data/attune.js';
 const attuneApp = {
   '@type': 'SoftwareApplication',
   name: 'Attune',
+  alternateName: 'Attune: Headphone EQ',
   applicationCategory: 'MultimediaApplication',
   operatingSystem: ATTUNE.operatingSystem,
   offers: {
@@ -38,7 +39,7 @@ const attuneApp = {
 
 <Layout
   title="Attune · Find your sound"
-  description={`Attune is a Warren Labs product: personal-EQ and real-time A/B auditioning for ${ATTUNE.metaPlatforms}. Tune any headphone to your taste, blind and loudness-matched, on your own music. Free on the ${ATTUNE.storeName}.`}
+  description={`Attune is a Warren Labs headphone EQ for ${ATTUNE.metaPlatforms} that you judge by ear: blind, loudness-matched, on music files you own. Best with headphones we have measured. Free on the ${ATTUNE.storeName}.`}
   signup="attune"
   jsonLd={attuneApp}
   wordmark
@@ -63,8 +64,8 @@ const attuneApp = {
         <span class="eyebrow">{ATTUNE.storeLine}</span>
         <h1>Find <em>your</em> sound.</h1>
         <p class="lede">
-          Hear your headphones the way <b style="color:var(--text)">you</b> want, or voiced like another headphone
-          entirely. Then actually listen and choose. The audition is <b
+          Hear your headphones the way <b style="color:var(--text)">you</b> want, or with another headphone's
+          tuning on the pair you own. Then actually listen and choose. The audition is <b
             style="color:var(--text)">free</b>, no subscription.
         </p>
         <div class="hero-cta">
@@ -153,7 +154,7 @@ const attuneApp = {
             </svg>
           </div>
           <h3>Audition A / B</h3>
-          <p>A blind, loudness-matched face-off plays on the track you're already hearing. Just tap the one you like. <b style="color:var(--text)">A or B?</b></p>
+          <p>A blind, loudness-matched face-off plays on the track you're already hearing. Just pick the one you like. <b style="color:var(--text)">A or B?</b></p>
           <svg class="arrow" width="18" height="18" viewBox="0 0 18 18"><path d="M6 4l5 5-5 5" stroke="#5f646b" stroke-width="1.5" fill="none" stroke-linecap="round"></path></svg>
         </div>
         <!-- 3 -->
@@ -179,7 +180,7 @@ const attuneApp = {
             </svg>
           </div>
           <h3>Save &amp; apply</h3>
-          <p>Flip <b style="color:var(--text)">Stock&nbsp;&#8644;&nbsp;Yours</b> to hear what you gained. Save the sound per headphone, then listen for real.</p>
+          <p>Switch between stock and tuned to hear what you gained. Save the sound per headphone, then listen for real.</p>
         </div>
       </div>
     </div>
@@ -418,6 +419,7 @@ const attuneApp = {
       <span class="eyebrow" style="justify-content:center">Get started</span>
       <h2>Find your sound.</h2>
       <p>Bring your own headphones and the music you know. A demo track is bundled, so you'll hear the difference before you load anything. It's free on the {ATTUNE.storeName}.</p>
+      <p>Attune plays its demo track and your own music files (WAV, AIFF, FLAC, ALAC, AAC, MP3). It cannot tune Spotify or Apple Music.</p>
       <div class="hero-cta">
         <Button href={APP_STORE} variant="primary" size="lg">{ATTUNE.ctaLabel}</Button>
       </div>

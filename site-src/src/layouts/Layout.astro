@@ -4,6 +4,7 @@ import '../styles/global.css';
 import Signup from '../components/Signup.astro';
 import { FORMSPREE } from '../data/config.js';
 import { ANALYTICS } from '../data/nav.js';
+import { ATTUNE } from '../data/attune.js';
 
 interface Props {
   title: string;
@@ -31,7 +32,7 @@ interface Props {
 
 const {
   title,
-  description = 'Headphone measurement, level-matched comparison, and Attune, a Mac app that tunes any headphone to your taste. From Jamey Warren at Warren Labs.',
+  description = `Headphone measurement, level-matched comparison, and Attune, an app for ${ATTUNE.metaPlatforms} that tunes your headphones to your taste by ear. From Jamey Warren at Warren Labs.`,
   image,
   ogType = 'website',
   signup = 'sonicTemple',
