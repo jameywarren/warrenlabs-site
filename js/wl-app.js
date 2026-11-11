@@ -11,8 +11,9 @@
   'use strict';
 
   /* ---------------- oscilloscope ----------------
-     Moved out from behind the h1 into its own band under the calls to action — it was competing
-     with the headline at the one moment the page has a single thing to say.
+     Runs behind the career rail in the hero (2026-11-11, lab-first homepage). Everything on this
+     page is optional to this script: each lookup is guarded, because a TypeError here would also
+     kill the mobile nav toggle below, with no desktop symptom.
 
      Colours are READ FROM CSS rather than hardcoded. The old version baked in
      rgba(232,235,237,…), which is why it was invisible in light mode and why it got classed as
@@ -20,7 +21,8 @@
   const scope = document.getElementById('scope');
   if (scope) {
     const sctx = scope.getContext('2d');
-    const H = 220, MID = 110;
+    // Height comes from CSS (160px desktop, 110px phone); the amplitudes were tuned at 220.
+    let H = 220, MID = 110, K = 1;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
     let W = 0;
 
@@ -28,13 +30,14 @@
     let TRACE = tok('--wl-text') || '#e8ebed';
     let GRIDA = 0.05;
     const reread = () => { TRACE = tok('--wl-text') || '#e8ebed'; };
-    window.addEventListener('wl-theme', reread);
+    window.addEventListener('wl-theme-change', reread);
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
     mq.addEventListener && mq.addEventListener('change', reread);
     new MutationObserver(reread).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
     const sizeScope = () => {
       W = scope.clientWidth;
+      H = scope.clientHeight || 220; MID = H / 2; K = H / 220;
       scope.width = W * dpr; scope.height = H * dpr;
       sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
@@ -67,7 +70,7 @@
 
       sctx.globalAlpha = GRIDA; sctx.strokeStyle = TRACE; sctx.lineWidth = 1;
       sctx.beginPath();
-      for (let x = 0; x <= W; x += 80) { sctx.moveTo(x, MID - 58); sctx.lineTo(x, MID + 58); }
+      for (let x = 0; x <= W; x += 80) { sctx.moveTo(x, MID - 58 * K); sctx.lineTo(x, MID + 58 * K); }
       sctx.stroke();
 
       layers.forEach(L => {
@@ -81,7 +84,7 @@
           // run ~32px off the top, which is part of the look; at 1.6 on this 220px canvas they run
           // 65px off, across the full width, which stops reading as headroom and starts reading as
           // a clipped render. 1.3 clips ~41px, proportionally about the same as the original.
-          const a = L.amp * energy * (0.55 + prox * 1.3);
+          const a = L.amp * K * energy * (0.55 + prox * 1.3);
           // Second harmonic, slightly detuned in both frequency and rate. Without it every layer is
           // a plain sine and the trace never develops any character between the peaks.
           const y = MID

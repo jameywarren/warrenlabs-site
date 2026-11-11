@@ -5,6 +5,10 @@ import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
 import { FORMSPREE } from '../data/config.js';
 import { WANTED } from '../data/wanted.js';
+// The mail-in price and turnaround: ../data/measure.js owns them (warren-labs DOCS.md). Never type
+// the price on this page by hand; the homepage reads the same file.
+import { MEASURE } from '../data/measure.js';
+const P = MEASURE.offListPrice;
 
 import { SITE, abs } from '../data/url.js';
 const url = abs('/measure');
@@ -20,7 +24,7 @@ const endpoint = FORMSPREE.measure ?? '';
 const faq: [string, string][] = [
   [
     'Does it cost me anything?',
-    'It depends which lane you are in. If the model is on the requested list we cover shipping both ways, inbound and back. If you are sending a unit we have not asked for, the $89 covers the measurement and you cover shipping.',
+    `It depends which lane you are in. If the model is on the requested list we cover shipping both ways, inbound and back. If you are sending a unit we have not asked for, the ${P} covers the measurement and you cover shipping.`,
   ],
   [
     'Is my headphone insured in transit?',
@@ -28,7 +32,7 @@ const faq: [string, string][] = [
   ],
   [
     'How long will you keep it?',
-    'We measure and ship it back within about five business days of arrival. If anything will take longer, we tell you before you send it.',
+    `We measure and ship it back ${MEASURE.turnaroundDefined}. If anything will take longer, we tell you before you send it.`,
   ],
   [
     'What if the measurement is unflattering?',
@@ -92,7 +96,7 @@ const steps: [string, string][] = [
         one way to get the curve of the pair actually in your hands. Your unit&rsquo;s
         <em>exact</em> measurement comes back by email, and if that model has no page here yet,
         it gets one. Two ways in: if it is a model we are asking for, it is free and we cover shipping
-        both ways. Any other headphone you own is $89, and you cover the postage.
+        both ways. Any other headphone you own is {P}, and you cover the postage.
       </p>
       <div class="cta-row">
         <Button href="#intake" variant="primary" size="lg">Send one in</Button>
@@ -124,7 +128,7 @@ const steps: [string, string][] = [
           <h3>Free if we are asking for it</h3>
           <p>
             We keep a public list of the models we most want on the bench. If yours is on it, the
-            measurement is free and we pay shipping both ways. Anything else you own is <b>$89</b>,
+            measurement is free and we pay shipping both ways. Anything else you own is <b>{P}</b>,
             and you cover the postage.
           </p>
         </div>
@@ -220,7 +224,7 @@ const steps: [string, string][] = [
         <p class="sec-lede">
           We are building this corpus from scratch, one headphone at a time. These are the models we most
           want on the bench first, and the reason each one earns a slot. Send one of these and the
-          measurement is free, with shipping covered both ways. Anything else you own is $89.
+          measurement is free, with shipping covered both ways. Anything else you own is {P}.
         </p>
       </div>
       <div class="wantgrid">
@@ -241,7 +245,7 @@ const steps: [string, string][] = [
       </div>
       <p class="wantfoot">
         P1 is what we want first. P2 is the second wave. P3 fills a real gap when one turns up. Not on
-        the list and still want yours measured? That is the $89 lane, and the answer is yes.
+        the list and still want yours measured? That is the {P} lane, and the answer is yes.
       </p>
     </div>
   </section>
@@ -258,7 +262,7 @@ const steps: [string, string][] = [
             have met an $89 invoice later. */}
         <p class="sec-lede">
           Tell us what you&rsquo;ve got and how to reach you. If it is a model on the requested list,
-          we email a prepaid, insured label and it is free both ways. Anything else you own is $89
+          we email a prepaid, insured label and it is free both ways. Anything else you own is {P}
           and you cover the postage. We confirm which lane you are in before anything ships, so the
           cost is settled before a headphone moves.
         </p>

@@ -65,7 +65,13 @@ const organization = {
   url: SITE,
   logo: `${SITE}/assets/brand/png/wl-mark_amber_512.png`,
   description:
-    'Audio product work by Jamey Warren: headphones, amps, DACs, DSP, and the software around them.',
+    "Jamey Warren's audio lab in Livingston, Montana: published headphone measurements, the Attune, Caliper and Proof apps, and audio plugins.",
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Livingston',
+    addressRegion: 'MT',
+    addressCountry: 'US',
+  },
   founder: { '@id': `${SITE}/#jamey` },
   sameAs: [
     'https://apps.apple.com/us/developer/warren-labs/id6792763836',
@@ -80,6 +86,9 @@ const person = {
   name: 'Jamey Warren',
   url: SITE,
   jobTitle: 'Founder',
+  description:
+    'Founder of Warren Labs. First employee at Grace Design (1997 to 2001); VP of Operations (2003 to 2007), then President and CEO (2012 to 2017), at HeadRoom. Author of The Art and Science of Headphone Design.',
+  knowsAbout: ['headphone measurement', 'headphone design', 'audio product development'],
   worksFor: { '@id': `${SITE}/#organization` },
   sameAs: ['https://github.com/jameywarren', 'https://www.linkedin.com/in/jameywarren'],
 };

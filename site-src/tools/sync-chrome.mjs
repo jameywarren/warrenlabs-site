@@ -7,6 +7,9 @@
 //   <!-- wl:header:start -->  ...generated...  <!-- wl:header:end -->
 //   <!-- wl:footer:start -->  ...generated...  <!-- wl:footer:end -->
 //
+// The homepage also delegates two product regions, wl:doors and wl:measure, rendered from data by
+// tools/home-regions.mjs.
+//
 // This script replaces whatever sits between those markers with markup built from
 // src/data/nav.js, so the hand-written pages and the 24 Astro pages always carry the same links.
 // Anything outside the markers is left alone.
@@ -18,6 +21,8 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+// The homepage's product regions (wl:doors, wl:measure): see tools/home-regions.mjs.
+import { renderDoors, renderMeasure } from './home-regions.mjs';
 // Read the canonical JSON directly rather than importing nav.js: this runs in plain Node, which
 // requires an import attribute for JSON, while Vite (which serves nav.js to Astro) does not.
 const nav = JSON.parse(
@@ -62,7 +67,7 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 // theme. But pinning the whole PAGE was the wrong granularity — those are two sections, so they
 // are now DARK ISLANDS (see .rack-zone/.contact in css/styles.css) and the page keeps its toggle.
 const PAGES = [
-  { file: 'index.html', logoHref: null },
+  { file: 'index.html', logoHref: null, home: true },
   { file: '404.html', logoHref: '/' },
 ];
 
@@ -180,7 +185,7 @@ function replaceBlock(html, name, body, file) {
 }
 
 let touched = 0;
-for (const { file, logoHref, darkOnly } of PAGES) {
+for (const { file, logoHref, darkOnly, home } of PAGES) {
   const path = join(ROOT, file);
   let html;
   try {
@@ -195,6 +200,10 @@ for (const { file, logoHref, darkOnly } of PAGES) {
   html = replaceBlock(html, 'head', head(darkOnly), file);
   html = replaceBlock(html, 'header', header(logoHref, darkOnly), file);
   html = replaceBlock(html, 'footer', footer() + (darkOnly ? '' : '\n' + themeScript()), file);
+  if (home) {
+    html = replaceBlock(html, 'doors', renderDoors(), file);
+    html = replaceBlock(html, 'measure', renderMeasure(), file);
+  }
   if (html !== before) {
     await writeFile(path, html);
     console.log(`sync-chrome: ${file}`);

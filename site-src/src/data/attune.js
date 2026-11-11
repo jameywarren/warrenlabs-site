@@ -10,8 +10,9 @@
 //   - iOS APPROVED and LIVE as of 2026-08-21.  iPhone iOS 16+, iPad iPadOS 16+.
 //   - Attune Pro is one time, no subscription, and a Universal Purchase covering Mac and iOS.
 //     $19.99 US (copied from warren-labs/docs/PRICING.md, 2026-11-08). Hand-typed in attune.astro
-//     (the Pro card AND the schema offers), support.astro and the homepage index.html: change
-//     those with it.
+//     (the Pro card AND the schema offers) and support.astro: change those with it. The homepage
+//     states no Attune price since 2026-11-11 (its wl:doors region reads APP_STORE and ATTUNE
+//     from this file via tools/home-regions.mjs).
 //   - One bundle id, so ONE App Store link serves every platform. That is why there is a single
 //     URL here and not two.
 //

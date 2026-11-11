@@ -19,10 +19,6 @@
   --led-green: var(--wl-good); --led-amber: var(--wl-accent); --led-cyan: var(--wl-accent);
   --font-display: "Barlow", sans-serif; --disp-weight: 700; --disp-ls: 0.01em; --disp-tt: uppercase;
   --h1: clamp(110px, 13.5vw, 196px); --h1-lh: 0.95;
-  /* Hero grid geometry. The scope's full-bleed correction derives from these two numbers, so the
-     grid and the trace can never drift apart. See .hero-cta.ctawrap > #scope below. */
-  --hero-creds-col: 480px; --hero-sub-gap: 64px;
-  --hero-scope-offset: calc((var(--hero-creds-col) + var(--hero-sub-gap)) / 2);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -64,35 +60,6 @@ header.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6.5px) ro
 .hero { position: relative; padding-top: 72px; }
 .hero-kicker .sep { color: var(--faint); }
 .hero h1 { font-size: var(--h1); line-height: var(--h1-lh); letter-spacing: 0.06em; position: relative; z-index: 2; }
-/* The scope lives BEHIND the call-to-action row. No divider rules: it is signal under the thing
-   you act on, not a band between sections. */
-.hero-cta.ctawrap { position: relative; isolation: isolate; padding: 26px 0; }
-/* FULL-BLEED, not a 40px bleed past the button column. The old homepage ran this the whole width
-   of the window and that is most of why it read as an instrument rather than an ornament.
-
-   left:50% + margin-left:-50vw is the full-viewport-width trick, but it only lands correctly when
-   the containing column is itself centred in the viewport. Ours is not: #scope sits in
-   .hero-lede-col, the 1fr cell of a `1fr var(--hero-creds-col)` grid, so that column's centre is
-   half the creds column plus half the gap LEFT of the viewport centre. Anchoring at a bare 50% put
-   the trace 272px off at 1080px+, hanging off the left edge and dying short of the right. Adding
-   --hero-scope-offset back moves the anchor to the true viewport centre. Below 1080px the grid
-   collapses to one column and the offset is zeroed there.
-
-   100vw counts the scrollbar on desktop, which would push the page ~15px wide; body already
-   carries overflow-x:hidden so that is absorbed. The previous -40px/+80px version overflowed for
-   real: it made the homepage the only page on the site wider than a 375px phone viewport. */
-.hero-cta.ctawrap > #scope { position: absolute; top: 50%; transform: translateY(-50%);
-  left: calc(50% + var(--hero-scope-offset)); margin-left: -50vw; width: 100vw; height: 220px;
-  z-index: -1; pointer-events: none; opacity: 0.7; }
-.hero-cta.ctawrap > .btn { position: relative; z-index: 1; }
-.hero-sub { display: grid; grid-template-columns: 1fr var(--hero-creds-col); gap: var(--hero-sub-gap); padding: 10px 0 84px; align-items: start; }
-.hero-sub .lede { font-size: 25px; line-height: 1.45; max-width: 640px; text-wrap: pretty; }
-.hero-sub .lede em { font-style: normal; color: var(--ink); }
-.creds { border-left: 1px solid var(--line); padding-left: 32px; display: grid; gap: 18px; }
-.cred { display: grid; grid-template-columns: 104px 1fr; gap: 16px; font-size: 12px; letter-spacing: 0.08em; }
-.cred .k { color: var(--faint); } .cred .v { color: var(--dim); }
-.hero-lede-col { display: grid; gap: 30px; align-content: start; }
-.hero-cta { display: flex; gap: 14px; flex-wrap: wrap; }
 .btn { font-family: "JetBrains Mono", monospace; font-size: 12.5px; letter-spacing: 0.1em; text-decoration: none; padding: 15px 26px; border-radius: 4px; display: inline-flex; align-items: center; gap: 9px; transition: filter 0.2s, border-color 0.2s, color 0.2s, background 0.2s; }
 .btn.primary { background: var(--acc); color: var(--bg); font-weight: 600; }
 .btn.primary:hover { filter: brightness(1.12); }
@@ -363,10 +330,6 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
 
 @media (max-width: 1080px) {
   .wrap { padding: 0 32px; }
-  .hero-sub { grid-template-columns: 1fr; gap: 36px; padding-bottom: 64px; }
-  /* single column: .hero-lede-col is centred again, so the scope needs no correction */
-  :root { --hero-scope-offset: 0px; }
-  .creds { border-left: none; border-top: 1px solid var(--line); padding: 24px 0 0; }
   .chain { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .chain-mod:not(:last-child)::after { display: none; }
   .rack-scene { width: min(1200px, calc(100vw - 48px)); }
@@ -386,9 +349,6 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   .approach { padding-top: 64px; padding-bottom: 32px; }
   .approach-head { margin-bottom: 36px; }
   .hero { padding-top: 44px; }
-  #scope { height: 150px; margin-top: -24px; }
-  .hero-sub .lede { font-size: 19px; }
-  .cred { grid-template-columns: 92px 1fr; font-size: 11px; }
   .rack-head .sub { font-size: 14.5px; }
   .rail { width: 14px; }
   .rail .holes { background-size: 14px 34px; background-image: radial-gradient(circle 2.5px at 7px 17px, #060608 2.5px, transparent 3.5px); }
@@ -432,13 +392,8 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
 .suite-cell .trace-thin { fill: none; stroke: var(--decor); stroke-width: 1.8; opacity: .38; }
 .suite-cell .grid-x { display: none; }
 
-/* ============================================================ "Also from the lab" */
-.also { padding-top: 80px; padding-bottom: 88px; }
-.also-head { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; margin-bottom: 24px; }
-.also-head .k { font-family: "JetBrains Mono", monospace; font-size: 11px; letter-spacing: 0.26em; color: var(--dim); }
-.also-head .sub { color: var(--faint); font-size: 14px; }
-.also-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-/* text-decoration: these were <button>s once and are <a>s now, so every word in every card took the
+/* ============================================================ cards (book, makerphones)
+   text-decoration: these were <button>s once and are <a>s now, so every word in every card took the
    browser's link underline (live until 2026-09-26). color and font were already reset for the
    same reason. */
 .also-card { text-align: left; background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
@@ -459,9 +414,6 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   .suite-screen { width: 250px; }
   .suite-mods { white-space: normal; }
 }
-@media (max-width: 880px) {
-  .also-grid { grid-template-columns: repeat(2, 1fr); }
-}
 @media (max-width: 720px) {
   .offer { padding: 24px 22px; }
   .offer-zone { padding-top: 52px; padding-bottom: 52px; }
@@ -469,7 +421,6 @@ footer { border-top: 1px solid var(--line); position: relative; z-index: 4; back
   .offer h3 { font-size: 24px; }
   .offer-main p { font-size: 14.5px; }
 }
-@media (max-width: 520px) { .also-grid { grid-template-columns: 1fr; } }
 
 /* ===================================== faceplate "shot" (shared with /plugins pages),
    shown inside the plugin info popup. Themed by --shot-accent (the plugin's accent). */
@@ -585,35 +536,7 @@ h1.lc, h2.lc, h3.lc, h4.lc, span.lc, .lc { text-transform: lowercase; }
    HOMEPAGE 2026-08-27 — Front Door structure. docs/homepage-redesign.md
    ============================================================================================ */
 
-/* The h1 is a sentence now, not the wordmark, so it opts out of --h1 (110–196px) and of the
-   uppercase transform .display carries. */
-/* .hero h1 is 0,0,1,1 and sets --h1 (110–196px, sized for the WARREN LABS wordmark), so a bare
-   .h1-lede at 0,0,1,0 loses and the sentence renders at 172px. Match the specificity. */
-.hero h1.h1-lede { font-size: clamp(34px, 4.6vw, 58px); line-height: 1.05; letter-spacing: -0.022em;
-  text-transform: none; font-weight: 600; margin: 0 0 14px; max-width: 17ch; text-wrap: balance; }
-/* The one-sentence identity above the h1 (2026-09-26). Body type and dim, so it reads as who is
-   speaking and does not compete with the offer under it. */
-.hero-id { font-size: 17px; line-height: 1.5; color: var(--dim); margin: 0 0 18px; max-width: 60ch; text-wrap: pretty; }
-/* On a phone it costs three lines above the h1, and docs/homepage-redesign.md §6.1 requires the App
-   Store button on the first screen at 375x812. A step smaller, and the hero gives back 20px of top
-   padding: the button's bottom edge measured 731px (674 before the line existed). */
-@media (max-width: 720px) {
-  .hero { padding-top: 24px; }
-  .hero-id { font-size: 15px; line-height: 1.45; margin-bottom: 12px; }
-}
-.hero-status { font-size: 12px; letter-spacing: 0.13em; color: var(--acc); margin: 0 0 26px; }
-.hero-byline { font-size: 15.5px; color: var(--faint); margin: 0 0 26px; max-width: 56ch; }
-.hero-fine { font-size: 14px; color: var(--faint); margin: 14px 0 0; }
-.hero-aside { font-size: 12px; letter-spacing: 0.06em; color: var(--faint); margin: 20px 0 0; }
-.hero-aside a { color: var(--dim); text-decoration: none; border-bottom: 1px solid var(--line); }
-.hero-aside a:hover { color: var(--acc); border-color: var(--acc); }
 
-/* three steps */
-.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-.step-n { display: block; font-size: 11px; font-weight: 700; letter-spacing: 0.13em;
-  color: var(--acc); margin-bottom: 10px; }
-.step p { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--dim); }
-.step a { color: var(--ink); text-decoration-color: var(--acc); text-underline-offset: 3px; }
 .honesty { border-left: 2px solid var(--line); padding-left: 18px; margin: 34px 0 0;
   font-size: 14.5px; color: var(--faint); max-width: 62ch; }
 
@@ -639,41 +562,167 @@ ol.method a { color: var(--ink); text-decoration-color: var(--acc); text-underli
 
 .ladder-k { margin: 40px 0 16px; }
 
-/* plugin offers — price and state are separate fields so the store opening is a data change */
-.plines { border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
-.pline { display: grid; grid-template-columns: 210px 90px 116px 1fr; gap: 22px; align-items: baseline;
-  padding: 19px 24px; border-bottom: 1px solid var(--line); background: var(--panel);
-  text-decoration: none; color: inherit; }
-.pline:last-child { border-bottom: 0; }
-.pline:hover { background: var(--panel-hi); }
-.pl-nm { font-size: 17px; font-weight: 600; }
-.pl-pr { font-size: 16px; font-weight: 700; color: var(--acc); font-variant-numeric: tabular-nums; }
-.pl-st { font-size: 9.5px; font-weight: 700; letter-spacing: 0.11em; color: var(--faint);
-  border: 1px solid var(--line); border-radius: 2px; padding: 3px 7px; justify-self: start; }
-.pl-st.shipping { color: var(--acc); border-color: var(--acc); }
-.pl-bl { font-size: 14.5px; color: var(--dim); }
-.plug-state { margin: 20px 0 0; padding: 16px 20px; border: 1px solid var(--line); border-radius: 4px;
-  background: var(--bg2); font-size: 15px; color: var(--dim); }
-.plug-state b { color: var(--ink); }
-.plug-state a { color: var(--ink); text-decoration-color: var(--acc); text-underline-offset: 3px; }
-.plug-state a:hover { color: var(--acc); }
 
 @media (max-width: 900px) {
-  .steps { grid-template-columns: 1fr; gap: 26px; }
   .specstrip { grid-template-columns: 1fr 1fr; }
   .specstrip > div:nth-child(2) { border-right: 0; }
-  .pline { grid-template-columns: 1fr auto; gap: 8px 14px; }
-  .pl-st { grid-column: 1 / -1; }
-  .pl-bl { grid-column: 1 / -1; }
 }
 
 /* the book, with its cover back */
-/* grid-column: five cards since Caliper joined (2026-09-26), so the book, last, takes its row whole
-   rather than leaving half of it empty. */
-.also-card.bookcard { display: grid; grid-template-columns: 84px 1fr; gap: 18px; align-items: start;
-  grid-column: 1 / -1; }
+.also-card.bookcard { display: grid; grid-template-columns: 84px 1fr; gap: 18px; align-items: start; }
 .bookcard-cover { width: 84px; height: auto; border-radius: 3px; display: block;
   box-shadow: 0 2px 10px rgba(0,0,0,.35); }
 .bookcard-body { display: block; }
 .bookcard-go { display: block; margin-top: 10px; font-size: 10.5px; letter-spacing: .13em; color: var(--acc); }
 @media (max-width: 900px) { .also-card.bookcard { grid-template-columns: 68px 1fr; } .bookcard-cover { width: 68px; } }
+
+/* ============================================================================================
+   HOMEPAGE 2026-11-11: lab first, three doors. warren-labs docs/homepage-lab-first.md
+   The doors and the Send one in card are generated (site-src/tools/home-regions.mjs); these rules
+   style what that script emits, so keep class names in step with it.
+   ============================================================================================ */
+
+/* Hero: the lab sentence is the h1. It opts out of --h1 (sized for a wordmark) and of the
+   uppercase transform .display carries. .hero h1 is 0,0,1,1, so match the specificity. */
+.hero { padding-top: 36px; padding-bottom: 24px; }
+.hero h1.h1-lab { font-size: clamp(30px, 4.1vw, 54px); line-height: 1.06; letter-spacing: -0.02em;
+  text-transform: none; font-weight: 600; margin: 0 0 12px; text-wrap: balance; }
+.hero-lede { font-size: 18px; line-height: 1.5; color: var(--dim); max-width: 66ch; margin: 0 0 20px; text-wrap: pretty; }
+
+/* Career rail: one mono row, newest first. The scope trace runs behind it, full bleed. The strip
+   is centred in .wrap, which is centred in the viewport, so left:50% + margin-left:-50vw lands. */
+.creds { position: relative; isolation: isolate; display: grid; grid-template-columns: 1.5fr 1.25fr 1fr 1fr 1fr;
+  gap: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  text-decoration: none; color: inherit; }
+.creds > #scope { position: absolute; top: 50%; left: 50%; margin-left: -50vw; width: 100vw; height: 160px;
+  transform: translateY(-50%); z-index: -1; pointer-events: none; opacity: 0.3; }
+.cred { display: grid; gap: 5px; align-content: start; padding: 12px 14px 12px 0; font-size: 10.5px;
+  letter-spacing: 0.05em; line-height: 1.45; }
+.creds .cred + .cred { padding-left: 14px; border-left: 1px solid var(--line); }
+.cred .k { color: var(--faint); } .cred .v { color: var(--dim); }
+.creds:hover .cred .v { color: var(--ink); }
+
+/* The doors. Listen is visibly the widest, and first in source order at every width. */
+.doors { display: grid; grid-template-columns: 1.45fr 1fr 1fr; gap: 20px; padding-top: 22px; padding-bottom: 34px;
+  align-items: start; }
+.door { display: grid; gap: 12px; align-content: start; min-width: 0; }
+.door-k { font-size: 11px; letter-spacing: 0.22em; color: var(--dim); }
+.dcard { display: flex; flex-direction: column; gap: 9px; min-width: 0;
+  border: 1px solid var(--panel-edge); border-radius: 6px; padding: 18px 22px 20px;
+  background: linear-gradient(180deg, var(--panel-hi), var(--panel) 34%);
+  text-decoration: none; color: inherit; position: relative; }
+.dcard-lead::before { content: ''; position: absolute; left: 0; top: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--acc), transparent 75%); border-radius: 6px 6px 0 0; }
+.dcard-mini { padding: 14px 18px 16px; gap: 6px; background: var(--panel); transition: border-color 0.2s, transform 0.2s; }
+.dcard-mini:hover { border-color: color-mix(in oklab, var(--acc) 40%, var(--panel-edge)); transform: translateY(-2px); }
+/* Kind, status and price: three fields, never one string. Wraps rather than truncates, so a price
+   is never hidden. */
+.dc-meta { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; font-size: 10px; letter-spacing: 0.12em; }
+.dc-kind { color: var(--faint); margin-right: auto; }
+.dc-status { color: var(--acc); }
+.dc-price { color: var(--ink); font-weight: 500; }
+.dc-name { font-size: clamp(26px, 2.4vw, 32px); line-height: 1; }
+.dc-name-sm { font-size: 20px; line-height: 1; }
+.dc-sub { font-size: 18px; font-weight: 600; color: var(--ink); margin-top: -2px; }
+.dc-body { font-size: 15px; line-height: 1.55; color: var(--dim); text-wrap: pretty; }
+.dc-plat { font-size: 10.5px; letter-spacing: 0.12em; color: var(--faint); }
+.dc-note { font-size: 13px; line-height: 1.5; color: var(--faint); }
+.dc-cta { margin-top: 4px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.dc-cta .dc-plat { flex: 1 1 140px; }
+.dc-cta .btn { padding: 13px 20px; }
+.dc-bundles { list-style: none; border-top: 1px solid var(--line); margin-top: 2px; }
+.dc-bundles a { display: grid; grid-template-columns: 1fr auto auto; gap: 2px 10px; align-items: baseline; padding: 9px 0;
+  border-bottom: 1px solid var(--line); text-decoration: none; color: inherit; }
+.dc-bundles a:hover .db-nm { color: var(--acc); }
+.db-nm { font-size: 14px; font-weight: 600; }
+.db-pr { font-size: 13px; font-weight: 700; color: var(--acc); font-variant-numeric: tabular-nums; text-align: right; }
+.db-st { font-size: 9px; letter-spacing: 0.12em; color: var(--faint); }
+.db-ln { font-size: 12.5px; color: var(--faint); grid-column: 1 / -1; }
+.db-st { order: -1; grid-column: 2; grid-row: 1; }
+.db-pr { grid-column: 3; grid-row: 1; }
+.door-links { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 10.5px; letter-spacing: 0.14em; }
+.door-links a { color: var(--dim); text-decoration: none; border-bottom: 1px solid var(--line); padding: 4px 0; }
+.door-links a:hover { color: var(--acc); border-color: var(--acc); }
+
+.honesty-band { padding-bottom: 8px; }
+.honesty { border-left: 2px solid var(--line); padding-left: 18px; margin: 0;
+  font-size: 14.5px; line-height: 1.55; color: var(--faint); max-width: 62ch; }
+
+/* spec strip + method (the bench) */
+.specstrip { display: grid; grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--line); border-radius: 4px; overflow: hidden; margin: 0 0 38px; }
+.specstrip > div { padding: 16px 18px; border-right: 1px solid var(--line); background: var(--panel); }
+.specstrip > div:last-child { border-right: 0; }
+.ss-k { display: block; font-size: 10px; letter-spacing: 0.14em; color: var(--faint); margin-bottom: 6px; }
+.ss-v { font-size: 14px; color: var(--ink); }
+ol.method { list-style: none; counter-reset: m; padding: 0; margin: 0; display: grid; gap: 22px; }
+/* Two columns: the counter in col 1, ALL the content in col 2. Without pinning b and p to
+   column 2 they auto-place, so the paragraph lands in the 30px counter column. */
+ol.method li { counter-increment: m; display: grid; grid-template-columns: 30px 1fr;
+  column-gap: 16px; row-gap: 4px; }
+ol.method li > b, ol.method li > p { grid-column: 2; }
+ol.method li::before { content: counter(m) "."; font-family: "JetBrains Mono", monospace;
+  font-size: 13px; font-weight: 700; color: var(--acc); padding-top: 3px; }
+ol.method b { display: block; font-size: 16.5px; margin-bottom: 5px; }
+ol.method p { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--dim); max-width: 66ch; }
+ol.method a { color: var(--ink); text-decoration-color: var(--acc); text-underline-offset: 3px; }
+.ladder-k { margin: 56px 0 16px; font-size: 12px; letter-spacing: 0.26em; color: var(--dim); scroll-margin-top: 24px; }
+.approach { padding-top: 84px; }
+
+/* Who runs the bench */
+.about-lab { padding-top: 84px; padding-bottom: 88px; border-top: 1px solid var(--line); margin-top: 56px; }
+.about-cols { display: grid; grid-template-columns: 1.2fr 1fr; gap: 56px; align-items: start; }
+.about-main > .k { font-size: 12px; letter-spacing: 0.26em; color: var(--dim); margin-bottom: 20px; }
+.about-main h2 { font-size: clamp(34px, 4.4vw, 56px); line-height: 1.04; margin-bottom: 20px; }
+.about-main p { font-size: 17px; line-height: 1.6; color: var(--dim); max-width: 60ch; text-wrap: pretty; }
+.timeline { display: grid; gap: 12px; margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); }
+.timeline .cred { grid-template-columns: 104px 1fr; padding: 0; gap: 16px; font-size: 11.5px; }
+.about-side { display: grid; gap: 16px; }
+.also-card h3 { font-family: var(--font-display); font-weight: var(--disp-weight); text-transform: var(--disp-tt);
+  letter-spacing: var(--disp-ls); font-size: 22px; line-height: 1.05; margin: 4px 0 6px; }
+.also-card h3.lc { text-transform: lowercase; }
+.also-card p { font-size: 14.5px; line-height: 1.55; color: var(--dim); }
+.bookcard-k { display: block; font-size: 10px; letter-spacing: 0.16em; color: var(--faint); }
+.mp-card .bookcard-go, .bookcard-go { display: block; margin-top: 10px; font-size: 10.5px; letter-spacing: .13em; color: var(--acc); }
+#about, #listen, #measure, #mix, #approach { scroll-margin-top: 16px; }
+
+/* ---------- homepage responsive ---------- */
+/* Below desktop the rail becomes a list: key | value, one row each. */
+@media (max-width: 1080px) {
+  .creds { grid-template-columns: 1fr; padding: 12px 0; gap: 7px; }
+  .creds .cred, .creds .cred + .cred { grid-template-columns: 104px 1fr; gap: 14px; padding: 0; border-left: 0; }
+}
+@media (max-width: 999px) {
+  .doors { grid-template-columns: 1fr 1fr; }
+  .door-listen { grid-column: 1 / -1; }
+  .about-cols { grid-template-columns: 1fr; gap: 36px; }
+}
+@media (max-width: 900px) {
+  .specstrip { grid-template-columns: 1fr 1fr; }
+  .specstrip > div:nth-child(2) { border-right: 0; }
+}
+@media (max-width: 720px) {
+  .hero { padding-top: 18px; padding-bottom: 12px; }
+  .hero h1.h1-lab { font-size: clamp(28px, 8vw, 40px); margin-bottom: 10px; }
+  .hero-lede { font-size: 16px; margin-bottom: 18px; }
+  /* The long half of the lede costs three lines on a phone, and the Attune button has to land on
+     the first screen at 375x812. The doors below say the same thing. */
+  .lede-long { display: none; }
+  .creds > #scope { height: 110px; }
+  .creds { padding: 10px 0; gap: 6px; }
+  .creds .cred, .creds .cred + .cred { grid-template-columns: 76px 1fr; gap: 8px; }
+  .cred { font-size: 10px; letter-spacing: 0.02em; line-height: 1.4; }
+  .doors { grid-template-columns: 1fr; gap: 26px; padding-top: 16px; }
+  .door { gap: 8px; }
+  .dcard { padding: 16px 16px 18px; }
+  .dc-cta .btn { width: 100%; justify-content: center; min-height: 48px; }
+  .about-lab { padding-top: 56px; padding-bottom: 56px; margin-top: 40px; }
+  .about-main p { font-size: 16px; }
+  .timeline .cred { grid-template-columns: 92px 1fr; font-size: 11px; }
+  .approach { padding-top: 52px; }
+}
+@media (max-width: 560px) {
+  .specstrip { grid-template-columns: 1fr; }
+  .specstrip > div, .specstrip > div:nth-child(2) { border-right: 0; border-bottom: 1px solid var(--line); }
+  .specstrip > div:last-child { border-bottom: 0; }
+}

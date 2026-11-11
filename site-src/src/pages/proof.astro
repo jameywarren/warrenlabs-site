@@ -4,6 +4,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import Button from '../components/Button.astro';
 import ProofFloorDiagram from '../components/ProofFloorDiagram.astro';
+import { PROOF } from '../data/apps.js';
 
 // ONE PAGE, TWO JOBS, ON PURPOSE.
 //
@@ -18,7 +19,9 @@ import ProofFloorDiagram from '../components/ProofFloorDiagram.astro';
 // close to verbatim — it was right. What changed: it is no longer the whole page, and the floor
 // measurement's DURATION is gone. See the note on that at #support.
 //
-// ACCURACY RULES FOR THIS PAGE. Proof has not shipped. Nothing here may imply it has.
+// ACCURACY RULES FOR THIS PAGE. Proof SHIPPED: free on the App Store for iPhone and iPad since
+// 2026-10-01 and for Mac since 2026-10-17 (checked against the public App Store lookup, 2026-11-11).
+// Store facts come from ../data/apps.js. This file said "Proof has not shipped" until 2026-11-11.
 //   1. NEVER write "the binary contains no networking code". proof/docs/SUBMISSION.md records that
 //      exact sentence as FALSE and corrects it: `nm -u` finds NSURLSession, _socket and _connect,
 //      and otool -L shows WebKit.framework, all pulled in by JUCE and the system frameworks
@@ -36,7 +39,9 @@ import ProofFloorDiagram from '../components/ProofFloorDiagram.astro';
 //      comes from a component-tree render with no measurement behind it, so all of them show an
 //      empty plot ("No rig chosen · nothing plotted yet"). ProofFloorDiagram is a captioned diagram
 //      instead. When real bench shots exist, they go in the slot marked below.
-//   4. No price. proof/docs/FREE-TIER.md leaves pricing explicitly undecided.
+//   4. The price is owned by proof/docs/DESIGN.md §16.2b (free app, one unlock, no subscription;
+//      it superseded FREE-TIER.md's "undecided" and §16.2a). This page states no number; the
+//      wording it does state comes from ../data/apps.js, a dated copy.
 //   5. No duration for the floor measurement. The app disagrees with itself — ProofView.cpp:3627
 //      says "About ninety seconds", ProofView.cpp:4408 says "about forty seconds", about the same
 //      operation. Restating either here would make the website a third, equally unreliable copy.
@@ -70,22 +75,23 @@ const LENSES = [
   },
 ];
 
-// Minimal on purpose. Add offers, sameAs and operatingSystem when Proof has a live listing and a
-// decided price (proof/docs/FREE-TIER.md). Until then any of them would be a claim, not an
-// omission: an offer of zero says "free", and an OS list says "shipping".
+// Minimal on purpose. Proof has a live listing now, so it carries sameAs. Offers and
+// operatingSystem wait for whoever next owns this page's pricing copy: the price is
+// proof/docs/DESIGN.md §16.2b's, and an Offer here would be one more hand copy of it.
 const proofApp = {
   '@type': 'SoftwareApplication',
   '@id': 'https://warrenlabs.com/proof/#app',
   name: 'Proof',
   url: 'https://warrenlabs.com/proof/',
   applicationCategory: 'MultimediaApplication',
+  sameAs: [PROOF.store],
   publisher: { '@id': 'https://warrenlabs.com/#organization' },
 };
 ---
 
 <Layout
   title="Proof · Measure, with a known floor"
-  description="Proof is an audio measurement instrument for Mac, iPad and iPhone. It measures its own noise and distortion before it measures anything else, then reports every reading against that floor. Coming soon to the App Store."
+  description="Proof is an audio measurement instrument for Mac, iPad and iPhone. It measures its own noise and distortion before it measures anything else, then reports every reading against that floor. Free on the App Store."
   jsonLd={proofApp}
 >
   <Nav variant="home" />
@@ -94,7 +100,7 @@ const proofApp = {
   <header class="hero">
     <div class="wrap hero-grid">
       <div class="hero-copy">
-        <span class="eyebrow">Coming soon to the App&nbsp;Store</span>
+        <span class="eyebrow">Free on the App&nbsp;Store</span>
         <h1>Ten audio instruments, free. <em>And measurements you can hand over.</em></h1>
         <p class="lede">
           RTA, oscilloscope, spectrogram, signal generator, SPL, LUFS and four more, running on
@@ -111,8 +117,8 @@ const proofApp = {
           <Button href="#support" variant="ghost" size="lg">Support</Button>
         </div>
         <p class="hero-note">
-          <span class="dot"></span> Not released yet. There is no download and no price.
-          When there is, it will be here.
+          <span class="dot"></span> {PROOF.storeLine}
+          <a href={PROOF.store}>Get it on the App&nbsp;Store</a>.
         </p>
       </div>
 
@@ -446,13 +452,13 @@ const proofApp = {
   <!-- ===================== CTA ===================== -->
   <section class="cta-end">
     <div class="wrap">
-      <h2>Coming soon to the App Store.</h2>
+      <h2>On the App Store.</h2>
       <p>
-        Mac, iPad and iPhone. If you measure things and you want to know when it lands, say so.
-        It goes to a person, not a list broker.
+        {PROOF.storeLine} Questions about a reading go to a person:
+        <a href="mailto:jamey@warrenlabs.com?subject=Proof">jamey@warrenlabs.com</a>.
       </p>
-      <Button href="mailto:jamey@warrenlabs.com?subject=Proof" variant="primary" size="lg">
-        jamey@warrenlabs.com
+      <Button href={PROOF.store} variant="primary" size="lg">
+        Download on the App Store
       </Button>
     </div>
   </section>

@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Warren Labs · Headphone measurements and audio tools</title>
-<meta name="description" content="I measure headphones on my own bench in Montana and publish what the rig says, flattering or not. Attune tunes your headphones by ear, free on the App Store.">
-<meta property="og:title" content="Warren Labs: Jamey Warren">
-<meta property="og:description" content="I measure headphones on my own bench in Montana and publish what the rig says, flattering or not. Attune tunes your headphones by ear, free on the App Store.">
+<meta name="description" content="Jamey Warren's audio lab in Livingston, Montana: published headphone measurements, Attune for tuning headphones by ear, the Caliper and Proof measurement apps, and plugins for mixing.">
+<meta property="og:title" content="Warren Labs · Headphone measurements and audio tools">
+<meta property="og:description" content="Jamey Warren's audio lab in Livingston, Montana: published headphone measurements, Attune for tuning headphones by ear, the Caliper and Proof measurement apps, and plugins for mixing.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://warrenlabs.com/">
 <meta property="og:image" content="https://warrenlabs.com/assets/brand/og-card.png">
@@ -32,7 +32,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 <script async src="https://plausible.io/js/pa-7zF1GswBt5oYNLddNETeJ.js"></script>
 <script>window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};plausible.init()</script>
 <!-- wl:head:end -->
-<link rel="stylesheet" href="css/styles.css?v=0f987542">
+<link rel="stylesheet" href="css/styles.css?v=9b845193">
 </head>
 <body>
 
@@ -56,62 +56,88 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
 </header>
 <!-- wl:header:end -->
 
+<!-- HOMEPAGE, LAB FIRST (Jamey, 2026-11-11: "lab-first, Attune lead card").
+     Spec: warren-labs docs/homepage-lab-first.md, which supersedes docs/homepage-redesign.md.
+     RULES FOR THIS FILE
+     - No product price, status, version or platform is typed by hand. They live in the generated
+       regions below and come from data at build time (site-src/tools/home-regions.mjs):
+         wl:doors    attune.js, apps.js, ../../web/plugins.json
+         wl:measure  measure.js (the owner of the mail-in price and turnaround)
+       Edit the data, run `npm run build`, never edit inside the markers.
+     - No counts (how many headphones, how many plugins). Counts go stale silently.
+     - Attune is the first and widest door but not the page's subject: no Attune price and no
+       feature that is not live on every platform. /attune/ owns both.
+     - No em dashes in copy. check-copy fails the build on one. -->
+
 <section class="hero wrap">
-  <!-- Who this is, before what to download. The 2026-09-25 review found the page had no
-       one-sentence identity: the h1 and the main button are Attune's, which is right for the
-       offer and wrong as the only thing a stranger learns. warren-labs docs/review-2026-09-25.md
-       section 5.2. -->
-  <p class="hero-id">Warren Labs is Jamey Warren&rsquo;s audio lab in Montana: I measure headphones and build tools for people who listen, measure and mix.</p>
-  <h1 class="display h1-lede">Tune your headphones by ear.</h1>
-  <p class="hero-status mono">FREE &middot; ON THE APP STORE FOR MAC, IPHONE AND IPAD</p>
-  <div class="hero-sub">
-    <div class="hero-lede-col">
-      <p class="lede">Attune plays your own music, loudness matched, and asks which of two tunings you like better. About a dozen answers later, you have a personal EQ curve for the headphones on your head. Then shape it exactly with a parametric EQ, up to six bands with shelves and Q, or use Fix by ear to find anything that still sticks out. There is no target you have to agree with, no preset to take on faith, and no subscription.</p>
-      <p class="hero-byline">I built it here in Livingston, Montana, on measurements I took myself.</p>
-      <!-- The scope sits BEHIND the buttons, not behind the headline and not as its own band.
-           Behind the h1 it competed with the one thing the page has to say; below the hero it was
-           just decoration. Behind the CTAs it reads as signal under the thing you act on. -->
-      <div class="hero-cta ctawrap">
-        <canvas id="scope" height="220" aria-hidden="true"></canvas>
-        <a class="btn primary" href="https://apps.apple.com/app/attune-headphone-eq/id6792873303" target="_blank" rel="noopener">Download on the App Store <span aria-hidden="true">&#8599;</span></a>
-        <a class="btn ghost" href="/attune/">How it works</a>
-      </div>
-      <p class="hero-fine">Free. No account, no card.</p>
-      <p class="hero-aside mono">Building a headphone? Lend me one and I&rsquo;ll measure it. <a href="/loaners/">FOR MAKERS &rarr;</a></p>
-    </div>
-    <div class="creds mono">
-      <div class="cred"><span class="k">1997&ndash;2001</span><span class="v">GRACE DESIGN, EMPLOYEE #1</span></div>
-      <div class="cred"><span class="k">2003&ndash;2017</span><span class="v">HEADROOM, VP OPS &rarr; CEO</span></div>
-      <div class="cred"><span class="k">NOW</span><span class="v">WARREN LABS &middot; INDEPENDENT</span></div>
-      <div class="cred"><span class="k">AUTHOR</span><span class="v">THE ART AND SCIENCE OF HEADPHONE DESIGN</span></div>
-    </div>
-  </div>
+  <!-- Who this is, in one sentence, as the page's only h1: the shape answer engines quote. -->
+  <h1 class="display h1-lab">Warren Labs is an audio lab in Livingston, Montana.</h1>
+  <p class="hero-lede">I&rsquo;m Jamey Warren. I measure headphones on my own bench, publish the results at full resolution, and build the tools that come out of that work<span class="lede-long">: an app that tunes your headphones by ear, the software I measure with, and plugins for mixing</span>.</p>
+  <!-- Career facts: copied from hq/BIOFACTS.md (HeadRoom roles, Grace Design, "lead with Caliper"),
+       2026-11-11. Newest first, current claim first. HeadRoom is two rows, not "2003-2017": it was
+       separate stints (hq/career/timeline.md). Never claim circuit design at HeadRoom or Grace, the
+       HeadRoom graph tool, or the HeadRoom archive as a credential. -->
+  <a class="creds mono" href="#about">
+    <canvas id="scope" height="160" aria-hidden="true"></canvas>
+    <span class="cred"><span class="k">NOW</span><span class="v">WARREN LABS &middot; I BUILT CALIPER, THE BENCH SOFTWARE I MEASURE WITH</span></span>
+    <span class="cred"><span class="k">AUTHOR</span><span class="v">THE ART AND SCIENCE OF HEADPHONE DESIGN</span></span>
+    <span class="cred"><span class="k">2012&ndash;2017</span><span class="v">HEADROOM, PRESIDENT AND CEO</span></span>
+    <span class="cred"><span class="k">2003&ndash;2007</span><span class="v">HEADROOM, VP OF OPERATIONS</span></span>
+    <span class="cred"><span class="k">1997&ndash;2001</span><span class="v">GRACE DESIGN, EMPLOYEE #1</span></span>
+  </a>
 </section>
 
-<section class="offer-zone" id="attune">
-  <div class="wrap">
-    <div class="offer-head">
-      <div class="k mono">YOU OWN HEADPHONES <span class="sig">&middot;</span> REAL TIME, ON YOUR OWN MUSIC</div>
-      <h2 class="display">You listen. It writes the curve.</h2>
-      <p class="sub">Everything happens on the track you already have playing.</p>
-    </div>
-    <div class="steps">
-      <div class="step">
-        <span class="step-n mono">01 &middot; PICK YOUR HEADPHONE</span>
-        <p>Every headphone in Attune was measured on my own rig. If yours isn&rsquo;t there yet, you can shape the tone by ear (that changes the tone; it cannot correct the headphone), import a measurement you already have (CSV, AutoEq or squig) for free, request it from inside the app, or <a href="/measure/">send your pair in</a> and I&rsquo;ll measure it.</p>
-      </div>
-      <div class="step">
-        <span class="step-n mono">02 &middot; ANSWER A OR B</span>
-        <p>About a dozen short comparisons, blind and loudness matched, so louder can never pass for better. It crossfades between the two instead of muting, so the only thing that changes is the sound.</p>
-      </div>
-      <div class="step">
-        <span class="step-n mono">03 &middot; KEEP IT</span>
-        <p>Your answers build one curve, saved per headphone. One saved sound is free and stays free. Pro is a one-time unlock, $19.99 in the US, for unlimited sounds, AutoEq export and separate left and right EQ bands. It is not a subscription and never will be.</p>
-      </div>
-    </div>
-    <p class="honesty">EQ moves tonal balance and nothing else. It won&rsquo;t buy you resolution, soundstage, lower distortion or different driver physics, and nothing on this page says otherwise.</p>
+<!-- The three doors. Generated: do not edit between the markers. -->
+<!-- wl:doors:start -->
+<div class="doors wrap">
+    <section class="door door-listen" id="listen" aria-labelledby="listen-h">
+      <div class="door-k mono">LISTEN <span class="sig">&middot;</span> YOU OWN HEADPHONES</div>
+      <article class="dcard dcard-lead">
+        <div class="dc-meta mono"><span class="dc-kind">HEADPHONE EQ APP BY WARREN LABS</span><span class="dc-status">ON THE APP STORE</span><span class="dc-price">FREE</span></div>
+        <h2 class="dc-name display" id="listen-h">Attune</h2>
+        <p class="dc-sub">Tune your headphones by ear.</p>
+        <p class="dc-body">Attune plays your own music, loudness matched, and asks which of two tunings you like better. About a dozen answers later you have a personal EQ curve for the pair on your head. One saved sound is free and stays free. Pro is a one-time unlock, not a subscription.</p>
+        <div class="dc-cta"><a class="btn primary" href="https://apps.apple.com/app/attune-headphone-eq/id6792873303" target="_blank" rel="noopener">Download on the App Store <span aria-hidden="true">&#8599;</span></a><span class="dc-plat mono">MAC, IPHONE AND IPAD, ONE DOWNLOAD.</span></div>
+      </article>
+      <p class="door-links mono"><a href="/attune/">HOW ATTUNE WORKS <span aria-hidden="true">&rarr;</span></a><a href="/collections/headphones/">HEADPHONES <span aria-hidden="true">&rarr;</span></a><a href="/graphs/">MEASUREMENTS <span aria-hidden="true">&rarr;</span></a></p>
+    </section>
+    <section class="door door-measure" id="measure" aria-labelledby="measure-h">
+      <div class="door-k mono">MEASURE <span class="sig">&middot;</span> YOU TEST GEAR</div>
+      <article class="dcard">
+        <div class="dc-meta mono"><span class="dc-kind">APP · MAC AND IPHONE</span><span class="dc-status">ON THE APP STORE</span><span class="dc-price">FREE</span></div>
+        <h2 class="dc-name display" id="measure-h">Caliper</h2>
+        <p class="dc-body">Headphone measurement for Mac and iPhone. It measures a headphone on an acoustic fixture and tells you how much of the curve is real. It is the software this bench runs on.</p>
+        <div class="dc-cta"><a class="btn ghost" href="/caliper/">See Caliper <span aria-hidden="true">&rarr;</span></a></div>
+      </article>
+      <a class="dcard dcard-mini" href="/proof/">
+        <div class="dc-meta mono"><span class="dc-kind">APP · MAC, IPAD AND IPHONE</span><span class="dc-status">ON THE APP STORE</span><span class="dc-price">FREE · ONE UNLOCK, NO SUBSCRIPTION</span></div>
+        <h3 class="dc-name-sm display">Proof</h3>
+        <p class="dc-body">An audio measurement instrument. It measures its own noise and distortion first, then reports every reading against that floor.</p>
+      </a>
+      <p class="door-links mono"><a href="/method/">HOW I MEASURE <span aria-hidden="true">&rarr;</span></a><a href="/measure/">SEND ONE IN <span aria-hidden="true">&rarr;</span></a><a href="/loaners/">FOR MAKERS <span aria-hidden="true">&rarr;</span></a></p>
+    </section>
+    <section class="door door-mix" id="mix" aria-labelledby="mix-h">
+      <div class="door-k mono">MIX <span class="sig">&middot;</span> YOU MAKE RECORDS</div>
+      <article class="dcard">
+        <div class="dc-meta mono"><span class="dc-kind">PLUGIN · AU AND VST3 FOR MACOS</span><span class="dc-status">SHIPPING</span><span class="dc-price">$29</span></div>
+        <h2 class="dc-name display" id="mix-h">Level</h2>
+        <p class="dc-body">Headphone correction and crossfeed for your DAW, built on the same correction engine Attune runs on.</p>
+        <div class="dc-cta"><a class="btn ghost" href="/plugins/">See the plugins <span aria-hidden="true">&rarr;</span></a></div>
+        <ul class="dc-bundles">
+          <li><a href="/plugins/#reference-desk"><span class="db-nm">The Reference Desk</span><span class="db-pr mono">$49</span><span class="db-st mono">PUBLIC BETA</span><span class="db-ln">Square, Bevel, Brace, Pare, Scribe</span></a></li>
+          <li><a href="/plugins/#character-collection"><span class="db-nm">The Character Collection</span><span class="db-pr mono">$39</span><span class="db-st mono">PUBLIC BETA</span><span class="db-ln">Temper, Ripple, Wake</span></a></li>
+          <li><a href="/plugins/#bundle"><span class="db-nm">The Whole Lab</span><span class="db-pr mono">$79</span><span class="db-st mono">PUBLIC BETA</span><span class="db-ln">The Trueness and Character lines, one install.</span></a></li>
+        </ul>
+        <p class="dc-note">Beta: includes every update through 1.0. Try any of them free first.</p>
+      </article>
+      <p class="door-links mono"><a href="/plugins/downloads/">FREE TRIALS <span aria-hidden="true">&rarr;</span></a><a href="/plugins/guides/">GUIDES <span aria-hidden="true">&rarr;</span></a></p>
+    </section>
   </div>
-</section>
+<!-- wl:doors:end -->
+
+<div class="wrap honesty-band">
+  <p class="honesty">EQ moves tonal balance and nothing else. It won&rsquo;t buy you resolution, soundstage, lower distortion or different driver physics, and nothing on this page says otherwise.</p>
+</div>
 
 <section class="approach wrap" id="approach">
   <div class="approach-head">
@@ -119,6 +145,8 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
     <h2 class="display">Why trust the measurements</h2>
     <p class="sub">Because I wrote the method down and you can check it. A measurement you can&rsquo;t audit is just a picture of a line.</p>
   </div>
+  <!-- Floor copied from warren-labs measurements/RIG.md (2026-08-19); licence and full resolution
+       from docs/measurement-publishing.md. Both copied 2026-11-11. -->
   <div class="specstrip mono">
     <div><span class="ss-k">FIXTURE</span><span class="ss-v">miniDSP EARS Pro, IEC 60318-4</span></div>
     <div><span class="ss-k">INSTRUMENT FLOOR</span><span class="ss-v">0.002 dB, 200 Hz &ndash; 2 kHz</span></div>
@@ -128,7 +156,7 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
   <ol class="method">
     <li>
       <b>The rig.</b>
-      <p>A miniDSP EARS Pro with per-unit serial-matched calibration, using the IEC 60318-4 couplers that the industry rigs use. It is a house reference rather than an industry reference coupler, and I label it that way next to every graph.</p>
+      <p>A miniDSP EARS Pro with per-unit serial-matched calibration, using the IEC 60318-4 couplers that the industry rigs use. It is a house reference rather than an industry reference coupler, and I label it that way.</p>
     </li>
     <li>
       <b>Seated for best fit, deliberately.</b>
@@ -136,122 +164,89 @@ if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)
     </li>
     <li>
       <b>Published raw, flattering or not.</b>
-      <p>Every measurement I take goes up at full resolution under CC BY-NC 4.0, with the rig and the date on it. <a href="/graphs/">See the measurements</a>.</p>
+      <p>I publish my measurements at full resolution under CC BY-NC 4.0, with the rig and the date on them. <a href="/graphs/">See the measurements</a>.</p>
     </li>
   </ol>
-</section>
 
-<section class="offer-zone" id="bench">
-  <div class="wrap">
-    <div class="offer-head">
-      <div class="k mono">THE BENCH <span class="sig">&middot;</span> WHAT IT COSTS</div>
-      <h2 class="display">Send me your pair.</h2>
-      <p class="sub">Every correction you can buy is built from somebody else&rsquo;s sample of your model. Send me yours and you get the curve of the pair actually in your hands. I publish it either way, flattering or not.</p>
-    </div>
-    <a class="offer" href="/measure/">
+  <div class="k mono ladder-k" id="bench">TWO WAYS ONTO THE BENCH</div>
+  <!-- Generated from site-src/src/data/measure.js, the owner of the price and turnaround. -->
+  <!-- wl:measure:start -->
+<a class="offer" href="/measure/">
       <div class="offer-main">
         <div class="offer-k mono">SEND ONE IN</div>
-        <h3 class="display">Your unit, on my rig</h3>
-        <p>I measure it on the EARS Pro, seated for best fit and labelled by rig, and send it back in about a week. It gets its own page here, credited however you like. Unit variation is real, and what your specific pair measures is exactly what Attune turns into a personal tuning.</p>
+        <h3 class="display">Your pair, on my rig</h3>
+        <p>I measure your unit on the EARS Pro, seated for best fit, and send it back within about five business days of arrival. Unit variation is real, and the curve of your own pair is exactly what Attune turns into a personal tuning.</p>
       </div>
       <div class="offer-side mono">
         <div class="offer-spec"><span class="sk">ON MY LIST</span><span class="sv">Free, both ways</span></div>
-        <div class="offer-spec"><span class="sk">ANYTHING ELSE</span><span class="sv">$89</span></div>
+        <div class="offer-spec"><span class="sk">ANYTHING ELSE</span><span class="sv">$89, postage on you</span></div>
         <div class="offer-spec"><span class="sk">TURNAROUND</span><span class="sv">About a week</span></div>
-        <span class="offer-note">Every result published, flattering or not.</span>
-        <span class="offer-go">SEND ONE IN &#8599;</span>
+        <span class="offer-note">Published either way, flattering or not.</span>
+        <span class="offer-go">SEND ONE IN <span aria-hidden="true">&#8599;</span></span>
       </div>
     </a>
-
-    <div class="k mono ladder-k">YOU MAKE HEADPHONES</div>
-    <a class="offer-alt" href="/loaners/">
-      <span class="oa-k mono">FREE &middot; LOAN ME A HEADPHONE</span>
-      <span class="oa-main"><b>Send me the headphone. I&rsquo;ll send you back the data.</b>
-        Lend me one retail unit for two weeks. I measure it on a documented rig and return the raw file for your own use, with no conditions attached. You cover shipping out, and I insure and pay the return.</span>
-      <span class="oa-go mono">LOAN ONE &#8599;</span>
-    </a>
-    <!-- Two priced maker offers were withdrawn here on 2026-09-01, along with /design-review/.
-         Reasoning, and what to know before reviving them: warren-labs/PLAN.md and
-         docs/offering-teardown.md §8. -->
-  </div>
+<!-- wl:measure:end -->
+  <a class="offer-alt" href="/loaners/">
+    <span class="oa-k mono">YOU MAKE HEADPHONES &middot; FREE</span>
+    <span class="oa-main"><b>Lend me one. I&rsquo;ll send you the data.</b>
+      Lend me one retail unit for two weeks. I measure it on a documented rig and return the raw file for your own use, with no conditions attached. You cover shipping out, and I insure and pay the return.</span>
+    <span class="oa-go mono">LOAN ONE &#8599;</span>
+  </a>
+  <!-- Loaner terms: a copy of site-src/src/pages/loaners.astro, 2026-11-11. Two priced maker
+       offers were withdrawn on 2026-09-01, along with /design-review/. Reasoning, and what to know
+       before reviving them: warren-labs PLAN.md and docs/offering-teardown.md. -->
 </section>
 
-<section class="offer-zone" id="plugins">
-  <div class="wrap">
-    <div class="offer-head">
-      <div class="k mono">YOU MIX <span class="sig">&middot;</span> AU AND VST3 FOR MACOS</div>
-      <h2 class="display">Tools that tell the truth.</h2>
-      <p class="sub">Nine plugins on one shared DSP library, built alongside the measurement work. Level is the same correction engine Attune runs on, as a plugin for your DAW.</p>
-    </div>
-    <!-- Price and STATE are separate fields on purpose. The store opened 2026-09-22, so the note
-         below says how the line is sold instead of saying it cannot be bought. Still open from
-         docs/homepage-redesign.md §8.4: buy links on the chips, and real plugin imagery. The
-         Whole Lab blurb copies wholeLab.tagline in warren-labs web/plugins.json. -->
-    <div class="plines">
-      <a class="pline" href="/plugins/level/">
-        <span class="pl-nm">Level</span><span class="pl-pr mono">$29</span>
-        <span class="pl-st mono shipping">SHIPPING</span>
-        <span class="pl-bl">Headphone correction plus Bauer crossfeed with interaural delay. Every curve says who measured it.</span>
-      </a>
-      <a class="pline" href="/plugins/#reference-desk">
-        <span class="pl-nm">The Reference Desk</span><span class="pl-pr mono">$49</span>
-        <span class="pl-st mono">PUBLIC BETA</span>
-        <span class="pl-bl">Square, Bevel, Brace, Pare and Scribe. Everything you need to hear the mix honestly.</span>
-      </a>
-      <a class="pline" href="/plugins/#character-collection">
-        <span class="pl-nm">The Character Collection</span><span class="pl-pr mono">$39</span>
-        <span class="pl-st mono">PUBLIC BETA</span>
-        <span class="pl-bl">Temper, Ripple, Wake. Heat, motion and space.</span>
-      </a>
-      <a class="pline" href="/plugins/#bundle">
-        <span class="pl-nm">The Whole Lab</span><span class="pl-pr mono">$79</span>
-        <span class="pl-st mono">PUBLIC BETA</span>
-        <span class="pl-bl">The Trueness and Character lines, one install.</span>
-      </a>
-    </div>
-    <p class="plug-state"><b>The store is open.</b> Level is a full release and sells on its own; the other eight are paid betas, sold in the bundles above. You can try any of them free before you buy, from the <a href="/plugins/downloads/">downloads page</a>.</p>
-  </div>
-</section>
-
-<section class="also wrap" id="projects">
-  <div class="also-head">
-    <div class="k mono">ALSO FROM THE LAB</div>
-  </div>
-  <div class="also-grid">
-    <a class="also-card" href="https://makerphones.com/" target="_blank" rel="noopener">
-      <h3>makerphones</h3>
-      <p>Everything I learn about building headphones, given away. A free build manual, open design files, and a pair you print, tune and service yourself.</p>
-    </a>
-    <!-- Caliper is released (2026-09-19) and until 2026-09-26 no page linked to it. Its price is
-         owned by the caliper repo, docs/PRICING.md. -->
-    <a class="also-card" href="/caliper/">
-      <h3>Caliper</h3>
-      <p>Headphone measurement for Mac and iPhone. It measures a headphone on an acoustic fixture and tells you how much of the curve is real. Free on the App&nbsp;Store.</p>
-    </a>
-    <a class="also-card" href="/proof/">
-      <h3>Proof</h3>
-      <p>An audio measurement instrument for Mac, iPad and iPhone. It measures its own noise and distortion first, then reports every reading against that floor. Coming soon to the App&nbsp;Store.</p>
-    </a>
-    <a class="also-card" href="/graphs/">
-      <h3>The measurements</h3>
-      <p>Every first-party measurement published raw and at full resolution under CC BY-NC 4.0. Flattering or not.</p>
-    </a>
-    <a class="also-card bookcard" href="https://www.amazon.com/dp/B0H6XWXM4C" target="_blank" rel="noopener">
-      <img class="bookcard-cover" src="assets/book-cover.jpg" width="560" height="800" loading="lazy"
-           alt="Cover of The Art and Science of Headphone Design by Jamey Warren">
-      <div class="bookcard-body">
-        <h3>The Art and Science of Headphone Design</h3>
-        <p>I wrote it from the same bench, using the same method, that produced the measurements on this site.</p>
-        <span class="bookcard-go mono">ON AMAZON &#8599;</span>
+<section class="about-lab wrap" id="about">
+  <div class="about-cols">
+    <div class="about-main">
+      <div class="k mono">WHO RUNS THE BENCH</div>
+      <h2 class="display">Jamey Warren</h2>
+      <!-- Every clause from hq/BIOFACTS.md (Grace Design; HeadRoom roles and the agreed framing for
+           the end; "lead with Caliper"), copied 2026-11-11. -->
+      <p>I was the first employee at Grace Design. I started there building cables and finished as production manager, bringing products from prototype into production. At HeadRoom I joined in sales and held virtually every role in the company over three separate stints, finishing as President and CEO and leading the company through its final chapter. Now I run this bench in Livingston, and I built Caliper, the software it runs on.</p>
+      <div class="timeline mono">
+        <div class="cred"><span class="k">NOW</span><span class="v">WARREN LABS, LIVINGSTON, MONTANA</span></div>
+        <div class="cred"><span class="k">2012&ndash;2017</span><span class="v">HEADROOM, PRESIDENT AND CEO</span></div>
+        <div class="cred"><span class="k">2003&ndash;2007</span><span class="v">HEADROOM, VP OF OPERATIONS</span></div>
+        <div class="cred"><span class="k">1997&ndash;2001</span><span class="v">GRACE DESIGN, EMPLOYEE #1</span></div>
       </div>
-    </a>
+    </div>
+    <div class="about-side">
+      <!-- Book description follows hq/CV.md. Not "written from the same bench": no hq record says so. -->
+      <a class="also-card bookcard" href="https://www.amazon.com/dp/B0H6XWXM4C" target="_blank" rel="noopener">
+        <img class="bookcard-cover" src="assets/book-cover.jpg" width="560" height="800" loading="lazy"
+             alt="Cover of The Art and Science of Headphone Design by Jamey Warren">
+        <div class="bookcard-body">
+          <span class="bookcard-k mono">AUTHOR</span>
+          <h3>The Art and Science of Headphone Design</h3>
+          <p>A technical book on transducer types, acoustic design, measurement, and the tradeoffs behind headphone voicing decisions.</p>
+          <span class="bookcard-go mono">ON AMAZON &#8599;</span>
+        </div>
+      </a>
+      <!-- makerphones: lowercase, one word. "Open design files" and "a pair you print" are left out
+           until the files are confirmed downloadable. -->
+      <a class="also-card mp-card" href="https://makerphones.com/" target="_blank" rel="noopener">
+        <span class="bookcard-k mono">FREE BUILD PROJECT</span>
+        <h3 class="lc">makerphones</h3>
+        <p>Everything I learn about building headphones, given away: an open reference manual and build guides for a pair you make, tune and service yourself.</p>
+        <span class="bookcard-go mono">MAKERPHONES.COM &#8599;</span>
+      </a>
+    </div>
   </div>
 </section>
+
+<!-- BENCH NOTES (email list): deliberately absent. PLAN.md makes the site the email list for the
+     90 days, but it ships only with its own Warren Labs list endpoint (NOT FORMSPREE.sonicTemple),
+     a real unsubscribe and RFC 8058 headers. Copy is ready in docs/homepage-lab-first.md §6. Never
+     ship a form that appears to work and collects nothing. -->
 
 <section class="contact wrap" id="patch">
   <div class="k">OUTPUT SECTION &middot; CONTACT</div>
   <h2 class="display">Building something in audio? <span class="accent">Patch in.</span></h2>
-  <p class="contact-sub">Tell me what you&rsquo;re working on and roughly where it is. I&rsquo;ll say honestly whether I&rsquo;m the right fit before anything gets booked.</p>
+  <!-- Not "before anything gets booked": Warren Labs sells no consulting (that sits under
+       Matchbook, hq/BIOFACTS.md, 2026-10-30). -->
+  <p class="contact-sub">Tell me what you&rsquo;re working on and roughly where it is: a headphone you&rsquo;d like on the bench, a question about a curve, or something you&rsquo;re building. It all comes to me.</p>
 
   <div class="pbay" id="pbay">
     <div class="pbay-panel">
@@ -292,17 +287,19 @@ b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';
 </script>
 <!-- wl:footer:end -->
 
-<script src="js/wl-app.js?v=42bd512b"></script>
+<script src="js/wl-app.js?v=03192e07"></script>
 <script src="js/wl-patchbay.js?v=c3c24f2a"></script>
 
-<!-- Structured data. The homepage had NONE, while 36 other pages carried an Organization
-     node whose @id is https://warrenlabs.com/#organization -- an identifier that points
-     here. This defines it at the URL it names, and adds the Person and the Book, both of
-     which the page already links but nothing declared.
-     No Product/Offer here on purpose: the eight bundle-only plugins have no individual
-     price, and an Offer without one is an incomplete offer that Google flags. -->
-<!-- Keep the Organization and Person nodes identical to Layout.astro (site-src/src/layouts). The
-     Attune node is a reference only: price and OS live on /attune, not in hand-written HTML. -->
+<!-- Structured data. Defines the Organization at the URL its @id names, plus the Person, the
+     Book, this WebPage, and reference nodes for the three apps the lab makes.
+     Keep the Organization and Person nodes IDENTICAL to Layout.astro (site-src/src/layouts) and to
+     _ORG_LD in warren-labs tools/gen_site.py: one entity that reads three ways to a crawler reads
+     as three entities.
+     No Product/Offer here on purpose. Prices and operating systems live on each product's own page
+     (/attune/, /caliper/, /proof/, /plugins/), which owns them; a homepage Offer would be one more
+     hand copy, and the bundle-only plugins have no individual price at all. The app nodes carry
+     only identity, so "who makes Attune" resolves to Warren Labs and "what is Warren Labs"
+     resolves to the lab, not to an EQ app. -->
 <script type="application/ld+json">
 {
  "@context": "https://schema.org",
@@ -314,7 +311,13 @@ b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';
    "legalName": "Free River Studios LLC",
    "url": "https://warrenlabs.com",
    "logo": "https://warrenlabs.com/assets/brand/png/wl-mark_amber_512.png",
-   "description": "Audio product work by Jamey Warren: headphones, amps, DACs, DSP, and the software around them.",
+   "description": "Jamey Warren's audio lab in Livingston, Montana: published headphone measurements, the Attune, Caliper and Proof apps, and audio plugins.",
+   "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Livingston",
+    "addressRegion": "MT",
+    "addressCountry": "US"
+   },
    "founder": {
     "@id": "https://warrenlabs.com/#jamey"
    },
@@ -340,12 +343,47 @@ b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';
    "name": "Jamey Warren",
    "url": "https://warrenlabs.com",
    "jobTitle": "Founder",
+   "description": "Founder of Warren Labs. First employee at Grace Design (1997 to 2001); VP of Operations (2003 to 2007), then President and CEO (2012 to 2017), at HeadRoom. Author of The Art and Science of Headphone Design.",
+   "knowsAbout": [
+    "headphone measurement",
+    "headphone design",
+    "audio product development"
+   ],
    "worksFor": {
     "@id": "https://warrenlabs.com/#organization"
    },
    "sameAs": [
     "https://github.com/jameywarren",
     "https://www.linkedin.com/in/jameywarren"
+   ]
+  },
+  {
+   "@type": "WebPage",
+   "@id": "https://warrenlabs.com/#webpage",
+   "url": "https://warrenlabs.com/",
+   "name": "Warren Labs · Headphone measurements and audio tools",
+   "isPartOf": {
+    "@id": "https://warrenlabs.com/#website"
+   },
+   "about": {
+    "@id": "https://warrenlabs.com/#organization"
+   },
+   "mainEntity": {
+    "@id": "https://warrenlabs.com/#organization"
+   },
+   "hasPart": [
+    {
+     "@id": "https://warrenlabs.com/attune/#app"
+    },
+    {
+     "@id": "https://warrenlabs.com/caliper/#app"
+    },
+    {
+     "@id": "https://warrenlabs.com/proof/#app"
+    },
+    {
+     "@id": "https://warrenlabs.com/#book"
+    }
    ]
   },
   {
@@ -358,6 +396,7 @@ b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';
    "image": "https://warrenlabs.com/assets/book-cover.jpg",
    "url": "https://www.amazon.com/dp/B0H6XWXM4C",
    "bookFormat": "https://schema.org/EBook",
+   "isbn": "979-8-9968299-1-0",
    "inLanguage": "en"
   },
   {
@@ -367,6 +406,35 @@ b.addEventListener('click',function(){var n=cur()==='dark'?'light':'dark';
    "url": "https://warrenlabs.com/attune/",
    "sameAs": [
     "https://apps.apple.com/app/attune-headphone-eq/id6792873303"
+   ],
+   "applicationCategory": "MultimediaApplication",
+   "author": {
+    "@id": "https://warrenlabs.com/#jamey"
+   },
+   "publisher": {
+    "@id": "https://warrenlabs.com/#organization"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "@id": "https://warrenlabs.com/caliper/#app",
+   "name": "Caliper",
+   "url": "https://warrenlabs.com/caliper/",
+   "sameAs": [
+    "https://apps.apple.com/app/caliper-headphone-measurement/id6813610070"
+   ],
+   "applicationCategory": "MultimediaApplication",
+   "publisher": {
+    "@id": "https://warrenlabs.com/#organization"
+   }
+  },
+  {
+   "@type": "SoftwareApplication",
+   "@id": "https://warrenlabs.com/proof/#app",
+   "name": "Proof",
+   "url": "https://warrenlabs.com/proof/",
+   "sameAs": [
+    "https://apps.apple.com/app/proof-audio-analyzer/id6813702023"
    ],
    "applicationCategory": "MultimediaApplication",
    "publisher": {
