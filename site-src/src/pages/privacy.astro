@@ -100,15 +100,18 @@ const updated = 'November 2026';
           method, status and URL, for one day, and no client IP, so "we do not tie requests to you"
           holds. If that changes, say so here. Retention (Jamey, 2026-11-11): 30 days, implemented in
           warren-labs bb6fc8d (tools/delivery/headphone-request.mjs). Each model record lives 30 days
-          from its first request and day totals are deleted after 30 days, swept daily. This page must
+          from its first request and day totals are deleted after 30 days, swept daily. The next
+          request after a record's window starts a fresh record and emails again (countModel), so the
+          page says so: "the first request" alone under-stated what reaches the mailbox. This page must
           not go live before that server change is deployed. The email stays in our mailbox until
           deleted; Resend keeps its copy 30 days (all self-serve plans, resend.com/pricing, checked
           2026-11-11). Change the code first, then this page. */}
       <p>
         For each model we keep the name as it was first typed, how many times it has been requested,
         and the dates of the first and latest request, for <b>30 days from the first request</b>. We
-        also keep a total count for each day, and delete each day's count after 30 days. The first
-        request for a model is also emailed to us with its app version and platform, through
+        also keep a total count for each day, and delete each day's count after 30 days. A request
+        after those 30 days starts a new record. The first request for a model, and the first of each
+        new record, is also emailed to us with its app version and platform, through
         <b>Resend</b>. That email stays in our mailbox until we delete it, and Resend keeps its copy
         for 30 days. The server runs
         on <b>Deno Deploy</b>. Like any request over the internet, it
