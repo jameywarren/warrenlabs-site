@@ -9,7 +9,7 @@
 //     proof/docs/DESIGN.md §16.2b, 2026-11-11; the $79 copied from the same section, 2026-11-13.
 //     On the App Store for iPhone and iPad since 2026-10-01 and for Mac since 2026-10-17 (checked
 //     against the public App Store lookup 2026-11-11). App Store Connect shows macOS 1.0 and iOS 1.0
-//     Ready for Sale (checked 2026-11-13; proof/docs/TODO.md, top block).
+//     Ready for Sale (checked 2026-11-11, per proof/docs/TODO.md's top block; read 2026-11-13).
 // When an owner changes, change it there first, then here. The homepage (wl:doors, stamped by
 // tools/sync-chrome.mjs) and pages/proof.astro read this file.
 //
