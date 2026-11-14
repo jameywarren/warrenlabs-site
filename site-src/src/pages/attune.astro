@@ -13,10 +13,10 @@ import AttuneVoiceMatchDemo from '../components/AttuneVoiceMatchDemo.astro';
 // PLATFORM WORDING IS NOT WRITTEN HERE. It comes from src/data/attune.js, which the handout and the
 // support page also read, because iOS is in review and only one file should decide how the site says
 // so. Do not hard-code "Mac App Store" or a system requirement into this page again.
-import { APP_STORE, ATTUNE, IOS_LIVE } from '../data/attune.js';
+import { APP_STORE, ATTUNE, IOS_LIVE, PRO_PRICE } from '../data/attune.js';
 
-// $19.99 copied from warren-labs/docs/PRICING.md (amendment 2026-11-08), 2026-11-11. It is also
-// hand-typed in the Pro card below; change both with it.
+// Attune Pro's price comes from PRO_PRICE in ../data/attune.js (a dated copy of
+// warren-labs/docs/PRICING.md), here in the schema offers and in the Pro card below.
 // No aggregateRating or review: we have none of our own, and App Store ratings may not be
 // re-marked up here as if they were ours.
 // No softwareVersion: one more version copy to go stale.
@@ -35,7 +35,7 @@ const attuneApp = {
   processorRequirements: 'Apple Silicon (M1 or later) on Mac',
   offers: [
     { '@type': 'Offer', name: 'Attune', price: '0', priceCurrency: 'USD', url: APP_STORE, availability: 'https://schema.org/InStock' },
-    { '@type': 'Offer', name: 'Attune Pro (one-time in-app purchase)', price: '19.99', priceCurrency: 'USD', url: APP_STORE },
+    { '@type': 'Offer', name: 'Attune Pro (one-time in-app purchase)', price: PRO_PRICE.amount, priceCurrency: PRO_PRICE.currency, url: APP_STORE },
   ],
   featureList: [
     'Blind, loudness-matched A/B on your own music',
@@ -499,7 +499,7 @@ const faqPage = {
         <!-- Pro (one-time unlock) -->
         <div class="tier feat">
           <div class="tname">Pro <span class="badge">One-time</span></div>
-          <div class="price">$19.99<small> US</small></div>
+          <div class="price">{PRO_PRICE.display}<small> US</small></div>
           <div class="per">paid once, never a subscription</div>
           <ul>
             <li><span class="chk">&#9670;</span> Everything in Free</li>

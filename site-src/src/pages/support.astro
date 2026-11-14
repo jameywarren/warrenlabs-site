@@ -4,7 +4,7 @@ import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 // iOS is in review, so what this page may claim about iPhone and iPad is decided in ONE file that
 // the landing page and the CanJam handout read too. When iOS is approved, flip IOS_STATUS there.
-import { ATTUNE } from '../data/attune.js';
+import { ATTUNE, PRO_PRICE } from '../data/attune.js';
 
 const email = 'jamey@warrenlabs.com';
 
@@ -40,7 +40,7 @@ const faq: { q: string; a: string }[] = [
   {
     q: 'Is Attune free? What does Pro add?',
     a: `<p>Free, permanently, and not a trial: tuning your headphone, every target, Find your sound, tone shaping, Fix by ear, the full parametric EQ for both ears together, importing your own measurements, and one saved sound kept for good. No account, no card.</p>
-<p><strong>Attune Pro is a single purchase, $19.99 in the US</strong>, no subscription. It adds unlimited saved sounds; EQ export as a standard AutoEq file, so a tuning found here can travel to your phone, DAP or dongle, with your tone and EQ bands included; and separate left and right EQ bands. It's a Universal Purchase, so buying it on the Mac unlocks it on iPhone and iPad, and the other way round.</p>
+<p><strong>Attune Pro is a single purchase, ${PRO_PRICE.display} in the US</strong>, no subscription. It adds unlimited saved sounds; EQ export as a standard AutoEq file, so a tuning found here can travel to your phone, DAP or dongle, with your tone and EQ bands included; and separate left and right EQ bands. It's a Universal Purchase, so buying it on the Mac unlocks it on iPhone and iPad, and the other way round.</p>
 <p><strong>Importing your own measurement is free and will not become a paid feature.</strong></p>`,
   },
   {

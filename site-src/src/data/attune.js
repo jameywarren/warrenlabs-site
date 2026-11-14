@@ -9,10 +9,11 @@
 //   - macOS APPROVED and LIVE.  macOS 12 or later, Apple Silicon (M1 or later). NOT Intel.
 //   - iOS APPROVED and LIVE as of 2026-08-21.  iPhone iOS 16+, iPad iPadOS 16+.
 //   - Attune Pro is one time, no subscription, and a Universal Purchase covering Mac and iOS.
-//     $19.99 US (copied from warren-labs/docs/PRICING.md, 2026-11-08). Hand-typed in attune.astro
-//     (the Pro card AND the schema offers) and support.astro: change those with it. The homepage
-//     states no Attune price since 2026-11-11 (its wl:doors region reads APP_STORE and ATTUNE
-//     from this file via tools/home-regions.mjs).
+//     $19.99 US (copied from warren-labs/docs/PRICING.md, 2026-11-08; re-checked 2026-11-13).
+//     PRO_PRICE below is the ONLY place on the site that carries it: attune.astro (the Pro card AND
+//     the schema offers) and support.astro read it, so a price change is one edit here, after the
+//     owner. The homepage states no Attune price since 2026-11-11 (its wl:doors region reads
+//     APP_STORE and ATTUNE from this file via tools/home-regions.mjs).
 //   - One bundle id, so ONE App Store link serves every platform. That is why there is a single
 //     URL here and not two.
 //
@@ -30,6 +31,14 @@ export const APP_STORE = 'https://apps.apple.com/app/attune-headphone-eq/id67928
 export const IOS_STATUS = 'live';
 
 export const IOS_LIVE = IOS_STATUS === 'live';
+
+// Attune Pro, US. A dated copy of warren-labs/docs/PRICING.md (see the header). `amount` is the
+// schema.org Offer price (no currency sign); `display` is what a person reads.
+export const PRO_PRICE = {
+  amount: '19.99',
+  currency: 'USD',
+  display: '$19.99',
+};
 
 // Prebuilt copy, so the conditional lives here once instead of at every call site. No em-dashes:
 // these strings go straight onto the page. See messaging-spine.md §7.

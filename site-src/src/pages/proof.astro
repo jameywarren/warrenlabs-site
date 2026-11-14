@@ -29,7 +29,8 @@ import { PROOF } from '../data/apps.js';
 //      AMENDED 2026-09-18: this rule used to end "The true claim describes BEHAVIOUR, and is the
 //      one used below", and the sentence it blessed was "Proof makes no network connections".
 //      That is a behaviour claim AND an absolute, and the shipping product breaks it: Proof sells
-//      subscriptions, so it asks the App Store for prices and for the purchase. NEVER write any
+//      an in-app unlock (subscriptions until 2026-09-25), so it asks the App Store for the price and
+//      for the purchase. NEVER write any
 //      form of "Proof makes no network connections" either. What is true, and stays true, are the
 //      negatives: no account, no server of ours, no analytics, no crash reporting, no telemetry,
 //      and nothing you measure leaving the device.
@@ -39,14 +40,15 @@ import { PROOF } from '../data/apps.js';
 //      comes from a component-tree render with no measurement behind it, so all of them show an
 //      empty plot ("No rig chosen · nothing plotted yet"). ProofFloorDiagram is a captioned diagram
 //      instead. When real bench shots exist, they go in the slot marked below.
-//   4. The price is owned by proof/docs/DESIGN.md §16.2b (free app, one unlock, no subscription;
-//      it superseded FREE-TIER.md's "undecided" and §16.2a). This page states no number; the
-//      wording it does state comes from ../data/apps.js, a dated copy.
+//   4. The price is owned by proof/docs/DESIGN.md §16.2b (free app, one $79 unlock, no
+//      subscription, no trial; it superseded FREE-TIER.md's "undecided" and §16.2a). This page
+//      never types the number: the closing CTA and the schema offers read PROOF.unlock, and every
+//      other store or price wording reads ../data/apps.js, a dated copy. Change the owner first.
 //   5. No duration for the floor measurement. The app disagrees with itself — ProofView.cpp:3627
 //      says "About ninety seconds", ProofView.cpp:4408 says "about forty seconds", about the same
 //      operation. Restating either here would make the website a third, equally unreliable copy.
 
-const updated = 'September 2026';
+const updated = 'November 2026';
 
 // Transcribed from proof/app/Lens.cpp — allLenses(). The `why` strings are that file's own `needs`
 // field. When a lens becomes ready in the app, change it HERE too; this table is a copy and the
@@ -75,9 +77,10 @@ const LENSES = [
   },
 ];
 
-// Minimal on purpose. Proof has a live listing now, so it carries sameAs. Offers and
-// operatingSystem wait for whoever next owns this page's pricing copy: the price is
-// proof/docs/DESIGN.md §16.2b's, and an Offer here would be one more hand copy of it.
+// Proof has a live listing and a decided price, so it carries sameAs, installUrl and offers. The
+// offers read PROOF from ../data/apps.js (a dated copy of proof/docs/DESIGN.md §16.2b), so the
+// price is not hand-typed here. No operatingSystem: the minimum OS versions have no copy on this
+// site yet, and guessing one is the overclaim this page avoids.
 const proofApp = {
   '@type': 'SoftwareApplication',
   '@id': 'https://warrenlabs.com/proof/#app',
@@ -85,6 +88,11 @@ const proofApp = {
   url: 'https://warrenlabs.com/proof/',
   applicationCategory: 'MultimediaApplication',
   sameAs: [PROOF.store],
+  installUrl: PROOF.store,
+  offers: [
+    { '@type': 'Offer', name: 'Proof', price: '0', priceCurrency: PROOF.unlock.currency, url: PROOF.store, availability: 'https://schema.org/InStock' },
+    { '@type': 'Offer', name: 'Proof unlock (one-time in-app purchase)', price: PROOF.unlock.amount, priceCurrency: PROOF.unlock.currency, url: PROOF.store },
+  ],
   publisher: { '@id': 'https://warrenlabs.com/#organization' },
 };
 ---
@@ -414,7 +422,7 @@ const proofApp = {
           paragraph used to open "Proof makes no network connections." Rule 1 forbade the SYMBOL
           claim and blessed this one as the behaviour claim, which was half right: the sentence is
           about behaviour, and it is still an absolute that the shipping product breaks. Proof
-          sells subscriptions, so it asks the App Store for prices and for the purchase, and this
+          sells an in-app unlock, so it asks the App Store for the price and the purchase, and this
           page now links to a terms page the app itself opens in a browser. The negatives below
           are the part that is true and stays true. DO NOT RESTORE THE ABSOLUTE. */}
       <p>
@@ -433,7 +441,7 @@ const proofApp = {
       {/* CORRECTED 2026-09-18. "Terms" here pointed at /terms/, which is the PLUGIN line's terms
           and is false about Proof in every load-bearing sentence: it names FastSpring as the
           seller (Apple is), it describes a .wllicense file (App Review guideline 3.1.1 forbids
-          one), it says there is nothing to cancel (Proof is primarily a subscription), and it
+          one), it says there is nothing to cancel (Proof was then primarily a subscription), and it
           calls the line a public beta. This page is the App Store Connect Support URL, so that
           link pointed a reviewer at a document contradicting the purchase under review.
           /proof/terms/ lands in the same commit as this change; read the DRAFT flag at the top of
@@ -454,7 +462,8 @@ const proofApp = {
     <div class="wrap">
       <h2>On the App Store.</h2>
       <p>
-        {PROOF.storeLine} Questions about a reading go to a person:
+        {PROOF.storeLine} The unlock is {PROOF.unlock.display} in the US, paid once. Questions
+        about a reading go to a person:
         <a href="mailto:jamey@warrenlabs.com?subject=Proof">jamey@warrenlabs.com</a>.
       </p>
       <Button href={PROOF.store} variant="primary" size="lg">

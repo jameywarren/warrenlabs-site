@@ -1,5 +1,7 @@
 # Warren Labs
-> Warren Labs measures headphones on its own rig, publishes the measurements, and makes Attune, a headphone EQ app for Mac, iPhone and iPad.
+> Warren Labs measures headphones on its own rig, publishes the measurements, and makes Attune, a headphone EQ app for Mac, iPhone and iPad, along with the Caliper and Proof measurement apps and audio plug-ins.
+
+- [Home](https://warrenlabs.com/)
 
 ## Attune
 - [Attune](https://warrenlabs.com/attune/): what it does, Free and Pro, platforms, measured headphones
@@ -19,3 +21,8 @@
 
 ## Other apps
 - [Caliper](https://warrenlabs.com/caliper/): free headphone measurement app for Mac and iPhone
+- [Proof](https://warrenlabs.com/proof/): audio measurement instrument for Mac, iPhone and iPad that measures its own noise floor first and reports every reading against it; support is on the same page
+- [Proof on the App Store](https://apps.apple.com/us/app/proof-audio-analyzer/id6813702023)
+
+## Plug-ins
+- [Plug-ins](https://warrenlabs.com/plugins/): audio plug-ins for mixing

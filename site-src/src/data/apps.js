@@ -5,13 +5,16 @@
 //   - Caliper is free, no paid tier: copied from caliper/docs/PRICING.md, 2026-11-11.
 //     Released on iOS 2026-09-19 and macOS 2026-09-29 (caliper/docs/RELEASE-READINESS.md; checked
 //     against the public App Store lookup 2026-11-11).
-//   - Proof is a free app with one unlock and no subscription: copied from proof/docs/DESIGN.md
-//     §16.2b, 2026-11-11. On the App Store for iPhone and iPad since 2026-10-01 and for Mac since
-//     2026-10-17 (checked against the public App Store lookup 2026-11-11).
+//   - Proof is a free app with one $79 unlock, no subscription and no trial: copied from
+//     proof/docs/DESIGN.md §16.2b, 2026-11-11; the $79 copied from the same section, 2026-11-13.
+//     On the App Store for iPhone and iPad since 2026-10-01 and for Mac since 2026-10-17 (checked
+//     against the public App Store lookup 2026-11-11). App Store Connect shows macOS 1.0 and iOS 1.0
+//     Ready for Sale (checked 2026-11-13; proof/docs/TODO.md, top block).
 // When an owner changes, change it there first, then here. The homepage (wl:doors, stamped by
 // tools/sync-chrome.mjs) and pages/proof.astro read this file.
 //
-// The homepage states no Proof price on purpose: /proof and its owner carry the number.
+// The homepage states no Proof price on purpose: /proof and its owner carry the number. /proof reads
+// PROOF.unlock for its one visible price and its schema.org offers.
 //
 // Plain ESM with no Vite-only syntax: tools/sync-chrome.mjs imports it in plain Node.
 // No em dashes: every string goes straight onto a page.
@@ -35,4 +38,6 @@ export const PROOF = {
   platforms: 'Mac, iPad and iPhone',
   /** A full sentence for a status line. */
   storeLine: 'Free on the App Store for Mac, iPad and iPhone, with one unlock and no subscription.',
+  /** The one in-app purchase, US. `amount` is the schema.org Offer price; `display` is for people. */
+  unlock: { amount: '79', currency: 'USD', display: '$79' },
 };
